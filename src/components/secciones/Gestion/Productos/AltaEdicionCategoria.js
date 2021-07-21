@@ -3,7 +3,8 @@ import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 
 //Actions  
-import {createCategoria, saveCreateCategoria, updateCategoria, saveUpdateCategoria} from '../../../../actions/CategoriaActions'
+import {createCategoria, saveCreateCategoria, updateCategoria, saveUpdateCategoria, fetchCategoriaById} from '../../../../actions/CategoriaActions'
+
 
 //Constants
 import * as rutas from '../../../../constants/rutas.js';
@@ -28,7 +29,10 @@ class AltaEdicionCategoria extends React.Component {
     }
 
     componentDidMount() {
-        
+        let id = this.props.match.params.id;
+        if (id) {
+            this.props.fetchCategoriaById(id);
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -148,6 +152,9 @@ const mapDispatchToProps = (dispatch) => {
         saveUpdateCategoria: (volverA) => {
             dispatch(saveUpdateCategoria(volverA))
         },
+        fetchCategoriaById: (id) => {
+            dispatch(fetchCategoriaById(id))
+        },    
 
     }
 };

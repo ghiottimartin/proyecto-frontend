@@ -26,6 +26,18 @@ var categorias = {
 
         return fetch(c.BASE_PUBLIC + 'producto/abm/categorias//', defaultOptions);
     },
+    getCategoria(id) {
+
+        let defaultOptions = {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "Authorization": "Token " + localStorage.token
+            }
+        };
+
+        return fetch(c.BASE_PUBLIC + 'producto/abm/categorias//' + id, defaultOptions);
+    },
 };
 
 export default categorias;
