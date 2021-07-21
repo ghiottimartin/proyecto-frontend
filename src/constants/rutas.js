@@ -58,7 +58,13 @@ export const PEDIDOS = '/pedidos';
  * @returns {string}
  */
 export function getUrl(tipoObjeto, id, accion, tipo, volverA) {
-    let ruta = `${tipoObjeto}/${accion}/${tipo}/${id}`;
+    let ruta = '';
+    if(tipo !== ''){    
+        ruta = `${tipoObjeto}/${accion}/${tipo}/${id}`;
+    }else{
+        ruta = `${tipoObjeto}/${accion}/${id}`;
+    }
+
     if (volverA) {
         ruta += `?volverA=${volverA}`
     }

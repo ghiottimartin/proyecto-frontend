@@ -119,16 +119,11 @@ class ListadoCategorias extends React.Component {
             <tr>
                 <td colSpan={3}><Loader display={true} /></td>
             </tr>;
-        let operacion = {
-            'ruta': rutas.CATEGORIA_ALTA + '?volverA=' + rutas.CATEGORIAS_LISTAR,
-            'texto': 'Categorías',
-            'clase': 'btn-success',
-        };
         return (
             <div className="tabla-listado">
                 <div className="table-responsive tarjeta-body listado">
                     <div className="d-flex justify-content-between">
-                        <Titulo ruta={rutas.PRODUCTOS_LISTAR_ADMIN} titulo={"Categorias"} clase="tabla-listado-titulo" operaciones={[operacion]} />
+                        <Titulo ruta={rutas.PRODUCTOS_LISTAR_ADMIN} titulo={"Categorias"} clase="tabla-listado-titulo" />
                     </div>
                     <table className="table">
                         <thead>
