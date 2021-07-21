@@ -29,8 +29,9 @@ import Navegador from "./components/elementos/Navegador";
 import NotFound from "./components/secciones/NotFound";
 import Registro from "./components/secciones/Usuarios/Alta";
 import ValidarEmail from "./components/secciones/Usuarios/ValidarEmail";
-import Pedidos from "./components/secciones/Pedidos";
 import ListadoCategorias from "./components/secciones/Gestion/Productos/ListadoCategorias.js";
+import PedidoListado from "./components/secciones/Pedidos/Listado";
+import PedidoVisualizar from "./components/secciones/Pedidos/Visualizar";
 
 //Redux
 import { connect } from 'react-redux';
@@ -249,7 +250,8 @@ class App extends React.Component {
                                 guardando={guardando}
                             />}
                         />
-                        <Route exact path={rutas.PEDIDOS} component={Pedidos} />
+                        <Route exact path={rutas.PEDIDOS} component={PedidoListado} />
+                        <Route exact path={rutas.PEDIDO_VISUALIZAR} component={PedidoVisualizar} />
                         <Route exact path="*" component={NotFound} />
                     </Switch>
                 </div>

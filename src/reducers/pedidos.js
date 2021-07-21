@@ -32,7 +32,8 @@ import {
     REQUEST_PEDIDO_ABIERTO,
     RECEIVE_PEDIDO_ABIERTO,
     ERROR_PEDIDO_ABIERTO,
-    RESET_PEDIDO_ABIERTO
+    RESET_PEDIDO_ABIERTO,
+    UPDATE_PEDIDO
 
 } from '../actions/PedidoActions';
 import {LOGOUT_SUCCESS} from "../actions/AuthenticationActions";
@@ -291,6 +292,13 @@ function update(state = {
                 isUpdating: false,
                 success: "",
                 error: action.error
+            });
+        case UPDATE_PEDIDO:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                activo: merge({}, state.activo, action.pedido),
+                success: "",
+                error: null,
             });
         default:
             return state

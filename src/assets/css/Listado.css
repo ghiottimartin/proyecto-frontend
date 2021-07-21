@@ -26,8 +26,9 @@
     cursor: pointer;
 }
 
-.tabla-listado .operacion:hover {
-    text-decoration: underline;
+.tabla-listado .operacion, .tabla-listado .operacion:focus, .tabla-listado .operacion:active, .tabla-listado .operacion:hover{
+    background: transparent !important;
+    text-decoration: none !important;
 }
 
 .tabla-listado .icono-operacion {

@@ -1,3 +1,18 @@
-.pedidos {
-    
+.pedido-visualizar {
+    max-width: 1200px;
+}
+
+.pedido-visualizar ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.pedido-visualizar li label {
+    width: 70px !important;
+    font-weight: bold;
+}
+
+.pedido-listar .operacion {
+    background: transparent;
+    text-decoration: none;
 }

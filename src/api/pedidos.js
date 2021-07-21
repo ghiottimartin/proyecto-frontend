@@ -78,7 +78,8 @@ var pedidos = {
         };
 
         return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/abierto/', defaultOptions);
-    }
+    },
+    
 
 };
 

@@ -333,7 +333,7 @@ export function fetchPedidoById(id) {
                 }
             })
             .then(function (data) {
-                dispatch(receivePedidoById(data));
+                dispatch(updatePedido(data.datos));
             })
             .catch(function (error) {
                 //dispatch(logout());
@@ -543,5 +543,15 @@ export function saveDeletePedido(id) {
                         return;
                 }
             });
+    }
+}
+
+//PEDIDO UPDATE
+export const UPDATE_PEDIDO = 'UPDATE_PEDIDO';
+
+export function updatePedido(pedido) {
+    return {
+        type: UPDATE_PEDIDO,
+        pedido
     }
 }

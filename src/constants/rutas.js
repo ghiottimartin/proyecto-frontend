@@ -46,6 +46,7 @@ export const CATEGORIAS_EDITAR_ADMIN = '/categorias/editar/admin/:id';
 
 //Gestión de pedidos
 export const PEDIDOS = '/pedidos';
+export const PEDIDO_VISUALIZAR = '/pedidos/visualizar/:id';
 
 /**
  * Devuelve la url de usuarios

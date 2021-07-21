@@ -1,24 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+
 //Actions
-import { fetchPedidos, resetPedidos } from "../../actions/PedidoActions";
+import { fetchPedidos, resetPedidos, updatePedido } from "../../../actions/PedidoActions";
+
 //Api
-import auth from "../../api/authentication";
+import auth from "../../../api/authentication";
+
 //CSS
-import "../../assets/css/Pedidos.css";
-//Constants
-import * as rutas from '../../constants/rutas.js';
+import "../../../assets/css/Pedidos.css";
+
 //Components
-import Loader from "../elementos/Loader";
-import Titulo from "../elementos/Titulo";
+import Loader from "../../elementos/Loader";
+import Titulo from "../../elementos/Titulo";
 
+//Librerias
+import history from "../../../history";
 
-
-
-
-
-class Pedidos extends React.Component {
+class Listado extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -53,6 +53,36 @@ class Pedidos extends React.Component {
         }
     }
 
+    ejecutarOperacion(pedido, accion) {
+        switch (accion) {
+            case 'visualizar':
+                this.visualizarPedido(pedido);
+                break;
+        }
+    }
+
+    visualizarPedido(pedido) {
+        this.props.updatePedido(pedido);
+        history.push("/pedidos/visualizar/" + pedido.id);
+    }
+
+    getOperacionesPedido(pedido) {
+        let operaciones = [];
+        pedido.operaciones.forEach(operacion => {
+            let accion = operacion.accion;
+            operaciones.push(
+                <div key={operacion.key} onClick={() => this.ejecutarOperacion(pedido, accion)} class={operacion.clase + " operacion"} >
+                    <i class={operacion.icono} aria-hidden="true"></i> {operacion.texto}
+                </div>
+            );
+        })
+        return (
+            <div className="fila-operaciones">
+                {operaciones}
+            </div>
+        );
+    }
+
     render() {
         const { noHayPedidos, buscando } = this.state;
         let Pedidos = [];
@@ -65,27 +95,26 @@ class Pedidos extends React.Component {
         this.props.pedidos.allIds.map(idPedido => {
             let pedido = this.props.pedidos.byId.pedidos[idPedido];
             if (pedido && pedido.id) {
+                let operaciones = this.getOperacionesPedido(pedido);
                 Pedidos.push(
                     <tr key={pedido.id}>
                         <td>{pedido.fecha_texto}</td>
                         <td>{pedido.estado_texto}</td>
                         <td>{pedido.total_texto}</td>
-                        <td></td>
+                        <td>{operaciones}</td>
                     </tr>
                 );
             }
         });
         const Cargando =
             <tr>
-                <td></td>
-                <td colspan="2"><Loader display={true} /></td>
-                <td></td>
+                <td colSpan="4"><Loader display={true} /></td>
             </tr>;
         return (
-            <div className="tabla-listado">
+            <div className="tabla-listado producto-listado">
                 <div className="table-responsive tarjeta-body listado">
                     <div className="d-flex justify-content-between">
-                        <Titulo ruta={rutas.ALMACEN} titulo={"Pedidos"} clase="tabla-listado-titulo" />
+                        <Titulo titulo={"Pedidos"} clase="tabla-listado-titulo" />
                     </div>
                     <table className="table">
                         <thead>
@@ -120,6 +149,9 @@ const mapDispatchToProps = (dispatch) => {
         resetPedidos: () => {
             dispatch(resetPedidos())
         },
+        updatePedido: (pedido) => {
+            dispatch(updatePedido(pedido))
+        }
     }
 };
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Pedidos));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Listado));
