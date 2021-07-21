@@ -146,7 +146,7 @@ export function updateCategoria(categoria) {
 export function saveUpdateCategoria() {
     return (dispatch, getState) => {
         dispatch(requestUpdateCategoria());
-        return categorias.saveUpdate(getState().categoriasProducto.update.activa)
+        return categorias.saveUpdate(getState().categorias.update.activa)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
@@ -252,8 +252,8 @@ export function fetchCategorias() {
 }
 
 function shouldFetchCategorias(state) {
-    const categoriasById   = state.categoriasProducto.byId;
-    const categoriasAllIds = state.categoriasProducto.allIds;
+    const categoriasById   = state.categorias.byId;
+    const categoriasAllIds = state.categorias.allIds;
     if (categoriasById.isFetching) {
         return false;
     } else if (categoriasAllIds.length === 0) {
@@ -342,8 +342,8 @@ export function fetchCategoriaById(id) {
 }
 
 function shouldFetchCategoriaById(id, state) {
-    const categoriasById   = state.categoriasProducto.byId;
-    const categoriasAllIds = state.categoriasProducto.allIds;
+    const categoriasById   = state.categorias.byId;
+    const categoriasAllIds = state.categorias.allIds;
     if (categoriasById.isFetchingCategoria) {
         return false;
     } else if (categoriasAllIds.length === 0) {
