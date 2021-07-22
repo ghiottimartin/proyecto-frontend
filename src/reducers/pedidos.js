@@ -57,7 +57,6 @@ function pedidosById(state = {
     error: null,
     success: "",
 }, action) {
-    let pedido = {};
     let mostrarUsuarios = false;
     switch (action.type) {
         case LOGOUT_SUCCESS:
@@ -77,7 +76,7 @@ function pedidosById(state = {
                 didInvalidate: false
             });
         case RECEIVE_PEDIDOS:
-            pedido = Object.values(action.pedidos.entities.pedidos)[0];
+            let pedido = Object.values(action.pedidos.entities.pedidos)[0];
             if (pedido && pedido.mostrar_usuario) {
                 mostrarUsuarios = true;
             }
@@ -114,8 +113,8 @@ function pedidosById(state = {
                 didInvalidatePedido: false
             });
         case RECEIVE_PEDIDO_ID:
-            pedido = Object.values(action.pedido.entities.pedido)[0];
-            if (pedido && pedido.mostrar_usuario) {
+            let pedido_unico = Object.values(action.pedido.entities.pedido)[0];
+            if (pedido_unico && pedido_unico.mostrar_usuario) {
                 mostrarUsuarios = true;
             }
             return Object.assign({}, state, {
@@ -151,23 +150,23 @@ function pedidosById(state = {
                 didInvalidatePedido: false
             });
         case RECEIVE_PEDIDO_ABIERTO:
-            let pedido = {};
+            let abierto = {};
             if (action.pedido && action.pedido.entities && action.pedido.entities.pedido) {
-                pedido = Object.values(action.pedido.entities.pedido)[0].datos;
+                abierto = Object.values(action.pedido.entities.pedido)[0].datos;
             }
             if (action.pedido.exito && action.pedido.datos && action.pedido.datos.cerrado) {
-                pedido.cerrado = true;
+                abierto.cerrado = true;
             }
-            if (pedido.lineas === undefined) {
-                pedido.lineas = [];
+            if (abierto.lineas === undefined) {
+                abierto.lineas = [];
             }
             var ids = [];
-            pedido.lineas.map(linea => ids.push(linea.id));
-            pedido.lineasIds = ids;
+            abierto.lineas.map(linea => ids.push(linea.id));
+            abierto.lineasIds = ids;
             return Object.assign({}, state, {
                 isFetchingPedido: false,
                 didInvalidatePedido: false,
-                abierto: merge(state.abierto, pedido),
+                abierto: merge(state.abierto, abierto),
                 lastUpdated: action.receivedAt,
                 error: null
             });
