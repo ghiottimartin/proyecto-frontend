@@ -42,7 +42,7 @@ export default function Titulo(props) {
     let operaciones = props.operaciones ? props.operaciones : [];
     let botones     = operaciones.map(op => {
         return (
-            <button style={botonStyle} onClick={() => history.push(op.ruta)} className={op.clase}>
+            <button key={op.texto} style={botonStyle} onClick={() => history.push(op.ruta)} className={op.clase}>
                 {op.texto}
             </button>
         )

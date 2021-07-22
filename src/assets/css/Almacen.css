@@ -36,3 +36,37 @@
 .almacen .carrito-botones {
     margin-top: auto;
 }
+
+@media (max-width: 950px) {
+    .almacen-productos {
+        grid-template-columns: 100%;
+    }
+    .almacen-productos .producto {
+        min-height: 150px;
+    }
+}
+
+@media (max-width: 560px) {
+    
+    .almacen-productos .producto {
+        width: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .almacen-productos .producto-izquierda {
+        max-width: 110px !important;
+        width: 110px !important;
+        display: flex;
+        justify-content: center;
+    }
+    .almacen-productos .producto img {
+        width: 100px;
+    }
+    .almacen-productos .producto-derecha-carrito {
+        flex-direction: column-reverse;
+    }
+    .almacen-productos .producto-derecha-titulos h2 {
+        text-align: center;
+    }
+}

@@ -76,7 +76,12 @@ function pedidosById(state = {
                 didInvalidate: false
             });
         case RECEIVE_PEDIDOS:
-            let pedido = Object.values(action.pedidos.entities.pedidos)[0];
+            let pedido = {};
+            let pedidos = [];
+            if (action.pedidos.entities.pedidos) {
+                pedidos = action.pedidos.entities.pedidos;
+                pedido = Object.values(pedidos)[0];
+            }
             if (pedido && pedido.mostrar_usuario) {
                 mostrarUsuarios = true;
             }
@@ -84,7 +89,7 @@ function pedidosById(state = {
                 isFetching: false,
                 didInvalidate: false,
                 mostrarUsuarios: mostrarUsuarios,
-                pedidos: action.pedidos.entities.pedidos,
+                pedidos: pedidos,
                 lastUpdated: action.receivedAt,
                 error: null
             });
@@ -113,7 +118,10 @@ function pedidosById(state = {
                 didInvalidatePedido: false
             });
         case RECEIVE_PEDIDO_ID:
-            let pedido_unico = Object.values(action.pedido.entities.pedido)[0];
+            let pedido_unico = {};
+            if (action.pedido.entities.pedido) {
+                pedido_unico = Object.values(action.pedido.entities.pedido)[0]
+            }
             if (pedido_unico && pedido_unico.mostrar_usuario) {
                 mostrarUsuarios = true;
             }
