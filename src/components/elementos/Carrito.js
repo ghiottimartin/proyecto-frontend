@@ -85,7 +85,7 @@ class Carrito extends React.Component {
         return compras;
     }
 
-    finalizarPedido(sinLineas) {
+    recibirPedido(sinLineas) {
         if (sinLineas) {
             return;
         }
@@ -137,7 +137,7 @@ class Carrito extends React.Component {
             <nav ref={this.carrito} className={`carrito ${claseBlur}`} style={{ right: !mostrar ? "-300px" : "0" }}>
                 <img className="volverA" src={imgVolver} alt="Icono volver" onClick={() => this.props.changeMostrar()} />
                 <div className="carrito-botones">
-                    <Button variant="outlined" color="secondary" className="finalizar" disabled={deshabilitar} onClick={() => this.finalizarPedido(deshabilitar)}>
+                    <Button variant="outlined" color="secondary" className="recibir" disabled={deshabilitar} onClick={() => this.recibirPedido(deshabilitar)}>
                         Enviar pedido
                     </Button>
                     <Button variant="outlined" color="primary" className="cancelar" disabled={deshabilitar} onClick={() => this.props.cancelarPedido(deshabilitar)}>

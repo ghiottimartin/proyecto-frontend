@@ -33,9 +33,9 @@ import {
     ERROR_PEDIDO_ABIERTO,
     RESET_PEDIDO_ABIERTO,
     UPDATE_PEDIDO,
-    RECEIVE_FINALIZAR_PEDIDO,
-    REQUEST_FINALIZAR_PEDIDO,
-    ERROR_FINALIZAR_PEDIDO
+    RECEIVE_RECIBIR_PEDIDO,
+    REQUEST_RECIBIR_PEDIDO,
+    ERROR_RECIBIR_PEDIDO
 
 } from '../actions/PedidoActions';
 import {LOGOUT_SUCCESS} from "../actions/AuthenticationActions";
@@ -295,19 +295,19 @@ function update(state = {
                 success: "",
                 error: null,
             });
-        case RECEIVE_FINALIZAR_PEDIDO:
+        case RECEIVE_RECIBIR_PEDIDO:
             return Object.assign({}, state, {
                 isUpdating: false,
                 success: action.message,
                 error: null,
             });
-        case REQUEST_FINALIZAR_PEDIDO:
+        case REQUEST_RECIBIR_PEDIDO:
             return Object.assign({}, state, {
                 isUpdating: true,
                 success: "",
                 error: null,
             });
-        case ERROR_FINALIZAR_PEDIDO:
+        case ERROR_RECIBIR_PEDIDO:
             return Object.assign({}, state, {
                 isUpdating: false,
                 success: "",

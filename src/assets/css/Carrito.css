@@ -28,16 +28,16 @@
     border-radius: 15px;
 }
 
-.carrito-botones .finalizar {
+.carrito-botones .recibir {
     color: white;
     background-color: #ea2a2a;
 }
 
-.carrito-botones .finalizar:hover {
+.carrito-botones .recibir:hover {
     background-color: #ff0000;
 }
 
-.carrito-botones .finalizar:disabled {
+.carrito-botones .recibir:disabled {
     color: #c6c6c6;
 }
 

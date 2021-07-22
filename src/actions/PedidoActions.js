@@ -549,37 +549,37 @@ export function updatePedido(pedido) {
     }
 }
 
-// FINALIZAR PEDIDO
-export const REQUEST_FINALIZAR_PEDIDO = "REQUEST_FINALIZAR_PEDIDO";
-export const RECEIVE_FINALIZAR_PEDIDO = "RECEIVE_FINALIZAR_PEDIDO";
-export const ERROR_FINALIZAR_PEDIDO   = "ERROR_FINALIZAR_PEDIDO";
+// RECIBIR PEDIDO
+export const REQUEST_RECIBIR_PEDIDO = "REQUEST_RECIBIR_PEDIDO";
+export const RECEIVE_RECIBIR_PEDIDO = "RECEIVE_RECIBIR_PEDIDO";
+export const ERROR_RECIBIR_PEDIDO   = "ERROR_RECIBIR_PEDIDO";
 
 
-function requestFinalizarPedido() {
+function requestRecibirPedido() {
     return {
-        type: REQUEST_FINALIZAR_PEDIDO,
+        type: REQUEST_RECIBIR_PEDIDO,
     }
 }
 
-function receiveFinalizarPedido(message) {
+function receiveRecibirPedido(message) {
     return {
-        type: RECEIVE_FINALIZAR_PEDIDO,
+        type: RECEIVE_RECIBIR_PEDIDO,
         success: message,
         receivedAt: Date.now()
     }
 }
 
-function errorFinalizarPedido(error) {
+function errorRecibirPedido(error) {
     return {
-        type: ERROR_FINALIZAR_PEDIDO,
+        type: ERROR_RECIBIR_PEDIDO,
         error: error,
     }
 }
 
-export function finalizarPedido(id, idUsuario) {
+export function recibirPedido(id, idUsuario) {
     return dispatch => {
-        dispatch(requestFinalizarPedido());
-        return pedidos.finalizarPedido(id)
+        dispatch(requestRecibirPedido());
+        return pedidos.recibirPedido(id)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
@@ -589,26 +589,26 @@ export function finalizarPedido(id, idUsuario) {
                 }
             })
             .then(function (data) {
-                dispatch(receiveFinalizarPedido(data.message));
+                dispatch(receiveRecibirPedido(data.message));
                 dispatch(resetPedidos())
                 dispatch(fetchPedidos(idUsuario))
             })
             .catch(function (error) {
                 switch (error.status) {
                     case 401:
-                        dispatch(errorFinalizarPedido(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(errorRecibirPedido(errorMessages.UNAUTHORIZED_TOKEN));
                         dispatch(logout());
                         return;
                     default:
                         error.json()
                             .then(error => {
                                 if (error.message !== "")
-                                    dispatch(errorFinalizarPedido(error.message));
+                                    dispatch(errorRecibirPedido(error.message));
                                 else
-                                    dispatch(errorFinalizarPedido(errorMessages.GENERAL_ERROR));
+                                    dispatch(errorRecibirPedido(errorMessages.GENERAL_ERROR));
                             })
                             .catch(error => {
-                                dispatch(errorFinalizarPedido(errorMessages.GENERAL_ERROR));
+                                dispatch(errorRecibirPedido(errorMessages.GENERAL_ERROR));
                             });
                         return;
                 }

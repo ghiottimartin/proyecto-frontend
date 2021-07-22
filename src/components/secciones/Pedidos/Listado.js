@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 //Actions
-import { fetchPedidos, resetPedidos, updatePedido, finalizarPedido } from "../../../actions/PedidoActions";
+import { fetchPedidos, resetPedidos, updatePedido, recibirPedido } from "../../../actions/PedidoActions";
 
 //Api
 import auth from "../../../api/authentication";
@@ -60,8 +60,8 @@ class Listado extends React.Component {
                 this.visualizarPedido(pedido);
                 break;
         
-            case 'finalizar':
-                this.finalizarPedido(pedido);
+            case 'recibir':
+                this.recibirPedido(pedido);
                 break;
         }
     }
@@ -71,11 +71,11 @@ class Listado extends React.Component {
         history.push("/pedidos/visualizar/" + pedido.id);
     }
 
-    finalizarPedido(pedido) {
+    recibirPedido(pedido) {
         let id = pedido.id;
         if (!id) {
             Swal.fire({
-                title: `Hubo un error al finalizar el pedido intente refrescar la página.`,
+                title: `Hubo un error al recibir el pedido intente refrescar la página.`,
                 icon: 'warning',
                 showCloseButton: true,
                 showCancelButton: false,
@@ -87,7 +87,7 @@ class Listado extends React.Component {
         } else {
             let idUsuario = auth.idUsuario();
             this.setState({ buscando: true });
-            this.props.finalizarPedido(pedido.id, idUsuario);
+            this.props.recibirPedido(pedido.id, idUsuario);
         }
     }
 
@@ -177,8 +177,8 @@ const mapDispatchToProps = (dispatch) => {
         updatePedido: (pedido) => {
             dispatch(updatePedido(pedido))
         },
-        finalizarPedido: (id, idUsuario) => {
-            dispatch(finalizarPedido(id, idUsuario))
+        recibirPedido: (id, idUsuario) => {
+            dispatch(recibirPedido(id, idUsuario))
         },
     }
 };

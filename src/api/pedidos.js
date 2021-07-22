@@ -80,7 +80,7 @@ var pedidos = {
         return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/abierto/', defaultOptions);
     },
 
-    finalizarPedido(id) {
+    recibirPedido(id) {
         let defaultOptions = {
             method: 'POST',
             headers: {
@@ -89,7 +89,7 @@ var pedidos = {
             },
         };
 
-        return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/' + id + '/finalizar/', defaultOptions);
+        return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/' + id + '/recibir/', defaultOptions);
     },
     
 
