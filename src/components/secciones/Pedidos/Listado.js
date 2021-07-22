@@ -108,6 +108,31 @@ class Listado extends React.Component {
         );
     }
 
+    getHtmlPedidosResponsive(mostrarUsuarios) {
+        let Pedidos = [];
+        this.props.pedidos.allIds.map(idPedido => {
+            let pedido = this.props.pedidos.byId.pedidos[idPedido];
+            if (pedido && pedido.id) {
+                let operaciones = this.getOperacionesPedido(pedido);
+                Pedidos.push(
+                    <div key={pedido.id + "-responsive"} className="pedidos-responsive-item">
+                        <ul>
+                            <li><b>Número:</b> {pedido.id_texto}</li>
+                            <li><b>Fecha:</b> {pedido.fecha_texto}</li>
+                            <li style={{ display: mostrarUsuarios ? "block" : "none" }}>
+                                <b>Usuario:</b> {pedido.usuario_texto}
+                            </li>
+                            <li><b>Estado:</b>  {pedido.estado_texto}</li>
+                            <li><b>Total:</b>  {pedido.total_texto}</li>
+                            <li>{operaciones}</li>
+                        </ul>
+                    </div>
+                );
+            }
+        });
+        return Pedidos;
+    }
+
     render() {
         const { noHayPedidos, buscando } = this.state;
         let mostrarUsuarios = this.props.pedidos.byId.mostrarUsuarios;
@@ -138,6 +163,7 @@ class Listado extends React.Component {
             <tr>
                 <td colSpan={mostrarUsuarios ? 6 : 5}><Loader display={true} /></td>
             </tr>;
+        const pedidosResponsive = this.getHtmlPedidosResponsive(mostrarUsuarios);
         return (
             <div className="tabla-listado producto-listado">
                 <div className="table-responsive tarjeta-body listado">
@@ -159,6 +185,9 @@ class Listado extends React.Component {
                             {buscando ? Cargando : Pedidos}
                         </tbody>
                     </table>
+                    <div className="pedidos-responsive">
+                        {pedidosResponsive}
+                    </div>
                 </div>
             </div>
         )

@@ -16,3 +16,39 @@
     background: transparent;
     text-decoration: none;
 }
+
+.producto-listado .pedidos-responsive {
+    display: none;
+}
+
+@media (max-width: 875px) {
+    .producto-listado .table {
+      display: none;
+    }
+    .producto-listado .pedidos-responsive {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .producto-listado .fila-operaciones {
+        margin-top: 15px;
+        display: flex;
+        justify-content: center;
+    }
+    .producto-listado .pedidos-responsive-item {
+        max-width: 350px;
+        border: 1px solid black;
+        border-radius: 6px;
+        padding: 15px;
+        margin: 10px 0;
+    }
+    
+    .producto-listado .pedidos-responsive ul {
+        list-style: none;
+        padding: 0;
+    }
+    .producto-listado .fila-operaciones .btn {
+        background-color: rgba(128, 128, 128, 0.37) !important;
+    }
+  }
