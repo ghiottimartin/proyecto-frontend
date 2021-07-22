@@ -114,7 +114,7 @@ class Listado extends React.Component {
         if (noHayPedidos) {
             Pedidos =
                 <tr className="text-center">
-                    <td colSpan="4">No hay pedidos cargados</td>
+                    <td colSpan="4">Todavía no ha realizado ningún pedido</td>
                 </tr>;
         }
         this.props.pedidos.allIds.map(idPedido => {
