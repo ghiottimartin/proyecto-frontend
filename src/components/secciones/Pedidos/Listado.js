@@ -141,7 +141,7 @@ class Listado extends React.Component {
             <div className="tabla-listado producto-listado">
                 <div className="table-responsive tarjeta-body listado">
                     <div className="d-flex justify-content-between">
-                        <Titulo titulo={"Pedidos"} clase="tabla-listado-titulo" />
+                        <Titulo titulo={mostrarUsuarios ? "Pedidos" : "Mis pedidos"} clase="tabla-listado-titulo" />
                     </div>
                     <table className="table">
                         <thead>
