@@ -326,6 +326,7 @@ export function fetchPedidoById(id) {
                 }
             })
             .then(function (data) {
+                dispatch(receivePedidoById(data.datos))
                 dispatch(updatePedido(data.datos));
             })
             .catch(function (error) {

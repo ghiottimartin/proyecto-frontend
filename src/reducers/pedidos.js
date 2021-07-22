@@ -47,16 +47,18 @@ function pedidosById(state = {
     didInvalidate: true,
     didInvalidatePedido: true,
     pedidos: [],
-    pedido: {},
     abierto: {
         id: 0,
         forzar: false,
         lineas: [],
         lineasIds: [],
     },
+    mostrarUsuarios: false,
     error: null,
     success: "",
 }, action) {
+    let pedido = {};
+    let mostrarUsuarios = false;
     switch (action.type) {
         case LOGOUT_SUCCESS:
             return Object.assign({}, state, {
@@ -75,9 +77,14 @@ function pedidosById(state = {
                 didInvalidate: false
             });
         case RECEIVE_PEDIDOS:
+            pedido = Object.values(action.pedidos.entities.pedidos)[0];
+            if (pedido && pedido.mostrar_usuario) {
+                mostrarUsuarios = true;
+            }
             return Object.assign({}, state, {
                 isFetching: false,
                 didInvalidate: false,
+                mostrarUsuarios: mostrarUsuarios,
                 pedidos: action.pedidos.entities.pedidos,
                 lastUpdated: action.receivedAt,
                 error: null
@@ -107,9 +114,14 @@ function pedidosById(state = {
                 didInvalidatePedido: false
             });
         case RECEIVE_PEDIDO_ID:
+            pedido = Object.values(action.pedido.entities.pedido)[0];
+            if (pedido && pedido.mostrar_usuario) {
+                mostrarUsuarios = true;
+            }
             return Object.assign({}, state, {
                 isFetchingPedido: false,
                 didInvalidatePedido: false,
+                mostrarUsuarios: mostrarUsuarios,
                 pedido: action.pedido.entities.pedido,
                 lastUpdated: action.receivedAt,
                 error: null

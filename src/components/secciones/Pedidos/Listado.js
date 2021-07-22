@@ -96,8 +96,8 @@ class Listado extends React.Component {
         pedido.operaciones.forEach(operacion => {
             let accion = operacion.accion;
             operaciones.push(
-                <div key={operacion.key} onClick={() => this.ejecutarOperacion(pedido, accion)} class={operacion.clase + " operacion"} >
-                    <i class={operacion.icono} aria-hidden="true"></i> {operacion.texto}
+                <div key={operacion.key} onClick={() => this.ejecutarOperacion(pedido, accion)} className={operacion.clase + " operacion"} >
+                    <i className={operacion.icono} aria-hidden="true"></i> {operacion.texto}
                 </div>
             );
         })
@@ -110,11 +110,12 @@ class Listado extends React.Component {
 
     render() {
         const { noHayPedidos, buscando } = this.state;
+        let mostrarUsuarios = this.props.pedidos.byId.mostrarUsuarios;
         let Pedidos = [];
         if (noHayPedidos) {
             Pedidos =
                 <tr className="text-center">
-                    <td colSpan="4">Todavía no ha realizado ningún pedido</td>
+                <td colSpan={mostrarUsuarios ? 5 : 4}>Todavía no ha realizado ningún pedido</td>
                 </tr>;
         }
         this.props.pedidos.allIds.map(idPedido => {
@@ -124,6 +125,7 @@ class Listado extends React.Component {
                 Pedidos.push(
                     <tr key={pedido.id}>
                         <td>{pedido.fecha_texto}</td>
+                        <td style={{display: mostrarUsuarios ? "block" : "none"}}>{pedido.usuario_texto}</td>
                         <td>{pedido.estado_texto}</td>
                         <td>{pedido.total_texto}</td>
                         <td>{operaciones}</td>
@@ -145,6 +147,7 @@ class Listado extends React.Component {
                         <thead>
                             <tr>
                                 <th>Fecha</th>
+                                <th style={{display: mostrarUsuarios ? "block" : "none"}}>Usuario</th>
                                 <th>Estado</th>
                                 <th>Total</th>
                                 <th>Operaciones</th>

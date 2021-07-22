@@ -27,7 +27,7 @@ class Visualizar extends React.Component {
         }
     }
 
-    getVisualizarHtml(pedido) {
+    getVisualizarHtml(pedido, mostrarUsuarios) {
         if (!pedido || !pedido.lineas) {
             return "";
         }
@@ -48,6 +48,10 @@ class Visualizar extends React.Component {
                     <li>
                         <label>Fecha:</label>
                         <span>{pedido.fecha_texto}</span>
+                    </li>
+                    <li style={{display: mostrarUsuarios ? "block" : "none"}}>
+                        <label>Usuario:</label>
+                        <span>{pedido.usuario_texto}</span>
                     </li>
                     <li>
                         <label>Estado:</label>
@@ -87,7 +91,8 @@ class Visualizar extends React.Component {
         if (pedido && pedido.id) {
             titulo += " P" + pedido.id.toString();
         }
-        let html = this.getVisualizarHtml(pedido);
+        let mostrarUsuarios = this.props.pedidos.byId.mostrarUsuarios;
+        let html = this.getVisualizarHtml(pedido, mostrarUsuarios);
         return (
             <div className="tarjeta-body pedido-visualizar">
                 <Titulo ruta={rutas.PEDIDOS} titulo={titulo} clase="tabla-listado-titulo" />
