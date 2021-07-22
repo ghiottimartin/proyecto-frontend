@@ -34,7 +34,7 @@ class Visualizar extends React.Component {
         let filas = [];
         pedido.lineas.forEach(linea => {
             filas.push(
-                <tr>
+                <tr key={linea.id}>
                     <td>{linea.producto.nombre}</td>
                     <td>{linea.cantidad}</td>
                     <td>{linea.producto.precio_texto}</td>
@@ -60,10 +60,12 @@ class Visualizar extends React.Component {
                 </ul>
                 <table className="table">
                     <thead>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Precio</th>
-                        <th>Subtotal</th>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th> Precio</th>
+                            <th>Subtotal</th>
+                        </tr>
                     </thead>
                     <tbody>
                         {filas}
