@@ -115,7 +115,7 @@ class Listado extends React.Component {
         if (noHayPedidos) {
             Pedidos =
                 <tr className="text-center">
-                <td colSpan={mostrarUsuarios ? 5 : 4}>Todavía no ha realizado ningún pedido</td>
+                    <td colSpan={mostrarUsuarios ? 6 : 5}>Todavía no ha realizado ningún pedido</td>
                 </tr>;
         }
         this.props.pedidos.allIds.map(idPedido => {
@@ -124,6 +124,7 @@ class Listado extends React.Component {
                 let operaciones = this.getOperacionesPedido(pedido);
                 Pedidos.push(
                     <tr key={pedido.id}>
+                        <td>{pedido.id_texto}</td>
                         <td>{pedido.fecha_texto}</td>
                         <td style={{display: mostrarUsuarios ? "block" : "none"}}>{pedido.usuario_texto}</td>
                         <td>{pedido.estado_texto}</td>
@@ -135,7 +136,7 @@ class Listado extends React.Component {
         });
         const Cargando =
             <tr>
-                <td colSpan="4"><Loader display={true} /></td>
+                <td colSpan={mostrarUsuarios ? 6 : 5}><Loader display={true} /></td>
             </tr>;
         return (
             <div className="tabla-listado producto-listado">
@@ -146,6 +147,7 @@ class Listado extends React.Component {
                     <table className="table">
                         <thead>
                             <tr>
+                                <th>Número</th>
                                 <th>Fecha</th>
                                 <th style={{display: mostrarUsuarios ? "block" : "none"}}>Usuario</th>
                                 <th>Estado</th>
