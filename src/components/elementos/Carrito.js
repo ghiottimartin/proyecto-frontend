@@ -7,7 +7,7 @@ import $ from 'jquery';
 import auth from "../../api/authentication";
 
 //Actions
-import { saveFinalizarPedido } from "../../actions/PedidoActions";
+import { saveCerrarPedido } from "../../actions/PedidoActions";
 
 //Components
 import ItemCarrito from "./CarritoItem";
@@ -105,7 +105,7 @@ class Carrito extends React.Component {
             cancelButtonColor: '#bfbfbf',
         }).then((result) => {
             if (result.isConfirmed) {
-                this.props.saveFinalizarPedido(abierto.id);
+                this.props.saveCerrarPedido(abierto.id);
             }
         });
     }
@@ -138,7 +138,7 @@ class Carrito extends React.Component {
                 <img className="volverA" src={imgVolver} alt="Icono volver" onClick={() => this.props.changeMostrar()} />
                 <div className="carrito-botones">
                     <Button variant="outlined" color="secondary" className="finalizar" disabled={deshabilitar} onClick={() => this.finalizarPedido(deshabilitar)}>
-                        Finalizar pedido
+                        Enviar pedido
                     </Button>
                     <Button variant="outlined" color="primary" className="cancelar" disabled={deshabilitar} onClick={() => this.props.cancelarPedido(deshabilitar)}>
                         Cancelar
@@ -162,8 +162,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        saveFinalizarPedido: (id) => {
-            dispatch(saveFinalizarPedido(id))
+        saveCerrarPedido: (id) => {
+            dispatch(saveCerrarPedido(id))
         }
     }
 };

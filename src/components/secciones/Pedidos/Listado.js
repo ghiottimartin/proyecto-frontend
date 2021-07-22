@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 //Actions
-import { fetchPedidos, resetPedidos, updatePedido } from "../../../actions/PedidoActions";
+import { fetchPedidos, resetPedidos, updatePedido, finalizarPedido } from "../../../actions/PedidoActions";
 
 //Api
 import auth from "../../../api/authentication";
@@ -17,6 +17,7 @@ import Titulo from "../../elementos/Titulo";
 
 //Librerias
 import history from "../../../history";
+import Swal from "sweetalert2";
 
 class Listado extends React.Component {
     constructor(props) {
@@ -58,12 +59,36 @@ class Listado extends React.Component {
             case 'visualizar':
                 this.visualizarPedido(pedido);
                 break;
+        
+            case 'finalizar':
+                this.finalizarPedido(pedido);
+                break;
         }
     }
 
     visualizarPedido(pedido) {
         this.props.updatePedido(pedido);
         history.push("/pedidos/visualizar/" + pedido.id);
+    }
+
+    finalizarPedido(pedido) {
+        let id = pedido.id;
+        if (!id) {
+            Swal.fire({
+                title: `Hubo un error al finalizar el pedido intente refrescar la página.`,
+                icon: 'warning',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: true,
+                confirmButtonText: 'Continuar',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+                cancelButtonColor: '#bfbfbf',
+            });
+        } else {
+            let idUsuario = auth.idUsuario();
+            this.setState({ buscando: true });
+            this.props.finalizarPedido(pedido.id, idUsuario);
+        }
     }
 
     getOperacionesPedido(pedido) {
@@ -151,7 +176,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         updatePedido: (pedido) => {
             dispatch(updatePedido(pedido))
-        }
+        },
+        finalizarPedido: (id, idUsuario) => {
+            dispatch(finalizarPedido(id, idUsuario))
+        },
     }
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Listado));

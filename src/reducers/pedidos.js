@@ -9,11 +9,10 @@ import {
     REQUEST_CREATE_PEDIDO,
     RECEIVE_CREATE_PEDIDO,
     ERROR_CREATE_PEDIDO,
-    FINALIZAR_PEDIDO,
-    RESET_FINALIZAR_PEDIDO,
-    REQUEST_FINALIZAR_PEDIDO,
-    RECEIVE_FINALIZAR_PEDIDO,
-    ERROR_FINALIZAR_PEDIDO,
+    RESET_CERRAR_PEDIDO,
+    REQUEST_CERRAR_PEDIDO,
+    RECEIVE_CERRAR_PEDIDO,
+    ERROR_CERRAR_PEDIDO,
     INVALIDATE_PEDIDOS,
     REQUEST_PEDIDOS,
     ERROR_PEDIDOS,
@@ -33,7 +32,10 @@ import {
     RECEIVE_PEDIDO_ABIERTO,
     ERROR_PEDIDO_ABIERTO,
     RESET_PEDIDO_ABIERTO,
-    UPDATE_PEDIDO
+    UPDATE_PEDIDO,
+    RECEIVE_FINALIZAR_PEDIDO,
+    REQUEST_FINALIZAR_PEDIDO,
+    ERROR_FINALIZAR_PEDIDO
 
 } from '../actions/PedidoActions';
 import {LOGOUT_SUCCESS} from "../actions/AuthenticationActions";
@@ -262,32 +264,25 @@ function update(state = {
     error: null
 }, action) {
     switch (action.type) {
-        //UPDATE PEDIDO
-        case FINALIZAR_PEDIDO:
+        case RESET_CERRAR_PEDIDO:
             return Object.assign({}, state, {
                 isUpdating: false,
                 success: "",
                 error: null,
             });
-        case RESET_FINALIZAR_PEDIDO:
-            return Object.assign({}, state, {
-                isUpdating: false,
-                success: "",
-                error: null,
-            });
-        case REQUEST_FINALIZAR_PEDIDO:
+        case REQUEST_CERRAR_PEDIDO:
             return Object.assign({}, state, {
                 isUpdating: true,
                 success: "",
                 error: null,
             });
-        case RECEIVE_FINALIZAR_PEDIDO:
+        case RECEIVE_CERRAR_PEDIDO:
             return Object.assign({}, state, {
                 isUpdating: false,
                 success: action.message,
                 error: null,
             });
-        case ERROR_FINALIZAR_PEDIDO:
+        case ERROR_CERRAR_PEDIDO:
             return Object.assign({}, state, {
                 isUpdating: false,
                 success: "",
@@ -299,6 +294,24 @@ function update(state = {
                 activo: merge({}, state.activo, action.pedido),
                 success: "",
                 error: null,
+            });
+        case RECEIVE_FINALIZAR_PEDIDO:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                success: action.message,
+                error: null,
+            });
+        case REQUEST_FINALIZAR_PEDIDO:
+            return Object.assign({}, state, {
+                isUpdating: true,
+                success: "",
+                error: null,
+            });
+        case ERROR_FINALIZAR_PEDIDO:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                success: "",
+                error: action.error
             });
         default:
             return state

@@ -108,51 +108,44 @@ export function saveCreatePedido(volverA) {
     }
 }
 
-//PEDIDO FINALIZAR
-export const FINALIZAR_PEDIDO		 = 'FINALIZAR_PEDIDO';
-export const RESET_FINALIZAR_PEDIDO   = "RESET_FINALIZAR_PEDIDO";
-export const REQUEST_FINALIZAR_PEDIDO = "REQUEST_FINALIZAR_PEDIDO";
-export const RECEIVE_FINALIZAR_PEDIDO = "RECEIVE_FINALIZAR_PEDIDO";
-export const ERROR_FINALIZAR_PEDIDO   = "ERROR_FINALIZAR_PEDIDO";
+//PEDIDO CERRAR
+export const CERRAR_PEDIDO		 = 'CERRAR_PEDIDO';
+export const RESET_CERRAR_PEDIDO   = "RESET_CERRAR_PEDIDO";
+export const REQUEST_CERRAR_PEDIDO = "REQUEST_CERRAR_PEDIDO";
+export const RECEIVE_CERRAR_PEDIDO = "RECEIVE_CERRAR_PEDIDO";
+export const ERROR_CERRAR_PEDIDO   = "ERROR_CERRAR_PEDIDO";
 
-function requestFinalizarPedido() {
+function requestCerrarPedido() {
     return {
-        type: REQUEST_FINALIZAR_PEDIDO,
+        type: REQUEST_CERRAR_PEDIDO,
     }
 }
 
-function receiveFinalizarPedido(mensaje) {
+function receiveCerrarPedido(mensaje) {
     return {
-        type: RECEIVE_FINALIZAR_PEDIDO,
+        type: RECEIVE_CERRAR_PEDIDO,
         receivedAt: Date.now(),
         message: mensaje
     }
 }
 
-function errorFinalizarPedido(error) {
+function errorCerrarPedido(error) {
     return {
-        type: ERROR_FINALIZAR_PEDIDO,
+        type: ERROR_CERRAR_PEDIDO,
         error: error,
     }
 }
 
-export function resetFinalizarPedido() {
+export function resetCerrarPedido() {
     return {
-        type: RESET_FINALIZAR_PEDIDO
+        type: RESET_CERRAR_PEDIDO
     }
 }
 
-export function finalizarPedido(pedido) {
-    return {
-        type: FINALIZAR_PEDIDO,
-        pedido: normalizeDato(pedido)
-    }
-}
-
-export function saveFinalizarPedido(id) {
+export function saveCerrarPedido(id) {
     return (dispatch, getState) => {
-        dispatch(requestFinalizarPedido());
-        return pedidos.saveFinalizar(id)
+        dispatch(requestCerrarPedido());
+        return pedidos.cerrarPedido(id)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
@@ -164,26 +157,26 @@ export function saveFinalizarPedido(id) {
             .then((data) => {
                 dispatch(resetCreatePedido());
                 if (data.message) {
-                    dispatch(receiveFinalizarPedido(data.message));
+                    dispatch(receiveCerrarPedido(data.message));
                     dispatch(fetchPedidoAbierto())
                 }
             })
             .catch(function (error) {
                 switch (error.status) {
                     case 401:
-                        dispatch(errorFinalizarPedido(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(errorCerrarPedido(errorMessages.UNAUTHORIZED_TOKEN));
                         dispatch(logout());
                         return Promise.reject(error);
                     default:
                         error.json()
                             .then(error => {
                                 if (error.message !== "")
-                                    dispatch(errorFinalizarPedido(error.message));
+                                    dispatch(errorCerrarPedido(error.message));
                                 else
-                                    dispatch(errorFinalizarPedido(errorMessages.GENERAL_ERROR));
+                                    dispatch(errorCerrarPedido(errorMessages.GENERAL_ERROR));
                             })
                             .catch(error => {
-                                dispatch(errorFinalizarPedido(errorMessages.GENERAL_ERROR));
+                                dispatch(errorCerrarPedido(errorMessages.GENERAL_ERROR));
                             });
                         return;
                 }
@@ -553,5 +546,72 @@ export function updatePedido(pedido) {
     return {
         type: UPDATE_PEDIDO,
         pedido
+    }
+}
+
+// FINALIZAR PEDIDO
+export const REQUEST_FINALIZAR_PEDIDO = "REQUEST_FINALIZAR_PEDIDO";
+export const RECEIVE_FINALIZAR_PEDIDO = "RECEIVE_FINALIZAR_PEDIDO";
+export const ERROR_FINALIZAR_PEDIDO   = "ERROR_FINALIZAR_PEDIDO";
+
+
+function requestFinalizarPedido() {
+    return {
+        type: REQUEST_FINALIZAR_PEDIDO,
+    }
+}
+
+function receiveFinalizarPedido(message) {
+    return {
+        type: RECEIVE_FINALIZAR_PEDIDO,
+        success: message,
+        receivedAt: Date.now()
+    }
+}
+
+function errorFinalizarPedido(error) {
+    return {
+        type: ERROR_FINALIZAR_PEDIDO,
+        error: error,
+    }
+}
+
+export function finalizarPedido(id, idUsuario) {
+    return dispatch => {
+        dispatch(requestFinalizarPedido());
+        return pedidos.finalizarPedido(id)
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    var data = response.json();
+                    return data;
+                }
+            })
+            .then(function (data) {
+                dispatch(receiveFinalizarPedido(data.message));
+                dispatch(resetPedidos())
+                dispatch(fetchPedidos(idUsuario))
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorFinalizarPedido(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(logout());
+                        return;
+                    default:
+                        error.json()
+                            .then(error => {
+                                if (error.message !== "")
+                                    dispatch(errorFinalizarPedido(error.message));
+                                else
+                                    dispatch(errorFinalizarPedido(errorMessages.GENERAL_ERROR));
+                            })
+                            .catch(error => {
+                                dispatch(errorFinalizarPedido(errorMessages.GENERAL_ERROR));
+                            });
+                        return;
+                }
+            });
     }
 }

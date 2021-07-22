@@ -42,7 +42,7 @@ var pedidos = {
         return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/' + id, defaultOptions);
     },
 
-    saveFinalizar(idPedido) {
+    cerrarPedido(idPedido) {
         let defaultOptions = {
             method: 'PUT',
             headers: {
@@ -78,6 +78,18 @@ var pedidos = {
         };
 
         return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/abierto/', defaultOptions);
+    },
+
+    finalizarPedido(id) {
+        let defaultOptions = {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "Authorization": "Token " + localStorage.token
+            },
+        };
+
+        return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/' + id + '/finalizar/', defaultOptions);
     },
     
 
