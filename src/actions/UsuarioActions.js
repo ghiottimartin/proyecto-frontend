@@ -162,7 +162,7 @@ export function saveUpdateUsuario() {
                 }
             })
             .then((respuesta) => {
-                let usuario  = respuesta.usuario;
+                let usuario  = respuesta.datos.usuario;
                 let logueado = getState().usuarios.update.logueado;
                 dispatch(resetUpdateUsuario());
                 dispatch(updateUsuario(usuario));
@@ -171,7 +171,7 @@ export function saveUpdateUsuario() {
                 }
                 const volverA = rutas.getQuery('volverA');
                 const valido  = rutas.validarRuta(volverA);
-                if (valido && respuesta.esAdmin) {
+                if (valido && respuesta.datos.esAdmin) {
                     history.push(volverA);
                 } else {
                     history.push(rutas.INICIO);
