@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {resetProductos, fetchProductosIfNeeded, saveDeleteProducto, updateProducto} from "../../../../actions/ProductoActions";
 
 //CSS
+import "../../../../assets/css/Productos/Listado.css";
 import "../../../../assets/css/Listado.css";
 
 //Constants
@@ -98,6 +99,37 @@ class Listado extends React.Component {
         })
     }
 
+    getHtmlListadoResponsive() {
+        let Productos = [];
+        this.props.productos.allIds.map(idProducto => {
+            let producto = this.props.productos.byId.productos[idProducto];
+            if (producto && producto.id) {
+                let operaciones = this.getOperacionesProducto(producto);
+                let path = productoVacio;
+                if (producto.imagen) {
+                    try {
+                        path = producto.imagen;
+                    } catch (e) {
+                    }
+                }
+                Productos.push(
+                    <div key={producto.id + "-responsive"} className="productos-responsive-item">
+                        <ul>
+                            <li className="td-imagen">
+                                <img src={path} onError={(e) => e.target.src = productoVacio} alt="Imagen de producto" />
+                            </li>
+                            <li><b>Nombre:</b> {producto.nombre}</li>
+                            <li><b>Categoría:</b>  {producto.categoria_texto}</li>
+                            <li><b>Precio:</b>  {producto.precio_texto}</li>
+                            <li>{operaciones}</li>
+                        </ul>
+                    </div>
+                );
+            }
+        });
+        return Productos;
+    }
+
     render() {
         const { noHayProductos, buscando } = this.state;
         let Productos = [];
@@ -124,7 +156,7 @@ class Listado extends React.Component {
                             <img src={path} onError={(e) => e.target.src = productoVacio} alt="Imagen de producto" />
                         </td>
                         <td>{producto.nombre}</td>
-                        <td>{producto.categoria}</td>
+                        <td>{producto.categoria_texto}</td>
                         <td className="font-weight-bold text-right px-5">
                             {producto.precio_texto}
                         </td>
@@ -142,9 +174,10 @@ class Listado extends React.Component {
             'texto': 'Categorías',
             'clase': 'btn-success',
         };
+        const tableResponsive = this.getHtmlListadoResponsive();
         return (
             <div className="tabla-listado">
-                <div className="table-responsive tarjeta-body listado">
+                <div className="table-responsive tarjeta-body productos-listado">
                     <div className="d-flex justify-content-between">
                         <Titulo ruta={rutas.GESTION} titulo={"Productos"} clase="tabla-listado-titulo" operaciones={[operacion]} />
                         <a href={rutas.PRODUCTO_ALTA + `?volverA=${rutas.PRODUCTOS_LISTAR_ADMIN}`}
@@ -166,6 +199,9 @@ class Listado extends React.Component {
                         {buscando ? Cargando : Productos}
                         </tbody>
                     </table>
+                    <div className="productos-responsive">
+                        {tableResponsive}
+                    </div>
                 </div>
             </div>
         )
