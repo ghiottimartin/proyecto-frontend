@@ -61,8 +61,8 @@ class Listado extends React.Component {
                 this.visualizarPedido(pedido);
                 break;
         
-            case 'recibir':
-                this.recibirPedido(pedido);
+            case 'entregar':
+                this.entregarPedido(pedido);
                 break;
             
             case 'cancelar':
@@ -76,11 +76,11 @@ class Listado extends React.Component {
         history.push("/pedidos/visualizar/" + pedido.id);
     }
 
-    recibirPedido(pedido) {
+    entregarPedido(pedido) {
         let id = pedido.id;
         if (!id) {
             Swal.fire({
-                title: `Hubo un error al recibir el pedido intente refrescar la página.`,
+                title: `Hubo un error al entregar el pedido intente refrescar la página.`,
                 icon: 'warning',
                 showCloseButton: true,
                 showCancelButton: false,

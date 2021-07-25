@@ -14,7 +14,7 @@ var pedidos = {
             },
         };
 
-        return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/?usuario=' + idUsuario, defaultOptions);
+        return fetch(c.BASE_URL + '/pedido/?usuario=' + idUsuario, defaultOptions);
     },
 
     saveCreate(pedido) {
@@ -27,7 +27,7 @@ var pedidos = {
             body: JSON.stringify(pedido)
         };
 
-        return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/', defaultOptions);
+        return fetch(c.BASE_URL + '/pedido/', defaultOptions);
     },
 
     borrarPedido(id) {
@@ -39,7 +39,7 @@ var pedidos = {
             }
         };
 
-        return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/' + id, defaultOptions);
+        return fetch(c.BASE_URL + '/pedido/' + id, defaultOptions);
     },
 
     cerrarPedido(idPedido) {
@@ -51,7 +51,7 @@ var pedidos = {
             },
         };
 
-        return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/' + idPedido + "/", defaultOptions);
+        return fetch(c.BASE_URL + '/pedido/' + idPedido + "/", defaultOptions);
     },
 
     getPedido(id) {
@@ -64,7 +64,7 @@ var pedidos = {
             }
         };
 
-        return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/' + id, defaultOptions);
+        return fetch(c.BASE_URL + '/pedido/' + id, defaultOptions);
     },
 
     getPedidoAbierto() {
@@ -77,7 +77,7 @@ var pedidos = {
             dataType: 'json',
         };
 
-        return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/abierto/', defaultOptions);
+        return fetch(c.BASE_URL + '/pedido/abierto/', defaultOptions);
     },
 
     recibirPedido(id) {
@@ -89,7 +89,7 @@ var pedidos = {
             },
         };
 
-        return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/' + id + '/recibir/', defaultOptions);
+        return fetch(c.BASE_URL + '/pedido/' + id + '/recibir/', defaultOptions);
     },
 
     cancelarPedido(id) {
@@ -102,7 +102,7 @@ var pedidos = {
             dataType: 'json',
         };
 
-        return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/' + id + '/cancelar/', defaultOptions);
+        return fetch(c.BASE_URL + '/pedido/' + id + '/cancelar/', defaultOptions);
     },
     
 
