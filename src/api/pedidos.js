@@ -91,6 +91,19 @@ var pedidos = {
 
         return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/' + id + '/recibir/', defaultOptions);
     },
+
+    cancelarPedido(id) {
+        let defaultOptions = {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "Authorization": "Token " + localStorage.token
+            },
+            dataType: 'json',
+        };
+
+        return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/' + id + '/cancelar/', defaultOptions);
+    },
     
 
 };

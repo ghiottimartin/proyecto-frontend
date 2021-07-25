@@ -35,7 +35,10 @@ import {
     UPDATE_PEDIDO,
     RECEIVE_RECIBIR_PEDIDO,
     REQUEST_RECIBIR_PEDIDO,
-    ERROR_RECIBIR_PEDIDO
+    ERROR_RECIBIR_PEDIDO,
+    RECEIVE_CANCELAR_PEDIDO,
+    REQUEST_CANCELAR_PEDIDO,
+    ERROR_CANCELAR_PEDIDO
 
 } from '../actions/PedidoActions';
 import {LOGOUT_SUCCESS} from "../actions/AuthenticationActions";
@@ -56,6 +59,7 @@ function pedidosById(state = {
     mostrarUsuarios: false,
     error: null,
     success: "",
+    isCanceling: false,
 }, action) {
     let mostrarUsuarios = false;
     switch (action.type) {
@@ -212,6 +216,24 @@ function pedidosById(state = {
                 pedidos: pickBy(state.pedidos, function (value, key) {
                     return parseInt(key) !== parseInt(action.idPedido);
                 })
+            });
+        case RECEIVE_CANCELAR_PEDIDO:
+            return Object.assign({}, state, {
+                isCanceling: false,
+                success: action.message,
+                error: null,
+            });
+        case REQUEST_CANCELAR_PEDIDO:
+            return Object.assign({}, state, {
+                isCanceling: true,
+                success: "",
+                error: null,
+            });
+        case ERROR_CANCELAR_PEDIDO:
+            return Object.assign({}, state, {
+                isCanceling: false,
+                success: "",
+                error: action.error
             });
         default:
             return state

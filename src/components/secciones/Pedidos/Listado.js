@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 //Actions
-import { fetchPedidos, resetPedidos, updatePedido, recibirPedido } from "../../../actions/PedidoActions";
+import { fetchPedidos, resetPedidos, updatePedido, recibirPedido, cancelarPedido } from "../../../actions/PedidoActions";
 
 //Api
 import auth from "../../../api/authentication";
@@ -42,12 +42,13 @@ class Listado extends React.Component {
         let preDeleting = prevProps.pedidos.delete;
         let busco = prePedidos.isFetching && !pedidos.isFetching;
         let borro = preDeleting.isDeleting && !deleting.isDeleting;
+        let cancelo = prePedidos.isCanceling && !pedidos.isCanceling;
         if ((busco || borro) && allIds.length === 0) {
             this.setState({
                 noHayPedidos: true,
             })
         }
-        if (prePedidos.isFetching && !pedidos.isFetching) {
+        if (busco || cancelo) {
             this.setState({
                 buscando: false,
             })
@@ -62,6 +63,10 @@ class Listado extends React.Component {
         
             case 'recibir':
                 this.recibirPedido(pedido);
+                break;
+            
+            case 'cancelar':
+                this.cancelarPedido(pedido);
                 break;
         }
     }
@@ -88,6 +93,26 @@ class Listado extends React.Component {
             let idUsuario = auth.idUsuario();
             this.setState({ buscando: true });
             this.props.recibirPedido(pedido.id, idUsuario);
+        }
+    }
+
+    cancelarPedido(pedido) {
+        let id = pedido.id;
+        if (!id) {
+            Swal.fire({
+                title: `Hubo un error al cancelar el pedido intente refrescar la página.`,
+                icon: 'warning',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: true,
+                confirmButtonText: 'Cancelar',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+                cancelButtonColor: '#bfbfbf',
+            });
+        } else {
+            let idUsuario = auth.idUsuario();
+            this.setState({ buscando: true });
+            this.props.cancelarPedido(pedido.id, idUsuario);
         }
     }
 
@@ -213,6 +238,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         recibirPedido: (id, idUsuario) => {
             dispatch(recibirPedido(id, idUsuario))
+        },
+        cancelarPedido: (id, idUsuario) => {
+            dispatch(cancelarPedido(id, idUsuario))
         },
     }
 };

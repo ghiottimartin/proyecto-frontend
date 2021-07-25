@@ -616,3 +616,73 @@ export function recibirPedido(id, idUsuario) {
             });
     }
 }
+
+// CANCELAR PEDIDO
+export const REQUEST_CANCELAR_PEDIDO = "REQUEST_CANCELAR_PEDIDO";
+export const RECEIVE_CANCELAR_PEDIDO = "RECEIVE_CANCELAR_PEDIDO";
+export const ERROR_CANCELAR_PEDIDO   = "ERROR_CANCELAR_PEDIDO";
+
+
+function requestCancelarPedido() {
+    return {
+        type: REQUEST_CANCELAR_PEDIDO,
+    }
+}
+
+function receiveCancelarPedido(message) {
+    return {
+        type: RECEIVE_CANCELAR_PEDIDO,
+        success: message,
+        receivedAt: Date.now()
+    }
+}
+
+function errorCancelarPedido(error) {
+    return {
+        type: ERROR_CANCELAR_PEDIDO,
+        error: error,
+    }
+}
+
+export function cancelarPedido(id, idUsuario) {
+    return dispatch => {
+        dispatch(requestCancelarPedido());
+        return pedidos.cancelarPedido(id)
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    var data = response.json();
+                    return data;
+                }
+            })
+            .then(function (data) {
+                dispatch(receiveCancelarPedido(data.message));
+                dispatch(resetPedidos())
+                dispatch(fetchPedidos(idUsuario))
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorCancelarPedido(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(logout());
+                        return;
+                    case 404:
+                        dispatch(errorCancelarPedido(errorMessages.GENERAL_ERROR));
+                        return;
+                    default:
+                        error.json()
+                            .then(error => {
+                                if (error.message !== "")
+                                    dispatch(errorCancelarPedido(error.message));
+                                else
+                                    dispatch(errorCancelarPedido(errorMessages.GENERAL_ERROR));
+                            })
+                            .catch(error => {
+                                dispatch(errorCancelarPedido(errorMessages.GENERAL_ERROR));
+                            });
+                        return;
+                }
+            });
+    }
+}

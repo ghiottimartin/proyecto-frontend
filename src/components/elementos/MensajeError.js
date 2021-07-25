@@ -38,6 +38,9 @@ class MensajeError extends React.Component {
                 if (value.byId && valuePrev && valuePrev.byId && !value.byId.isFetching && valuePrev.byId.isFetching && value.byId.error) {
                     error = value.byId.error;
                 }
+                if (value.byId && valuePrev && valuePrev.byId && !value.byId.isCanceling && valuePrev.byId.isCanceling && value.byId.error) {
+                    error = value.byId.error;
+                }
                 //Authentication
                 if (value.errorMessage !== valuePrev.errorMessage) {
                     error = value.errorMessage;
