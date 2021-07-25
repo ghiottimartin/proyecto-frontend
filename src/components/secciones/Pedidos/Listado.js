@@ -173,7 +173,7 @@ class Listado extends React.Component {
             if (pedido && pedido.id) {
                 let operaciones = this.getOperacionesPedido(pedido);
                 Pedidos.push(
-                    <tr key={pedido.id}>
+                    <tr key={pedido.id} className={pedido.cancelado ? "text-muted" : ""}>
                         <td>{pedido.id_texto}</td>
                         <td>{pedido.fecha_texto}</td>
                         <td style={{display: mostrarUsuarios ? "block" : "none"}}>{pedido.usuario_texto}</td>
