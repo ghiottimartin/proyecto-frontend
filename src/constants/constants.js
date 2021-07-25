@@ -13,15 +13,15 @@ if (process.env.NODE_ENV === 'development' && !process.env.REACT_APP_ENVI) {
 
 //testing
 if (process.env.REACT_APP_ENVI === 'develop') {
-    BASE_URL = "http://test.huellitasenelespacio.com/hueBE/api";
-    BASE_PUBLIC = "http://test.huellitasenelespacio.com/hueBE/";
+    BASE_URL = "https://ancient-oasis-22601.herokuapp.com/api";
+    BASE_PUBLIC = "https://ancient-oasis-22601.herokuapp.com/";
 }
 
 
 //Produccion
 if (process.env.NODE_ENV === 'production' && !process.env.REACT_APP_ENVI) {
-    BASE_URL = "http://www.huellitasenelespacio.com/hueBE/api";
-    BASE_PUBLIC = "http://www.huellitasenelespacio.com/hueBE/";
+    BASE_URL = "https://ancient-oasis-22601.herokuapp.com/api";
+    BASE_PUBLIC = "https://ancient-oasis-22601.herokuapp.com/";
 }
 
 export default {
