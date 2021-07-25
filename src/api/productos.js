@@ -12,14 +12,14 @@ var productos = {
             }
         };
 
-        return fetch(c.BASE_PUBLIC + 'producto/', defaultOptions);
+        return fetch(c.BASE_URL + '/producto//', defaultOptions);
     },
 
     saveCreate(producto) {
         let formData = this.getFormDataProducto(producto);
 
         return $.ajax({
-            url: c.BASE_PUBLIC + 'producto/abm//',
+            url: c.BASE_URL + '/producto/abm//',
             data: formData,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', "Token " + localStorage.token);
@@ -40,14 +40,14 @@ var productos = {
             }
         };
 
-        return fetch(c.BASE_PUBLIC + 'producto/abm//' + id + '/', defaultOptions);
+        return fetch(c.BASE_URL + '/producto/abm//' + id + '/', defaultOptions);
     },
 
     saveUpdate(producto) {
         let formData = this.getFormDataProducto(producto);
 
         return $.ajax({
-            url: c.BASE_PUBLIC +'producto/abm//' + producto.id + '/',
+            url: c.BASE_URL + '/producto/abm//' + producto.id + '/',
             data: formData,
             beforeSend: function (xhr) {
                 xhr.setRequestHeader('Authorization', "Token " + localStorage.token);
@@ -67,7 +67,7 @@ var productos = {
             }
         };
 
-        return fetch(c.BASE_PUBLIC + 'producto/' + id, defaultOptions);
+        return fetch(c.BASE_URL + '/producto/' + id, defaultOptions);
     },
 
     getFormDataProducto(producto) {

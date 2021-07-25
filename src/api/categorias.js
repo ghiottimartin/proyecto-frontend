@@ -11,7 +11,7 @@ var categorias = {
             },
         };
 
-        return fetch(c.BASE_PUBLIC + 'producto/categorias//', defaultOptions);
+        return fetch(c.BASE_URL + '/producto/categorias//', defaultOptions);
     },
 
     saveCreate(categoria) {
@@ -24,7 +24,7 @@ var categorias = {
             body: JSON.stringify(categoria)
         };
 
-        return fetch(c.BASE_PUBLIC + 'producto/abm/categorias//', defaultOptions);
+        return fetch(c.BASE_URL + '/producto/abm/categorias//', defaultOptions);
     },
     getCategoria(id) {
 
@@ -36,7 +36,7 @@ var categorias = {
             }
         };
 
-        return fetch(c.BASE_PUBLIC + 'producto/abm/categorias//' + id, defaultOptions);
+        return fetch(c.BASE_URL + '/producto/abm/categorias//' + id, defaultOptions);
     },
 };
 

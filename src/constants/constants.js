@@ -1,7 +1,7 @@
 /**
  * Created by martingh15 on 21/04/2020.
  */
-let develop = false;
+let develop = true;
 let BASE_URL = "https://ancient-oasis-22601.herokuapp.com/api";
 let BASE_PUBLIC = "https://ancient-oasis-22601.herokuapp.com/";
 if (develop) {
