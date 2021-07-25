@@ -33,6 +33,9 @@ import ListadoCategorias from "./components/secciones/Gestion/Productos/ListadoC
 import PedidoListado from "./components/secciones/Pedidos/Listado";
 import PedidoVisualizar from "./components/secciones/Pedidos/Visualizar";
 
+//CSS
+import "./App.css";
+
 //Redux
 import { connect } from 'react-redux';
 
