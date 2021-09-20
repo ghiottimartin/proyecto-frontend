@@ -26,7 +26,7 @@ var pedidos = {
             body: JSON.stringify(pedido)
         };
 
-        return fetch(c.BASE_PUBLIC + 'gastronomia/pedido/', defaultOptions);
+        return fetch(c.BASE_URL + '/gastronomia/pedido/', defaultOptions);
     },
 
     borrarPedido(id) {
