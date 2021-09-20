@@ -12,7 +12,7 @@ var productos = {
             }
         };
 
-        return fetch(c.BASE_URL + '/producto//', defaultOptions);
+        return fetch(c.BASE_URL + '/producto/', defaultOptions);
     },
 
     saveCreate(producto) {
