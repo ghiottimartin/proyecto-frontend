@@ -318,7 +318,7 @@ class Alta extends React.Component {
                                 :
                                 <div className="d-flex">
                                     <Button className="boton-submit" variant="primary" type="submit" >
-                                        {!tipoAdmin ? "Registrarse" : "Guardar usuario"}
+                                        {!tipoAdmin ? "Registrarse" : "Guardar"}
                                     </Button>
                                     {volverAValido ? botonVolverA : ""}
                                 </div>

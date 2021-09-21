@@ -121,7 +121,7 @@ class AltaEdicionCategoria extends React.Component {
                             :
                             <div className="d-flex">
                                 <Button className="boton-submit" variant="primary" type="submit" disabled={buscando}>
-                                    Guardar categoria
+                                    Guardar
                                 </Button>
                                 {volverAValido ? botonVolverA : ""}
                             </div>

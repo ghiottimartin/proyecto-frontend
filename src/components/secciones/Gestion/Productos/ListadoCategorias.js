@@ -129,7 +129,7 @@ class ListadoCategorias extends React.Component {
                         <thead>
                         <tr>
                             <th>Nombre</th>
-                            <th>descripcion</th>
+                            <th>Descripción</th>
                             <th>Operaciones</th>
                         </tr>
                         </thead>

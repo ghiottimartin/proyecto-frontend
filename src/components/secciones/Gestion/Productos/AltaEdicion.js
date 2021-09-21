@@ -237,7 +237,7 @@ class AltaEdicion extends React.Component {
                             :
                             <div className="d-flex">
                                 <Button className="boton-submit" variant="primary" type="submit" disabled={buscando}>
-                                    Guardar producto
+                                    Guardar
                                 </Button>
                                 {volverAValido ? botonVolverA : ""}
                             </div>
