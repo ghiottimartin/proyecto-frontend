@@ -4,7 +4,6 @@ import {connect} from "react-redux";
 
 //Constants
 import * as rutas from '../../constants/rutas.js';
-import * as roles from '../../constants/roles.js';
 
 //Components
 import Loader from "../elementos/Loader";
@@ -19,6 +18,7 @@ import TarjetaMenu from "../elementos/TarjetaMenu";
 import imgUsuarios from "../../assets/img/menu/gestion-usuario.svg";
 import imgCompras from "../../assets/img/menu/compras.svg";
 import imgProductos from "../../assets/img/menu/productos.png";
+import imgPedidos from "../../assets/img/menu/pedidos.png";
 
 class Gestion extends React.Component {
     constructor(props) {
@@ -33,26 +33,30 @@ class Gestion extends React.Component {
                 return imgUsuarios;
             case rutas.PRODUCTOS_LISTAR_ADMIN:
                 return imgProductos;
+            case rutas.PEDIDOS_VENDEDOR:
+                return imgPedidos;
         }
     }
 
-    getOperacion(operacion, rol) {
-        let usuario      = this.props.usuarios.update.logueado;
-        let rolesUsuario = usuario && usuario.rolesArray ? usuario.rolesArray : [];
-        let tieneRol     = rolesUsuario.includes(rol);
-        if (!tieneRol) {
+    getOperacion(operacion) {
+        let rol        = operacion.rol;
+        let usuario    = this.props.usuarios.update.logueado;
+        let roles      = usuario && usuario.rolesArray ? usuario.rolesArray : [];
+        let autorizado = roles.includes(rol);
+        if (!autorizado) {
             return;
         }
+
         let alt         = operacion && operacion.alt ? operacion.alt : "";
         let key         = Math.floor(Math.random() * 100);
         let ruta        = operacion && operacion.ruta ? operacion.ruta : "";
         let titulo      = operacion && operacion.titulo ? operacion.titulo : "";
         let descripcion = operacion && operacion.descripcion ? operacion.descripcion : "";
         if (ruta !== "") {
-            let rutaValida = rutas.validarRuta(ruta);
-            ruta = rutaValida ? ruta : "#";
+            ruta = rutas.validarRuta(ruta) ? ruta : "#";
         }
-        let imagen = this.getImagenPorRuta(ruta);
+        let imagen        = this.getImagenPorRuta(ruta);
+        let margenLeftImg = operacion.ruta === rutas.PEDIDOS_VENDEDOR ? "13px" : "";
         return(
             <TarjetaMenu
                 key={key}
@@ -63,45 +67,49 @@ class Gestion extends React.Component {
                 ruta={ruta}
                 img={imagen}
                 rol={rol}
+                margenLeftImg={margenLeftImg}
             />
         );
     }
 
-    getOperaciones(rol) {
-        const logueado         = this.props.usuarios.update.logueado;
-        const operaciones      = logueado && logueado.id ? logueado.operaciones : [];
-        let   operacionesAdmin = [];
-        operaciones.map((operacion) => {
-            let existe = this.getOperacion(operacion, rol);
+    getOperaciones() {
+        const logueado    = this.props.usuarios.update.logueado;
+        const convertir   = logueado && logueado.id ? logueado.operaciones : [];
+        let   operaciones = [];
+        convertir.map((operacion) => {
+            let existe = this.getOperacion(operacion);
             if (existe) {
-                operacionesAdmin.push(existe);
+                operaciones.push(existe);
             }
         });
-        let renderOperacionesAdmin =  (
+
+        let contenedorOperaciones =  (
             <div className="contenedor-operaciones">
                 <div className="operaciones">
-                    {operacionesAdmin}
+                    {operaciones}
                 </div>
             </div>
         );
-        if (operaciones.length === 0) {
-            renderOperacionesAdmin = (<div></div>);
+
+        if (convertir.length === 0) {
+            contenedorOperaciones = (<div></div>);
         }
-        return renderOperacionesAdmin;
+        return contenedorOperaciones;
     }
 
     render() {
-        let operacionesAdmin = this.getOperaciones(roles.ROL_ADMIN);
-        let buscando = this.props.usuarios.update.isFetchingUsuarioLogueado;
+        let buscando    = this.props.usuarios.update.isFetchingUsuarioLogueado;
+        let operaciones = this.getOperaciones();
         return (
             <div className="gestion">
                 {buscando ?
-                        <div className="tarjeta-body">
-                            <b className="mb-5">Buscando operaciones de gestión...</b>
-                            <Loader display={buscando} />
-                        </div>
+                    <div className="tarjeta-body">
+                        <b className="mb-5">Buscando operaciones de gestión...</b>
+                        <Loader display={buscando} />
+                    </div>
                     :
-                        operacionesAdmin}
+                    operaciones
+                }
             </div>
         )
     }

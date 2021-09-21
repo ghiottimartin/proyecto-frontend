@@ -253,7 +253,7 @@ class App extends React.Component {
                                 guardando={guardando}
                             />}
                         />
-                        <Route exact path={rutas.PEDIDOS_COMENSAL} component={PedidoListado} />
+                        <Route exact path={rutas.PEDIDOS} component={PedidoListado} />
                         <Route exact path={rutas.PEDIDO_VISUALIZAR} component={PedidoVisualizar} />
                         <Route exact path="*" component={NotFound} />
                     </Switch>

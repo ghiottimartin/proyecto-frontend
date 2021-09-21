@@ -47,6 +47,7 @@ export const CATEGORIAS_EDITAR_ADMIN = '/categorias/editar/admin/:id';
 //Gestión de pedidos
 export const PEDIDOS = '/pedidos/:rol';
 export const PEDIDOS_COMENSAL = '/pedidos/comensal';
+export const PEDIDOS_VENDEDOR = '/pedidos/vendedor';
 export const PEDIDO_VISUALIZAR = '/pedidos/visualizar/:id';
 
 /**
@@ -100,6 +101,7 @@ const RUTAS = [
     PRODUCTOS_LISTAR_ADMIN,
     PRODUCTO_ALTA,
     PEDIDOS_COMENSAL,
+    PEDIDOS_VENDEDOR,
     CATEGORIAS_LISTAR
 ];
 

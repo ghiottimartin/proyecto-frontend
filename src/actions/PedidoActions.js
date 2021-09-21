@@ -686,3 +686,72 @@ export function cancelarPedido(id, idUsuario) {
             });
     }
 }
+
+//PEDIDO VENDEDOR
+export const INVALIDATE_PEDIDOS_VENDEDOR = 'INVALIDATE_PEDIDOS_VENDEDOR';
+export const REQUEST_PEDIDOS_VENDEDOR    = "REQUEST_PEDIDOS_VENDEDOR";
+export const RECEIVE_PEDIDOS_VENDEDOR    = "RECEIVE_PEDIDOS_VENDEDOR";
+export const ERROR_PEDIDOS_VENDEDOR      = "ERROR_PEDIDOS_VENDEDOR";
+export const RESET_PEDIDOS_VENDEDOR      = "RESET_PEDIDOS_VENDEDOR";
+
+export function invalidatePedidosVendedor() {
+    return {
+        type: INVALIDATE_PEDIDOS_VENDEDOR,
+    }
+}
+
+export function resetPedidosVendedor() {
+    return {
+        type: RESET_PEDIDOS_VENDEDOR
+    }
+}
+
+function requestPedidosVendedor() {
+    return {
+        type: REQUEST_PEDIDOS_VENDEDOR,
+    }
+}
+
+function receivePedidosVendedor(json) {
+    return {
+        type: RECEIVE_PEDIDOS_VENDEDOR,
+        pedidos: normalizeDatos(json),
+        receivedAt: Date.now()
+    }
+}
+
+function errorPedidosVendedor(error) {
+    return {
+        type: ERROR_PEDIDOS_VENDEDOR,
+        error: error,
+    }
+}
+
+export function fetchPedidosVendedor() {
+    return dispatch => {
+        dispatch(requestPedidosVendedor());
+        return pedidos.getPedidosVendedor()
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    var data = response.json();
+                    return data;
+                }
+            })
+            .then(function (data) {
+                dispatch(receivePedidosVendedor(data.datos));
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorPedidos(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(logout());
+                        return;
+                    default:
+                        dispatch(errorPedidos(errorMessages.GENERAL_ERROR));
+                        return;
+                }
+            });
+    }
+}

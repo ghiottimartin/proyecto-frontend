@@ -38,7 +38,12 @@ import {
     ERROR_RECIBIR_PEDIDO,
     RECEIVE_CANCELAR_PEDIDO,
     REQUEST_CANCELAR_PEDIDO,
-    ERROR_CANCELAR_PEDIDO
+    ERROR_CANCELAR_PEDIDO,
+    INVALIDATE_PEDIDOS_VENDEDOR,
+    REQUEST_PEDIDOS_VENDEDOR,
+    RECEIVE_PEDIDOS_VENDEDOR,
+    ERROR_PEDIDOS_VENDEDOR,
+    RESET_PEDIDOS_VENDEDOR
 
 } from '../actions/PedidoActions';
 import {LOGOUT_SUCCESS} from "../actions/AuthenticationActions";
@@ -56,12 +61,10 @@ function pedidosById(state = {
         lineas: [],
         lineasIds: [],
     },
-    mostrarUsuarios: false,
     error: null,
     success: "",
     isCanceling: false,
 }, action) {
-    let mostrarUsuarios = false;
     switch (action.type) {
         case LOGOUT_SUCCESS:
             return Object.assign({}, state, {
@@ -80,20 +83,10 @@ function pedidosById(state = {
                 didInvalidate: false
             });
         case RECEIVE_PEDIDOS:
-            let pedido = {};
-            let pedidos = [];
-            if (action.pedidos.entities.pedidos) {
-                pedidos = action.pedidos.entities.pedidos;
-                pedido = Object.values(pedidos)[0];
-            }
-            if (pedido && pedido.mostrar_usuario) {
-                mostrarUsuarios = true;
-            }
             return Object.assign({}, state, {
                 isFetching: false,
                 didInvalidate: false,
-                mostrarUsuarios: mostrarUsuarios,
-                pedidos: pedidos,
+                pedidos: action.pedidos.entities.pedidos,
                 lastUpdated: action.receivedAt,
                 error: null
             });
@@ -122,17 +115,9 @@ function pedidosById(state = {
                 didInvalidatePedido: false
             });
         case RECEIVE_PEDIDO_ID:
-            let pedido_unico = {};
-            if (action.pedido.entities.pedido) {
-                pedido_unico = Object.values(action.pedido.entities.pedido)[0]
-            }
-            if (pedido_unico && pedido_unico.mostrar_usuario) {
-                mostrarUsuarios = true;
-            }
             return Object.assign({}, state, {
                 isFetchingPedido: false,
                 didInvalidatePedido: false,
-                mostrarUsuarios: mostrarUsuarios,
                 pedido: action.pedido.entities.pedido,
                 lastUpdated: action.receivedAt,
                 error: null
@@ -234,6 +219,38 @@ function pedidosById(state = {
                 isCanceling: false,
                 success: "",
                 error: action.error
+            });
+            //PEDIDOS
+        case INVALIDATE_PEDIDOS_VENDEDOR:
+            return Object.assign({}, state, {
+                didInvalidate: true
+            });
+        case REQUEST_PEDIDOS_VENDEDOR:
+            return Object.assign({}, state, {
+                isFetching: true,
+                didInvalidate: false
+            });
+        case RECEIVE_PEDIDOS_VENDEDOR:
+            return Object.assign({}, state, {
+                isFetching: false,
+                didInvalidate: false,
+                pedidos: action.pedidos.entities.pedidos,
+                lastUpdated: action.receivedAt,
+                error: null
+            });
+        case ERROR_PEDIDOS_VENDEDOR:
+            return Object.assign({}, state, {
+                isFetching: false,
+                didInvalidate: true,
+                error: action.error
+            });
+        case RESET_PEDIDOS_VENDEDOR:
+            return Object.assign({}, state, {
+                isFetching: false,
+                didInvalidate: true,
+                error: null,
+                lastUpdated: null,
+                pedidos: [],
             });
         default:
             return state
@@ -399,10 +416,14 @@ function pedidosAllIds(state = [], action) {
     switch (action.type) {
         case RECEIVE_PEDIDOS:
             return action.pedidos.result ? action.pedidos.result : [];
+            case RECEIVE_PEDIDOS_VENDEDOR:
+                return action.pedidos.result ? action.pedidos.result : [];
         case RECEIVE_DELETE_PEDIDO:
             return state.filter(id => id != action.idPedido);
         case RESET_PEDIDOS:
-             return [];
+            return [];
+        case RESET_PEDIDOS_VENDEDOR:
+                return [];
         default:
             return state
     }

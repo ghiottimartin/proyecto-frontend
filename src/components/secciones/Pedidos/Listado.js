@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 //Actions
-import { fetchPedidos, resetPedidos, updatePedido, recibirPedido, cancelarPedido } from "../../../actions/PedidoActions";
+import { fetchPedidos, resetPedidos, updatePedido, recibirPedido, cancelarPedido, fetchPedidosVendedor, resetPedidosVendedor } from "../../../actions/PedidoActions";
 
 //Api
 import auth from "../../../api/authentication";
@@ -14,6 +14,9 @@ import "../../../assets/css/Pedidos.css";
 //Components
 import Loader from "../../elementos/Loader";
 import Titulo from "../../elementos/Titulo";
+
+//Constantes
+import * as roles from '../../../constants/roles.js';
 
 //Librerias
 import history from "../../../history";
@@ -31,9 +34,16 @@ class Listado extends React.Component {
     componentDidMount() {
         let idUsuario = auth.idUsuario();
         let rol = this.props.match.params.rol;
-        console.log(rol);
-        this.props.resetPedidos();
-        this.props.fetchPedidos(idUsuario);
+        if (rol === roles.ROL_COMENSAL) {
+            this.props.resetPedidos();
+            this.props.fetchPedidos(idUsuario);
+        }
+
+        if (rol === roles.ROL_VENDEDOR) {
+            this.props.resetPedidosVendedor();
+            this.props.fetchPedidosVendedor();
+        }
+        
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -191,11 +201,14 @@ class Listado extends React.Component {
                 <td colSpan={mostrarUsuarios ? 6 : 5}><Loader display={true} /></td>
             </tr>;
         const pedidosResponsive = this.getHtmlPedidosResponsive(mostrarUsuarios);
+        const rol = this.props.match.params.rol;
+        const rolComensal = rol === roles.ROL_COMENSAL;
+        const titulo = rolComensal ? "Mis pedidos" : "Pedidos";
         return (
             <div className="tabla-listado producto-listado">
                 <div className="table-responsive tarjeta-body listado">
                     <div className="d-flex justify-content-between">
-                        <Titulo titulo={mostrarUsuarios ? "Pedidos" : "Mis pedidos"} clase="tabla-listado-titulo" />
+                        <Titulo titulo={titulo} clase="tabla-listado-titulo" />
                     </div>
                     <table className="table">
                         <thead>
@@ -243,6 +256,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         cancelarPedido: (id, idUsuario) => {
             dispatch(cancelarPedido(id, idUsuario))
+        },
+        fetchPedidosVendedor: () => {
+            dispatch(fetchPedidosVendedor())
+        },
+        resetPedidosVendedor: () => {
+            dispatch(resetPedidosVendedor())
         },
     }
 };

@@ -16,6 +16,19 @@ var pedidos = {
         return fetch(c.BASE_URL + '/gastronomia/pedido/?usuario=' + idUsuario, defaultOptions);
     },
 
+    getPedidosVendedor() {
+
+        let defaultOptions = {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "Authorization": "Token " + localStorage.token
+            },
+        };
+
+        return fetch(c.BASE_URL + '/gastronomia/pedido/listado_vendedor/', defaultOptions);
+    },
+
     saveCreate(pedido) {
         let defaultOptions = {
             method: 'POST',
