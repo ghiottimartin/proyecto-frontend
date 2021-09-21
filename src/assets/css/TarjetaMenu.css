@@ -42,9 +42,9 @@
     border-radius: 6px;
     margin: 0 auto;
     padding: 20px;
-    -webkit-box-shadow: 0px -1px 20px 4px rgba(230,207,230,1);
-    -moz-box-shadow: 0px -1px 20px 4px rgba(230,207,230,1);
-    box-shadow: 0px -1px 20px 4px rgba(230,207,230,1);
+    -webkit-box-shadow: 0px -1px 20px 4px rgb(0 0 0 / 75%);
+    -moz-box-shadow: 0px -1px 20px 4px rgb(0 0 0 / 75%);
+    box-shadow: 0px -1px 20px 4px rgb(0 0 0 / 75%);
     max-width: 250px;
     width: 250px;
     height: 250px;
