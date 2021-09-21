@@ -30,6 +30,8 @@ class Listado extends React.Component {
 
     componentDidMount() {
         let idUsuario = auth.idUsuario();
+        let rol = this.props.match.params.rol;
+        console.log(rol);
         this.props.resetPedidos();
         this.props.fetchPedidos(idUsuario);
     }

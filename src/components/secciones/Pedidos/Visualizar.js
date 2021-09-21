@@ -95,7 +95,7 @@ class Visualizar extends React.Component {
         let html = this.getVisualizarHtml(pedido, mostrarUsuarios);
         return (
             <div className="tarjeta-body pedido-visualizar">
-                <Titulo ruta={rutas.PEDIDOS} titulo={titulo} clase="tabla-listado-titulo" />
+                <Titulo ruta={rutas.PEDIDOS_COMENSAL} titulo={titulo} clase="tabla-listado-titulo" />
                 {html}
             </div>
         )
