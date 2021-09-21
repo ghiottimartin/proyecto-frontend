@@ -32,18 +32,7 @@ class Listado extends React.Component {
     }
 
     componentDidMount() {
-        let idUsuario = auth.idUsuario();
-        let rol = this.props.match.params.rol;
-        if (rol === roles.ROL_COMENSAL) {
-            this.props.resetPedidos();
-            this.props.fetchPedidos(idUsuario);
-        }
-
-        if (rol === roles.ROL_VENDEDOR) {
-            this.props.resetPedidosVendedor();
-            this.props.fetchPedidosVendedor();
-        }
-        
+        this.buscarPedidos();        
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -64,6 +53,25 @@ class Listado extends React.Component {
             this.setState({
                 buscando: false,
             })
+        }
+
+        let rol = this.props.match.params.rol;
+        let rolAnterior = prevProps.match.params.rol;
+        if (rol !== rolAnterior) {
+            this.buscarPedidos();
+        }
+    }
+
+    buscarPedidos() {
+        let rol = this.props.match.params.rol;
+        this.props.resetPedidos();
+        if (rol === roles.ROL_COMENSAL) {
+            let idUsuario = auth.idUsuario();
+            this.props.fetchPedidos(idUsuario);
+        }
+
+        if (rol === roles.ROL_VENDEDOR) {
+            this.props.fetchPedidosVendedor();
         }
     }
 
