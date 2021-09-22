@@ -745,8 +745,8 @@ export function fetchPedidosVendedor() {
             .catch(function (error) {
                 switch (error.status) {
                     case 401:
-                        dispatch(errorPedidos(errorMessages.UNAUTHORIZED_TOKEN));
-                        dispatch(logout());
+                        dispatch(errorPedidos("No está autorizado para ver los pedidos vendidos."));
+                        history.push(rutas.PEDIDOS_COMENSAL)
                         return;
                     default:
                         dispatch(errorPedidos(errorMessages.GENERAL_ERROR));

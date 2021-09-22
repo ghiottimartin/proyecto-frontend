@@ -17,6 +17,7 @@ import Titulo from "../../elementos/Titulo";
 
 //Constantes
 import * as roles from '../../../constants/roles.js';
+import * as rutas from '../../../constants/rutas.js';
 
 //Librerias
 import history from "../../../history";
@@ -32,10 +33,20 @@ class Listado extends React.Component {
     }
 
     componentDidMount() {
-        this.buscarPedidos();        
+        let logueado = this.props.usuarios.update.logueado;
+        if (logueado && logueado.id && !this.comprobarAutorizado(logueado)) {
+            history.push(rutas.PEDIDOS_COMENSAL);
+        }
+
+        this.buscarPedidos();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
+        let logueado = this.props.usuarios.update.logueado;
+        if (logueado && logueado.id && !this.comprobarAutorizado(logueado)) {
+            history.push(rutas.PEDIDOS_COMENSAL);
+        }
+        
         let allIds = this.props.pedidos.allIds;
         let pedidos = this.props.pedidos.byId;
         let prePedidos = prevProps.pedidos.byId;
@@ -60,6 +71,13 @@ class Listado extends React.Component {
         if (rol !== rolAnterior) {
             this.buscarPedidos();
         }
+    }
+
+    comprobarAutorizado(logueado) {
+        let rol = this.props.match.params.rol;
+        let rolVendedor = rol === roles.ROL_VENDEDOR;
+        let esVendedor = logueado.esVendedor;
+        return rolVendedor && esVendedor || !rolVendedor;
     }
 
     buscarPedidos() {
@@ -244,7 +262,8 @@ class Listado extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        pedidos: state.pedidos
+        pedidos: state.pedidos,
+        usuarios: state.usuarios,
     };
 }
 
