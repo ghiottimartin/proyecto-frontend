@@ -31,7 +31,7 @@ class Navegador extends React.Component {
         super(props);
         this.state = {
             nombre: '',
-            esAdmin: null,
+            gestionHabilitada: null,
             collapse: false,
         };
 
@@ -57,9 +57,9 @@ class Navegador extends React.Component {
             && (this.state.first_name === "" || this.state.first_name !== logueado.first_name)) {
             this.setNombreUsuarioLogueado();
         }
-        if (this.state.esAdmin === null && logueado.id) {
+        if (this.state.gestionHabilitada === null && logueado.id) {
             this.setState({
-                esAdmin: logueado.esAdmin
+                gestionHabilitada: logueado.operaciones.length > 0
             });
         }
     }
@@ -118,7 +118,7 @@ class Navegador extends React.Component {
     }
 
     render() {
-        const { nombre, esAdmin, collapse } = this.state;
+        const { nombre, gestionHabilitada, collapse } = this.state;
         const logueado = this.props.authentication.token;
         const ItemMenu = props => {
             let display = props.mostrar ? "" : "no-mostrar";
@@ -159,7 +159,7 @@ class Navegador extends React.Component {
                     ruta={rutas.PEDIDOS_COMENSAL}
                 />
                 <ItemMenu
-                    mostrar={props.mostrar && props.logueado}
+                    mostrar={props.mostrar && props.logueado && props.gestionHabilitada}
                     grow={true}
                     texto={"Gestión"}
                     admin={true}
@@ -193,7 +193,7 @@ class Navegador extends React.Component {
                     ruta={""}
                     tipo={"boton"}
                 />
-                <OpcionesMenu mostrar={props.mostrar && props.responsive} esAdmin={esAdmin} />
+                <OpcionesMenu mostrar={props.mostrar && props.responsive} gestionHabilitada={gestionHabilitada} />
                 <ItemMenu
                     mostrar={props.mostrar}
                     grow={true}
@@ -219,7 +219,7 @@ class Navegador extends React.Component {
                         alt="Logo sistema gestión"
                         title="Logo sistema de gestión gastronómico"
                     />
-                    {!responsive ? <OpcionesMenu mostrar={true} logueado={logueado} esAdmin={esAdmin} /> : ""}
+                    {!responsive ? <OpcionesMenu mostrar={true} logueado={logueado} gestionHabilitada={gestionHabilitada} /> : ""}
 
                 </div>
                 <div className="derecha">
