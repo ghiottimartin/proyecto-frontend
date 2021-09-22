@@ -235,11 +235,12 @@ class Listado extends React.Component {
         const rol = this.props.match.params.rol;
         const rolComensal = rol === roles.ROL_COMENSAL;
         const titulo = rolComensal ? "Mis pedidos" : "Pedidos";
+        const ruta = rolComensal ? null : rutas.GESTION;
         return (
             <div className="tabla-listado producto-listado">
                 <div className="table-responsive tarjeta-body listado">
                     <div className="d-flex justify-content-between">
-                        <Titulo titulo={titulo} clase="tabla-listado-titulo" />
+                        <Titulo titulo={titulo} clase="tabla-listado-titulo" ruta={ruta} />
                     </div>
                     <table className="table">
                         <thead>
