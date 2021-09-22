@@ -78,47 +78,107 @@ class Listado extends React.Component {
         }
     }
 
-    comprobarAutorizado(logueado) {
+    /**
+     * Devuelve true si el listado de pedidos pertenece a un vendedor que gestiona los mismos.
+     * 
+     * @returns bool
+     */
+    comprobarRutaTipoVendedor() {
+        let rolVendedor = this.comprobarRutaRol(roles.ROL_VENDEDOR);
+        return rolVendedor;
+    }
+
+    /**
+     * Devuelve true si el listado de pedidos pertenece al los realizados por el usuario logueado.
+     * 
+     * @returns bool
+     */
+    comprobarRutaTipoComensal() {
+        let rolComensal = this.comprobarRutaRol(roles.ROL_COMENSAL);
+        return rolComensal;
+    }
+
+    /**
+     * Devuelve true si el rol de la ruta coincide con el parámetro comparar.
+     * 
+     * @param {String} comparar 
+     * @returns {Boolean}
+     */
+    comprobarRutaRol(comparar) {
         let rol = this.props.match.params.rol;
-        let rolVendedor = rol === roles.ROL_VENDEDOR;
+        let rolVendedor = rol === comparar;
+        return rolVendedor;
+    }
+
+    /**
+     * Devuelve true si el usuario logueado tiene permitido visualizar el listado actual.
+     * 
+     * El listado actual puede listar todos los pedidos si se ingresó desde las operaciones
+     * del Vendedor, o los pedidos del usuario logueado.
+     * 
+     * @param {Object} logueado 
+     * @returns {Boolean}
+     */
+    comprobarAutorizado(logueado) {
+        let rolVendedor = this.comprobarRutaTipoVendedor();
         let esVendedor = logueado.esVendedor;
         return rolVendedor && esVendedor || !rolVendedor;
     }
 
+    /**
+     * Busca los pedidos según el tipo de listado.
+     */
     buscarPedidos() {
-        let rol = this.props.match.params.rol;
+        let rolVendedor = this.comprobarRutaTipoVendedor();
         this.props.resetPedidos();
-        if (rol === roles.ROL_COMENSAL) {
+        if (!rolVendedor) {
             let idUsuario = auth.idUsuario();
             this.props.fetchPedidos(idUsuario);
         }
 
-        if (rol === roles.ROL_VENDEDOR) {
+        if (rolVendedor) {
             this.props.fetchPedidosVendedor();
         }
     }
 
+    /**
+     * Ejecuta la operación del listado de pedidos según el caso.
+     * 
+     * @param {Object} pedido 
+     * @param {String} accion 
+     */
     ejecutarOperacion(pedido, accion) {
         switch (accion) {
             case 'visualizar':
                 this.visualizarPedido(pedido);
                 break;
-        
+
             case 'entregar':
                 this.entregarPedido(pedido);
                 break;
-            
+
             case 'cancelar':
                 this.cancelarPedido(pedido);
                 break;
         }
     }
 
+    /**
+     * Redirige a la visualización del pedido.
+     * 
+     * @param {Object} pedido 
+     */
     visualizarPedido(pedido) {
         this.props.updatePedido(pedido);
         history.push("/pedidos/visualizar/" + pedido.id);
     }
 
+    /**
+     * Indica que el pedido fue recibido por el cliente, para ejecutar esta acción
+     * debe tener el rol vendedor.
+     * 
+     * @param {Object} pedido 
+     */
     entregarPedido(pedido) {
         let id = pedido.id;
         if (!id) {
@@ -139,6 +199,12 @@ class Listado extends React.Component {
         }
     }
 
+    /**
+     * Marca el pedido como cancelado.
+     * 
+     * @param {Object} pedido 
+     * @returns {void}
+     */
     cancelarPedido(pedido) {
         let id = pedido.id;
         if (!id) {
@@ -169,9 +235,14 @@ class Listado extends React.Component {
                 this.setState({ buscando: true });
                 this.props.cancelarPedido(pedido.id, idUsuario);
             }
-        });       
+        });
     }
-
+    /**
+     * Devuelve las operaciones de un pedido.
+     * 
+     * @param {Object} pedido 
+     * @returns {void}
+     */
     getOperacionesPedido(pedido) {
         let operaciones = [];
         pedido.operaciones.forEach(operacion => {
@@ -189,6 +260,12 @@ class Listado extends React.Component {
         );
     }
 
+    /**
+     * Devuelve el html necesario para mostrar los pedidos en formato de responsive.
+     * 
+     * @param {bool} rolVendedor 
+     * @returns 
+     */
     getHtmlPedidosResponsive(rolVendedor) {
         let Pedidos = [];
         this.props.pedidos.allIds.map(idPedido => {
@@ -216,8 +293,7 @@ class Listado extends React.Component {
 
     render() {
         const { noHayPedidos, buscando } = this.state;
-        const rol = this.props.match.params.rol;
-        const rolVendedor = rol === roles.ROL_VENDEDOR;
+        const rolVendedor = this.comprobarRutaTipoVendedor();
         const titulo = rolVendedor ? "Pedidos" : "Mis pedidos";
         const ruta = rolVendedor ? rutas.GESTION : null;
         let Pedidos = [];
@@ -235,7 +311,7 @@ class Listado extends React.Component {
                     <tr key={pedido.id} className={pedido.cancelado ? "text-muted" : ""}>
                         <td>{pedido.id_texto}</td>
                         <td>{pedido.fecha_texto}</td>
-                        <td style={{display: rolVendedor ? "table-cell" : "none"}}>{pedido.usuario_texto}</td>
+                        <td style={{ display: rolVendedor ? "table-cell" : "none" }}>{pedido.usuario_texto}</td>
                         <td>{pedido.estado_texto}</td>
                         <td>{pedido.total_texto}</td>
                         <td>{operaciones}</td>
@@ -259,7 +335,7 @@ class Listado extends React.Component {
                             <tr>
                                 <th>Número</th>
                                 <th>Fecha</th>
-                                <th style={{display: rolVendedor ? "table-cell" : "none"}}>Usuario</th>
+                                <th style={{ display: rolVendedor ? "table-cell" : "none" }}>Usuario</th>
                                 <th>Estado</th>
                                 <th>Total</th>
                                 <th>Operaciones</th>
