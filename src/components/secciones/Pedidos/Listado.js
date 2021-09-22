@@ -176,7 +176,7 @@ class Listado extends React.Component {
         );
     }
 
-    getHtmlPedidosResponsive(mostrarUsuarios) {
+    getHtmlPedidosResponsive(rolVendedor) {
         let Pedidos = [];
         this.props.pedidos.allIds.map(idPedido => {
             let pedido = this.props.pedidos.byId.pedidos[idPedido];
@@ -187,7 +187,7 @@ class Listado extends React.Component {
                         <ul>
                             <li><b>Número:</b> {pedido.id_texto}</li>
                             <li><b>Fecha:</b> {pedido.fecha_texto}</li>
-                            <li style={{ display: mostrarUsuarios ? "block" : "none" }}>
+                            <li style={{ display: rolVendedor ? "block" : "none" }}>
                                 <b>Usuario:</b> {pedido.usuario_texto}
                             </li>
                             <li><b>Estado:</b>  {pedido.estado_texto}</li>
@@ -203,12 +203,15 @@ class Listado extends React.Component {
 
     render() {
         const { noHayPedidos, buscando } = this.state;
-        let mostrarUsuarios = this.props.pedidos.byId.mostrarUsuarios;
+        const rol = this.props.match.params.rol;
+        const rolVendedor = rol === roles.ROL_VENDEDOR;
+        const titulo = rolVendedor ? "Pedidos" : "Mis pedidos";
+        const ruta = rolVendedor ? rutas.GESTION : null;
         let Pedidos = [];
         if (noHayPedidos) {
             Pedidos =
                 <tr className="text-center">
-                    <td colSpan={mostrarUsuarios ? 6 : 5}>Todavía no ha realizado ningún pedido</td>
+                    <td colSpan={rolVendedor ? 6 : 5}>Todavía no ha realizado ningún pedido</td>
                 </tr>;
         }
         this.props.pedidos.allIds.map(idPedido => {
@@ -219,7 +222,7 @@ class Listado extends React.Component {
                     <tr key={pedido.id} className={pedido.cancelado ? "text-muted" : ""}>
                         <td>{pedido.id_texto}</td>
                         <td>{pedido.fecha_texto}</td>
-                        <td style={{display: mostrarUsuarios ? "block" : "none"}}>{pedido.usuario_texto}</td>
+                        <td style={{display: rolVendedor ? "table-cell" : "none"}}>{pedido.usuario_texto}</td>
                         <td>{pedido.estado_texto}</td>
                         <td>{pedido.total_texto}</td>
                         <td>{operaciones}</td>
@@ -229,13 +232,9 @@ class Listado extends React.Component {
         });
         const Cargando =
             <tr>
-                <td colSpan={mostrarUsuarios ? 6 : 5}><Loader display={true} /></td>
+                <td colSpan={rolVendedor ? 6 : 5}><Loader display={true} /></td>
             </tr>;
-        const pedidosResponsive = this.getHtmlPedidosResponsive(mostrarUsuarios);
-        const rol = this.props.match.params.rol;
-        const rolComensal = rol === roles.ROL_COMENSAL;
-        const titulo = rolComensal ? "Mis pedidos" : "Pedidos";
-        const ruta = rolComensal ? null : rutas.GESTION;
+        const pedidosResponsive = this.getHtmlPedidosResponsive(rolVendedor);
         return (
             <div className="tabla-listado producto-listado">
                 <div className="table-responsive tarjeta-body listado">
@@ -247,7 +246,7 @@ class Listado extends React.Component {
                             <tr>
                                 <th>Número</th>
                                 <th>Fecha</th>
-                                <th style={{display: mostrarUsuarios ? "block" : "none"}}>Usuario</th>
+                                <th style={{display: rolVendedor ? "table-cell" : "none"}}>Usuario</th>
                                 <th>Estado</th>
                                 <th>Total</th>
                                 <th>Operaciones</th>
