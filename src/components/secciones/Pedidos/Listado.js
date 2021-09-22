@@ -252,8 +252,13 @@ class Listado extends React.Component {
      */
     getOperacionesPedido(pedido) {
         let operaciones = [];
+        let rutaComensal = this.comprobarRutaTipoComensal();
         pedido.operaciones.forEach(operacion => {
             let accion = operacion.accion;
+            if (rutaComensal && accion === 'entregar') {
+                return;
+            }
+            
             operaciones.push(
                 <div key={operacion.key} onClick={() => this.ejecutarOperacion(pedido, accion)} className={operacion.clase + " operacion"} >
                     <i className={operacion.icono} aria-hidden="true"></i> {operacion.texto}
