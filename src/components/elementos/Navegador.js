@@ -152,14 +152,14 @@ class Navegador extends React.Component {
                     ruta={rutas.MENU}
                 />
                 <ItemMenu
-                    mostrar={props.mostrar}
+                    mostrar={props.mostrar && props.logueado}
                     grow={true}
                     texto={"Mis pedidos"}
                     admin={true}
                     ruta={rutas.PEDIDOS_COMENSAL}
                 />
                 <ItemMenu
-                    mostrar={props.mostrar && props.esAdmin}
+                    mostrar={props.mostrar && props.logueado}
                     grow={true}
                     texto={"Gestión"}
                     admin={true}
@@ -219,7 +219,7 @@ class Navegador extends React.Component {
                         alt="Logo sistema gestión"
                         title="Logo sistema de gestión gastronómico"
                     />
-                    {!responsive ? <OpcionesMenu mostrar={true} esAdmin={esAdmin} /> : ""}
+                    {!responsive ? <OpcionesMenu mostrar={true} logueado={logueado} esAdmin={esAdmin} /> : ""}
 
                 </div>
                 <div className="derecha">

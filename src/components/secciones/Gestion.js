@@ -1,6 +1,9 @@
 import React from "react";
 import {withRouter} from "react-router-dom";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
+
+//Api
+import auth from "../../api/authentication";
 
 //Constants
 import * as rutas from '../../constants/rutas.js';
@@ -20,9 +23,19 @@ import imgCompras from "../../assets/img/menu/compras.svg";
 import imgProductos from "../../assets/img/menu/productos.png";
 import imgPedidos from "../../assets/img/menu/pedidos.png";
 
+//Librerias
+import history from "../../history";
+
 class Gestion extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount() {
+        let idUsuario = auth.idUsuario();
+        if (isNaN(idUsuario)) {
+            history.push(rutas.LOGIN);
+        }
     }
 
     getImagenPorRuta(ruta) {

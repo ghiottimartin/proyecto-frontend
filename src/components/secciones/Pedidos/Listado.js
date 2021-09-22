@@ -33,6 +33,11 @@ class Listado extends React.Component {
     }
 
     componentDidMount() {
+        let idUsuario = auth.idUsuario();
+        if (isNaN(idUsuario)) {
+            history.push(rutas.LOGIN);
+        }
+
         let logueado = this.props.usuarios.update.logueado;
         if (logueado && logueado.id && !this.comprobarAutorizado(logueado)) {
             history.push(rutas.PEDIDOS_COMENSAL);
@@ -46,7 +51,7 @@ class Listado extends React.Component {
         if (logueado && logueado.id && !this.comprobarAutorizado(logueado)) {
             history.push(rutas.PEDIDOS_COMENSAL);
         }
-        
+
         let allIds = this.props.pedidos.allIds;
         let pedidos = this.props.pedidos.byId;
         let prePedidos = prevProps.pedidos.byId;
