@@ -152,11 +152,24 @@ class Listado extends React.Component {
                 confirmButtonColor: 'rgb(88, 219, 131)',
                 cancelButtonColor: '#bfbfbf',
             });
-        } else {
-            let idUsuario = auth.idUsuario();
-            this.setState({ buscando: true });
-            this.props.cancelarPedido(pedido.id, idUsuario);
+            return;
         }
+        Swal.fire({
+            title: `¿Está seguro de cancelar el pedido? `,
+            icon: 'question',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: 'rgb(88, 219, 131)',
+            cancelButtonColor: '#bfbfbf',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let idUsuario = auth.idUsuario();
+                this.setState({ buscando: true });
+                this.props.cancelarPedido(pedido.id, idUsuario);
+            }
+        });       
     }
 
     getOperacionesPedido(pedido) {
