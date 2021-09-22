@@ -81,7 +81,7 @@ class Listado extends React.Component {
     /**
      * Devuelve true si el listado de pedidos pertenece a un vendedor que gestiona los mismos.
      * 
-     * @returns bool
+     * @returns {Boolean}
      */
     comprobarRutaTipoVendedor() {
         let rolVendedor = this.comprobarRutaRol(roles.ROL_VENDEDOR);
@@ -91,7 +91,7 @@ class Listado extends React.Component {
     /**
      * Devuelve true si el listado de pedidos pertenece al los realizados por el usuario logueado.
      * 
-     * @returns bool
+     * @returns {Boolean}
      */
     comprobarRutaTipoComensal() {
         let rolComensal = this.comprobarRutaRol(roles.ROL_COMENSAL);
@@ -170,7 +170,14 @@ class Listado extends React.Component {
      */
     visualizarPedido(pedido) {
         this.props.updatePedido(pedido);
-        history.push("/pedidos/visualizar/" + pedido.id);
+        
+        let listadoVendedor = this.comprobarRutaTipoVendedor();
+        let ruta = rutas.PEDIDO_VISUALIZAR_COMENSAL;
+        if (listadoVendedor) {
+            ruta = rutas.PEDIDO_VISUALIZAR_VENDEDOR;
+        }
+        ruta += pedido.id;
+        history.push(ruta);
     }
 
     /**
@@ -263,7 +270,7 @@ class Listado extends React.Component {
     /**
      * Devuelve el html necesario para mostrar los pedidos en formato de responsive.
      * 
-     * @param {bool} rolVendedor 
+     * @param {Boolean} rolVendedor 
      * @returns 
      */
     getHtmlPedidosResponsive(rolVendedor) {

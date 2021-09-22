@@ -48,7 +48,9 @@ export const CATEGORIAS_EDITAR_ADMIN = '/categorias/editar/admin/:id';
 export const PEDIDOS = '/pedidos/:rol';
 export const PEDIDOS_COMENSAL = '/pedidos/comensal';
 export const PEDIDOS_VENDEDOR = '/pedidos/vendedor';
-export const PEDIDO_VISUALIZAR = '/pedidos/visualizar/:id';
+export const PEDIDO_VISUALIZAR = '/pedidos/visualizar/:rol/:id';
+export const PEDIDO_VISUALIZAR_COMENSAL = '/pedidos/visualizar/comensal/';
+export const PEDIDO_VISUALIZAR_VENDEDOR = '/pedidos/visualizar/vendedor/';
 
 /**
  * Devuelve la url de usuarios

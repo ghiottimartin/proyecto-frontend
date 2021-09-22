@@ -8,7 +8,8 @@ import {fetchPedidoById} from "../../../actions/PedidoActions";
 //Components
 import Titulo from "../../elementos/Titulo";
 
-//Constants
+//Constantes
+import * as roles from '../../../constants/roles.js';
 import * as rutas from "../../../constants/rutas";
 
 //CSS
@@ -85,17 +86,30 @@ class Visualizar extends React.Component {
         );
     }
 
+    /**
+     * Devuelve true si la operación de visualización proviene de un listado
+     * de pedidos para vendedores.
+     * 
+     * @returns {Boolean}
+     */
+    comprobarMostrarUsuario() {
+        let rol = this.props.match.params.rol;
+        let rolVendedor = rol === roles.ROL_VENDEDOR;
+        return rolVendedor;
+    }
+
     render() {
         let pedido = this.props.pedidos.update.activo;
         let titulo = "Visualizar pedido";
         if (pedido && pedido.id) {
             titulo += " P" + pedido.id.toString().padStart(5, 0);;
         }
-        let mostrarUsuarios = this.props.pedidos.byId.mostrarUsuarios;
-        let html = this.getVisualizarHtml(pedido, mostrarUsuarios);
+        let mostrarUsuario = this.comprobarMostrarUsuario();
+        let html = this.getVisualizarHtml(pedido, mostrarUsuario);
+        let rutaVolver = mostrarUsuario ? rutas.PEDIDOS_VENDEDOR : rutas.PEDIDOS_COMENSAL;
         return (
             <div className="tarjeta-body pedido-visualizar">
-                <Titulo ruta={rutas.PEDIDOS_COMENSAL} titulo={titulo} clase="tabla-listado-titulo" />
+                <Titulo ruta={rutaVolver} titulo={titulo} clase="tabla-listado-titulo" />
                 {html}
             </div>
         )
