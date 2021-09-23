@@ -20,3 +20,9 @@
     right: 10px;
     top: 9px;
 }
+
+.texto-chico {
+    color: #6c757d!important;
+    font-size: 80%;
+    font-weight: 400;
+}

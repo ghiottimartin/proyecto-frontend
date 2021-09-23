@@ -301,7 +301,7 @@ class Listado extends React.Component {
                             <li><b>Número:</b> {pedido.id_texto}</li>
                             <li><b>Fecha:</b> {pedido.fecha_texto}</li>
                             <li style={{ display: rolVendedor ? "block" : "none" }}>
-                                <b>Usuario:</b> {pedido.usuario_texto}
+                                <b>Usuario:</b>{pedido.usuario_nombre}, <span className="texto-chico">{pedido.usuario_email}</span>
                             </li>
                             <li><b>Estado:</b>  {pedido.estado_texto}</li>
                             <li><b>Total:</b>  {pedido.total_texto}</li>
@@ -353,11 +353,15 @@ class Listado extends React.Component {
             if (!noHayPedidos && pedido && pedido.id) {
                 let operaciones = this.getOperacionesPedido(pedido);
                 Pedidos.push(
-                    <tr key={pedido.id} className={pedido.cancelado ? "text-muted" : ""}>
+                    <tr key={pedido.id}>
                         <td>{pedido.id_texto}</td>
                         <td>{pedido.fecha_texto}</td>
-                        <td style={{ display: rolVendedor ? "table-cell" : "none" }}>{pedido.usuario_texto}</td>
-                        <td>{pedido.estado_texto}</td>
+                        <td style={{ display: rolVendedor ? "table-cell" : "none" }}>
+                            <span>{pedido.usuario_nombre}</span>
+                            <br/>
+                            <span className="texto-chico">{pedido.usuario_email}</span>
+                        </td>
+                        <td className={pedido.estado_clase}>{pedido.estado_texto}</td>
                         <td>{pedido.total_texto}</td>
                         <td>{operaciones}</td>
                     </tr>
