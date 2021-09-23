@@ -250,8 +250,9 @@ class Listado extends React.Component {
         }).then((result) => {
             if (result.isConfirmed) {
                 let idUsuario = auth.idUsuario();
+                let filtros = this.state.filtros;
                 this.setState({ buscando: true });
-                this.props.cancelarPedido(pedido.id, idUsuario);
+                this.props.cancelarPedido(pedido.id, idUsuario, filtros);
             }
         });
     }

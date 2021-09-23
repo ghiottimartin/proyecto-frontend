@@ -614,9 +614,10 @@ function requestCancelarPedido() {
     }
 }
 
-function receiveCancelarPedido(message) {
+function receiveCancelarPedido(id, message) {
     return {
         type: RECEIVE_CANCELAR_PEDIDO,
+        idCancelado: id,
         success: message,
         receivedAt: Date.now()
     }
@@ -642,7 +643,7 @@ export function cancelarPedido(id, idUsuario, filtros) {
                 }
             })
             .then(function (data) {
-                dispatch(receiveCancelarPedido(data.message));
+                dispatch(receiveCancelarPedido(id, data.message));
                 dispatch(resetPedidos())
                 dispatch(fetchPedidos(idUsuario, filtros))
             })

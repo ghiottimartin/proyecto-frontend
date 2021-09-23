@@ -67,6 +67,19 @@ function pedidosById(state = {
     cantidad: 0,
 }, action) {
     switch (action.type) {
+        case RECEIVE_CANCELAR_PEDIDO:
+            let pedidoAbierto = state.abierto;
+            if (action.idCancelado === state.abierto.id) {
+                pedidoAbierto = {
+                    id: 0,
+                    forzar: false,
+                    lineas: [],
+                    lineasIds: [],
+                };
+            }
+            return Object.assign({}, state, {
+                abierto: pedidoAbierto
+            });
         case LOGOUT_SUCCESS:
             return Object.assign({}, state, {
                 isFetching: false,
