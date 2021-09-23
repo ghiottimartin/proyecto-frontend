@@ -47,8 +47,9 @@ export default function Titulo(props) {
             </button>
         )
     })
+    let claseBorder = props.border ? " tabla-listado-titulo-border" : "";
     return (
-        <h4 className={clase} >
+        <h4 className={clase + claseBorder} >
             {flecha}
             {props.titulo}
             {botones}

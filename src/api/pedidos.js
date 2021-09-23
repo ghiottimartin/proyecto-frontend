@@ -3,8 +3,14 @@ require('isomorphic-fetch');
 
 var pedidos = {
 
-    getAll(idUsuario) {
-
+    getAll(idUsuario, filtros) {
+        var esc = encodeURIComponent;
+        var query = "&";
+        if (filtros)
+            query += Object.keys(filtros)
+                .map(k => esc(k) + '=' + esc(filtros[k]))
+                .join('&');
+        
         let defaultOptions = {
             method: 'GET',
             headers: {
@@ -13,10 +19,16 @@ var pedidos = {
             },
         };
 
-        return fetch(c.BASE_URL + '/gastronomia/pedido/?usuario=' + idUsuario, defaultOptions);
+        return fetch(c.BASE_URL + '/gastronomia/pedido/?usuario=' + idUsuario +  query, defaultOptions);
     },
 
-    getPedidosVendedor() {
+    getPedidosVendedor(filtros) {
+        var esc = encodeURIComponent;
+        var query = "&";
+        if (filtros)
+            query += Object.keys(filtros)
+                .map(k => esc(k) + '=' + esc(filtros[k]))
+                .join('&');
 
         let defaultOptions = {
             method: 'GET',
@@ -26,7 +38,7 @@ var pedidos = {
             },
         };
 
-        return fetch(c.BASE_URL + '/gastronomia/pedido/listado_vendedor/', defaultOptions);
+        return fetch(c.BASE_URL + '/gastronomia/pedido/listado_vendedor/?' + query, defaultOptions);
     },
 
     saveCreate(pedido) {

@@ -115,7 +115,6 @@ var auth = {
                 callback(data);
             })
             .catch(function (error) {
-                console.log(error);
                 callback(false, error);
             });
     },
@@ -147,7 +146,6 @@ var auth = {
                 callback(data);
             })
             .catch(function (error) {
-                console.log(error);
                 callback(false, error);
             });
     },
@@ -184,7 +182,6 @@ var auth = {
                 callback(true);
             })
             .catch(function (error) {
-                console.log(error);
                 callback(false, error);
             });
     },

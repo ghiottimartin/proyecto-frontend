@@ -88,7 +88,6 @@ export function saveCreateCategoria(volverA) {
                     default:
                         error.json()
                             .then((error) => {
-                                console.log(error);
                                 if (error.message !== "")
                                     dispatch(errorCreateCategoria(error.message));
                                 else

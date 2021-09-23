@@ -4,6 +4,12 @@
 
 .tabla-listado-titulo {
     font-size: 23px;
+    width: 100%;
+}
+
+.tabla-listado-titulo-border {
+    padding-bottom: 20px;
+    border-bottom: 2px solid #dee2e6;
 }
 
 .tabla-listado td {

@@ -14,6 +14,7 @@ import "../../../assets/css/Pedidos.css";
 //Components
 import Loader from "../../elementos/Loader";
 import Titulo from "../../elementos/Titulo";
+import Filtros from "../../elementos/Pedidos/Filtros";
 
 //Constantes
 import * as roles from '../../../constants/roles.js';
@@ -22,13 +23,22 @@ import * as rutas from '../../../constants/rutas.js';
 //Librerias
 import history from "../../../history";
 import Swal from "sweetalert2";
+import moment from 'moment';
 
 class Listado extends React.Component {
     constructor(props) {
         super(props);
+        let hoy = moment();
+        let haceUnaSemana = moment().subtract(2, 'weeks');
         this.state = {
             buscando: true,
-            noHayPedidos: false
+            noHayPedidos: false,
+            filtros: {
+                fechaDesde: haceUnaSemana.format("YYYY-MM-DD"),
+                fechaHasta: hoy.format("YYYY-MM-DD"),
+                registros: 5,
+                pagina: 1
+            }
         }
     }
 
@@ -55,14 +65,11 @@ class Listado extends React.Component {
         let allIds = this.props.pedidos.allIds;
         let pedidos = this.props.pedidos.byId;
         let prePedidos = prevProps.pedidos.byId;
-        let deleting = this.props.pedidos.delete;
-        let preDeleting = prevProps.pedidos.delete;
         let busco = prePedidos.isFetching && !pedidos.isFetching;
-        let borro = preDeleting.isDeleting && !deleting.isDeleting;
         let cancelo = prePedidos.isCanceling && !pedidos.isCanceling;
-        if ((busco || borro) && allIds.length === 0) {
+        if (busco) {
             this.setState({
-                noHayPedidos: true,
+                noHayPedidos: allIds.length === 0,
             })
         }
         if (busco || cancelo) {
@@ -129,15 +136,17 @@ class Listado extends React.Component {
      * Busca los pedidos según el tipo de listado.
      */
     buscarPedidos() {
+        this.setState({ buscando: true });
+        let filtros = this.state.filtros;
         let rolVendedor = this.comprobarRutaTipoVendedor();
         this.props.resetPedidos();
         if (!rolVendedor) {
             let idUsuario = auth.idUsuario();
-            this.props.fetchPedidos(idUsuario);
+            this.props.fetchPedidos(idUsuario, filtros);
         }
 
         if (rolVendedor) {
-            this.props.fetchPedidosVendedor();
+            this.props.fetchPedidosVendedor(filtros);
         }
     }
 
@@ -158,7 +167,8 @@ class Listado extends React.Component {
                 break;
 
             case 'cancelar':
-                this.cancelarPedido(pedido);
+                let filtros = this.state.filtros;
+                this.cancelarPedido(pedido, filtros);
                 break;
         }
     }
@@ -200,9 +210,10 @@ class Listado extends React.Component {
                 cancelButtonColor: '#bfbfbf',
             });
         } else {
+            let filtros = this.state.filtros;
             let idUsuario = auth.idUsuario();
             this.setState({ buscando: true });
-            this.props.recibirPedido(pedido.id, idUsuario);
+            this.props.recibirPedido(pedido.id, idUsuario, filtros);
         }
     }
 
@@ -303,6 +314,19 @@ class Listado extends React.Component {
         return Pedidos;
     }
 
+    onChangeBusqueda(e) {
+        let filtros = this.state.filtros;
+        filtros[e.target.id] = e.target.value;
+        this.setState({
+            filtros: filtros,
+        });
+    }
+
+    filtrarPedidos(e) {
+        e.preventDefault();
+        this.buscarPedidos();
+    }
+
     render() {
         const { noHayPedidos, buscando } = this.state;
         const rolVendedor = this.comprobarRutaTipoVendedor();
@@ -310,14 +334,23 @@ class Listado extends React.Component {
         const ruta = rolVendedor ? rutas.GESTION : null;
         let Pedidos = [];
         if (noHayPedidos) {
-            Pedidos =
+            let cantidad = this.props.pedidos.byId.cantidad;
+            let placeholder = "Todavía no ha realizado ningún pedido";
+            if (rolVendedor) {
+                placeholder = "Todavía no se han realizado pedidos";
+            }
+            if (cantidad > 0) {
+                placeholder = "No hay pedidos para los filtros aplicados";
+            }
+            Pedidos = 
                 <tr className="text-center">
-                    <td colSpan={rolVendedor ? 6 : 5}>Todavía no ha realizado ningún pedido</td>
+                    <td colSpan={rolVendedor ? 6 : 5}>{placeholder}</td>
                 </tr>;
         }
+
         this.props.pedidos.allIds.map(idPedido => {
             let pedido = this.props.pedidos.byId.pedidos[idPedido];
-            if (pedido && pedido.id) {
+            if (!noHayPedidos && pedido && pedido.id) {
                 let operaciones = this.getOperacionesPedido(pedido);
                 Pedidos.push(
                     <tr key={pedido.id} className={pedido.cancelado ? "text-muted" : ""}>
@@ -340,8 +373,13 @@ class Listado extends React.Component {
             <div className="tabla-listado producto-listado">
                 <div className="table-responsive tarjeta-body listado">
                     <div className="d-flex justify-content-between">
-                        <Titulo titulo={titulo} clase="tabla-listado-titulo" ruta={ruta} />
+                        <Titulo titulo={titulo} clase="tabla-listado-titulo" ruta={ruta} border={true} />
                     </div>
+                    <Filtros 
+                        filtros={this.state.filtros}
+                        filtrar={(e) => this.filtrarPedidos(e)}
+                        onChangeBusqueda={(e) => this.onChangeBusqueda(e)}
+                    />
                     <table className="table">
                         <thead>
                             <tr>
@@ -375,8 +413,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchPedidos: (idUsuario) => {
-            dispatch(fetchPedidos(idUsuario))
+        fetchPedidos: (idUsuario, filtros) => {
+            dispatch(fetchPedidos(idUsuario, filtros))
         },
         resetPedidos: () => {
             dispatch(resetPedidos())
@@ -384,14 +422,14 @@ const mapDispatchToProps = (dispatch) => {
         updatePedido: (pedido) => {
             dispatch(updatePedido(pedido))
         },
-        recibirPedido: (id, idUsuario) => {
-            dispatch(recibirPedido(id, idUsuario))
+        recibirPedido: (id, idUsuario, filtros) => {
+            dispatch(recibirPedido(id, idUsuario, filtros))
         },
-        cancelarPedido: (id, idUsuario) => {
-            dispatch(cancelarPedido(id, idUsuario))
+        cancelarPedido: (id, idUsuario, filtros) => {
+            dispatch(cancelarPedido(id, idUsuario, filtros))
         },
-        fetchPedidosVendedor: () => {
-            dispatch(fetchPedidosVendedor())
+        fetchPedidosVendedor: (filtros) => {
+            dispatch(fetchPedidosVendedor(filtros))
         },
         resetPedidosVendedor: () => {
             dispatch(resetPedidosVendedor())

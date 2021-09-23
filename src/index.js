@@ -29,10 +29,8 @@ var createStoreWithMiddleware = null;
 if (process.env.NODE_ENV !== 'production') {
     const loggerMiddleware = createLogger();
     createStoreWithMiddleware = applyMiddleware(thunk, loggerMiddleware)(createStore);
-    console.log("hola estoy en debug")
 }
 else {
-    console.log("hola estoy en produccion")
     createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 
     //Quita todos los los en produccion

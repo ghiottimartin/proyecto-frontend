@@ -162,7 +162,6 @@ export function saveUpdateProducto(volverA) {
                         return Promise.reject(error);
                     default:
                         if (error.responseJSON !== "") {
-                            console.log(error)
                             dispatch(errorUpdateProducto(error.responseJSON.message));
                         } else {
                             dispatch(errorUpdateProducto(errorMessages.GENERAL_ERROR));

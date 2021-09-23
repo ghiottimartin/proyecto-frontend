@@ -64,6 +64,7 @@ function pedidosById(state = {
     error: null,
     success: "",
     isCanceling: false,
+    cantidad: 0,
 }, action) {
     switch (action.type) {
         case LOGOUT_SUCCESS:
@@ -87,6 +88,7 @@ function pedidosById(state = {
                 isFetching: false,
                 didInvalidate: false,
                 pedidos: action.pedidos.entities.pedidos,
+                cantidad: action.cantidad,
                 lastUpdated: action.receivedAt,
                 error: null
             });
@@ -235,6 +237,7 @@ function pedidosById(state = {
                 isFetching: false,
                 didInvalidate: false,
                 pedidos: action.pedidos.entities.pedidos,
+                cantidad: action.cantidad,
                 lastUpdated: action.receivedAt,
                 error: null
             });

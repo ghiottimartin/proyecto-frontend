@@ -1,0 +1,87 @@
+.filtros {
+    position: relative;
+    padding: 0 0 40px 0;
+}
+
+.filtros h4 {
+    margin: 0 !important;
+    font-size: 22px;
+}
+
+.form-filtros {
+    display: flex !important;
+    position: relative;
+    align-items: center;
+    padding: 10px 0 20px 0;
+}
+
+.form-filtros .loading {
+    width: 40px;
+    margin-right: 15px;
+    -webkit-animation: spin 1s linear infinite;
+    -moz-animation: spin 1s linear infinite;
+    animation: spin 1s linear infinite;
+    position: absolute;
+    right: 15px;
+}
+
+.form-filtros .order-by {
+    padding: 0 10px;
+    display: flex;
+    border-right: 1px solid black;
+}
+
+.form-filtros .order-by .form-group {
+    display: inline-block;
+}
+
+.form-filtros .order-by .direccion {
+    width: 20px;
+    height: 25px;
+    margin: 30px 5px 15px 10px;
+    cursor: pointer;
+    display: inline-block;
+}
+
+.form-filtros .contenedor-filtros {
+    display: flex;
+    flex-flow: column wrap;
+}
+
+.form-filtros .filter-by {
+    display: flex;
+    padding: 0 10px;
+}
+
+.form-filtros .contenedor-filtros .texto-filtrar {
+    height: fit-content;
+    padding-left: 10px;
+}
+
+.form-filtros .form-label {
+    margin-right: 10px;
+    margin-bottom: 0px;
+}
+
+.form-filtros .tipo {
+    margin-right: 15px;
+}
+
+.form-filtros .filter-by .form-group {
+    display: flex;
+    margin-right: 15px;
+    margin-top: 7px;
+    margin-bottom: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-filtros .filter-by.edadAproximada input {
+    width: 140px;
+}
+
+.filtros .boton-filtrar {
+    position: absolute;
+    right: 0;
+    bottom: 10px;
+}

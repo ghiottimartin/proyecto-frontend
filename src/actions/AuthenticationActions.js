@@ -20,7 +20,6 @@ export const LOGOUT_REQUEST = 'LOGOUT_REQUEST';
 
 export function login(usuario, ruta) {
     return (dispatch) => {
-        console.log("login");
         dispatch(sendingRequest(true));
         // If no username or password was specified, throw a field-missing error
         if (anyElementsEmpty(usuario)) {
@@ -147,7 +146,6 @@ function anyElementsEmpty(elements) {
 
 export function olvideMiPassword(usuario) {
     return (dispatch) => {
-        console.log("login");
         dispatch(sendingRequest(true, ""));
         // If no username or password was specified, throw a field-missing error
         if (usuario === "") {

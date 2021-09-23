@@ -212,7 +212,8 @@ function requestPedidos() {
 function receivePedidos(json) {
     return {
         type: RECEIVE_PEDIDOS,
-        pedidos: normalizeDatos(json),
+        pedidos: normalizeDatos(json.pedidos),
+        cantidad: json.cantidad,
         receivedAt: Date.now()
     }
 }
@@ -224,10 +225,10 @@ function errorPedidos(error) {
     }
 }
 
-export function fetchPedidos(idUsuario) {
+export function fetchPedidos(idUsuario, filtros) {
     return dispatch => {
         dispatch(requestPedidos());
-        return pedidos.getAll(idUsuario)
+        return pedidos.getAll(idUsuario, filtros)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
@@ -262,14 +263,6 @@ function shouldFetchPedidos(state) {
         return true;
     } else {
         return pedidosById.didInvalidate;
-    }
-}
-
-export function fetchPedidosIfNeeded() {
-    return (dispatch, getState) => {
-        if (shouldFetchPedidos(getState())) {
-            return dispatch(fetchPedidos())
-        }
     }
 }
 
@@ -352,14 +345,6 @@ function shouldFetchPedidoById(id, state) {
         return true;
     } else {
         return pedidosById.didInvalidatePedido;
-    }
-}
-
-export function fetchPedidoByIdIfNeeded(id) {
-    return (dispatch, getState) => {
-        if (shouldFetchPedidos(id, getState())) {
-            return dispatch(fetchPedidos())
-        }
     }
 }
 
@@ -577,7 +562,7 @@ function errorRecibirPedido(error) {
     }
 }
 
-export function recibirPedido(id, idUsuario) {
+export function recibirPedido(id, idUsuario, filtros) {
     return dispatch => {
         dispatch(requestRecibirPedido());
         return pedidos.recibirPedido(id)
@@ -592,7 +577,7 @@ export function recibirPedido(id, idUsuario) {
             .then(function (data) {
                 dispatch(receiveRecibirPedido(data.message));
                 dispatch(resetPedidos())
-                dispatch(fetchPedidos(idUsuario))
+                dispatch(fetchPedidos(idUsuario, filtros))
             })
             .catch(function (error) {
                 switch (error.status) {
@@ -644,7 +629,7 @@ function errorCancelarPedido(error) {
     }
 }
 
-export function cancelarPedido(id, idUsuario) {
+export function cancelarPedido(id, idUsuario, filtros) {
     return dispatch => {
         dispatch(requestCancelarPedido());
         return pedidos.cancelarPedido(id)
@@ -659,7 +644,7 @@ export function cancelarPedido(id, idUsuario) {
             .then(function (data) {
                 dispatch(receiveCancelarPedido(data.message));
                 dispatch(resetPedidos())
-                dispatch(fetchPedidos(idUsuario))
+                dispatch(fetchPedidos(idUsuario, filtros))
             })
             .catch(function (error) {
                 switch (error.status) {
@@ -715,7 +700,8 @@ function requestPedidosVendedor() {
 function receivePedidosVendedor(json) {
     return {
         type: RECEIVE_PEDIDOS_VENDEDOR,
-        pedidos: normalizeDatos(json),
+        pedidos: normalizeDatos(json.pedidos),
+        cantidad: json.cantidad,
         receivedAt: Date.now()
     }
 }
@@ -727,10 +713,10 @@ function errorPedidosVendedor(error) {
     }
 }
 
-export function fetchPedidosVendedor() {
+export function fetchPedidosVendedor(filtros) {
     return dispatch => {
         dispatch(requestPedidosVendedor());
-        return pedidos.getPedidosVendedor()
+        return pedidos.getPedidosVendedor(filtros)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
