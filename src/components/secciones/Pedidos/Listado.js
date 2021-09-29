@@ -355,8 +355,9 @@ class Listado extends React.Component {
         const ruta = rolVendedor ? rutas.GESTION : null;
         const registros = this.props.pedidos.byId.registros;
         let Pedidos = [];
+        const total = this.props.pedidos.byId.total;
+        const totalCero = parseInt(total) === 0;
         if (noHayPedidos) {
-            const total = this.props.pedidos.byId.total;
             let placeholder = "Todavía no ha realizado ningún pedido";
             if (rolVendedor) {
                 placeholder = "Todavía no se han realizado pedidos";
@@ -422,7 +423,7 @@ class Listado extends React.Component {
                         </tbody>
                     </table>
                     {
-                        buscando ?
+                        buscando || totalCero ?
                             ''
                             :
                             <Paginacion
