@@ -1,0 +1,51 @@
+.pagination {
+  border: 1px solid #1579bf;
+  width: fit-content;
+  margin: 10px;
+  display: table;
+  padding: 3px;
+}
+
+.pagination li {
+  font-size: 17px;
+  padding: 0 10px;
+  display: table-cell;
+  vertical-align: middle;
+  height: 30px;
+  font-weight: bold;
+}
+
+.pagination li a {
+  color: black;
+}
+
+.pagination a {
+  text-decoration: none;
+}
+
+.pagination li:hover {
+  background-color: #1579bf;
+}
+
+.pagination li.active {
+  background-color: #1579bf;
+}
+
+.pagination li.active a,
+.pagination li:hover a {
+  color: white;
+}
+
+.pagination .previous a,
+.pagination .first a {
+  color: #1579bf;
+}
+
+.pagination li.disabled:hover {
+  background-color: transparent;
+}
+
+.pagination li.disabled a {
+  cursor: not-allowed;
+  color: darkgray;
+}

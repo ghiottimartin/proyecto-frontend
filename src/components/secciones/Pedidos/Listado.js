@@ -15,6 +15,7 @@ import "../../../assets/css/Pedidos.css";
 import Loader from "../../elementos/Loader";
 import Titulo from "../../elementos/Titulo";
 import Filtros from "../../elementos/Pedidos/Filtros";
+import Paginacion from "../../elementos/Paginacion";
 
 //Constantes
 import * as roles from '../../../constants/roles.js';
@@ -36,9 +37,9 @@ class Listado extends React.Component {
             filtros: {
                 fechaDesde: haceUnaSemana.format("YYYY-MM-DD"),
                 fechaHasta: hoy.format("YYYY-MM-DD"),
-                registros: 5,
-                pagina: 1
-            }
+                paginaActual: 1,
+                registrosPorPagina: 2
+            },
         }
     }
 
@@ -81,6 +82,10 @@ class Listado extends React.Component {
         let rol = this.props.match.params.rol;
         let rolAnterior = prevProps.match.params.rol;
         if (rol !== rolAnterior) {
+            this.buscarPedidos();
+        }
+
+        if (prevState.filtros.paginaActual !== this.state.filtros.paginaActual) {
             this.buscarPedidos();
         }
     }
@@ -328,14 +333,22 @@ class Listado extends React.Component {
         this.buscarPedidos();
     }
 
+    cambiarDePagina(pagina) {
+        this.setState({
+            filtros: {
+                paginaActual: pagina
+            }
+        });
+    }
+
     render() {
         const { noHayPedidos, buscando } = this.state;
         const rolVendedor = this.comprobarRutaTipoVendedor();
         const titulo = rolVendedor ? "Pedidos" : "Mis pedidos";
         const ruta = rolVendedor ? rutas.GESTION : null;
         let Pedidos = [];
+        let cantidad = this.props.pedidos.byId.cantidad;
         if (noHayPedidos) {
-            let cantidad = this.props.pedidos.byId.cantidad;
             let placeholder = "Todavía no ha realizado ningún pedido";
             if (rolVendedor) {
                 placeholder = "Todavía no se han realizado pedidos";
@@ -400,6 +413,19 @@ class Listado extends React.Component {
                             {buscando ? Cargando : Pedidos}
                         </tbody>
                     </table>
+                    {
+                        buscando ?
+                            ''
+                            :
+                            <Paginacion
+                                activePage={this.state.filtros.paginaActual}
+                                itemsCountPerPage={this.state.filtros.registrosPorPagina}
+                                totalItemsCount={cantidad}
+                                pageRangeDisplayed={5}
+                                onChange={(e) => this.cambiarDePagina(e)}
+                            />
+                    }
+                    
                     <div className="pedidos-responsive">
                         {pedidosResponsive}
                     </div>
