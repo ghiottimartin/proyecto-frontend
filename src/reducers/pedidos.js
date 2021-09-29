@@ -33,9 +33,9 @@ import {
     ERROR_PEDIDO_ABIERTO,
     RESET_PEDIDO_ABIERTO,
     UPDATE_PEDIDO,
-    RECEIVE_RECIBIR_PEDIDO,
-    REQUEST_RECIBIR_PEDIDO,
-    ERROR_RECIBIR_PEDIDO,
+    RECEIVE_ENTREGAR_PEDIDO,
+    REQUEST_ENTREGAR_PEDIDO,
+    ERROR_ENTREGAR_PEDIDO,
     RECEIVE_CANCELAR_PEDIDO,
     REQUEST_CANCELAR_PEDIDO,
     ERROR_CANCELAR_PEDIDO,
@@ -372,19 +372,19 @@ function update(state = {
                 success: "",
                 error: null,
             });
-        case RECEIVE_RECIBIR_PEDIDO:
+        case RECEIVE_ENTREGAR_PEDIDO:
             return Object.assign({}, state, {
                 isUpdating: false,
                 success: action.message,
                 error: null,
             });
-        case REQUEST_RECIBIR_PEDIDO:
+        case REQUEST_ENTREGAR_PEDIDO:
             return Object.assign({}, state, {
                 isUpdating: true,
                 success: "",
                 error: null,
             });
-        case ERROR_RECIBIR_PEDIDO:
+        case ERROR_ENTREGAR_PEDIDO:
             return Object.assign({}, state, {
                 isUpdating: false,
                 success: "",

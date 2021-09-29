@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 //Actions
-import { fetchPedidos, resetPedidos, updatePedido, recibirPedido, cancelarPedido, fetchPedidosVendedor, resetPedidosVendedor } from "../../../actions/PedidoActions";
+import { fetchPedidos, resetPedidos, updatePedido, entregarPedido, cancelarPedido, fetchPedidosVendedor, resetPedidosVendedor } from "../../../actions/PedidoActions";
 
 //Api
 import auth from "../../../api/authentication";
@@ -218,7 +218,7 @@ class Listado extends React.Component {
             let filtros = this.state.filtros;
             let idUsuario = auth.idUsuario();
             this.setState({ buscando: true });
-            this.props.recibirPedido(pedido.id, idUsuario, filtros);
+            this.props.entregarPedido(pedido.id, idUsuario, filtros);
         }
     }
 
@@ -462,8 +462,8 @@ const mapDispatchToProps = (dispatch) => {
         updatePedido: (pedido) => {
             dispatch(updatePedido(pedido))
         },
-        recibirPedido: (id, idUsuario, filtros) => {
-            dispatch(recibirPedido(id, idUsuario, filtros))
+        entregarPedido: (id, idUsuario, filtros) => {
+            dispatch(entregarPedido(id, idUsuario, filtros))
         },
         cancelarPedido: (id, idUsuario, filtros) => {
             dispatch(cancelarPedido(id, idUsuario, filtros))

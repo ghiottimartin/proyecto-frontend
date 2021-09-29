@@ -536,37 +536,37 @@ export function updatePedido(pedido) {
     }
 }
 
-// RECIBIR PEDIDO
-export const REQUEST_RECIBIR_PEDIDO = "REQUEST_RECIBIR_PEDIDO";
-export const RECEIVE_RECIBIR_PEDIDO = "RECEIVE_RECIBIR_PEDIDO";
-export const ERROR_RECIBIR_PEDIDO   = "ERROR_RECIBIR_PEDIDO";
+// ENTREGAR PEDIDO
+export const REQUEST_ENTREGAR_PEDIDO = "REQUEST_ENTREGAR_PEDIDO";
+export const RECEIVE_ENTREGAR_PEDIDO = "RECEIVE_ENTREGAR_PEDIDO";
+export const ERROR_ENTREGAR_PEDIDO   = "ERROR_ENTREGAR_PEDIDO";
 
 
-function requestRecibirPedido() {
+function requestEntregarPedido() {
     return {
-        type: REQUEST_RECIBIR_PEDIDO,
+        type: REQUEST_ENTREGAR_PEDIDO,
     }
 }
 
-function receiveRecibirPedido(message) {
+function receiveEntregarPedido(message) {
     return {
-        type: RECEIVE_RECIBIR_PEDIDO,
+        type: RECEIVE_ENTREGAR_PEDIDO,
         success: message,
         receivedAt: Date.now()
     }
 }
 
-function errorRecibirPedido(error) {
+function errorEntregarPedido(error) {
     return {
-        type: ERROR_RECIBIR_PEDIDO,
+        type: ERROR_ENTREGAR_PEDIDO,
         error: error,
     }
 }
 
-export function recibirPedido(id, idUsuario, filtros) {
+export function entregarPedido(id, idUsuario, filtros) {
     return dispatch => {
-        dispatch(requestRecibirPedido());
-        return pedidos.recibirPedido(id)
+        dispatch(requestEntregarPedido());
+        return pedidos.entregarPedido(id)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
@@ -576,26 +576,26 @@ export function recibirPedido(id, idUsuario, filtros) {
                 }
             })
             .then(function (data) {
-                dispatch(receiveRecibirPedido(data.message));
+                dispatch(receiveEntregarPedido(data.message));
                 dispatch(resetPedidos())
                 dispatch(fetchPedidos(idUsuario, filtros))
             })
             .catch(function (error) {
                 switch (error.status) {
                     case 401:
-                        dispatch(errorRecibirPedido(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(errorEntregarPedido(errorMessages.UNAUTHORIZED_TOKEN));
                         dispatch(logout());
                         return;
                     default:
                         error.json()
                             .then(error => {
                                 if (error.message !== "")
-                                    dispatch(errorRecibirPedido(error.message));
+                                    dispatch(errorEntregarPedido(error.message));
                                 else
-                                    dispatch(errorRecibirPedido(errorMessages.GENERAL_ERROR));
+                                    dispatch(errorEntregarPedido(errorMessages.GENERAL_ERROR));
                             })
                             .catch(error => {
-                                dispatch(errorRecibirPedido(errorMessages.GENERAL_ERROR));
+                                dispatch(errorEntregarPedido(errorMessages.GENERAL_ERROR));
                             });
                         return;
                 }
