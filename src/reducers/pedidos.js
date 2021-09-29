@@ -64,7 +64,8 @@ function pedidosById(state = {
     error: null,
     success: "",
     isCanceling: false,
-    cantidad: 0,
+    total: 0,
+    registros: 0,
 }, action) {
     switch (action.type) {
         case RECEIVE_CANCELAR_PEDIDO:
@@ -101,7 +102,8 @@ function pedidosById(state = {
                 isFetching: false,
                 didInvalidate: false,
                 pedidos: action.pedidos.entities.pedidos,
-                cantidad: action.cantidad,
+                total: action.total,
+                registros: action.registros,
                 lastUpdated: action.receivedAt,
                 error: null
             });
@@ -250,7 +252,8 @@ function pedidosById(state = {
                 isFetching: false,
                 didInvalidate: false,
                 pedidos: action.pedidos.entities.pedidos,
-                cantidad: action.cantidad,
+                total: action.total,
+                registros: action.registros,
                 lastUpdated: action.receivedAt,
                 error: null
             });

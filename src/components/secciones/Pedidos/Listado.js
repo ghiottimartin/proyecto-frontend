@@ -38,7 +38,7 @@ class Listado extends React.Component {
                 fechaDesde: haceUnaSemana.format("YYYY-MM-DD"),
                 fechaHasta: hoy.format("YYYY-MM-DD"),
                 paginaActual: 1,
-                registrosPorPagina: 2
+                registrosPorPagina: 10
             },
         }
     }
@@ -334,10 +334,13 @@ class Listado extends React.Component {
     }
 
     cambiarDePagina(pagina) {
+        const filtrosPagina = {
+            paginaActual: pagina
+        };
+        const filtros = { ...this.state.filtros, ...filtrosPagina };
+        console.log(filtros)
         this.setState({
-            filtros: {
-                paginaActual: pagina
-            }
+            filtros: filtros
         });
     }
 
@@ -346,14 +349,15 @@ class Listado extends React.Component {
         const rolVendedor = this.comprobarRutaTipoVendedor();
         const titulo = rolVendedor ? "Pedidos" : "Mis pedidos";
         const ruta = rolVendedor ? rutas.GESTION : null;
+        const registros = this.props.pedidos.byId.registros;
         let Pedidos = [];
-        let cantidad = this.props.pedidos.byId.cantidad;
         if (noHayPedidos) {
+            const total = this.props.pedidos.byId.total;
             let placeholder = "Todavía no ha realizado ningún pedido";
             if (rolVendedor) {
                 placeholder = "Todavía no se han realizado pedidos";
             }
-            if (cantidad > 0) {
+            if (total > 0) {
                 placeholder = "No hay pedidos para los filtros aplicados";
             }
             Pedidos = 
@@ -420,7 +424,7 @@ class Listado extends React.Component {
                             <Paginacion
                                 activePage={this.state.filtros.paginaActual}
                                 itemsCountPerPage={this.state.filtros.registrosPorPagina}
-                                totalItemsCount={cantidad}
+                                totalItemsCount={registros}
                                 pageRangeDisplayed={5}
                                 onChange={(e) => this.cambiarDePagina(e)}
                             />
