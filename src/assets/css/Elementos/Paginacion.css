@@ -36,7 +36,7 @@
   color: white;
 }
 
-.pagination .previous a,
+.pagination .last a,
 .pagination .first a {
   color: #1579bf;
 }

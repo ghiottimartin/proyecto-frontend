@@ -25,7 +25,7 @@ class Paginacion extends React.Component {
                     nextPageText={"..."}
                     firstPageText={"<"}
                     lastPageText={">"}
-                    itemClassLast={"previous"}
+                    itemClassLast={"last"}
                     itemClassFirst={"first"}
                 />
             </div>

@@ -39,7 +39,7 @@ class Listado extends React.Component {
                 fechaHasta: hoy.format("YYYY-MM-DD"),
                 paginaActual: 1,
                 registrosPorPagina: 10
-            },
+            }
         }
     }
 
@@ -334,6 +334,10 @@ class Listado extends React.Component {
     }
 
     cambiarDePagina(pagina) {
+        if (isNaN(pagina)) {
+            return;
+        }
+
         const filtrosPagina = {
             paginaActual: pagina
         };

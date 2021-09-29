@@ -213,7 +213,8 @@ function receivePedidos(json) {
     return {
         type: RECEIVE_PEDIDOS,
         pedidos: normalizeDatos(json.pedidos),
-        cantidad: json.cantidad,
+        total: json.total,
+        registros: json.registros,
         receivedAt: Date.now()
     }
 }
