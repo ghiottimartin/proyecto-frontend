@@ -85,6 +85,22 @@ class Filtros extends React.Component {
                                         value={filtros.numero}
                                     ></Form.Control>
                                 </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Estado:</Form.Label>
+                                    <Form.Control
+                                        id="estado"
+                                        as="select"
+                                        defaultValue=""
+                                        onChange={(e) => this.changeFiltros(e)}
+                                        value={filtros.estado}
+                                    >
+                                        <option key={0} value="">Todos</option>
+                                        <option key={1} value="abierto">Abierto</option>
+                                        <option key={2} value="cerrado">Cerrado</option>
+                                        <option key={3} value="cancelado">Cancelado</option>
+                                        <option key={4} value="recibido">{textoEntregado}</option>
+                                    </Form.Control>
+                                </Form.Group>
                             </div>
                         </div>
                     </div>
