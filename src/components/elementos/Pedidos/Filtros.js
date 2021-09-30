@@ -86,6 +86,15 @@ class Filtros extends React.Component {
                                     ></Form.Control>
                                 </Form.Group>
                                 <Form.Group>
+                                    <Form.Label>Usuario:</Form.Label>
+                                    <Form.Control
+                                        id="nombreUsuario"
+                                        type="text"
+                                        onChange={(e) => this.changeFiltros(e)}
+                                        value={filtros.usuario}
+                                    ></Form.Control>
+                                </Form.Group>
+                                <Form.Group>
                                     <Form.Label>Estado:</Form.Label>
                                     <Form.Control
                                         id="estado"
