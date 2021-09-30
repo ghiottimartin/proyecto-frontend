@@ -45,6 +45,7 @@ class Filtros extends React.Component {
         const props = this.props;
         const filtros = props.pedidos.byId.filtros;
         let maximo = moment().format("YYYY-MM-DD");
+        const textoEntregado = props.rutaVendedor ? "Entregado" : "Recibido";
         return (
             <div className="filtros">
                 <h4>Filtrado</h4>
@@ -53,7 +54,7 @@ class Filtros extends React.Component {
                         <div className="contenedor-filtros">
                             <div className="filter-by text-nowrap">                       
                                 <Form.Group>
-                                    <Form.Label>Fecha desde</Form.Label>
+                                    <Form.Label>Fecha desde:</Form.Label>
                                     <Form.Control
                                         id="fechaDesde"
                                         type="date"
@@ -64,7 +65,7 @@ class Filtros extends React.Component {
                                     ></Form.Control>
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Fecha hasta</Form.Label>
+                                    <Form.Label>Fecha hasta:</Form.Label>
                                     <Form.Control
                                         id="fechaHasta"
                                         type="date"
@@ -75,7 +76,7 @@ class Filtros extends React.Component {
                                     ></Form.Control>
                                 </Form.Group>
                                 <Form.Group>
-                                    <Form.Label>Número</Form.Label>
+                                    <Form.Label>Número:</Form.Label>
                                     <Form.Control
                                         id="numero"
                                         type="number"

@@ -30,7 +30,8 @@ class Listado extends React.Component {
         super(props);
         this.state = {
             buscando: true,
-            noHayPedidos: false
+            noHayPedidos: false,
+            paginaUno: false,
         }
     }
 
@@ -312,11 +313,25 @@ class Listado extends React.Component {
     onChangeBusqueda(e) {
         var cambio = {};
         cambio[e.target.id] = e.target.value;
+        if (e.target.id !== "paginaActual") {
+            this.setState({ paginaUno: true });
+        } else {
+            this.setState({ paginaUno: false });
+        }
         this.props.updateFiltros(cambio);
     }
 
     filtrarPedidos(e) {
         e.preventDefault();
+        if (this.state.paginaUno) {
+            var cambio = {
+                target: {
+                    id: 'paginaActual',
+                    value: 1
+                }
+            };
+            this.onChangeBusqueda(cambio);
+        }
         this.buscarPedidos();
     }
 
@@ -385,7 +400,8 @@ class Listado extends React.Component {
                     <div className="d-flex justify-content-between">
                         <Titulo titulo={titulo} clase="tabla-listado-titulo" ruta={ruta} border={true} />
                     </div>
-                    <Filtros 
+                    <Filtros
+                        rutaVendedor={rolVendedor}
                         filtrar={(e) => this.filtrarPedidos(e)}
                         onChangeBusqueda={(e) => this.onChangeBusqueda(e)}
                     />

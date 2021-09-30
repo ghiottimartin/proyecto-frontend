@@ -59,7 +59,8 @@ const filtrosIniciales = {
     fechaDesde: haceUnaSemana.format("YYYY-MM-DD"),
     fechaHasta: hoy.format("YYYY-MM-DD"),
     paginaActual: 1,
-    registrosPorPagina: 10
+    registrosPorPagina: 10,
+    estado: ""
 };
 
 function pedidosById(state = {
