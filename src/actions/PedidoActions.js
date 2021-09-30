@@ -226,9 +226,10 @@ function errorPedidos(error) {
     }
 }
 
-export function fetchPedidos(idUsuario, filtros) {
-    return dispatch => {
+export function fetchPedidos(idUsuario) {
+    return (dispatch, getState) => {
         dispatch(requestPedidos());
+        let filtros = getState().pedidos.byId.filtros;
         return pedidos.getAll(idUsuario, filtros)
             .then(function (response) {
                 if (response.status >= 400) {
@@ -563,7 +564,7 @@ function errorEntregarPedido(error) {
     }
 }
 
-export function entregarPedido(id, idUsuario, filtros) {
+export function entregarPedido(id, idUsuario) {
     return dispatch => {
         dispatch(requestEntregarPedido());
         return pedidos.entregarPedido(id)
@@ -578,7 +579,7 @@ export function entregarPedido(id, idUsuario, filtros) {
             .then(function (data) {
                 dispatch(receiveEntregarPedido(data.message));
                 dispatch(resetPedidos())
-                dispatch(fetchPedidos(idUsuario, filtros))
+                dispatch(fetchPedidos(idUsuario))
             })
             .catch(function (error) {
                 switch (error.status) {
@@ -631,7 +632,7 @@ function errorCancelarPedido(error) {
     }
 }
 
-export function cancelarPedido(id, idUsuario, filtros) {
+export function cancelarPedido(id, idUsuario) {
     return dispatch => {
         dispatch(requestCancelarPedido());
         return pedidos.cancelarPedido(id)
@@ -646,7 +647,7 @@ export function cancelarPedido(id, idUsuario, filtros) {
             .then(function (data) {
                 dispatch(receiveCancelarPedido(id, data.message));
                 dispatch(resetPedidos())
-                dispatch(fetchPedidos(idUsuario, filtros))
+                dispatch(fetchPedidos(idUsuario))
             })
             .catch(function (error) {
                 switch (error.status) {
@@ -716,9 +717,10 @@ function errorPedidosVendedor(error) {
     }
 }
 
-export function fetchPedidosVendedor(filtros) {
-    return dispatch => {
+export function fetchPedidosVendedor() {
+    return (dispatch, getState) => {
         dispatch(requestPedidosVendedor());
+        let filtros = getState().pedidos.byId.filtros;
         return pedidos.getPedidosVendedor(filtros)
             .then(function (response) {
                 if (response.status >= 400) {
@@ -742,5 +744,15 @@ export function fetchPedidosVendedor(filtros) {
                         return;
                 }
             });
+    }
+}
+
+//PEDIDO UPDATE
+export const UPDATE_FILTROS = 'UPDATE_FILTROS';
+
+export function updateFiltros(filtros) {
+    return {
+        type: UPDATE_FILTROS,
+        filtros
     }
 }

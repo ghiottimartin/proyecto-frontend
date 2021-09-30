@@ -36,7 +36,7 @@ class Filtros extends React.Component {
 
     render() {
         const props = this.props;
-        let buscando = this.state.buscando;
+        const filtros = props.pedidos.byId.filtros;
         let maximo = moment().format("YYYY-MM-DD");
         return (
             <div className="filtros">
@@ -53,7 +53,7 @@ class Filtros extends React.Component {
                                         lang="es-ES"
                                         max={maximo}
                                         onChange={(e) => this.changeFiltros(e)}
-                                        value={props.filtros.fechaDesde}
+                                        value={filtros.fechaDesde}
                                     ></Form.Control>
                                 </Form.Group>
                                 <Form.Group>
@@ -64,7 +64,7 @@ class Filtros extends React.Component {
                                         lang="es-ES"
                                         max={maximo}
                                         onChange={(e) => this.changeFiltros(e)}
-                                        value={props.filtros.fechaHasta}
+                                        value={filtros.fechaHasta}
                                     ></Form.Control>
                                 </Form.Group>
                             </div>

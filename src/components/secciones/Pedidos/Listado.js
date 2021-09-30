@@ -3,19 +3,13 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 //Actions
-import { fetchPedidos, resetPedidos, updatePedido, entregarPedido, cancelarPedido, fetchPedidosVendedor, resetPedidosVendedor } from "../../../actions/PedidoActions";
+import { cancelarPedido, entregarPedido, fetchPedidos, fetchPedidosVendedor, resetPedidos, resetPedidosVendedor, updateFiltros, updatePedido } from "../../../actions/PedidoActions";
 
 //Api
 import auth from "../../../api/authentication";
 
 //CSS
 import "../../../assets/css/Pedidos.css";
-
-//Components
-import Loader from "../../elementos/Loader";
-import Titulo from "../../elementos/Titulo";
-import Filtros from "../../elementos/Pedidos/Filtros";
-import Paginacion from "../../elementos/Paginacion";
 
 //Constantes
 import * as roles from '../../../constants/roles.js';
@@ -24,22 +18,19 @@ import * as rutas from '../../../constants/rutas.js';
 //Librerias
 import history from "../../../history";
 import Swal from "sweetalert2";
-import moment from 'moment';
+
+//Components
+import Loader from "../../elementos/Loader";
+import Paginacion from "../../elementos/Paginacion";
+import Filtros from "../../elementos/Pedidos/Filtros";
+import Titulo from "../../elementos/Titulo";
 
 class Listado extends React.Component {
     constructor(props) {
         super(props);
-        let hoy = moment();
-        let haceUnaSemana = moment().subtract(2, 'weeks');
         this.state = {
             buscando: true,
-            noHayPedidos: false,
-            filtros: {
-                fechaDesde: haceUnaSemana.format("YYYY-MM-DD"),
-                fechaHasta: hoy.format("YYYY-MM-DD"),
-                paginaActual: 1,
-                registrosPorPagina: 10
-            }
+            noHayPedidos: false
         }
     }
 
@@ -85,7 +76,7 @@ class Listado extends React.Component {
             this.buscarPedidos();
         }
 
-        if (prevState.filtros.paginaActual !== this.state.filtros.paginaActual) {
+        if (prevProps.pedidos.byId.filtros.paginaActual !== this.props.pedidos.byId.filtros.paginaActual) {
             this.buscarPedidos();
         }
     }
@@ -142,16 +133,15 @@ class Listado extends React.Component {
      */
     buscarPedidos() {
         this.setState({ buscando: true });
-        let filtros = this.state.filtros;
         let rolVendedor = this.comprobarRutaTipoVendedor();
         this.props.resetPedidos();
         if (!rolVendedor) {
             let idUsuario = auth.idUsuario();
-            this.props.fetchPedidos(idUsuario, filtros);
+            this.props.fetchPedidos(idUsuario);
         }
 
         if (rolVendedor) {
-            this.props.fetchPedidosVendedor(filtros);
+            this.props.fetchPedidosVendedor();
         }
     }
 
@@ -172,8 +162,7 @@ class Listado extends React.Component {
                 break;
 
             case 'cancelar':
-                let filtros = this.state.filtros;
-                this.cancelarPedido(pedido, filtros);
+                this.cancelarPedido(pedido);
                 break;
         }
     }
@@ -215,10 +204,9 @@ class Listado extends React.Component {
                 cancelButtonColor: '#bfbfbf',
             });
         } else {
-            let filtros = this.state.filtros;
             let idUsuario = auth.idUsuario();
             this.setState({ buscando: true });
-            this.props.entregarPedido(pedido.id, idUsuario, filtros);
+            this.props.entregarPedido(pedido.id, idUsuario);
         }
     }
 
@@ -255,9 +243,8 @@ class Listado extends React.Component {
         }).then((result) => {
             if (result.isConfirmed) {
                 let idUsuario = auth.idUsuario();
-                let filtros = this.state.filtros;
                 this.setState({ buscando: true });
-                this.props.cancelarPedido(pedido.id, idUsuario, filtros);
+                this.props.cancelarPedido(pedido.id, idUsuario);
             }
         });
     }
@@ -321,11 +308,9 @@ class Listado extends React.Component {
     }
 
     onChangeBusqueda(e) {
-        let filtros = this.state.filtros;
-        filtros[e.target.id] = e.target.value;
-        this.setState({
-            filtros: filtros,
-        });
+        var cambio = {};
+        cambio[e.target.id] = e.target.value;
+        this.props.updateFiltros(cambio);
     }
 
     filtrarPedidos(e) {
@@ -338,14 +323,9 @@ class Listado extends React.Component {
             return;
         }
 
-        const filtrosPagina = {
-            paginaActual: pagina
-        };
-        const filtros = { ...this.state.filtros, ...filtrosPagina };
-        console.log(filtros)
-        this.setState({
-            filtros: filtros
-        });
+        var cambio = {};
+        cambio['paginaActual'] = pagina;
+        this.props.updateFiltros(cambio);
     }
 
     render() {
@@ -396,6 +376,7 @@ class Listado extends React.Component {
                 <td colSpan={rolVendedor ? 6 : 5}><Loader display={true} /></td>
             </tr>;
         const pedidosResponsive = this.getHtmlPedidosResponsive(rolVendedor);
+        const filtros = this.props.pedidos.byId.filtros;
         return (
             <div className="tabla-listado producto-listado">
                 <div className="table-responsive tarjeta-body listado">
@@ -403,7 +384,6 @@ class Listado extends React.Component {
                         <Titulo titulo={titulo} clase="tabla-listado-titulo" ruta={ruta} border={true} />
                     </div>
                     <Filtros 
-                        filtros={this.state.filtros}
                         filtrar={(e) => this.filtrarPedidos(e)}
                         onChangeBusqueda={(e) => this.onChangeBusqueda(e)}
                     />
@@ -427,8 +407,8 @@ class Listado extends React.Component {
                             ''
                             :
                             <Paginacion
-                                activePage={this.state.filtros.paginaActual}
-                                itemsCountPerPage={this.state.filtros.registrosPorPagina}
+                                activePage={filtros.paginaActual}
+                                itemsCountPerPage={filtros.registrosPorPagina}
                                 totalItemsCount={registros}
                                 pageRangeDisplayed={5}
                                 onChange={(e) => this.cambiarDePagina(e)}
@@ -453,8 +433,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchPedidos: (idUsuario, filtros) => {
-            dispatch(fetchPedidos(idUsuario, filtros))
+        fetchPedidos: (idUsuario) => {
+            dispatch(fetchPedidos(idUsuario))
         },
         resetPedidos: () => {
             dispatch(resetPedidos())
@@ -462,18 +442,21 @@ const mapDispatchToProps = (dispatch) => {
         updatePedido: (pedido) => {
             dispatch(updatePedido(pedido))
         },
-        entregarPedido: (id, idUsuario, filtros) => {
-            dispatch(entregarPedido(id, idUsuario, filtros))
+        entregarPedido: (id, idUsuario) => {
+            dispatch(entregarPedido(id, idUsuario))
         },
-        cancelarPedido: (id, idUsuario, filtros) => {
-            dispatch(cancelarPedido(id, idUsuario, filtros))
+        cancelarPedido: (id, idUsuario) => {
+            dispatch(cancelarPedido(id, idUsuario))
         },
-        fetchPedidosVendedor: (filtros) => {
-            dispatch(fetchPedidosVendedor(filtros))
+        fetchPedidosVendedor: () => {
+            dispatch(fetchPedidosVendedor())
         },
         resetPedidosVendedor: () => {
             dispatch(resetPedidosVendedor())
         },
+        updateFiltros: (filtros) => {
+            dispatch(updateFiltros(filtros))
+        }
     }
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Listado));

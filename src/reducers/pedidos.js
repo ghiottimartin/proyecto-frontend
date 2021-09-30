@@ -1,6 +1,6 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import merge from "lodash/merge";
-import isEmpty from "lodash/isEmpty";
+import moment from 'moment';
 
 //Actions
 import {
@@ -43,11 +43,15 @@ import {
     REQUEST_PEDIDOS_VENDEDOR,
     RECEIVE_PEDIDOS_VENDEDOR,
     ERROR_PEDIDOS_VENDEDOR,
-    RESET_PEDIDOS_VENDEDOR
+    RESET_PEDIDOS_VENDEDOR,
+    UPDATE_FILTROS
 
 } from '../actions/PedidoActions';
-import {LOGOUT_SUCCESS} from "../actions/AuthenticationActions";
+import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions";
 import pickBy from "lodash/pickBy";
+
+let hoy = moment();
+let haceUnaSemana = moment().subtract(2, 'weeks');
 
 function pedidosById(state = {
     isFetching: false,
@@ -60,6 +64,12 @@ function pedidosById(state = {
         forzar: false,
         lineas: [],
         lineasIds: [],
+    },
+    filtros: {
+        fechaDesde: haceUnaSemana.format("YYYY-MM-DD"),
+        fechaHasta: hoy.format("YYYY-MM-DD"),
+        paginaActual: 1,
+        registrosPorPagina: 10
     },
     error: null,
     success: "",
@@ -237,7 +247,7 @@ function pedidosById(state = {
                 success: "",
                 error: action.error
             });
-            //PEDIDOS
+        //PEDIDOS
         case INVALIDATE_PEDIDOS_VENDEDOR:
             return Object.assign({}, state, {
                 didInvalidate: true
@@ -271,6 +281,10 @@ function pedidosById(state = {
                 lastUpdated: null,
                 pedidos: [],
             });
+        case UPDATE_FILTROS:
+            return Object.assign({}, state, {
+                filtros: merge({}, state.filtros, action.filtros)
+            });
         default:
             return state
     }
@@ -299,7 +313,7 @@ function create(state = {
                 isCreating: false,
                 success: "",
                 error: null,
-                nuevo:{},
+                nuevo: {},
             });
         case REQUEST_CREATE_PEDIDO:
             return Object.assign({}, state, {
@@ -435,14 +449,14 @@ function pedidosAllIds(state = [], action) {
     switch (action.type) {
         case RECEIVE_PEDIDOS:
             return action.pedidos.result ? action.pedidos.result : [];
-            case RECEIVE_PEDIDOS_VENDEDOR:
-                return action.pedidos.result ? action.pedidos.result : [];
+        case RECEIVE_PEDIDOS_VENDEDOR:
+            return action.pedidos.result ? action.pedidos.result : [];
         case RECEIVE_DELETE_PEDIDO:
             return state.filter(id => id != action.idPedido);
         case RESET_PEDIDOS:
             return [];
         case RESET_PEDIDOS_VENDEDOR:
-                return [];
+            return [];
         default:
             return state
     }
@@ -451,7 +465,7 @@ function pedidosAllIds(state = [], action) {
 
 const pedidos = combineReducers({
     allIds: pedidosAllIds,
-    byId:   pedidosById,
+    byId: pedidosById,
     create: create,
     update: update,
     delete: borrar
