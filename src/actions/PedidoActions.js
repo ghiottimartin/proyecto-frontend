@@ -564,7 +564,7 @@ function errorEntregarPedido(error) {
     }
 }
 
-export function entregarPedido(id, idUsuario) {
+export function entregarPedido(id, idUsuario, listadoVendedor) {
     return dispatch => {
         dispatch(requestEntregarPedido());
         return pedidos.entregarPedido(id)
@@ -579,7 +579,11 @@ export function entregarPedido(id, idUsuario) {
             .then(function (data) {
                 dispatch(receiveEntregarPedido(data.message));
                 dispatch(resetPedidos())
-                dispatch(fetchPedidos(idUsuario))
+                if (listadoVendedor) {
+                    dispatch(fetchPedidosVendedor())
+                } else {
+                    dispatch(fetchPedidos(idUsuario))
+                }
             })
             .catch(function (error) {
                 switch (error.status) {
@@ -632,7 +636,7 @@ function errorCancelarPedido(error) {
     }
 }
 
-export function cancelarPedido(id, idUsuario) {
+export function cancelarPedido(id, idUsuario, listadoVendedor) {
     return dispatch => {
         dispatch(requestCancelarPedido());
         return pedidos.cancelarPedido(id)
@@ -647,7 +651,11 @@ export function cancelarPedido(id, idUsuario) {
             .then(function (data) {
                 dispatch(receiveCancelarPedido(id, data.message));
                 dispatch(resetPedidos())
-                dispatch(fetchPedidos(idUsuario))
+                if (listadoVendedor) {
+                    dispatch(fetchPedidosVendedor())
+                } else {
+                    dispatch(fetchPedidos(idUsuario))
+                }
             })
             .catch(function (error) {
                 switch (error.status) {

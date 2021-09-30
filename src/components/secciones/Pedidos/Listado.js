@@ -206,7 +206,8 @@ class Listado extends React.Component {
         } else {
             let idUsuario = auth.idUsuario();
             this.setState({ buscando: true });
-            this.props.entregarPedido(pedido.id, idUsuario);
+            let listadoVendedor = this.comprobarRutaTipoVendedor();
+            this.props.entregarPedido(pedido.id, idUsuario, listadoVendedor);
         }
     }
 
@@ -244,7 +245,8 @@ class Listado extends React.Component {
             if (result.isConfirmed) {
                 let idUsuario = auth.idUsuario();
                 this.setState({ buscando: true });
-                this.props.cancelarPedido(pedido.id, idUsuario);
+                let listadoVendedor = this.comprobarRutaTipoVendedor();
+                this.props.cancelarPedido(pedido.id, idUsuario, listadoVendedor);
             }
         });
     }
@@ -442,11 +444,11 @@ const mapDispatchToProps = (dispatch) => {
         updatePedido: (pedido) => {
             dispatch(updatePedido(pedido))
         },
-        entregarPedido: (id, idUsuario) => {
-            dispatch(entregarPedido(id, idUsuario))
+        entregarPedido: (id, idUsuario, listadoVendedor) => {
+            dispatch(entregarPedido(id, idUsuario, listadoVendedor))
         },
-        cancelarPedido: (id, idUsuario) => {
-            dispatch(cancelarPedido(id, idUsuario))
+        cancelarPedido: (id, idUsuario, listadoVendedor) => {
+            dispatch(cancelarPedido(id, idUsuario, listadoVendedor))
         },
         fetchPedidosVendedor: () => {
             dispatch(fetchPedidosVendedor())

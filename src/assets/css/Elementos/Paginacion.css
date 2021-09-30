@@ -36,11 +36,6 @@
   color: white;
 }
 
-.pagination .last a,
-.pagination .first a {
-  color: #1579bf;
-}
-
 .pagination li.disabled:hover {
   background-color: transparent;
 }

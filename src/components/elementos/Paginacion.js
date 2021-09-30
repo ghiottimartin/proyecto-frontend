@@ -21,10 +21,10 @@ class Paginacion extends React.Component {
                     totalItemsCount={props.totalItemsCount}
                     pageRangeDisplayed={props.pageRangeDisplayed}
                     onChange={props.onChange}
-                    prevPageText={"..."}
-                    nextPageText={"..."}
-                    firstPageText={"<"}
-                    lastPageText={">"}
+                    prevPageText={"<"}
+                    nextPageText={">"}
+                    firstPageText={"<<"}
+                    lastPageText={">>"}
                     itemClassLast={"last"}
                     itemClassFirst={"first"}
                 />

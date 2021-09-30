@@ -51,7 +51,7 @@ class Visualizar extends React.Component {
                         <span>{pedido.fecha_texto}</span>
                     </li>
                     <li style={{display: mostrarUsuarios ? "block" : "none"}}>
-                        <label>Usuario:</label>{pedido.usuario_nombre}, <span className="texto-chico">{pedido.usuario_email}</span>
+                        <label>Usuario:</label>{pedido.usuario_nombre} <span className="texto-chico">({pedido.usuario_email})</span>
                     </li>
                     <li>
                         <label>Estado:</label>
