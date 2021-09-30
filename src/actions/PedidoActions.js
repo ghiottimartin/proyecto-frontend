@@ -757,10 +757,17 @@ export function fetchPedidosVendedor() {
 
 //PEDIDO UPDATE
 export const UPDATE_FILTROS = 'UPDATE_FILTROS';
+export const RESET_FILTROS  = 'RESET_FILTROS';
 
 export function updateFiltros(filtros) {
     return {
         type: UPDATE_FILTROS,
         filtros
+    }
+}
+
+export function resetFiltros() {
+    return {
+        type: RESET_FILTROS
     }
 }

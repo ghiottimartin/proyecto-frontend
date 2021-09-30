@@ -44,7 +44,8 @@ import {
     RECEIVE_PEDIDOS_VENDEDOR,
     ERROR_PEDIDOS_VENDEDOR,
     RESET_PEDIDOS_VENDEDOR,
-    UPDATE_FILTROS
+    UPDATE_FILTROS,
+    RESET_FILTROS
 
 } from '../actions/PedidoActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions";
@@ -52,6 +53,14 @@ import pickBy from "lodash/pickBy";
 
 let hoy = moment();
 let haceUnaSemana = moment().subtract(2, 'weeks');
+
+const filtrosIniciales = {
+    numero: "",
+    fechaDesde: haceUnaSemana.format("YYYY-MM-DD"),
+    fechaHasta: hoy.format("YYYY-MM-DD"),
+    paginaActual: 1,
+    registrosPorPagina: 10
+};
 
 function pedidosById(state = {
     isFetching: false,
@@ -65,13 +74,7 @@ function pedidosById(state = {
         lineas: [],
         lineasIds: [],
     },
-    filtros: {
-        numero: "",
-        fechaDesde: haceUnaSemana.format("YYYY-MM-DD"),
-        fechaHasta: hoy.format("YYYY-MM-DD"),
-        paginaActual: 1,
-        registrosPorPagina: 10
-    },
+    filtros: filtrosIniciales,
     error: null,
     success: "",
     isCanceling: false,
@@ -285,6 +288,10 @@ function pedidosById(state = {
         case UPDATE_FILTROS:
             return Object.assign({}, state, {
                 filtros: merge({}, state.filtros, action.filtros)
+            });
+        case RESET_FILTROS:
+            return Object.assign({}, state, {
+                filtros: filtrosIniciales
             });
         default:
             return state

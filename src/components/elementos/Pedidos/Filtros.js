@@ -2,6 +2,9 @@ import React from 'react';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
+//Actions
+import { resetFiltros } from "../../../actions/PedidoActions";
+
 //Boostrap
 import Form from "react-bootstrap/Form";
 
@@ -17,6 +20,10 @@ class Filtros extends React.Component {
         this.state = {
             buscando: false,
         }
+    }
+
+    componentDidMount() {
+        this.props.resetFiltros();
     }
 
     changeDirection() {
@@ -98,7 +105,9 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-      
+        resetFiltros: () => {
+            dispatch(resetFiltros())
+        }
     }
 };
 
