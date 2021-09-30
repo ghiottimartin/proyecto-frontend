@@ -99,9 +99,8 @@ class Filtros extends React.Component {
                                     <Form.Control
                                         id="estado"
                                         as="select"
-                                        defaultValue=""
                                         onChange={(e) => this.changeFiltros(e)}
-                                        value={filtros.estado}
+                                        value={filtros.estado ? filtros.estado : ""}
                                     >
                                         <option key={0} value="">Todos</option>
                                         <option key={1} value="abierto">Abierto</option>

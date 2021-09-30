@@ -5,8 +5,8 @@ import history from "./history";
 import auth from "./api/authentication";
 
 //Actions
-import { createPedido, fetchPedidoAbiertoIfNeeded, saveCreatePedido, saveDeletePedido, resetPedidoAbierto} from "./actions/PedidoActions";
-import { fetchProductosIfNeeded } from "./actions/ProductoActions";
+import { createPedido, fetchPedidoAbierto , saveCreatePedido, saveDeletePedido, resetPedidoAbierto} from "./actions/PedidoActions";
+import { fetchProductos } from "./actions/ProductoActions";
 import { fetchUsuarioLogueadoIfNeeded } from "./actions/UsuarioActions";
 
 //Constants
@@ -64,8 +64,8 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchProductosIfNeeded();
-        this.props.fetchPedidoAbiertoIfNeeded();
+        this.props.fetchProductos();
+        this.props.fetchPedidoAbierto();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -154,7 +154,7 @@ class App extends React.Component {
     }
 
     actualizarPedido(producto, cantidad) {
-        let pedido = this.props.pedidos.byId.abierto;;
+        let pedido = this.props.pedidos.byId.abierto;
         let linea = this.getLineaProducto(producto, pedido);
         let nuevas = pedido.lineas;
         let idLinea = linea.id > 0 ? linea.id : 0;
@@ -276,11 +276,11 @@ const mapDispatchToProps = (dispatch) => {
         fetchUsuarioLogueadoIfNeeded: () => {
             dispatch(fetchUsuarioLogueadoIfNeeded())
         },
-        fetchProductosIfNeeded: () => {
-            dispatch(fetchProductosIfNeeded())
+        fetchProductos: () => {
+            dispatch(fetchProductos())
         },
-        fetchPedidoAbiertoIfNeeded: () => {
-            dispatch(fetchPedidoAbiertoIfNeeded())
+        fetchPedidoAbierto: () => {
+            dispatch(fetchPedidoAbierto())
         },
         createPedido: (pedido) => {
             dispatch(createPedido(pedido))

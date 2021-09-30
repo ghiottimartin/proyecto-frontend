@@ -75,6 +75,8 @@ export function saveCreateProducto(volverA) {
                 }
                 dispatch(reveiceCreateProducto(mensaje));
                 dispatch(resetCreateProducto());
+                dispatch(resetProductos());
+                dispatch(fetchProductos());
                 if (rutas.validarRuta(volverA)) {
                     history.push(volverA);
                 }

@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 //Actions
-import { fetchProductosIfNeeded } from "../../actions/ProductoActions";
+import { resetProductos,  fetchProductos} from "../../actions/ProductoActions";
 
 //Components
 import Button from '@material-ui/core/Button';
@@ -18,7 +18,8 @@ class Almacen extends React.Component {
     }
 
     componentDidMount() {
-        this.props.fetchProductosIfNeeded();
+        this.props.resetProductos();
+        this.props.fetchProductos();
     }
 
     render() {
@@ -68,8 +69,11 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchProductosIfNeeded: () => {
-            dispatch(fetchProductosIfNeeded())
+        fetchProductos: () => {
+            dispatch(fetchProductos())
+        },
+        resetProductos: () => {
+            dispatch(resetProductos())
         },
     }
 };
