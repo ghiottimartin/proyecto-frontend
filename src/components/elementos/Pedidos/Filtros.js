@@ -67,6 +67,16 @@ class Filtros extends React.Component {
                                         value={filtros.fechaHasta}
                                     ></Form.Control>
                                 </Form.Group>
+                                <Form.Group>
+                                    <Form.Label>Número</Form.Label>
+                                    <Form.Control
+                                        id="numero"
+                                        type="number"
+                                        min="0"
+                                        onChange={(e) => this.changeFiltros(e)}
+                                        value={filtros.numero}
+                                    ></Form.Control>
+                                </Form.Group>
                             </div>
                         </div>
                     </div>

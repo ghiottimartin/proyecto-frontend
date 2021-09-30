@@ -66,6 +66,7 @@ function pedidosById(state = {
         lineasIds: [],
     },
     filtros: {
+        numero: "",
         fechaDesde: haceUnaSemana.format("YYYY-MM-DD"),
         fechaHasta: hoy.format("YYYY-MM-DD"),
         paginaActual: 1,
