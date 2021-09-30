@@ -46,6 +46,7 @@ class Filtros extends React.Component {
         const filtros = props.pedidos.byId.filtros;
         let maximo = moment().format("YYYY-MM-DD");
         const textoEntregado = props.rutaVendedor ? "Entregado" : "Recibido";
+        const mostrarFiltroUsuario = props.rutaVendedor;
         return (
             <div className="filtros">
                 <h4>Filtrado</h4>
@@ -85,7 +86,7 @@ class Filtros extends React.Component {
                                         value={filtros.numero}
                                     ></Form.Control>
                                 </Form.Group>
-                                <Form.Group>
+                                <Form.Group style={{display: mostrarFiltroUsuario ? "block" : "none"}}>
                                     <Form.Label>Usuario:</Form.Label>
                                     <Form.Control
                                         id="nombreUsuario"
