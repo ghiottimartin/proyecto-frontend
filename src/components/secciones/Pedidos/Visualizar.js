@@ -55,7 +55,7 @@ class Visualizar extends React.Component {
                     </li>
                     <li>
                         <label>Estado:</label>
-                        <span>{pedido.estado_texto}</span>
+                        <span className={pedido.estado_clase}>{pedido.estado_texto}</span>
                     </li>
                     <li>
                         <label>Total:</label>
@@ -75,8 +75,8 @@ class Visualizar extends React.Component {
                         {filas}
                     </tbody>
                     <tfoot>
-                        <tr>
-                            <td colSpan="3" className="text-right font-weight-bold">Total</td>
+                        <tr className="font-weight-bold">
+                            <td colSpan="3" className="text-right">Total</td>
                             <td>{pedido.total_texto}</td>
                         </tr>
                     </tfoot>
