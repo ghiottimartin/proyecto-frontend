@@ -47,13 +47,13 @@ class Almacen extends React.Component {
             <div className="almacen">
                 <div className="tarjeta-body d-flex flex-column">
                     <h1>Almacén</h1>
-                    <div className={clase}>
-                        {productos}
-                    </div>
                     <div className="carrito-botones justify-content-end no-cerrar-carrito align-self-end">
                         <Button variant="outlined" color="secondary" className="entregar" onClick={() => this.props.changeMostrar()}>
                             Carrito
                         </Button>
+                    </div>
+                    <div className={clase}>
+                        {productos}
                     </div>
                 </div>
             </div>
