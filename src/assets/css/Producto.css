@@ -13,14 +13,17 @@
 }
 
 .producto img {
-    width: 100%;
+    width: 80%;
     height: auto;
+    max-height: 150px;
 }
 
 .producto .producto-izquierda {
     display: flex;
     align-items: center;
-    max-width: 30%;
+    align-self: center;
+    width: 40%;
+    
 }
 
 .producto .producto-derecha {
