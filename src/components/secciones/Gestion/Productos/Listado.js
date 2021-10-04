@@ -180,7 +180,8 @@ class Listado extends React.Component {
                 <div className="table-responsive tarjeta-body productos-listado">
                     <div className="d-flex justify-content-between">
                         <Titulo ruta={rutas.GESTION} titulo={"Productos"} clase="tabla-listado-titulo" operaciones={[operacion]} />
-                        <a href={rutas.PRODUCTO_ALTA + `?volverA=${rutas.PRODUCTOS_LISTAR_ADMIN}`}
+                        <a href="#"
+                            onClick={() => history.push(rutas.PRODUCTO_ALTA + "?volverA=" + rutas.PRODUCTOS_LISTAR_ADMIN)}
                            data-toggle="tooltip" data-original-title="" title="">
                             <AddBoxIcon style={{ color:  '#5cb860'}}/>
                         </a>
