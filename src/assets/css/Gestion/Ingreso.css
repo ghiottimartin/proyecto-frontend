@@ -1,0 +1,71 @@
+.ingreso-mercaderia {
+  height: calc(100vh - 100px) !important;
+  margin: 0 20px !important;
+  overflow: auto;
+}
+
+.ingreso-mercaderia-contenedor {
+  padding: 20px;
+}
+
+.ingreso-mercaderia .ingreso-mercaderia-articulos ul {
+  list-style: none;
+  padding: 0;
+  max-height: 500px;
+  overflow: auto;
+}
+
+.ingreso-mercaderia .ingreso-mercaderia-articulos ul li {
+  margin: 10px 0;
+  padding: 10px 5px;
+  border: 1px solid rgb(128 128 128 / 30%);
+  border-radius: 6px;
+}
+
+.ingreso-mercaderia .ingreso-mercaderia-articulos ul li:hover {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  cursor: pointer;
+}
+
+.ingreso-mercaderia table thead th {
+  padding: 0.75rem;
+  background-color: transparent;
+  border-top: 0;
+  color: #fff;
+  border: 1px solid #efefef;
+  border-right: 0;
+  border-left: 0;
+  vertical-align: middle;
+}
+
+.ingreso-mercaderia table thead {
+  background: #879799;
+  color: #fff;
+}
+
+.ingreso-mercaderia table thead tr th:first-child {
+  border-top-left-radius: 6px;
+}
+
+.ingreso-mercaderia table thead tr th:last-child {
+  border-top-right-radius: 6px;
+}
+
+.ingreso-mercaderia table tr {
+  border: 1px solid #efefef;
+  border-right: 0;
+  border-left: 0;
+  vertical-align: middle;
+}
+
+.ingreso-mercaderia table tfoot {
+  font-weight: bold;
+}
+
+.ingreso-mercaderia .boton-guardar {
+  bottom: 0;
+  position: absolute;
+  right: 15px;
+}

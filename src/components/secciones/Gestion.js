@@ -40,7 +40,7 @@ class Gestion extends React.Component {
 
     getImagenPorRuta(ruta) {
         switch (ruta) {
-            case rutas.COMPRAS:
+            case rutas.INGRESO_MERCADERIA:
                 return imgCompras;
             case rutas.USUARIOS_LISTAR:
                 return imgUsuarios;

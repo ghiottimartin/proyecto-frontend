@@ -9,7 +9,6 @@ export const RESET_PASSWORD = '/reset-password/:token';
 export const MENU            = '/menu';
 export const ALMACEN         = '/almacen';
 export const GESTION         = '/gestion';
-export const COMPRAS         = '/compras';
 
 export const ACCION_ALTA   = 'alta';
 export const ACCION_LISTAR = 'listar';
@@ -51,6 +50,9 @@ export const PEDIDOS_VENDEDOR = '/pedidos/vendedor';
 export const PEDIDO_VISUALIZAR = '/pedidos/visualizar/:rol/:id';
 export const PEDIDO_VISUALIZAR_COMENSAL = '/pedidos/visualizar/comensal/';
 export const PEDIDO_VISUALIZAR_VENDEDOR = '/pedidos/visualizar/vendedor/';
+
+//Ingreso de mercadería
+export const INGRESO_MERCADERIA = '/ingreso-mercaderia/';
 
 /**
  * Devuelve la url de usuarios
@@ -95,7 +97,7 @@ const RUTAS = [
     MENU,
     ALMACEN,
     GESTION,
-    COMPRAS,
+    INGRESO_MERCADERIA,
     USUARIOS_LISTAR,
     USUARIOS_ALTA_ADMIN,
     USUARIOS_ALTA_COMUN,

@@ -1,28 +1,40 @@
 .inicio {
-    display: grid;
-    grid-template-columns: 50% 50%;
-    grid-template-rows: auto;
-    grid-template-areas: "tarjeta-menu tarjeta-menu";
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: auto;
+  grid-template-areas: "tarjeta-menu tarjeta-menu";
 }
 
 .inicio .tarjeta-menu .tarjeta img {
-    max-width: 300px !important;
-    border-radius: 6px;
+  max-width: 300px !important;
+  border-radius: 6px;
 }
 
 .contenedor-contrasenia {
-    position: relative;
+  position: relative;
 }
 
 .contenedor-contrasenia .ver-password {
-    width: 20px;
-    position: absolute;
-    right: 10px;
-    top: 9px;
+  width: 20px;
+  position: absolute;
+  right: 10px;
+  top: 9px;
 }
 
 .texto-chico {
-    color: #6c757d!important;
-    font-size: 80%;
-    font-weight: 400;
+  color: #6c757d !important;
+  font-size: 80%;
+  font-weight: 400;
+}
+
+.boton-icono-quitar {
+  border: none;
+  background: #ccc;
+  border-radius: 100%;
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+}
+.boton-icono-quitar:hover {
+  background: #fa5858;
 }

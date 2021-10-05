@@ -63,6 +63,7 @@
     ]
   },
   "devDependencies": {
-    "css-loader": "^6.2.0"
+    "css-loader": "^6.2.0",
+    "eslint-plugin-react-hooks": "^4.2.0"
   }
 }

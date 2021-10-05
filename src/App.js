@@ -32,6 +32,7 @@ import ValidarEmail from "./components/secciones/Usuarios/ValidarEmail";
 import ListadoCategorias from "./components/secciones/Gestion/Productos/ListadoCategorias.js";
 import PedidoListado from "./components/secciones/Pedidos/Listado";
 import PedidoVisualizar from "./components/secciones/Pedidos/Visualizar";
+import Ingreso from './components/secciones/Gestion/Ingreso/Ingreso';
 
 //CSS
 import "./App.css";
@@ -255,6 +256,7 @@ class App extends React.Component {
                         />
                         <Route exact path={rutas.PEDIDOS} component={PedidoListado} />
                         <Route exact path={rutas.PEDIDO_VISUALIZAR} component={PedidoVisualizar} />
+                        <Route exact path={rutas.INGRESO_MERCADERIA} component={Ingreso} />
                         <Route exact path="*" component={NotFound} />
                     </Switch>
                 </div>
