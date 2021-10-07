@@ -60,6 +60,11 @@ function Ingreso(props) {
     }
 
     const getOpcionesProductos = () => {
+        const buscando = props.productos.byId.isFetching
+        if (buscando) {
+            return []
+        }
+
         let actuales = []
         const agregados = getIdsProductosIngreso()
         props.productos.allIds.map(id => {
@@ -194,6 +199,7 @@ function Ingreso(props) {
     </tr>
 
     const isCreating = props.ingresos.create.isCreating
+    const buscandoProductos = props.productos.byId.isFetching
 
     return (
         <div className="ingreso-mercaderia tarjeta-body">
@@ -202,7 +208,7 @@ function Ingreso(props) {
                 <div className="col-lg-4">
                     <div className="ingreso-mercaderia-articulos">
                         <h5>Productos</h5>
-                        <ul>{Opciones}</ul>
+                        <ul>{buscandoProductos ? <Loader display={true} /> : Opciones}</ul>
                     </div>
                 </div>
                 <div className="col-lg-8 position-relative">
