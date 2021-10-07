@@ -12,6 +12,10 @@ import {
 } from '../actions/IngresoActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions";
 
+const nuevo = {
+    lineas: [],
+}
+
 function create(state = {
     isCreating: false,
     nuevo: {
@@ -35,7 +39,9 @@ function create(state = {
                 isCreating: false,
                 success: "",
                 error: null,
-                nuevo: {},
+                nuevo:  {
+                    lineas: [],
+                },
             });
         case REQUEST_CREATE_INGRESO:
             return Object.assign({}, state, {

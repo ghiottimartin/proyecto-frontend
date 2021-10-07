@@ -12,7 +12,8 @@ import "../../../../assets/css/Gestion/Ingreso.css"
 //Constants
 import * as rutas from "../../../../constants/rutas"
 
-//Componentes
+//Components
+import Loader from "../../../elementos/Loader";
 import Titulo from "../../../elementos/Titulo"
 
 //Librerías
@@ -223,9 +224,11 @@ function Ingreso(props) {
                             {Filas.length === 0 ? '' : Total}
                         </tfoot>
                     </table>
-                    <button onClick={() => crearIngreso()}className="btn btn-success float-right boton-guardar">
-                        {isCreating ? <i class="fa fa-spinner fa-spin fa-fw" aria-hidden="true"></i> : ''}
-                        <span className="ml-1">Guardar</span>
+                    <button className="btn btn-success float-right boton-guardar" onClick={() => crearIngreso()}>
+                        <div style={{display: isCreating ? "inline-block" : "none"}} class="spinner spinner-border text-light" role="status">
+                            <span class="sr-only"></span>
+                        </div>
+                        <span className="ml-1">Guardar</span>                        
                     </button>
                 </div>
             </div>

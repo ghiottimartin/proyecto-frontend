@@ -159,7 +159,7 @@ class Alta extends React.Component {
         }
 
         if (mensajes.length > 0) {
-            let texto = `<p class="text-left">${mensajes.join("<br/>")}</p>`;
+            let texto = `<p className="text-left">${mensajes.join("<br/>")}</p>`;
             Swal.fire({
                 title: 'Error al guardar',
                 html: texto,

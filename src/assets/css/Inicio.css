@@ -35,6 +35,13 @@
   cursor: pointer;
   font-size: 13px;
 }
+
 .boton-icono-quitar:hover {
   background: #fa5858;
+}
+
+.spinner {
+  width: 18px;
+  height: 18px;
+  margin-right: 2px;
 }

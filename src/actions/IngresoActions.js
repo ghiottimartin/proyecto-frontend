@@ -20,7 +20,7 @@ export const REQUEST_CREATE_INGRESO = "REQUEST_CREATE_INGRESO";
 export const RECEIVE_CREATE_INGRESO = "RECEIVE_CREATE_INGRESO";
 export const ERROR_CREATE_INGRESO   = "ERROR_CREATE_INGRESO";
 
-//INGRESOLOGUEADO CREATE
+// INGRESO CREATE
 function requestCreateIngreso() {
     return {
         type: REQUEST_CREATE_INGRESO,
@@ -65,7 +65,8 @@ export function saveCreateIngreso(volverA) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
                 } else {
-                    return true;
+                    var data = response.json();
+                    return data;
                 }
             })
             .then(function (data) {
