@@ -2,6 +2,7 @@ import history from "../history";
 
 //Actions
 import { logout } from "./AuthenticationActions";
+import { fetchProductos, resetProductos } from "./ProductoActions";
 
 //Api
 import ingresos from "../api/ingresos";
@@ -74,6 +75,8 @@ export function saveCreateIngreso(volverA) {
                 if (data.message) {
                     mensaje = data.message;
                 }
+                dispatch(resetProductos())
+                dispatch(fetchProductos())
                 dispatch(reveiceCreateIngreso(mensaje));
                 dispatch(resetCreateIngreso());
                 if (rutas.validarRuta(volverA)) {

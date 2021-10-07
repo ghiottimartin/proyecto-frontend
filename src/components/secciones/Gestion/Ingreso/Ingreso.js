@@ -35,7 +35,7 @@ function Ingreso(props) {
         let linea = ingreso.lineas.find(linea => linea.producto.id === producto.id)
         if (linea === undefined) {
             linea = {
-                'precio': '',
+                'precio': producto.precio_vigente,
                 'cantidad': '',
                 'producto': producto
             }
@@ -216,11 +216,11 @@ function Ingreso(props) {
                     <table className="table">
                         <thead>
                             <tr>
-                                <th></th>
-                                <th>Descripción</th>
-                                <th>Cantidad</th>
-                                <th>Precio</th>
-                                <th className="text-right">Subtotal</th>
+                                <th className="tabla-columna-quitar"></th>
+                                <th className="tabla-columna-descripcion">Descripción</th>
+                                <th className="tabla-columna-cantidad">Cantidad</th>
+                                <th className="tabla-columna-precio">Precio</th>
+                                <th className="tabla-columna-subtotal">Subtotal</th>
                             </tr>
                         </thead>
                         <tbody>

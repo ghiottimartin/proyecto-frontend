@@ -29,6 +29,14 @@
   cursor: pointer;
 }
 
+.ingreso-mercaderia table {
+  table-layout: fixed;
+}
+
+.ingreso-mercaderia .tabla-columna-quitar {
+  width: 45px;
+}
+
 .ingreso-mercaderia table thead th {
   padding: 0.75rem;
   background-color: transparent;
