@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 
 //Actions
 import { fetchProductosIfNeeded } from "../../../../actions/ProductoActions"
-import { createIngreso } from "../../../../actions/IngresoActions"
+import { createIngreso, saveCreateIngreso } from "../../../../actions/IngresoActions"
 
 //CSS
 import "../../../../assets/css/Gestion/Ingreso.css"
@@ -149,7 +149,7 @@ function Ingreso(props) {
     const crearIngreso = () => {
         let valido = comprobarIngresoValido()
         if (valido) {
-            //props.saveCreateIngreso()
+            props.saveCreateIngreso()
         }
     }
 
@@ -188,7 +188,7 @@ function Ingreso(props) {
     })
 
     const Total = <tr>
-        <td colSpan={3}>Total</td>
+        <td colSpan={4}>Total</td>
         <td className="text-right">{formatearMoneda(ingreso.total)}</td>
     </tr>
 
@@ -247,6 +247,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         createIngreso: (ingreso) => {
             dispatch(createIngreso(ingreso))
+        },
+        saveCreateIngreso: () => {
+            dispatch(saveCreateIngreso())
         }
     }
 }

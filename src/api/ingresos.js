@@ -14,7 +14,7 @@ var ingresos = {
             body: JSON.stringify(ingreso)
         };
 
-        return fetch(c.BASE_URL + '/producto/ingreso/', defaultOptions);
+        return fetch(c.BASE_URL + '/producto/ingreso//', defaultOptions);
     },
     
 

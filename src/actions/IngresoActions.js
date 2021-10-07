@@ -86,10 +86,16 @@ export function saveCreateIngreso(volverA) {
                         dispatch(logout());
                         return;
                     default:
-                        if (error.responseJSON !== "")
-                            dispatch(errorCreateIngreso(error.responseJSON.message));
-                        else
-                            dispatch(errorCreateIngreso(errorMessages.GENERAL_ERROR));
+                        error.json()
+                            .then(error => {
+                                if (error.message !== "")
+                                    dispatch(errorCreateIngreso(error.message));
+                                else
+                                    dispatch(errorCreateIngreso(errorMessages.GENERAL_ERROR));
+                            })
+                            .catch(error => {
+                                dispatch(errorCreateIngreso(errorMessages.GENERAL_ERROR));
+                            });
                         return;
                 }
             });
