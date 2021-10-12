@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useEffect } from "react"
 import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 
@@ -13,7 +13,7 @@ import "../../../../assets/css/Gestion/Ingreso.css"
 import * as rutas from "../../../../constants/rutas"
 
 //Components
-import Loader from "../../../elementos/Loader";
+import Loader from "../../../elementos/Loader"
 import Titulo from "../../../elementos/Titulo"
 
 //Librerías
@@ -22,14 +22,20 @@ import Swal from 'sweetalert2'
 //Utils
 import { formatearMoneda } from "../../../../utils/formateador"
 
-function Ingreso(props) {
+function Alta(props) {
     const titulo = "Ingreso"
     const ingreso = props.ingresos.create.nuevo
 
     useEffect(() => {
-        fetchProductosIfNeeded()
+        props.fetchProductosIfNeeded()
     }, [props.productos.allIds])
 
+    /**
+     * Agrega una línea de ingreso.
+     * 
+     * @param {Object} producto 
+     * @returns {void}
+     */
     const addLineaIngreso = (producto) => {
         let nuevas = ingreso.lineas
         let linea = ingreso.lineas.find(linea => linea.producto.id === producto.id)
@@ -43,8 +49,14 @@ function Ingreso(props) {
             let nuevo = { 'lineas': nuevas }
             props.createIngreso(nuevo)
         }
+        return;
     }
 
+    /**
+     * Quita una línea de ingreso.
+     * 
+     * @param {SyntheticBaseEvent} e 
+     */
     const removeLineaIngreso = (e) => {
         let actualizado = ingreso
         const idQuitar = e.target.dataset.id
@@ -59,6 +71,11 @@ function Ingreso(props) {
         props.createIngreso(actualizado)
     }
 
+    /**
+     * Devuelve las opciones elegibles de productos.
+     * 
+     * @returns {array}
+     */
     const getOpcionesProductos = () => {
         const buscando = props.productos.byId.isFetching
         if (buscando) {
@@ -77,6 +94,11 @@ function Ingreso(props) {
         return actuales
     }
 
+    /**
+     * Devuelve los id's de productos elegidos.
+     * 
+     * @returns {array}
+     */
     const getIdsProductosIngreso = () => {
         const ids = ingreso.lineas.map(l => {
             const producto = l.producto
@@ -94,6 +116,12 @@ function Ingreso(props) {
         Opciones.push(<li key={producto.id} title={title} onClick={() => addLineaIngreso(producto)}>{producto.nombre}</li>)
     })
 
+    /**
+     * Cambia la línea de ingreso por id de producto.
+     * 
+     * @param {SyntheticBaseEvent} e 
+     * @returns {void}
+     */
     const onChangeLineaIngreso = (e) => {
         const idProducto = e.target.dataset.id
         let actualizada = ingreso.lineas.find(linea => {
@@ -118,6 +146,12 @@ function Ingreso(props) {
         props.createIngreso(cambiado)
     }
 
+    /**
+     * Devuelve true si el alta de ingreso es válida. Sino muestra los errores
+     * con Sweetalert.
+     * 
+     * @returns {Boolean}
+     */
     const comprobarIngresoValido = () => {
         let errores = []
         ingreso.lineas.map(linea => {
@@ -152,7 +186,10 @@ function Ingreso(props) {
         return valido
     }
 
-    const crearIngreso = () => {
+    /**
+     * Guarda un ingreso nuevo.
+     */
+    const guardarIngreso = () => {
         let valido = comprobarIngresoValido()
         if (valido) {
             props.saveCreateIngreso()
@@ -203,7 +240,7 @@ function Ingreso(props) {
 
     return (
         <div className="ingreso-mercaderia tarjeta-body">
-            <Titulo ruta={rutas.GESTION} titulo={titulo} />
+            <Titulo ruta={rutas.INGRESO_MERCADERIA} titulo={titulo} />
             <div className="row ingreso-mercaderia-contenedor">
                 <div className="col-lg-4">
                     <div className="ingreso-mercaderia-articulos">
@@ -230,7 +267,7 @@ function Ingreso(props) {
                             {Filas.length === 0 ? '' : Total}
                         </tfoot>
                     </table>
-                    <button className="btn btn-success float-right boton-guardar" onClick={() => crearIngreso()}>
+                    <button className="btn btn-success float-right boton-guardar" onClick={() => guardarIngreso()}>
                         <div style={{display: isCreating ? "inline-block" : "none"}} class="spinner spinner-border text-light" role="status">
                             <span class="sr-only"></span>
                         </div>
@@ -262,4 +299,4 @@ const mapDispatchToProps = (dispatch) => {
         }
     }
 }
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Ingreso))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Alta))

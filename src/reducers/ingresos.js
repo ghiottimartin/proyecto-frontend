@@ -7,13 +7,76 @@ import {
     RESET_CREATE_INGRESO,
     REQUEST_CREATE_INGRESO,
     RECEIVE_CREATE_INGRESO,
-    ERROR_CREATE_INGRESO
+    ERROR_CREATE_INGRESO,
+    INVALIDATE_INGRESOS,
+    REQUEST_INGRESOS,
+    RECEIVE_INGRESOS,
+    ERROR_INGRESOS,
+    RESET_INGRESOS
 
 } from '../actions/IngresoActions';
-import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions";
+import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions"
 
-const nuevo = {
-    lineas: [],
+function ingresosById(state = {
+    isFetching: false,
+    didInvalidate: true,
+    ingresos: [],
+    error: null,
+    success: "",
+}, action) {
+    switch (action.type) {
+        case LOGOUT_SUCCESS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                didInvalidate: true,
+                ingresos: [],
+            });
+        //INGRESOS
+        case INVALIDATE_INGRESOS:
+            return Object.assign({}, state, {
+                didInvalidate: true
+            });
+        case REQUEST_INGRESOS:
+            return Object.assign({}, state, {
+                isFetching: true,
+                didInvalidate: false
+            });
+        case RECEIVE_INGRESOS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                didInvalidate: false,
+                ingresos: action.ingresos.entities.ingresos,
+                lastUpdated: action.receivedAt,
+                error: null
+            });
+        case ERROR_INGRESOS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                didInvalidate: true,
+                error: action.error
+            });
+        case RESET_INGRESOS:
+            return Object.assign({}, state, {
+                isFetching: false,
+                didInvalidate: true,
+                error: null,
+                lastUpdated: null,
+                ingresos: [],
+            });
+        default:
+            return state
+    }
+}
+
+function ingresosAllIds(state = [], action) {
+    switch (action.type) {
+        case RECEIVE_INGRESOS:
+            return action.ingresos.result ? action.ingresos.result : [];
+        case RESET_INGRESOS:
+             return [];
+        default:
+            return state
+    }
 }
 
 function create(state = {
@@ -76,6 +139,8 @@ function create(state = {
 }
 
 const ingresos = combineReducers({
+    allIds: ingresosAllIds,
+    byId:   ingresosById,
     create: create
 });
 

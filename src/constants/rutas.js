@@ -52,7 +52,8 @@ export const PEDIDO_VISUALIZAR_COMENSAL = '/pedidos/visualizar/comensal/';
 export const PEDIDO_VISUALIZAR_VENDEDOR = '/pedidos/visualizar/vendedor/';
 
 //Ingreso de mercadería
-export const INGRESO_MERCADERIA = '/ingreso-mercaderia/';
+export const INGRESO_MERCADERIA      = '/ingreso-mercaderia/';
+export const INGRESO_MERCADERIA_ALTA = '/ingreso-mercaderia/alta';
 
 /**
  * Devuelve la url de usuarios
@@ -98,6 +99,7 @@ const RUTAS = [
     ALMACEN,
     GESTION,
     INGRESO_MERCADERIA,
+    INGRESO_MERCADERIA_ALTA,
     USUARIOS_LISTAR,
     USUARIOS_ALTA_ADMIN,
     USUARIOS_ALTA_COMUN,
