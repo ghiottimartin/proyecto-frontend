@@ -63,16 +63,16 @@ class ListadoCategorias extends React.Component {
     getOperacionesCategoria(categoria) {
         return (
             <div>
-                <p onClick={() => this.clickEditar(categoria)} title="Editar "
+                <a href="#" onClick={() => this.clickEditar(categoria)} title="Editar "
                    className="operacion">
                     <img src={lapiz} className="icono-operacion" alt="Editar categoria"/>
                     Editar
-                </p>
-                <p onClick={() => this.modalBorrar(categoria)} title="Borrar"
+                </a>
+                <a href="#" style={{display: categoria.puede_borrarse ? "inline" : "none"}} onClick={() => this.modalBorrar(categoria)} title="Borrar"
                    className="operacion">
                     <img src={tacho} className="icono-operacion" alt="Borrar categoria"/>
                     Borrar
-                </p>
+                </a>
             </div>
         );
     }
