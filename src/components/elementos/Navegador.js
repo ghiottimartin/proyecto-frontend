@@ -148,7 +148,7 @@ class Navegador extends React.Component {
                     ruta={rutas.ALMACEN}
                 />
                 <ItemMenu
-                    mostrar={props.mostrar}
+                    mostrar={false}
                     grow={true}
                     texto={"Menu"}
                     ruta={rutas.MENU}
