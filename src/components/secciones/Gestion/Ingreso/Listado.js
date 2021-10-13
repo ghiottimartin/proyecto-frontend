@@ -1,9 +1,9 @@
-import React, { useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 
 //Actions
-import { fetchIngresosIfNeeded } from "../../../../actions/IngresoActions"
+import { fetchIngresos, updateFiltros } from "../../../../actions/IngresoActions"
 
 //CSS
 import "../../../../assets/css/Gestion/Ingreso.css"
@@ -14,13 +14,32 @@ import * as rutas from "../../../../constants/rutas"
 //Components
 import Loader from "../../../elementos/Loader"
 import Titulo from "../../../elementos/Titulo"
+import Filtros from "./Filtros"
+import Paginacion from "../../../elementos/Paginacion"
 
 function IngresoListado(props) {
     const titulo = "Listado de ingresos"
-    const buscando = props.ingresos.byId.isFetching
+    const ingresos = props.ingresos
+    const buscando = ingresos.byId.isFetching
+    
+    //Filtros 
+    const filtros = ingresos.byId.filtros
+    const registros = ingresos.byId.registros
+    const total = ingresos.byId.total;
+    const totalCero = parseInt(total) === 0;
+    const [paginaUno, setPaginaUno] = useState(false)
+    const [noHayIngresos, setNoHayIngresos] = useState(false)
 
     useEffect(() => {
-        props.fetchIngresosIfNeeded()
+        props.fetchIngresos()
+    }, [filtros.paginaActual])
+
+    useEffect(() => {
+        let noHayIngresos = false
+        if (props.ingresos.allIds.length === 0) {
+            noHayIngresos = true
+        }
+        setNoHayIngresos(noHayIngresos)      
     }, [props.ingresos.allIds])
 
     /**
@@ -32,9 +51,61 @@ function IngresoListado(props) {
         return <div></div>
     }
 
+    /**
+     * Filtra los ingresos.
+     * 
+     * @param {SyntheticBaseEvent} e 
+     */
+    const filtrarIngresos = (e) => {
+        e.preventDefault();
+        if (paginaUno) {
+            var cambio = {
+                target: {
+                    id: 'paginaActual',
+                    value: 1
+                }
+            };
+            onChangeBusqueda(cambio);
+        }
+        props.fetchIngresos();
+    }
+
+    /**
+     * Cambia los filtros a aplicar, si cambia un filtro que no sea la paginación
+     * vuelve a la página inicial.
+     * 
+     * @param {SyntheticBaseEvent} e 
+     */
+    const onChangeBusqueda = (e) => {
+        var cambio = {};
+        cambio[e.target.id] = e.target.value;
+        if (e.target.id !== "paginaActual") {
+            setPaginaUno(true)
+        } else {
+            setPaginaUno(false)
+        }
+        props.updateFiltros(cambio);
+    }
+
+    /**
+     * Cambia la página del filtro de paginación.
+     * 
+     * @param {Number} pagina 
+     * @returns 
+     */
+    const cambiarDePagina = (pagina) => {
+        if (isNaN(pagina)) {
+            return;
+        }
+
+        let cambio = {};
+        cambio['paginaActual'] = pagina;
+        props.updateFiltros(cambio);
+    }
+
     let Ingresos = []
-    props.ingresos.allIds.map(idIngreso => {
-        let ingreso = props.ingresos.byId.ingresos[idIngreso];
+    ingresos.allIds.map(idIngreso => {
+        let ingreso = ingresos.byId.ingresos[idIngreso];
         if (ingreso && ingreso.id) {
             let operaciones = getOperacionesIngreso(ingreso);
             Ingresos.push(
@@ -54,9 +125,25 @@ function IngresoListado(props) {
             );
         }
     });
+
+    if (noHayIngresos) {
+        let placeholder = "Todavía no se han realizado ingresos"
+        if (!totalCero) {
+            placeholder = "No hay ingresos para los filtros aplicados";
+        }
+        Ingresos = 
+            <tr className="text-center">
+                <td colSpan={5}>{placeholder}</td>
+            </tr>;
+    }
     return (
         <div className="ingreso-listado tarjeta-body">
             <Titulo ruta={rutas.GESTION} titulo={titulo} />
+            <Filtros
+                {...props}
+                filtrar={(e) => filtrarIngresos(e)}
+                onChangeBusqueda={(e) => onChangeBusqueda(e)}
+            />
             <table className="table">
                 <thead>
                     <tr>
@@ -71,6 +158,18 @@ function IngresoListado(props) {
                     {buscando ? <tr><td colSpan={5}><Loader display={true} /></td></tr> : Ingresos}
                 </tbody>
             </table>
+            {
+                buscando || totalCero ?
+                    ''
+                    :
+                    <Paginacion
+                        activePage={filtros.paginaActual}
+                        itemsCountPerPage={filtros.registrosPorPagina}
+                        totalItemsCount={registros}
+                        pageRangeDisplayed={5}
+                        onChange={(e) => cambiarDePagina(e)}
+                    />
+            }
         </div>
     )
 }
@@ -83,9 +182,12 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchIngresosIfNeeded: () => {
-            dispatch(fetchIngresosIfNeeded())
+        fetchIngresos: () => {
+            dispatch(fetchIngresos())
         },
+        updateFiltros: (filtros) => {
+            dispatch(updateFiltros(filtros))
+        }
     }
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IngresoListado))

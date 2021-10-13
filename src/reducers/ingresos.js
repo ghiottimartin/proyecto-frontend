@@ -1,5 +1,6 @@
-import { combineReducers } from 'redux';
-import merge from "lodash/merge";
+import { combineReducers } from 'redux'
+import merge from "lodash/merge"
+import moment from 'moment'
 
 //Actions
 import {
@@ -12,15 +13,35 @@ import {
     REQUEST_INGRESOS,
     RECEIVE_INGRESOS,
     ERROR_INGRESOS,
-    RESET_INGRESOS
+    RESET_INGRESOS,
+    UPDATE_FILTROS,
+    RESET_FILTROS
 
 } from '../actions/IngresoActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions"
+
+
+let hoy = moment()
+let haceUnaSemana = moment().subtract(2, 'weeks')
+
+const filtrosIniciales = {
+    numero: "",
+    fechaDesde: haceUnaSemana.format("YYYY-MM-DD"),
+    fechaHasta: hoy.format("YYYY-MM-DD"),
+    paginaActual: 1,
+    registrosPorPagina: 10,
+    estado: "",
+    nombreUsuario: ""
+}
 
 function ingresosById(state = {
     isFetching: false,
     didInvalidate: true,
     ingresos: [],
+    filtros: filtrosIniciales,
+    resetFiltros: false,
+    total: 0,
+    registros: 0,
     error: null,
     success: "",
 }, action) {
@@ -46,6 +67,8 @@ function ingresosById(state = {
                 isFetching: false,
                 didInvalidate: false,
                 ingresos: action.ingresos.entities.ingresos,
+                total: action.total,
+                registros: action.registros,
                 lastUpdated: action.receivedAt,
                 error: null
             });
@@ -62,6 +85,15 @@ function ingresosById(state = {
                 error: null,
                 lastUpdated: null,
                 ingresos: [],
+            });
+        // FILTROS
+        case UPDATE_FILTROS:
+            return Object.assign({}, state, {
+                filtros: merge({}, state.filtros, action.filtros)
+            });
+        case RESET_FILTROS:
+            return Object.assign({}, state, {
+                filtros: filtrosIniciales
             });
         default:
             return state

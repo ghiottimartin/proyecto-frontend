@@ -3,7 +3,14 @@ require('isomorphic-fetch');
 
 var ingresos = {
 
-    getAll() {
+    getAll(filtros) {
+        var esc = encodeURIComponent;
+        var query = "?";
+        if (filtros)
+            query += Object.keys(filtros)
+                .map(k => esc(k) + '=' + esc(filtros[k]))
+                .join('&');
+        
         let defaultOptions = {
             method: 'GET',
             headers: {
@@ -11,8 +18,7 @@ var ingresos = {
                 "Authorization": "Token " + localStorage.token
             }
         };
-        console.log('get all')
-        return fetch(c.BASE_URL + '/producto/ingreso//', defaultOptions);
+        return fetch(c.BASE_URL + '/producto/ingreso//' + query, defaultOptions);
     },
 
 

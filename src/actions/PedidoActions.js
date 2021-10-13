@@ -755,7 +755,7 @@ export function fetchPedidosVendedor() {
     }
 }
 
-//PEDIDO UPDATE
+// FILTROS PEDIDO
 export const UPDATE_FILTROS = 'UPDATE_FILTROS';
 export const RESET_FILTROS  = 'RESET_FILTROS';
 

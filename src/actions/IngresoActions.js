@@ -126,17 +126,17 @@ export function resetIngresos() {
 }
 
 function requestIngresos() {
-    console.log('REQUEST_INGRESOS')
     return {
         type: REQUEST_INGRESOS,
     }
 }
 
 function receiveIngresos(json) {
-    console.log('RECEIVE_INGRESOS')
     return {
         type: RECEIVE_INGRESOS,
-        ingresos: normalizeDatos(json),
+        ingresos: normalizeDatos(json.ingresos),
+        total: json.total,
+        registros: json.registros,
         receivedAt: Date.now()
     }
 }
@@ -149,10 +149,9 @@ function errorIngresos(error) {
 }
 
 export function fetchIngresos() {
-    console.log('entro')
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch(requestIngresos());
-        return ingresos.getAll()
+        return ingresos.getAll(getState().ingresos.byId.filtros)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
@@ -162,7 +161,7 @@ export function fetchIngresos() {
                 }
             })
             .then(function (data) {
-                dispatch(receiveIngresos(data));
+                dispatch(receiveIngresos(data.datos));
             })
             .catch(function (error) {
                 switch (error.status) {
@@ -204,5 +203,23 @@ export function fetchIngresosIfNeeded() {
         if (shouldFetchIngresos(getState())) {
             return dispatch(fetchIngresos())
         }
+    }
+}
+
+
+// FILTROS PEDIDO
+export const UPDATE_FILTROS = 'UPDATE_FILTROS';
+export const RESET_FILTROS  = 'RESET_FILTROS';
+
+export function updateFiltros(filtros) {
+    return {
+        type: UPDATE_FILTROS,
+        filtros
+    }
+}
+
+export function resetFiltros() {
+    return {
+        type: RESET_FILTROS
     }
 }

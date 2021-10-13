@@ -17,9 +17,7 @@ import moment from 'moment';
 class Filtros extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            buscando: false,
-        }
+        this.state = {}
     }
 
     componentDidMount() {
@@ -27,9 +25,6 @@ class Filtros extends React.Component {
     }
 
     changeFiltros(e) {
-        this.setState({
-            buscando: true
-        });
         this.props.onChangeBusqueda(e);
     }
 
