@@ -53,6 +53,18 @@ var categorias = {
 
         return fetch(c.BASE_URL + '/producto/abm/categorias//' + categoria.id + "/", defaultOptions);
     },
+
+    borrarCategoria(id) {
+        let defaultOptions = {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "Authorization": "Token " + localStorage.token
+            }
+        };
+
+        return fetch(c.BASE_URL + '/producto/abm/categorias//' + id + '/', defaultOptions);
+    },
 };
 
 export default categorias;
