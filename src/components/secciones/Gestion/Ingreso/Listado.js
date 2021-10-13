@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 
 //Actions
-import { fetchIngresos, updateFiltros } from "../../../../actions/IngresoActions"
+import { fetchIngresos, updateFiltros, updateIngreso } from "../../../../actions/IngresoActions"
 
 //CSS
 import "../../../../assets/css/Gestion/Ingreso.css"
@@ -51,8 +51,21 @@ function IngresoListado(props) {
      * 
      * @returns {Array}
      */
-    const getOperacionesIngreso = () => {
-        return <div></div>
+    const getOperacionesIngreso = (ingreso) => {
+        let operaciones = [];
+        ingreso.operaciones.forEach(operacion => {
+            let accion = operacion.accion;            
+            operaciones.push(
+                <div key={operacion.key} onClick={() => ejecutarOperacion(ingreso, accion)} className={operacion.clase + " operacion"} >
+                    <i className={operacion.icono} aria-hidden="true"></i> {operacion.texto}
+                </div>
+            );
+        })
+        return (
+            <div className="fila-operaciones">
+                {operaciones}
+            </div>
+        );
     }
 
     /**
@@ -107,6 +120,33 @@ function IngresoListado(props) {
         props.updateFiltros(cambio);
     }
 
+    /**
+     * Ejecuta la operación del listado de ingresos según el caso.
+     * 
+     * @param {Object} ingreso 
+     * @param {String} accion 
+     */
+    const ejecutarOperacion = (ingreso, accion)  => {
+        switch (accion) {
+            case 'visualizar':
+                visualizarIngreso(ingreso);
+                break;
+        }
+    }
+
+    /**
+     * Redirige a la visualización del ingreso.
+     * 
+     * @param {Object} pedido 
+     */
+    const visualizarIngreso = (pedido) => {
+        props.updateIngreso(pedido);
+        
+        let ruta = rutas.INGRESO_MERCADERIA_VISUALIZAR;
+        ruta += pedido.id;
+        history.push(ruta);
+    }
+
     let Ingresos = []
     ingresos.allIds.map(idIngreso => {
         let ingreso = ingresos.byId.ingresos[idIngreso];
@@ -155,7 +195,7 @@ function IngresoListado(props) {
                 filtrar={(e) => filtrarIngresos(e)}
                 onChangeBusqueda={(e) => onChangeBusqueda(e)}
             />
-            <table className="table">
+            <table className="table tabla-listado">
                 <thead>
                     <tr>
                         <th>Número</th>
@@ -198,6 +238,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         updateFiltros: (filtros) => {
             dispatch(updateFiltros(filtros))
+        },
+        updateIngreso: (ingreso) => {
+            dispatch(updateIngreso(ingreso))
         }
     }
 }

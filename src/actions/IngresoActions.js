@@ -12,14 +12,14 @@ import * as rutas from '../constants/rutas.js';
 import * as errorMessages from '../constants/MessageConstants';
 
 //Normalizer
-import {normalizeDato, normalizeDatos} from "../normalizers/normalizeIngresos";
+import { normalizeDato, normalizeDatos } from "../normalizers/normalizeIngresos";
 
 //INGRESO CREATE
-export const CREATE_INGRESO		 = 'CREATE_INGRESO';
-export const RESET_CREATE_INGRESO   = "RESET_CREATE_INGRESO";
+export const CREATE_INGRESO = 'CREATE_INGRESO';
+export const RESET_CREATE_INGRESO = "RESET_CREATE_INGRESO";
 export const REQUEST_CREATE_INGRESO = "REQUEST_CREATE_INGRESO";
 export const RECEIVE_CREATE_INGRESO = "RECEIVE_CREATE_INGRESO";
-export const ERROR_CREATE_INGRESO   = "ERROR_CREATE_INGRESO";
+export const ERROR_CREATE_INGRESO = "ERROR_CREATE_INGRESO";
 
 // INGRESO CREATE
 function requestCreateIngreso() {
@@ -106,10 +106,10 @@ export function saveCreateIngreso() {
 
 //INGRESOS LOGUEADO
 export const INVALIDATE_INGRESOS = 'INVALIDATE_INGRESOS';
-export const REQUEST_INGRESOS    = "REQUEST_INGRESOS";
-export const RECEIVE_INGRESOS    = "RECEIVE_INGRESOS";
-export const ERROR_INGRESOS      = "ERROR_INGRESOS";
-export const RESET_INGRESOS      = "RESET_INGRESOS";
+export const REQUEST_INGRESOS = "REQUEST_INGRESOS";
+export const RECEIVE_INGRESOS = "RECEIVE_INGRESOS";
+export const ERROR_INGRESOS = "ERROR_INGRESOS";
+export const RESET_INGRESOS = "RESET_INGRESOS";
 
 export function invalidateIngresos() {
     return {
@@ -185,7 +185,7 @@ export function fetchIngresos() {
 }
 
 function shouldFetchIngresos(state) {
-    const ingresosById   = state.ingresos.byId;
+    const ingresosById = state.ingresos.byId;
     const ingresosAllIds = state.ingresos.allIds;
     if (ingresosById.isFetching) {
         return false;
@@ -205,9 +205,9 @@ export function fetchIngresosIfNeeded() {
 }
 
 
-// FILTROS PEDIDO
+// FILTROS INGRESO
 export const UPDATE_FILTROS = 'UPDATE_FILTROS';
-export const RESET_FILTROS  = 'RESET_FILTROS';
+export const RESET_FILTROS = 'RESET_FILTROS';
 
 export function updateFiltros(filtros) {
     return {
@@ -219,5 +219,86 @@ export function updateFiltros(filtros) {
 export function resetFiltros() {
     return {
         type: RESET_FILTROS
+    }
+}
+
+// INGRESO UPDATE
+export const UPDATE_INGRESO = 'UPDATE_INGRESO';
+
+export function updateIngreso(ingreso) {
+    return {
+        type: UPDATE_INGRESO,
+        ingreso: ingreso
+    }
+}
+
+// BUSCAR INGRESO
+export const INVALIDATE_INGRESO_ID = 'INVALIDATE_INGRESO_ID';
+export const REQUEST_INGRESO_ID = "REQUEST_INGRESO_ID";
+export const RECEIVE_INGRESO_ID = "RECEIVE_INGRESO_ID";
+export const ERROR_INGRESO_ID = "ERROR_INGRESO_ID";
+export const RESET_INGRESO_ID = "RESET_INGRESO_ID";
+
+export function invalidateIngresoById() {
+    return {
+        type: INVALIDATE_INGRESO_ID,
+    }
+}
+
+export function resetIngresoById() {
+    return {
+        type: RESET_INGRESO_ID
+    }
+}
+
+function requestIngresoById() {
+    return {
+        type: REQUEST_INGRESO_ID,
+    }
+}
+
+function receiveIngresoById(json) {
+    return {
+        type: RECEIVE_INGRESO_ID,
+        ingreso: normalizeDato(json),
+        receivedAt: Date.now()
+    }
+}
+
+function errorIngresoById(error) {
+    return {
+        type: ERROR_INGRESO_ID,
+        error: error,
+    }
+}
+
+export function fetchIngresoById(id) {
+    return dispatch => {
+        dispatch(requestIngresoById());
+        return ingresos.getIngreso(id)
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    var data = response.json();
+                    return data;
+                }
+            })
+            .then(function (data) {
+                console.log(data)
+                dispatch(receiveIngresoById(data))
+                dispatch(updateIngreso(data));
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(logout())
+                        dispatch(errorIngresoById(errorMessages.UNAUTHORIZED_TOKEN));
+                        return;
+                    default:
+                        dispatch(errorIngresoById(errorMessages.GENERAL_ERROR));
+                        return;
+                }
+            });
     }
 }

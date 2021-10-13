@@ -45,3 +45,13 @@
   height: 18px;
   margin-right: 2px;
 }
+
+.fila-operaciones {
+  margin-top: 15px;
+  display: flex;
+  justify-content: start;
+}
+
+.fila-operaciones .btn {
+  background-color: rgba(128, 128, 128, 0.13) !important;
+}

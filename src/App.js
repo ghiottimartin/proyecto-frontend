@@ -34,6 +34,7 @@ import PedidoListado from "./components/secciones/Pedidos/Listado";
 import PedidoVisualizar from "./components/secciones/Pedidos/Visualizar";
 import IngresoAlta from './components/secciones/Gestion/Ingreso/Alta';
 import IngresoListado from './components/secciones/Gestion/Ingreso/Listado';
+import IngresoVisualizar from './components/secciones/Gestion/Ingreso/Visualizar';
 
 //CSS
 import "./App.css";
@@ -259,6 +260,7 @@ class App extends React.Component {
                         <Route exact path={rutas.PEDIDO_VISUALIZAR} component={PedidoVisualizar} />
                         <Route exact path={rutas.INGRESO_MERCADERIA} component={IngresoListado} />
                         <Route exact path={rutas.INGRESO_MERCADERIA_ALTA} component={IngresoAlta} />
+                        <Route exact path={rutas.INGRESO_MERCADERIA_VISUALIZAR_ID} component={IngresoVisualizar} />
                         <Route exact path="*" component={NotFound} />
                     </Switch>
                 </div>

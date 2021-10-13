@@ -77,3 +77,17 @@
   position: absolute;
   right: 15px;
 }
+
+.ingreso-visualizar {
+  max-width: 1200px;
+}
+
+.ingreso-visualizar ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.ingreso-visualizar li label {
+  width: 70px !important;
+  font-weight: bold;
+}

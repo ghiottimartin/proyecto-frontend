@@ -15,7 +15,8 @@ import {
     ERROR_INGRESOS,
     RESET_INGRESOS,
     UPDATE_FILTROS,
-    RESET_FILTROS
+    RESET_FILTROS,
+    UPDATE_INGRESO
 
 } from '../actions/IngresoActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions"
@@ -170,10 +171,30 @@ function create(state = {
     }
 }
 
+function update(state = {
+    isUpdating: false,
+    activo: {},
+    success: "",
+    error: null
+}, action) {
+    switch (action.type) {
+        case UPDATE_INGRESO:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                activo: merge({}, state.activo, action.ingreso),
+                success: "",
+                error: null,
+            });
+        default:
+            return state
+    }
+}
+
 const ingresos = combineReducers({
     allIds: ingresosAllIds,
     byId:   ingresosById,
-    create: create
+    create: create,
+    update: update
 });
 
 export default ingresos;

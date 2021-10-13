@@ -52,8 +52,10 @@ export const PEDIDO_VISUALIZAR_COMENSAL = '/pedidos/visualizar/comensal/';
 export const PEDIDO_VISUALIZAR_VENDEDOR = '/pedidos/visualizar/vendedor/';
 
 //Ingreso de mercadería
-export const INGRESO_MERCADERIA      = '/ingreso-mercaderia/';
-export const INGRESO_MERCADERIA_ALTA = '/ingreso-mercaderia/alta';
+export const INGRESO_MERCADERIA               = '/ingreso-mercaderia/';
+export const INGRESO_MERCADERIA_ALTA          = '/ingreso-mercaderia/alta';
+export const INGRESO_MERCADERIA_VISUALIZAR    = '/ingreso-mercaderia/visualizar/';
+export const INGRESO_MERCADERIA_VISUALIZAR_ID = '/ingreso-mercaderia/visualizar/:id';
 
 /**
  * Devuelve la url de usuarios
