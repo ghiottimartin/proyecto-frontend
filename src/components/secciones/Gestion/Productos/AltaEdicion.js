@@ -207,12 +207,26 @@ class AltaEdicion extends React.Component {
                         />
                     </Form.Group>
                     <Form.Group>
+                        <Form.Label>Costo</Form.Label>
+                        <Form.Control
+                            id="costo_vigente"
+                            type="number"
+                            min={0}
+                            onChange={(e) => this.onChangeProducto(e)}
+                            value={producto.costo_vigente}
+                            max={producto.precio_vigente}
+                            placeholder="Ingresar costo"
+                            required={true}
+                        />
+                    </Form.Group>
+                    <Form.Group>
                         <Form.Label>Precio</Form.Label>
                         <Form.Control
                             id="precio_vigente"
                             type="number"
                             min={0}
                             onChange={(e) => this.onChangeProducto(e)}
+                            min={producto.costo_vigente}
                             value={producto.precio_vigente}
                             placeholder="Ingresar precio"
                             required={true}

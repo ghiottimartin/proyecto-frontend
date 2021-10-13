@@ -77,6 +77,7 @@ var productos = {
         formData.append("habilitado", 1);
         formData.append("descripcion", producto.descripcion);
         formData.append("precio_vigente", parseFloat(producto.precio_vigente));
+        formData.append("costo_vigente", parseFloat(producto.costo_vigente));
 
         if (producto.imagen.name) {
             formData.append("imagen", producto.imagen);

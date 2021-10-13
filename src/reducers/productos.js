@@ -120,11 +120,12 @@ function productosById(state = {
     }
 }
 
-let activoDefecto = {
+let creadoDefecto = {
     nombre: '',
     imagen: '',
     descripcion: '',
     imagen_nombre: '',
+    costo_vigente: '',
     precio_vigente: '',
     habilitado: 1
 };
@@ -132,7 +133,7 @@ let activoDefecto = {
 
 function create(state = {
     isCreating: false,
-    nuevo: activoDefecto,
+    nuevo: creadoDefecto,
     success: "",
     error: null,
     errores: [],
@@ -188,7 +189,7 @@ function create(state = {
 
 function update(state = {
     isUpdating: false,
-    activo: activoDefecto,
+    activo: creadoDefecto,
     success: "",
     error: null
 }, action) {
@@ -204,7 +205,7 @@ function update(state = {
         case RESET_UPDATE_PRODUCTO:
             return Object.assign({}, state, {
                 isUpdating: false,
-                activo: activoDefecto,
+                activo: creadoDefecto,
                 success: "",
                 error: null,
             });

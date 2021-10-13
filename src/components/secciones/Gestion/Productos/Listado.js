@@ -120,7 +120,9 @@ class Listado extends React.Component {
                             </li>
                             <li><b>Nombre:</b> {producto.nombre}</li>
                             <li><b>Categoría:</b>  {producto.categoria_texto}</li>
+                            <li><b>Costo:</b>  {producto.costo_texto}</li>
                             <li><b>Precio:</b>  {producto.precio_texto}</li>
+                            <li><b>Margen:</b>  {producto.margen_texto}</li>
                             <li>{operaciones}</li>
                         </ul>
                     </div>
@@ -136,7 +138,7 @@ class Listado extends React.Component {
         if (noHayProductos) {
             Productos =
                 <tr className="text-center">
-                    <td colSpan="5">No hay productos cargados</td>
+                    <td colSpan="7">No hay productos cargados</td>
                 </tr>;
         }
         this.props.productos.allIds.map(idProducto => {
@@ -158,7 +160,13 @@ class Listado extends React.Component {
                         <td>{producto.nombre}</td>
                         <td>{producto.categoria_texto}</td>
                         <td className="font-weight-bold text-right px-5">
+                            {producto.costo_texto}
+                        </td>
+                        <td className="font-weight-bold text-right px-5">
                             {producto.precio_texto}
+                        </td>
+                        <td className="text-right px-5">
+                            {producto.margen_texto}
                         </td>
                         <td>{operaciones}</td>
                     </tr>
@@ -167,7 +175,7 @@ class Listado extends React.Component {
         });
         const Cargando =
             <tr>
-                <td colSpan={5}><Loader display={true} /></td>
+                <td colSpan={7}><Loader display={true} /></td>
             </tr>;
         let operacion = {
             'ruta': rutas.CATEGORIAS_LISTAR_ADMIN + '?volverA=' + rutas.PRODUCTOS_LISTAR_ADMIN,
@@ -192,7 +200,9 @@ class Listado extends React.Component {
                             <th>Imagen</th>
                             <th>Nombre</th>
                             <th>Categoria</th>
+                            <th className="text-right px-5">Costo</th>
                             <th className="text-right px-5">Precio</th>
+                            <th className="text-right px-5">Margen</th>
                             <th>Operaciones</th>
                         </tr>
                         </thead>
