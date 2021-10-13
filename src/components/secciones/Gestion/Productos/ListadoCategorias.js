@@ -8,6 +8,9 @@ import {resetCategorias, fetchCategoriasIfNeeded, saveDeleteCategoria, updateCat
 //Constants
 import * as rutas from "../../../../constants/rutas";
 
+//Componentes
+import AddBoxIcon from "@material-ui/icons/AddBox"
+
 //Librerias
 import history from "../../../../history";
 
@@ -122,8 +125,13 @@ class ListadoCategorias extends React.Component {
         return (
             <div className="tabla-listado">
                 <div className="table-responsive tarjeta-body listado">
-                    <div className="d-flex justify-content-between">
-                        <Titulo ruta={rutas.PRODUCTOS_LISTAR_ADMIN} titulo={"Categorias"} clase="tabla-listado-titulo" />
+                    <div className="d-flex PRODUCTOS_LISTAR_ADMIN-content-between">
+                        <Titulo ruta={rutas.PRODUCTOS_LISTAR_ADMIN} titulo={"Categorias"} clase="tabla-listado-titulo"/>
+                        <a href="#"
+                            onClick={() => history.push(rutas.CATEGORIA_ALTA + "?volverA=" + rutas.CATEGORIAS_LISTAR_ADMIN)}
+                            data-toggle="tooltip" data-original-title="" title="">
+                            <AddBoxIcon style={{ color:  '#5cb860'}}/>
+                        </a>
                     </div>
                     <table className="table">
                         <thead>

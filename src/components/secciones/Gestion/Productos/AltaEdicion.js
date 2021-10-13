@@ -236,7 +236,7 @@ class AltaEdicion extends React.Component {
                             <Loader display={true}/>
                             :
                             <div className="d-flex">
-                                <Button className="boton-submit" variant="primary" type="submit" disabled={buscando}>
+                                <Button className="boton-submit" variant="success" type="submit" disabled={buscando}>
                                     Guardar
                                 </Button>
                                 {volverAValido ? botonVolverA : ""}

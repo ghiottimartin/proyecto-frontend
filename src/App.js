@@ -244,7 +244,7 @@ class App extends React.Component {
                         <Route exact path={rutas.USUARIOS_EDITAR} component={Editar} />
                         <Route exact path={rutas.PRODUCTOS_LISTAR_ADMIN} component={ListadoProductos} />
                         <Route exact path={rutas.PRODUCTOS_ACCIONES} component={AltaEdicionProducto} />
-                        <Route exact path={rutas.CATEGORIAS_LISTAR} component={ListadoCategorias} />
+                        <Route exact path={rutas.CATEGORIAS_LISTAR_ADMIN} component={ListadoCategorias} />
                         <Route exact path={rutas.CATEGORIAS_ACCIONES} component={AltaEdicionCategoria} />
                         <Route exact path={[rutas.ALMACEN]} render={(props) =>
                             <Almacen

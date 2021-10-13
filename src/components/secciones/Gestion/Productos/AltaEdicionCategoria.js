@@ -82,17 +82,11 @@ class AltaEdicionCategoria extends React.Component {
 
 
         let buscando = this.props.categorias.byId.isFetching;
-        
-        let ruta = rutas.PRODUCTO_ALTA;
-        let volverA = rutas.getQuery('volverA');
-        if (volverA) {
-            ruta = volverA;
-        }
 
         return (
             <div className="categoria-alta">
                 <Form className="tarjeta-body" onSubmit={(e) => {this.submitForm(e)}}>
-                    <Titulo ruta={ruta} titulo={titulo}/>
+                    <Titulo ruta={rutas.CATEGORIAS_LISTAR_ADMIN} titulo={titulo}/>
                     <Form.Group>
                         <Form.Label>Nombre</Form.Label>
                         <Form.Control
@@ -120,7 +114,7 @@ class AltaEdicionCategoria extends React.Component {
                             <Loader display={true}/>
                             :
                             <div className="d-flex">
-                                <Button className="boton-submit" variant="primary" type="submit" disabled={buscando}>
+                                <Button className="boton-submit" variant="success" type="submit" disabled={buscando}>
                                     Guardar
                                 </Button>
                                 {volverAValido ? botonVolverA : ""}

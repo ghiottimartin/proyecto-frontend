@@ -170,7 +170,7 @@ class Listado extends React.Component {
                 <td colSpan={5}><Loader display={true} /></td>
             </tr>;
         let operacion = {
-            'ruta': rutas.CATEGORIAS_LISTAR + '?volverA=' + rutas.PRODUCTOS_LISTAR_ADMIN,
+            'ruta': rutas.CATEGORIAS_LISTAR_ADMIN + '?volverA=' + rutas.PRODUCTOS_LISTAR_ADMIN,
             'texto': 'Categorías',
             'clase': 'btn-success',
         };
