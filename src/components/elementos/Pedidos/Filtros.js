@@ -26,14 +26,6 @@ class Filtros extends React.Component {
         this.props.resetFiltros();
     }
 
-    changeDirection() {
-        var filtros = {};
-        filtros.target = {};
-        filtros.target.id = "direction";
-        filtros.target.value = this.props.filtros.direction === "ASC" ? "DESC" : "ASC";
-        this.changeFiltros(filtros);
-    }
-
     changeFiltros(e) {
         this.setState({
             buscando: true

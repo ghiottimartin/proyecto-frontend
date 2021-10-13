@@ -41,6 +41,11 @@ function IngresoListado(props) {
                 <tr key={ingreso.id}>
                     <td>{ingreso.id_texto}</td>
                     <td>{ingreso.fecha_texto}</td>
+                    <td>
+                            <span>{ingreso.usuario_nombre}</span>
+                            <br/>
+                            <span className="texto-chico">{ingreso.usuario_email}</span>
+                        </td>
                     <td className="font-weight-bold text-right px-5">
                         {ingreso.total_texto}
                     </td>
@@ -57,12 +62,13 @@ function IngresoListado(props) {
                     <tr>
                         <th>Número</th>
                         <th>Fecha</th>
+                        <th>Usuario</th>
                         <th className="text-right px-5">Total</th>
                         <th>Operaciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {buscando ? <tr><td colSpan={4}><Loader display={true} /></td></tr> : Ingresos}
+                    {buscando ? <tr><td colSpan={5}><Loader display={true} /></td></tr> : Ingresos}
                 </tbody>
             </table>
         </div>
