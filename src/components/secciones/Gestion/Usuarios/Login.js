@@ -3,25 +3,27 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 
 //Actions
-import {changeLogin, login, olvideMiPassword} from "../../../actions/AuthenticationActions";
+import {changeLogin, login, olvideMiPassword} from "../../../../actions/AuthenticationActions";
 
 //Constants
-import * as rutas from '../../../constants/rutas.js';
+import * as rutas from '../../../../constants/rutas.js';
+
+//Components
+import Loader from "../../../elementos/Loader";
 
 //CSS
-import '../../../assets/css/Usuarios/Login.css';
+import '../../../../assets/css/Usuarios/Login.css';
 
 //Boostrap
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Loader from "../../elementos/Loader";
 
 //Images
-import blackEye from "../../../assets/img/eye.png";
-import whiteEye from "../../../assets/img/view.png";
+import blackEye from "../../../../assets/img/eye.png";
+import whiteEye from "../../../../assets/img/view.png";
 
 //Librerias
-import history from "../../../history";
+import history from "../../../../history";
 
 class Login extends React.Component {
     constructor(props) {

@@ -3,24 +3,26 @@ import {withRouter} from "react-router-dom";
 import { connect } from "react-redux";
 
 //Actions
-import {resetUsuarios, fetchUsuarios, saveDeleteUsuario} from "../../../actions/UsuarioActions";
+import {resetUsuarios, fetchUsuarios, saveDeleteUsuario} from "../../../../actions/UsuarioActions";
 
 //Constants
-import * as rutas from '../../../constants/rutas.js';
+import * as rutas from '../../../../constants/rutas.js';
 
 //Components
-import Loader from "../../elementos/Loader";
-import Titulo from "../../elementos/Titulo";
+import Loader from "../../../elementos/Loader";
+import Titulo from "../../../elementos/Titulo";
 
 //CSS
-import "../../../assets/css/Listado.css";
+import "../../../../assets/css/Listado.css";
 
 //Librerias
+import history from "../../../../history";
 import Swal from 'sweetalert2';
+import AddBoxIcon from "@material-ui/icons/AddBox"
 
 //Images
-import lapiz from "../../../assets/icon/pencil.png";
-import tacho from "../../../assets/icon/delete.png";
+import lapiz from "../../../../assets/icon/pencil.png";
+import tacho from "../../../../assets/icon/delete.png";
 
 class Listado extends React.Component {
     constructor(props) {
@@ -165,6 +167,11 @@ class Listado extends React.Component {
                 <div className="table-responsive tarjeta-body listado">
                     <div className="d-flex justify-content-between">
                         <Titulo ruta={rutas.GESTION} titulo={"Usuarios"} clase="tabla-listado-titulo" />
+                        <a href="#"
+                            onClick={() => history.push(rutas.USUARIOS_ALTA_ADMIN + "?volverA=" + rutas.USUARIOS_LISTAR)}
+                            data-toggle="tooltip" data-original-title="" title="">
+                            <AddBoxIcon style={{ color:  '#5cb860'}}/>
+                        </a>
                     </div>
                     <table className="table">
                         <thead>

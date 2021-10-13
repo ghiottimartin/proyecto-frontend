@@ -3,30 +3,32 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 
 //Actions
-import {saveUpdateUsuario, updateUsuario, fetchUsuarioById, resetUpdateUsuario} from "../../../actions/UsuarioActions";
+import { saveUpdateUsuario, updateUsuario, fetchUsuarioById, resetUpdateUsuario } from "../../../../actions/UsuarioActions";
+
+//Api
+import auth from "../../../../api/authentication";
 
 //Boostrap
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 //Constants
-import * as rutas from '../../../constants/rutas.js';
+import * as rutas from '../../../../constants/rutas.js';
 
 //Components
-import Loader from "../../elementos/Loader";
-import Titulo from "../../elementos/Titulo";
+import Loader from "../../../elementos/Loader";
+import Titulo from "../../../elementos/Titulo";
 
 //CSS
-import "../../../assets/css/Usuarios/Editar.css";
+import "../../../../assets/css/Usuarios/Editar.css";
 
 //Images
-import blackEye from "../../../assets/img/eye.png";
-import whiteEye from "../../../assets/img/view.png";
+import blackEye from "../../../../assets/img/eye.png";
+import whiteEye from "../../../../assets/img/view.png";
 
 //Librerias
-import history from "../../../history";
+import history from "../../../../history";
 import Swal from "sweetalert2";
-import auth from "../../../api/authentication";
 
 class Editar extends React.Component {
     constructor(props) {

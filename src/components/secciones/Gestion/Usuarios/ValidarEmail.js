@@ -3,19 +3,19 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
 //Actions
-import {validarToken} from "../../../actions/AuthenticationActions";
+import {validarToken} from "../../../../actions/AuthenticationActions";
 
 //Constants
-import * as rutas from '../../../constants/rutas.js';
+import * as rutas from '../../../../constants/rutas.js';
 
 //Components
-import Loader from "../../elementos/Loader";
+import Loader from "../../../elementos/Loader";
 
 //CSS
-import "../../../assets/css/Usuarios/ValidarEmail.css";
+import "../../../../assets/css/Usuarios/ValidarEmail.css";
 
 //Librerias
-import history from "../../../history";
+import history from "../../../../history";
 
 class ValidarEmail extends React.Component {
     constructor(props) {

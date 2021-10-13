@@ -3,30 +3,29 @@ import {withRouter, useLocation} from 'react-router-dom'
 import {connect} from 'react-redux';
 
 //Actions
-import {resetPassword} from "../../../actions/AuthenticationActions";
-import {createUsuario, saveCreateUsuario} from "../../../actions/UsuarioActions";
+import {resetPassword} from "../../../../actions/AuthenticationActions";
+import {createUsuario, saveCreateUsuario} from "../../../../actions/UsuarioActions";
 
 //Constants
-import * as rutas from '../../../constants/rutas.js';
-import * as roles from '../../../constants/roles.js';
+import * as rutas from '../../../../constants/rutas.js';
 
 //Boostrap
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 //Components
-import Loader from "../../elementos/Loader";
-import Titulo from "../../elementos/Titulo";
+import Loader from "../../../elementos/Loader";
+import Titulo from "../../../elementos/Titulo";
 
 //CSS
-import '../../../assets/css/Usuarios/Registro.css';
+import '../../../../assets/css/Usuarios/Registro.css';
 
 //Images
-import blackEye from "../../../assets/img/eye.png";
-import whiteEye from "../../../assets/img/view.png";
+import blackEye from "../../../../assets/img/eye.png";
+import whiteEye from "../../../../assets/img/view.png";
 
 //Librerias
-import history from "../../../history";
+import history from "../../../../history";
 import Swal from 'sweetalert2';
 
 class Alta extends React.Component {
@@ -200,7 +199,7 @@ class Alta extends React.Component {
                 <img onClick={(e) => this.onClickEye()} src={imgPassword} className="ver-password" alt="Mostrar/ocultar contraseña"/>
             );
         };
-        var titulo = tipoAdmin ? "Registrar usuario" : "Registro";
+        var titulo = tipoAdmin ? "Alta de usuario" : "Registro";
         var ruta = tipoAdmin ? rutas.USUARIOS_LISTAR : null;
         return (
             <div className="registro">
