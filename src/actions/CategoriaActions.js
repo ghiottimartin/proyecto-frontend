@@ -145,7 +145,7 @@ export function updateCategoria(categoria) {
 export function saveUpdateCategoria() {
     return (dispatch, getState) => {
         dispatch(requestUpdateCategoria());
-        return categorias.saveUpdate(getState().categorias.update.activa)
+        return categorias.saveUpdate(getState().categorias.update.activo)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
@@ -155,9 +155,8 @@ export function saveUpdateCategoria() {
                 }
             })
             .then((respuesta) => {
-                let categoria = respuesta.categoria;
                 dispatch(resetUpdateCategoria());
-                dispatch(updateCategoria(categoria));
+                history.push(rutas.CATEGORIAS_LISTAR_ADMIN);
             })
             .catch(function (error) {
                 switch (error.status) {

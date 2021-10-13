@@ -35,11 +35,6 @@ class AltaEdicionCategoria extends React.Component {
         }
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        
-
-    }
-
     onChangeCategoria(e) {
         var cambio          = {};
         cambio[e.target.id] = e.target.value;
@@ -143,8 +138,8 @@ const mapDispatchToProps = (dispatch) => {
         saveCreateCategoria: (volverA) => {
             dispatch(saveCreateCategoria(volverA))
         },
-        saveUpdateCategoria: (volverA) => {
-            dispatch(saveUpdateCategoria(volverA))
+        saveUpdateCategoria: () => {
+            dispatch(saveUpdateCategoria())
         },
         fetchCategoriaById: (id) => {
             dispatch(fetchCategoriaById(id))

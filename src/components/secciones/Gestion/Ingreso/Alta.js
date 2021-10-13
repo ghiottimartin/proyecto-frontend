@@ -129,7 +129,7 @@ function Alta(props) {
             const idBuscar = producto.id ? producto.id : 0
             return parseInt(idBuscar) === parseInt(idProducto)
         })
-        
+
         if (actualizada === undefined) {
             return
         }
@@ -155,7 +155,7 @@ function Alta(props) {
     const comprobarIngresoValido = () => {
         let errores = []
         ingreso.lineas.map(linea => {
-            const cantidad = linea.cantidad !== "" ? linea.cantidad : 0 
+            const cantidad = linea.cantidad !== "" ? linea.cantidad : 0
             const producto = linea.producto
             const nombre = producto.nombre
             if (isNaN(cantidad) || parseFloat(cantidad) <= 0.00) {
@@ -201,7 +201,7 @@ function Alta(props) {
         const cantidad = linea.cantidad ? linea.cantidad : ''
         const precio = linea.precio ? linea.precio : ''
         const subtotal = cantidad !== precio !== '' ? precio * cantidad : 0.00
-        return(
+        return (
             <tr key={producto.id}>
                 <td>
                     <button className="boton-icono-quitar" data-id={producto.id} onClick={(e) => removeLineaIngreso(e)}>
@@ -268,10 +268,10 @@ function Alta(props) {
                         </tfoot>
                     </table>
                     <button className="btn btn-success float-right boton-guardar" onClick={() => guardarIngreso()}>
-                        <div style={{display: isCreating ? "inline-block" : "none"}} class="spinner spinner-border text-light" role="status">
+                        <div style={{ display: isCreating ? "inline-block" : "none" }} class="spinner spinner-border text-light" role="status">
                             <span class="sr-only"></span>
                         </div>
-                        <span className="ml-1">Guardar</span>                        
+                        <span className="ml-1">Guardar</span>
                     </button>
                 </div>
             </div>

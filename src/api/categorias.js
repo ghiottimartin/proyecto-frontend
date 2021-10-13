@@ -26,6 +26,7 @@ var categorias = {
 
         return fetch(c.BASE_URL + '/producto/abm/categorias//', defaultOptions);
     },
+
     getCategoria(id) {
 
         let defaultOptions = {
@@ -37,6 +38,20 @@ var categorias = {
         };
 
         return fetch(c.BASE_URL + '/producto/abm/categorias//' + id, defaultOptions);
+    },
+
+    saveUpdate(categoria) {
+
+        let defaultOptions = {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "Authorization": "Token " + localStorage.token
+            },
+            body: JSON.stringify(categoria)
+        };
+
+        return fetch(c.BASE_URL + '/producto/abm/categorias//' + categoria.id + "/", defaultOptions);
     },
 };
 
