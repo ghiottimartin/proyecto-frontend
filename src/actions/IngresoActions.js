@@ -58,7 +58,7 @@ export function createIngreso(ingreso) {
     }
 }
 
-export function saveCreateIngreso(volverA) {
+export function saveCreateIngreso() {
     return (dispatch, getState) => {
         dispatch(requestCreateIngreso());
         return ingresos.saveCreate(getState().ingresos.create.nuevo)
@@ -79,9 +79,7 @@ export function saveCreateIngreso(volverA) {
                 dispatch(fetchProductos())
                 dispatch(reveiceCreateIngreso(mensaje));
                 dispatch(resetCreateIngreso());
-                if (rutas.validarRuta(volverA)) {
-                    history.push(volverA);
-                }
+                history.push(rutas.INGRESO_MERCADERIA);
             })
             .catch(function (error) {
                 switch (error.status) {

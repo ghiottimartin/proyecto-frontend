@@ -16,6 +16,10 @@ import Loader from "../../../elementos/Loader"
 import Titulo from "../../../elementos/Titulo"
 import Filtros from "./Filtros"
 import Paginacion from "../../../elementos/Paginacion"
+import AddBoxIcon from "@material-ui/icons/AddBox"
+
+//Librerías
+import history from "../../../../history";
 
 function IngresoListado(props) {
     const titulo = "Listado de ingresos"
@@ -138,7 +142,14 @@ function IngresoListado(props) {
     }
     return (
         <div className="ingreso-listado tarjeta-body">
-            <Titulo ruta={rutas.GESTION} titulo={titulo} />
+            <div className="d-flex justify-content-between">
+                <Titulo ruta={rutas.GESTION} titulo={titulo} />
+                <a href="#"
+                    onClick={() => history.push(rutas.INGRESO_MERCADERIA_ALTA + "?volverA=" + rutas.INGRESO_MERCADERIA)}
+                    data-toggle="tooltip" data-original-title="" title="">
+                    <AddBoxIcon style={{ color:  '#5cb860'}}/>
+                </a>
+            </div>
             <Filtros
                 {...props}
                 filtrar={(e) => filtrarIngresos(e)}

@@ -23,7 +23,7 @@ import Swal from 'sweetalert2'
 import { formatearMoneda } from "../../../../utils/formateador"
 
 function Alta(props) {
-    const titulo = "Ingreso"
+    const titulo = "Alta de ingreso"
     const ingreso = props.ingresos.create.nuevo
 
     useEffect(() => {
