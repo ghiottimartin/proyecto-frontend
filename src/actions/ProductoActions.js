@@ -77,9 +77,7 @@ export function saveCreateProducto(volverA) {
                 dispatch(resetCreateProducto());
                 dispatch(resetProductos());
                 dispatch(fetchProductos());
-                if (rutas.validarRuta(volverA)) {
-                    history.push(volverA);
-                }
+                history.push(rutas.PRODUCTOS_LISTAR_ADMIN);
             })
             .catch(function (error) {
                 switch (error.status) {
