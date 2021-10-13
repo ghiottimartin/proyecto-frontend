@@ -73,7 +73,7 @@ class Listado extends React.Component {
                     <img src={lapiz} className="icono-operacion" alt="Editar producto"/>
                     Editar
                 </p>
-                <p onClick={() => this.modalBorrar(producto)} title="Borrar"
+                <p onClick={() => this.modalBorrar(producto)} title="Borrar"  style={{display: producto.puede_borrarse ? "inline" : "none"}} 
                    className="operacion">
                     <img src={tacho} className="icono-operacion" alt="Borrar producto"/>
                     Borrar
