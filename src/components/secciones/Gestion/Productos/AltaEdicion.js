@@ -113,6 +113,33 @@ class AltaEdicion extends React.Component {
         this.onChangeProducto(e, cambio);
     }
 
+    onChangeCheckbox(id) {
+        var cambio  = {};
+        var valor = true;
+        
+        let accion = this.props.match.params['accion'];
+        let producto = this.props.productos.create.nuevo;
+        if (accion === rutas.ACCION_EDITAR) {
+            producto = this.props.productos.update.activo;
+        }
+
+        switch (id) {
+            case 'compra_directa':
+                if (producto.compra_directa) {
+                    valor = false;
+                }
+                break;
+
+        }
+        cambio[id] = valor;
+        if (accion === rutas.ACCION_ALTA) {
+            this.props.createProducto(cambio);
+        }
+        if (accion === rutas.ACCION_EDITAR) {
+            this.props.updateProducto(cambio);
+        }
+    }
+
     submitForm(e) {
         e.preventDefault();
         let linkVolver = rutas.getQuery('volverA');
@@ -195,6 +222,19 @@ class AltaEdicion extends React.Component {
                             required={true}
                         />
                     </Form.Group>
+                    <div className="form-check my-3">
+                        <input
+                            className="form-check-input"
+                            type="checkbox"
+                            checked={producto.compra_directa ? producto.compra_directa : false}
+                            id="compra_directa"
+                            onClick={() => this.onChangeCheckbox('compra_directa')}
+                            onChange={() => {}}
+                        />
+                        <label className="form-check-label" htmlFor="compra_directa">
+                            Compra directa
+                        </label>
+                    </div>
                     <Form.Group>
                         <Form.Label>Descripción</Form.Label>
                         <Form.Control

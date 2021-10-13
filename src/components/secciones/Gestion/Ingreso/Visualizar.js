@@ -64,7 +64,7 @@ function Visualizar(props) {
                         <tr>
                             <th>Producto</th>
                             <th className="text-right">Cantidad</th>
-                            <th className="text-right">Precio</th>
+                            <th className="text-right">Costo</th>
                             <th className="text-right">Subtotal</th>
                         </tr>
                     </thead>
