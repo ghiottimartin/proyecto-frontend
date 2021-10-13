@@ -73,8 +73,8 @@ function Visualizar(props) {
                     </tbody>
                     <tfoot>
                         <tr className="font-weight-bold">
-                            <td colSpan="3" className="text-right">Total</td>
-                            <td>{ingreso.total_texto}</td>
+                            <td colSpan="3" className="text-left">Total</td>
+                            <td className="text-right">{ingreso.total_texto}</td>
                         </tr>
                     </tfoot>
                 </table>

@@ -37,9 +37,9 @@ class Visualizar extends React.Component {
             filas.push(
                 <tr key={linea.id}>
                     <td>{linea.producto.nombre}</td>
-                    <td>{linea.cantidad}</td>
-                    <td>{linea.producto.precio_texto}</td>
-                    <td>{linea.total_texto}</td>
+                    <td className="text-right">{linea.cantidad}</td>
+                    <td className="text-right">{linea.producto.precio_texto}</td>
+                    <td className="text-right">{linea.total_texto}</td>
                 </tr>
             );
         });
@@ -66,9 +66,9 @@ class Visualizar extends React.Component {
                     <thead>
                         <tr>
                             <th>Producto</th>
-                            <th>Cantidad</th>
-                            <th> Precio</th>
-                            <th>Subtotal</th>
+                            <th className="text-right">Cantidad</th>
+                            <th className="text-right">Precio</th>
+                            <th className="text-right">Subtotal</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,8 +76,8 @@ class Visualizar extends React.Component {
                     </tbody>
                     <tfoot>
                         <tr className="font-weight-bold">
-                            <td colSpan="3" className="text-right">Total</td>
-                            <td>{pedido.total_texto}</td>
+                            <td colSpan="3" className="text-left">Total</td>
+                            <td className="text-right">{pedido.total_texto}</td>
                         </tr>
                     </tfoot>
                 </table>
