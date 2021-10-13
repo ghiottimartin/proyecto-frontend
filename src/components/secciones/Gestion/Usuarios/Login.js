@@ -3,7 +3,7 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 
 //Actions
-import {changeLogin, login, olvideMiPassword} from "../../../../actions/AuthenticationActions";
+import { changeLogin, login, olvideMiPassword } from "../../../../actions/AuthenticationActions";
 
 //Constants
 import * as rutas from '../../../../constants/rutas.js';
@@ -49,6 +49,7 @@ class Login extends React.Component {
             'password': ''
         };
         this.props.changeLogin(cambio);
+        this.email.current.value = "";
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -58,6 +59,10 @@ class Login extends React.Component {
         if (prevState.imgPassword !== this.state.imgPassword && this.state.imgPassword === whiteEye) {
             this.toogleClave(true);
         }
+    }
+
+    componentWillUnmount() {
+        this.resetUsuario();
     }
 
     toogleClave(mostrar) {
@@ -110,6 +115,7 @@ class Login extends React.Component {
 
     render() {
         const nuevoUsuario = this.props.usuarios.create.nuevo;
+        console.log(nuevoUsuario)
         const {imgPassword, tipo} = this.state;
         return (
             <div className="login">

@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 
 //Actions
 import {resetPassword} from "../../../../actions/AuthenticationActions";
-import {createUsuario, saveCreateUsuario} from "../../../../actions/UsuarioActions";
+import {createUsuario, saveCreateUsuario, resetCreateUsuario} from "../../../../actions/UsuarioActions";
 
 //Constants
 import * as rutas from '../../../../constants/rutas.js';
@@ -42,6 +42,7 @@ class Alta extends React.Component {
     }
 
     componentDidMount() {
+        this.props.resetCreateUsuario();
         const volverA    = rutas.getQuery('volverA');
         const valido     = rutas.validarRuta(volverA);
         let botonVolverA = "";
@@ -68,6 +69,10 @@ class Alta extends React.Component {
             this.toogleClave(true);
         }
 
+    }
+
+    componentWillUnmount() {
+        this.props.resetCreateUsuario();
     }
 
     toogleClave(mostrar) {
@@ -347,6 +352,9 @@ const mapDispatchToProps = (dispatch) => {
         resetPassword: (usuario) => {
             dispatch(resetPassword(usuario))
         },
+        resetCreateUsuario: () => {
+            dispatch(resetCreateUsuario())
+        }
     }
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Alta));
