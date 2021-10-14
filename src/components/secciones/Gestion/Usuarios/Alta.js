@@ -231,9 +231,6 @@ class Alta extends React.Component {
                                 placeholder="Ingresar email"
                                 required={true}
                             />
-                            <Form.Text className="text-muted">
-                                No le compartiremos el email a nadie.
-                            </Form.Text>
                         </Form.Group>
                         { !tipoAdmin ?
                             <div className="claves">
