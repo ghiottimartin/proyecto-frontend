@@ -79,6 +79,7 @@ var productos = {
         formData.append("precio_vigente", parseFloat(producto.precio_vigente));
         formData.append("costo_vigente", parseFloat(producto.costo_vigente));
         formData.append("compra_directa", producto.compra_directa);
+        formData.append("venta_directa", producto.venta_directa);
 
         if (producto.imagen.name) {
             formData.append("imagen", producto.imagen);

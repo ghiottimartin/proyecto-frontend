@@ -123,6 +123,7 @@ class Listado extends React.Component {
                             <li><b>Nombre:</b> {producto.nombre}</li>
                             <li><b>Categoría:</b>  {producto.categoria_texto}</li>
                             <li><b>Compra directa:</b>  {this.getCompraDirecta(producto)}</li>
+                            <li><b>Venta directa:</b>  {this.getVentaDirecta(producto)}</li>
                             <li><b>Costo:</b>  {producto.costo_texto}</li>
                             <li><b>Precio:</b>  {producto.precio_texto}</li>
                             <li><b>Margen:</b>  {producto.margen_texto}</li>
@@ -143,10 +144,25 @@ class Listado extends React.Component {
      */
     getCompraDirecta(producto) {
         const directa = producto.compra_directa;
-        if (directa) {
-            return <img src={check} className="icono-operacion" alt="Compra directa" />
+        return this.getIconoBooleano(directa)
+    }
+
+    /**
+     * Devuelve el ícono de venta directa.
+     * 
+     * @param {Object} producto 
+     * @returns 
+     */
+     getVentaDirecta(producto) {
+        const directa = producto.venta_directa;
+        return this.getIconoBooleano(directa)
+    }
+
+    getIconoBooleano(verdadero, title) {
+        if (verdadero) {
+            return <img src={check} className="icono-operacion" alt={title} />
         }
-        return <img src={cruz} className="icono-operacion" alt="Compra no directa" />
+        return <img src={cruz} className="icono-operacion" alt={title} />
     }
 
     render() {
@@ -155,7 +171,7 @@ class Listado extends React.Component {
         if (noHayProductos) {
             Productos =
                 <tr className="text-center">
-                    <td colSpan="7">No hay productos cargados</td>
+                    <td colSpan="8">No hay productos cargados</td>
                 </tr>;
         }
         this.props.productos.allIds.map(idProducto => {
@@ -176,8 +192,8 @@ class Listado extends React.Component {
                         </td>
                         <td>{producto.nombre}</td>
                         <td>{producto.categoria_texto}</td>
-                        <td className="text-center">{this.getCompraDirecta(producto)}
-                        </td>
+                        <td className="text-center">{this.getCompraDirecta(producto)}</td>
+                        <td className="text-center">{this.getVentaDirecta(producto)}</td>
                         <td className="font-weight-bold text-right px-5">
                             {producto.costo_texto}
                         </td>
@@ -194,7 +210,7 @@ class Listado extends React.Component {
         });
         const Cargando =
             <tr>
-                <td colSpan={7}><Loader display={true} /></td>
+                <td colSpan={8}><Loader display={true} /></td>
             </tr>;
         let operacion = {
             'ruta': rutas.CATEGORIAS_LISTAR_ADMIN + '?volverA=' + rutas.PRODUCTOS_LISTAR_ADMIN,
@@ -220,6 +236,7 @@ class Listado extends React.Component {
                             <th>Nombre</th>
                             <th>Categoria</th>
                             <th className="text-center">Compra directa</th>
+                            <th className="text-center">Venta directa</th>
                             <th className="text-right px-5">Costo</th>
                             <th className="text-right px-5">Precio</th>
                             <th className="text-right px-5">Margen</th>

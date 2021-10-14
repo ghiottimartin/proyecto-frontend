@@ -129,6 +129,12 @@ class AltaEdicion extends React.Component {
                     valor = false;
                 }
                 break;
+            
+            case 'venta_directa':
+                if (producto.venta_directa) {
+                    valor = false;
+                }
+                break;
 
         }
         cambio[id] = valor;
@@ -233,6 +239,19 @@ class AltaEdicion extends React.Component {
                         />
                         <label className="form-check-label" htmlFor="compra_directa">
                             Compra directa
+                        </label>
+                    </div>
+                    <div className="form-check my-3">
+                        <input
+                            className="form-check-input"
+                            type="checkbox"
+                            checked={producto.venta_directa ? producto.venta_directa : false}
+                            id="venta_directa"
+                            onClick={() => this.onChangeCheckbox('venta_directa')}
+                            onChange={() => {}}
+                        />
+                        <label className="form-check-label" htmlFor="venta_directa">
+                            Venta directa
                         </label>
                     </div>
                     <Form.Group>

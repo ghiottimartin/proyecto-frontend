@@ -127,6 +127,8 @@ let creadoDefecto = {
     imagen_nombre: '',
     costo_vigente: '',
     precio_vigente: '',
+    compra_directa: false,
+    venta_directa: true,
     habilitado: 1
 };
 
