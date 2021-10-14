@@ -25,7 +25,7 @@ class Almacen extends React.Component {
     render() {
         let productos = this.props.productos.allIds.map(id => {
             let producto = this.props.productos.byId.productos[id];
-            if (producto !== undefined && producto.venta_directa) {
+            if (producto !== undefined && producto.venta_directa && producto.stock > 0) {
                 return (
                     <Producto
                         key={Math.random()}

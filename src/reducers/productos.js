@@ -129,6 +129,7 @@ let creadoDefecto = {
     precio_vigente: '',
     compra_directa: false,
     venta_directa: true,
+    stock: 0,
     habilitado: 1
 };
 

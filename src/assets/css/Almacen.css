@@ -34,7 +34,7 @@
 }
 
 .almacen .carrito-botones {
-    margin-top: auto;
+    margin-top: 10px;
 }
 
 @media (max-width: 950px) {
