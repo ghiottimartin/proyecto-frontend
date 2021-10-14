@@ -41,7 +41,7 @@ function Alta(props) {
         let linea = ingreso.lineas.find(linea => linea.producto.id === producto.id)
         if (linea === undefined) {
             linea = {
-                'precio': producto.precio_vigente,
+                'costo': producto.costo_vigente,
                 'cantidad': '',
                 'producto': producto
             }
@@ -139,9 +139,9 @@ function Alta(props) {
         actualizada[e.target.id] = parseFloat(e.target.value)
         cambiado.lineas[indice] = actualizada
         cambiado.total = cambiado.lineas.reduce((total, linea) => {
-            const precio = linea.precio ? linea.precio : 0
+            const costo = linea.costo ? linea.costo : 0
             const cantidad = linea.cantidad ? linea.cantidad : 0
-            return total + precio * cantidad
+            return total + costo * cantidad
         }, 0)
         props.createIngreso(cambiado)
     }
@@ -162,9 +162,9 @@ function Alta(props) {
                 errores.push("La cantidad de producto " + nombre + " debe ser mayor a cero.\n")
             }
 
-            const precio = linea.precio ? linea.precio : 0
-            if (isNaN(precio) || parseFloat(precio) <= 0.00) {
-                errores.push("El precio de producto " + nombre + " debe ser mayor a cero.\n")
+            const costo = linea.costo ? linea.costo : 0
+            if (isNaN(costo) || parseFloat(costo) <= 0.00) {
+                errores.push("El costo de producto " + nombre + " debe ser mayor a cero.\n")
             }
         })
 
@@ -199,8 +199,8 @@ function Alta(props) {
     const Filas = ingreso.lineas.map(linea => {
         const producto = linea.producto
         const cantidad = linea.cantidad ? linea.cantidad : ''
-        const precio = linea.precio ? linea.precio : ''
-        const subtotal = cantidad !== precio !== '' ? precio * cantidad : 0.00
+        const costo = linea.costo ? linea.costo : ''
+        const subtotal = cantidad !== costo !== '' ? costo * cantidad : 0.00
         return (
             <tr key={producto.id}>
                 <td>
@@ -222,7 +222,7 @@ function Alta(props) {
                         <div className="input-group-prepend">
                             <span className="input-group-text">$</span>
                         </div>
-                        <input id="precio" type="number" className="text-right" data-id={producto.id} value={precio ? precio : ""} step="0.01" onChange={(e) => onChangeLineaIngreso(e)} />
+                        <input id="costo" type="number" className="text-right" data-id={producto.id} value={costo ? costo : ""} step="0.01" onChange={(e) => onChangeLineaIngreso(e)} />
                     </div>
                 </td>
                 <td className="text-right">{formatearMoneda(subtotal)}</td>
@@ -256,7 +256,7 @@ function Alta(props) {
                                 <th className="tabla-columna-quitar"></th>
                                 <th className="tabla-columna-descripcion">Descripción</th>
                                 <th className="tabla-columna-cantidad">Cantidad</th>
-                                <th className="tabla-columna-precio">Precio</th>
+                                <th className="tabla-columna-costo">Costo</th>
                                 <th className="tabla-columna-subtotal">Subtotal</th>
                             </tr>
                         </thead>
