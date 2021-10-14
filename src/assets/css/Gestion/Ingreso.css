@@ -5,7 +5,7 @@
 }
 
 .ingreso-mercaderia-contenedor {
-  padding: 20px;
+  padding: 20px 20px 50px 20px;
 }
 
 .ingreso-mercaderia .ingreso-mercaderia-articulos ul {
@@ -73,7 +73,7 @@
 }
 
 .ingreso-mercaderia .boton-guardar {
-  bottom: 0;
+  bottom: -40px;
   position: absolute;
   right: 15px;
 }
