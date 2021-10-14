@@ -83,6 +83,10 @@ function Alta(props) {
         }
 
         let actuales = []
+        if (!props && !props.productos && !Array.isArray(props.productos.allIds)) {
+            return actuales;
+        }
+
         const agregados = getIdsProductosIngreso()
         props.productos.allIds.map(id => {
             const existe = agregados.includes(id)
@@ -100,6 +104,10 @@ function Alta(props) {
      * @returns {array}
      */
     const getIdsProductosIngreso = () => {
+        if (!ingreso || !Array.isArray(ingreso.lineas)) {
+            return []
+        }
+
         const ids = ingreso.lineas.map(l => {
             const producto = l.producto
             if (producto !== undefined && producto.id !== undefined) {
@@ -154,6 +162,11 @@ function Alta(props) {
      */
     const comprobarIngresoValido = () => {
         let errores = []
+        if (!ingreso || !Array.isArray(ingreso.lineas) || ingreso.lineas.length === 0) {
+            errores.push("Debe seleccionar al menos un producto.")
+            ingreso.lineas = []
+        }
+
         ingreso.lineas.map(linea => {
             const cantidad = linea.cantidad !== "" ? linea.cantidad : 0
             const producto = linea.producto
@@ -196,39 +209,42 @@ function Alta(props) {
         }
     }
 
-    const Filas = ingreso.lineas.map(linea => {
-        const producto = linea.producto
-        const cantidad = linea.cantidad ? linea.cantidad : ''
-        const costo = linea.costo ? linea.costo : ''
-        const subtotal = cantidad !== costo !== '' ? costo * cantidad : 0.00
-        return (
-            <tr key={producto.id}>
-                <td>
-                    <button className="boton-icono-quitar" data-id={producto.id} onClick={(e) => removeLineaIngreso(e)}>
-                        <i data-id={producto.id} className="fa fa-times"></i>
-                    </button>
-                </td>
-                <td>{producto.nombre}</td>
-                <td>
-                    <div className="input-group">
-                        <input id="cantidad" type="number" className="text-right" data-id={producto.id} value={cantidad ? cantidad : ""} step="1" onChange={(e) => onChangeLineaIngreso(e)} />
-                        <div className="input-group-append">
-                            <span className="input-group-text">u</span>
+    let Filas = []
+    if (ingreso && Array.isArray(ingreso.lineas)) {
+        Filas = ingreso.lineas.map(linea => {
+            const producto = linea.producto
+            const cantidad = linea.cantidad ? linea.cantidad : ''
+            const costo = linea.costo ? linea.costo : ''
+            const subtotal = cantidad !== costo !== '' ? costo * cantidad : 0.00
+            return (
+                <tr key={producto.id}>
+                    <td>
+                        <button className="boton-icono-quitar" data-id={producto.id} onClick={(e) => removeLineaIngreso(e)}>
+                            <i data-id={producto.id} className="fa fa-times"></i>
+                        </button>
+                    </td>
+                    <td>{producto.nombre}</td>
+                    <td>
+                        <div className="input-group">
+                            <input id="cantidad" type="number" className="text-right" data-id={producto.id} value={cantidad ? cantidad : ""} step="1" onChange={(e) => onChangeLineaIngreso(e)} />
+                            <div className="input-group-append">
+                                <span className="input-group-text">u</span>
+                            </div>
                         </div>
-                    </div>
-                </td>
-                <td>
-                    <div className="input-group">
-                        <div className="input-group-prepend">
-                            <span className="input-group-text">$</span>
+                    </td>
+                    <td>
+                        <div className="input-group">
+                            <div className="input-group-prepend">
+                                <span className="input-group-text">$</span>
+                            </div>
+                            <input id="costo" type="number" className="text-right" data-id={producto.id} value={costo ? costo : ""} step="0.01" onChange={(e) => onChangeLineaIngreso(e)} />
                         </div>
-                        <input id="costo" type="number" className="text-right" data-id={producto.id} value={costo ? costo : ""} step="0.01" onChange={(e) => onChangeLineaIngreso(e)} />
-                    </div>
-                </td>
-                <td className="text-right">{formatearMoneda(subtotal)}</td>
-            </tr>
-        )
-    })
+                    </td>
+                    <td className="text-right">{formatearMoneda(subtotal)}</td>
+                </tr>
+            )
+        })
+    }
 
     const Total = <tr>
         <td colSpan={4}>Total</td>
