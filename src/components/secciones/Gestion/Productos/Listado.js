@@ -124,6 +124,7 @@ class Listado extends React.Component {
                             <li><b>Categoría:</b>  {producto.categoria_texto}</li>
                             <li><b>Compra directa:</b>  {this.getCompraDirecta(producto)}</li>
                             <li><b>Venta directa:</b>  {this.getVentaDirecta(producto)}</li>
+                            <li><b>Stock:</b>  {producto.stock}</li>
                             <li><b>Costo:</b>  {producto.costo_texto}</li>
                             <li><b>Precio:</b>  {producto.precio_texto}</li>
                             <li><b>Margen:</b>  {producto.margen_texto}</li>
@@ -171,7 +172,7 @@ class Listado extends React.Component {
         if (noHayProductos) {
             Productos =
                 <tr className="text-center">
-                    <td colSpan="8">No hay productos cargados</td>
+                    <td colSpan={9}>No hay productos cargados</td>
                 </tr>;
         }
         this.props.productos.allIds.map(idProducto => {
@@ -194,6 +195,7 @@ class Listado extends React.Component {
                         <td>{producto.categoria_texto}</td>
                         <td className="text-center">{this.getCompraDirecta(producto)}</td>
                         <td className="text-center">{this.getVentaDirecta(producto)}</td>
+                        <td className="text-right px-5">{producto.stock}</td>
                         <td className="font-weight-bold text-right px-5">
                             {producto.costo_texto}
                         </td>
@@ -210,7 +212,7 @@ class Listado extends React.Component {
         });
         const Cargando =
             <tr>
-                <td colSpan={8}><Loader display={true} /></td>
+                <td colSpan={9}><Loader display={true} /></td>
             </tr>;
         let operacion = {
             'ruta': rutas.CATEGORIAS_LISTAR_ADMIN + '?volverA=' + rutas.PRODUCTOS_LISTAR_ADMIN,
@@ -237,6 +239,7 @@ class Listado extends React.Component {
                             <th>Categoria</th>
                             <th className="text-center">Compra directa</th>
                             <th className="text-center">Venta directa</th>
+                            <th className="text-right px-5">Stock</th>
                             <th className="text-right px-5">Costo</th>
                             <th className="text-right px-5">Precio</th>
                             <th className="text-right px-5">Margen</th>
