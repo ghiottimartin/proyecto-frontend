@@ -87,7 +87,7 @@ function Alta(props) {
         props.productos.allIds.map(id => {
             const existe = agregados.includes(id)
             const producto = props.productos.byId.productos[id]
-            if (!existe && producto !== undefined) {
+            if (!existe && producto !== undefined && producto.compra_directa) {
                 actuales.push(producto)
             }
         })
