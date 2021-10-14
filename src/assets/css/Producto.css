@@ -13,9 +13,10 @@
 }
 
 .producto img {
-    width: 80%;
-    height: auto;
-    max-height: 150px;
+    float: left;
+    width:  100px;
+    height: 100px;
+    object-fit: cover;
 }
 
 .producto .producto-izquierda {

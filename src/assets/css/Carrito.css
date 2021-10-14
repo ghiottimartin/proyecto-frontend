@@ -71,9 +71,12 @@
 }
 
 .carrito-compras .carrito-item img {
-    width: 45px;
-    border-radius: 50%;;
-    margin-right: 15px
+    border-radius: 50%;
+    margin-right: 15px;
+    float: left;
+    width:  45px;
+    height: 45px;
+    object-fit: cover;
 }
 
 .carrito-compras .carrito-item h2 {
