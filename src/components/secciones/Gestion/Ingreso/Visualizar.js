@@ -35,7 +35,7 @@ function Visualizar(props) {
                 <tr key={linea.id}>
                     <td>{linea.producto.nombre}</td>
                     <td className="text-right">{linea.cantidad}</td>
-                    <td className="text-right">{linea.producto.precio_texto}</td>
+                    <td className="text-right">{linea.costo_texto}</td>
                     <td className="text-right">{linea.total_texto}</td>
                 </tr>
             );
