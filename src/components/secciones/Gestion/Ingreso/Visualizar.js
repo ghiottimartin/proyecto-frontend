@@ -50,11 +50,12 @@ function Visualizar(props) {
                     <li>
                         <label>Usuario:</label>{ingreso.usuario_nombre} <span className="texto-chico">({ingreso.usuario_email})</span>
                     </li>
-                    <li>
-                        <label>Estado:</label>
-                        <span className={ingreso.estado_clase}>Activo</span>
+                    <li className="d-flex align-items-center">
+                        <label className="mb-0">Estado:</label>
+                        <span className={ingreso.estado_clase}>{ingreso.estado_texto}</span>
+                        <span style={{ display: ingreso.anulado ? "block" : "none" }} className="ingreso-anulado pl-2">{ingreso.fecha_anulado}</span>
                     </li>
-                    <li>
+                    <li className="mt-1">
                         <label>Total:</label>
                         <span>{ingreso.total_texto}</span>
                     </li>
