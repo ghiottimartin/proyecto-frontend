@@ -302,3 +302,74 @@ export function fetchIngresoById(id) {
             });
     }
 }
+
+// ANULAR INGRESO
+export const REQUEST_ANULAR_INGRESO = "REQUEST_ANULAR_INGRESO";
+export const RECEIVE_ANULAR_INGRESO = "RECEIVE_ANULAR_INGRESO";
+export const ERROR_ANULAR_INGRESO   = "ERROR_ANULAR_INGRESO";
+
+
+function requestAnularIngreso() {
+    return {
+        type: REQUEST_ANULAR_INGRESO,
+    }
+}
+
+function receiveAnularIngreso(id, message) {
+    return {
+        type: RECEIVE_ANULAR_INGRESO,
+        idCancelado: id,
+        message: message,
+        receivedAt: Date.now()
+    }
+}
+
+function errorAnularIngreso(error) {
+    return {
+        type: ERROR_ANULAR_INGRESO,
+        error: error,
+    }
+}
+
+export function anularIngreso(id) {
+    return dispatch => {
+        dispatch(requestAnularIngreso());
+        return ingresos.anularIngreso(id)
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    var data = response.json();
+                    return data;
+                }
+            })
+            .then(function (data) {
+                dispatch(receiveAnularIngreso(id, data.message));
+                dispatch(resetIngresos())
+                dispatch(fetchIngresos())
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorAnularIngreso(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(logout());
+                        return;
+                    case 404:
+                        dispatch(errorAnularIngreso(errorMessages.GENERAL_ERROR));
+                        return;
+                    default:
+                        error.json()
+                            .then(error => {
+                                if (error.message !== "")
+                                    dispatch(errorAnularIngreso(error.message));
+                                else
+                                    dispatch(errorAnularIngreso(errorMessages.GENERAL_ERROR));
+                            })
+                            .catch(error => {
+                                dispatch(errorAnularIngreso(errorMessages.GENERAL_ERROR));
+                            });
+                        return;
+                }
+            });
+    }
+}

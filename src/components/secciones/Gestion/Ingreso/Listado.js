@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 
 //Actions
-import { fetchIngresos, updateFiltros, updateIngreso } from "../../../../actions/IngresoActions"
+import { fetchIngresos, updateFiltros, updateIngreso, anularIngreso } from "../../../../actions/IngresoActions"
 
 //CSS
 import "../../../../assets/css/Gestion/Ingreso.css"
@@ -19,6 +19,7 @@ import Paginacion from "../../../elementos/Paginacion"
 import AddBoxIcon from "@material-ui/icons/AddBox"
 
 //Librerías
+import Swal from 'sweetalert2';
 import history from "../../../../history";
 
 function IngresoListado(props) {
@@ -131,20 +132,48 @@ function IngresoListado(props) {
             case 'visualizar':
                 visualizarIngreso(ingreso);
                 break;
+            
+            case 'anular':
+                anularIngreso(ingreso);
+                break;
+            
         }
     }
 
     /**
      * Redirige a la visualización del ingreso.
      * 
-     * @param {Object} pedido 
+     * @param {Object} ingreso 
      */
-    const visualizarIngreso = (pedido) => {
-        props.updateIngreso(pedido);
+    const visualizarIngreso = (ingreso) => {
+        props.updateIngreso(ingreso);
         
         let ruta = rutas.INGRESO_MERCADERIA_VISUALIZAR;
-        ruta += pedido.id;
+        ruta += ingreso.id;
         history.push(ruta);
+    }
+
+    
+    /**
+     * Anula el ingreso.
+     * 
+     * @param {Object} ingreso 
+     */
+    const anularIngreso = (ingreso) => {
+        Swal.fire({
+            title: `¿Está seguro de anular el ingreso? `,
+            icon: 'question',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: 'rgb(88, 219, 131)',
+            cancelButtonColor: '#bfbfbf',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                props.anularIngreso(ingreso.id);
+            }
+        });
     }
 
     let Ingresos = []
@@ -157,10 +186,14 @@ function IngresoListado(props) {
                     <td>{ingreso.id_texto}</td>
                     <td>{ingreso.fecha_texto}</td>
                     <td>
-                            <span>{ingreso.usuario_nombre}</span>
-                            <br/>
-                            <span className="texto-chico">{ingreso.usuario_email}</span>
-                        </td>
+                        <span>{ingreso.usuario_nombre}</span>
+                        <br/>
+                        <span className="texto-chico">{ingreso.usuario_email}</span>
+                    </td>
+                    <td>
+                        <span className={ingreso.estado_clase}>{ingreso.estado_texto}</span>
+                        <span style={{ display: ingreso.anulado ? "block" : "none" }} className="ingreso-anulado">{ingreso.fecha_anulado}</span>
+                    </td>
                     <td className="font-weight-bold text-right px-5">
                         {ingreso.total_texto}
                     </td>
@@ -177,7 +210,7 @@ function IngresoListado(props) {
         }
         Ingresos = 
             <tr className="text-center">
-                <td colSpan={5}>{placeholder}</td>
+                <td colSpan={6}>{placeholder}</td>
             </tr>;
     }
     return (
@@ -201,12 +234,13 @@ function IngresoListado(props) {
                         <th>Número</th>
                         <th>Fecha</th>
                         <th>Usuario</th>
+                        <th>Estado</th>
                         <th className="text-right px-5">Total</th>
                         <th>Operaciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {buscando ? <tr><td colSpan={5}><Loader display={true} /></td></tr> : Ingresos}
+                    {buscando ? <tr><td colSpan={6}><Loader display={true} /></td></tr> : Ingresos}
                 </tbody>
             </table>
             {
@@ -241,7 +275,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         updateIngreso: (ingreso) => {
             dispatch(updateIngreso(ingreso))
-        }
+        },
+        anularIngreso: (idIngreso) => {
+            dispatch(anularIngreso(idIngreso))
+        },
     }
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(IngresoListado))

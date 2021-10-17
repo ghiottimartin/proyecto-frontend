@@ -47,6 +47,19 @@ var ingresos = {
 
         return fetch(c.BASE_URL + '/producto/ingreso//' + id, defaultOptions);
     },
+
+    anularIngreso(id) {
+        let defaultOptions = {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "Authorization": "Token " + localStorage.token
+            },
+            dataType: 'json',
+        };
+
+        return fetch(c.BASE_URL + '/producto/ingreso//' + id + '/anular/', defaultOptions);
+    },
     
 
 };

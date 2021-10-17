@@ -16,7 +16,10 @@ import {
     RESET_INGRESOS,
     UPDATE_FILTROS,
     RESET_FILTROS,
-    UPDATE_INGRESO
+    UPDATE_INGRESO,
+    RECEIVE_ANULAR_INGRESO,
+    REQUEST_ANULAR_INGRESO,
+    ERROR_ANULAR_INGRESO
 
 } from '../actions/IngresoActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions"
@@ -37,6 +40,7 @@ const filtrosIniciales = {
 
 function ingresosById(state = {
     isFetching: false,
+    isCanceling: false,
     didInvalidate: true,
     ingresos: [],
     filtros: filtrosIniciales,
@@ -184,6 +188,25 @@ function update(state = {
                 activo: merge({}, state.activo, action.ingreso),
                 success: "",
                 error: null,
+            });
+         // CANCELACIÓN
+         case RECEIVE_ANULAR_INGRESO:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                success: action.message,
+                error: null,
+            });
+        case REQUEST_ANULAR_INGRESO:
+            return Object.assign({}, state, {
+                isUpdating: true,
+                success: "",
+                error: null,
+            });
+        case ERROR_ANULAR_INGRESO:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                success: "",
+                error: action.error
             });
         default:
             return state
