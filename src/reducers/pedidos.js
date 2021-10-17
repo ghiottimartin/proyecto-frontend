@@ -184,8 +184,8 @@ function pedidosById(state = {
             if (action.pedido && action.pedido.entities && action.pedido.entities.pedido) {
                 abierto = Object.values(action.pedido.entities.pedido)[0].datos;
             }
-            if (action.pedido.exito && action.pedido.datos && action.pedido.datos.cerrado) {
-                abierto.cerrado = true;
+            if (action.pedido.exito && action.pedido.datos && action.pedido.datos.en_curso) {
+                abierto.en_curso = true;
             }
             if (abierto.lineas === undefined) {
                 abierto.lineas = [];

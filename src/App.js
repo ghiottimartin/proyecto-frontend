@@ -124,7 +124,7 @@ class App extends React.Component {
             });
         } else {
             let pedido = this.actualizarPedido(producto, cantidad);
-            if (pedido.cerrado) {
+            if (pedido.en_curso) {
                 Swal.fire({
                     title: "Ya tiene un pedido por retirar. ¿Está seguro de comenzar otro pedido?",
                     icon: 'question',

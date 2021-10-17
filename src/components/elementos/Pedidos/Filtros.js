@@ -92,7 +92,7 @@ class Filtros extends React.Component {
                                     >
                                         <option key={0} value="">Todos</option>
                                         <option key={1} value="abierto">Abierto</option>
-                                        <option key={2} value="cerrado">En curso</option>
+                                        <option key={2} value="en curso">En curso</option>
                                         <option key={3} value="cancelado">Cancelado</option>
                                         <option key={4} value="recibido">{textoEntregado}</option>
                                     </Form.Control>
