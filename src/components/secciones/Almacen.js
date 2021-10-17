@@ -8,6 +8,7 @@ import { resetProductos,  fetchProductos} from "../../actions/ProductoActions";
 //Components
 import Button from '@material-ui/core/Button';
 import Producto from "../elementos/Producto";
+import Loader from "../elementos/Loader";
 
 //CSS
 import "../../assets/css/Almacen.css";
@@ -23,6 +24,7 @@ class Almacen extends React.Component {
     }
 
     render() {
+        const buscando = this.props.productos.byId.isFetching;
         let productos = this.props.productos.allIds.map(id => {
             let producto = this.props.productos.byId.productos[id];
             if (producto !== undefined && producto.venta_directa && producto.stock > 0) {
@@ -39,9 +41,12 @@ class Almacen extends React.Component {
             }
         });
         let hayProductos = productos.length > 0;
-        let clase = hayProductos ? "almacen-productos" : "d-flex justify-content-center align-items-center h-100";
+        let clase = hayProductos && !buscando ? "almacen-productos" : "d-flex justify-content-center align-items-center h-100";
         if (!hayProductos) {
             productos = <h2 className="placeholder-producto">No hay productos cargados</h2>;
+        }
+        if (buscando) {
+            productos = <Loader display={true} />;
         }
         return (
             <div className="almacen">
