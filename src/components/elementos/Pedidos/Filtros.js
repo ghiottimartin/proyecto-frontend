@@ -28,12 +28,23 @@ class Filtros extends React.Component {
         this.props.onChangeBusqueda(e);
     }
 
+    getOpcionesEstados() {
+        let opciones = [];
+        opciones.push(<option key={0} value="">Todos</option>);
+        opciones.push(<option key={1} value="abierto">Abierto</option>);
+        opciones.push(<option key={2} value="en curso">En curso</option>);
+        opciones.push(<option key={3} value="cancelado">Cancelado</option>);
+        opciones.push(<option key={4} value="recibido">Entregado</option>);
+        return opciones;
+
+    }
+
     render() {
         const props = this.props;
         const filtros = props.pedidos.byId.filtros;
         let maximo = moment().format("YYYY-MM-DD");
-        const textoEntregado = props.rutaVendedor ? "Entregado" : "Recibido";
         const mostrarFiltroUsuario = props.rutaVendedor;
+        const estados = this.getOpcionesEstados()
         return (
             <div className="filtros">
                 <h4>Filtrado</h4>
@@ -90,11 +101,7 @@ class Filtros extends React.Component {
                                         onChange={(e) => this.changeFiltros(e)}
                                         value={filtros.estado ? filtros.estado : ""}
                                     >
-                                        <option key={0} value="">Todos</option>
-                                        <option key={1} value="abierto">Abierto</option>
-                                        <option key={2} value="en curso">En curso</option>
-                                        <option key={3} value="cancelado">Cancelado</option>
-                                        <option key={4} value="recibido">{textoEntregado}</option>
+                                        {estados}
                                     </Form.Control>
                                 </Form.Group>
                             </div>
