@@ -19,6 +19,7 @@ import Loader from "../../../elementos/Loader";
 import Titulo from "../../../elementos/Titulo";
 import Filtros from "./Filtros";
 import Paginacion from "../../../elementos/Paginacion";
+import Ordenador from "../../../elementos/Tabla/Ordenador";
 
 //Images
 import productoVacio from "../../../../assets/img/emptyImg.jpg";
@@ -26,9 +27,9 @@ import tacho from "../../../../assets/icon/delete.png";
 import lapiz from "../../../../assets/icon/pencil.png";
 import check from "../../../../assets/icon/checked.png";
 import cruz from "../../../../assets/icon/close.png";
-import Swal from "sweetalert2";
 
 //Librerias
+import Swal from "sweetalert2";
 import history from "../../../../history";
 
 class Listado extends React.Component {
@@ -42,8 +43,7 @@ class Listado extends React.Component {
     }
 
     componentDidMount() {
-        this.props.resetProductos();
-        this.props.fetchProductos();
+        this.buscarProductos();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -63,10 +63,17 @@ class Listado extends React.Component {
             })
         }
 
-        if (prevProps.productos.byId.filtros.paginaActual !== this.props.productos.byId.filtros.paginaActual) {
-            this.props.resetProductos();
-            this.props.fetchProductos();
+        const cambioOrden = prevProps.productos.byId.filtros.orden !== this.props.productos.byId.filtros.orden
+        const cambioDePagina = prevProps.productos.byId.filtros.paginaActual !== this.props.productos.byId.filtros.paginaActual
+        const cambioDireccion = prevProps.productos.byId.filtros.direccion !== this.props.productos.byId.filtros.direccion
+        if (cambioOrden || cambioDePagina || cambioDireccion) {
+            this.buscarProductos();
         }
+    }
+
+    buscarProductos() {
+        this.props.resetProductos();
+        this.props.fetchProductos();
     }
 
     clickEditar(producto) {
@@ -234,8 +241,36 @@ class Listado extends React.Component {
         this.props.updateFiltros(cambio);
     }
 
+    /**
+     * Cambia el ordenamiento de una columna de la tabla.
+     * 
+     * @param {SyntheticBaseEvent} e 
+     */
+    changeDirection(e) {
+        const filtros = this.props.productos.byId.filtros
+        
+        let nuevos = {};
+        nuevos.target = {};
+        nuevos.target.id = "orden";
+        nuevos.target.value = e.target.id;
+        this.onChangeBusqueda(nuevos);
+
+        const cambioOrden = filtros.orden !== e.target.id
+        const nuevoOrden = cambioOrden ? "ASC" : filtros.direccion === "ASC" ? "DESC" : "ASC";
+        if (nuevoOrden) {
+            nuevos.target.id = "paginaActual";
+            nuevos.target.value = 1;
+            this.onChangeBusqueda(nuevos);
+        }
+
+        nuevos.target.id = "direccion";
+        nuevos.target.value = nuevoOrden;
+        this.onChangeBusqueda(nuevos);
+    }
+
     render() {
         const { noHayProductos, buscando } = this.state;
+        const productosById = this.props.productos.byId;
         let Productos = [];
         if (noHayProductos) {
             Productos =
@@ -244,7 +279,7 @@ class Listado extends React.Component {
                 </tr>;
         }
         this.props.productos.allIds.map(idProducto => {
-            let producto = this.props.productos.byId.productos[idProducto];
+            let producto = productosById.productos[idProducto];
             if (producto && producto.id) {
                 let operaciones = this.getOperacionesProducto(producto);
                 let path = productoVacio;
@@ -288,10 +323,12 @@ class Listado extends React.Component {
             'clase': 'btn-success',
         };
         const tableResponsive = this.getHtmlListadoResponsive();
-        const total = this.props.productos.byId.total;
+        const total = productosById.total;
         const totalCero = parseInt(total) === 0;
-        const filtros = this.props.productos.byId.filtros
-        const registros = this.props.productos.byId.registros
+        const filtros = productosById.filtros
+        const registros = productosById.registros
+        const orden = productosById.filtros.orden
+        const direccion = productosById.filtros.direccion
         return (
             <div className="tabla-listado">
                 <div className="table-responsive tarjeta-body productos-listado">
@@ -311,15 +348,66 @@ class Listado extends React.Component {
                     <table className="table">
                         <thead>
                             <tr>
-                                <th>Imagen</th>
-                                <th>Nombre</th>
-                                <th>Categoria</th>
-                                <th className="text-center">Compra directa</th>
-                                <th className="text-center">Venta directa</th>
-                                <th className="text-right px-5">Stock</th>
-                                <th className="text-right px-5">Costo</th>
-                                <th className="text-right px-5">Precio</th>
-                                <th className="text-right px-5">Margen</th>
+                                <th>
+                                    Imagen
+                                </th>
+                                <Ordenador
+                                    id="nombre"
+                                    texto="Nombre"
+                                    orden={orden}
+                                    direccion={direccion}
+                                    changeDireccion={(e) => this.changeDirection(e)}
+                                />
+                                <Ordenador
+                                    id="categoria"
+                                    texto="Categoría"
+                                    orden={orden}
+                                    direccion={direccion}
+                                    changeDireccion={(e) => this.changeDirection(e)}
+                                />
+                                <Ordenador
+                                    id="compra_directa"
+                                    clase="justify-content-end"
+                                    texto="Compra directa"
+                                    orden={orden}
+                                    direccion={direccion}
+                                    changeDireccion={(e) => this.changeDirection(e)}
+                                />
+                                <Ordenador
+                                    id="venta_directa"
+                                    clase="justify-content-end"
+                                    texto="Venta directa"
+                                    orden={orden}
+                                    direccion={direccion}
+                                    changeDireccion={(e) => this.changeDirection(e)}
+                                />
+                                <Ordenador
+                                    id="stock"
+                                    clase="justify-content-end"
+                                    texto="Stock"
+                                    orden={orden}
+                                    direccion={direccion}
+                                    changeDireccion={(e) => this.changeDirection(e)}
+                                />
+                                <Ordenador
+                                    id="costo_vigente"
+                                    clase="justify-content-end"
+                                    texto="Costo"
+                                    orden={orden}
+                                    direccion={direccion}
+                                    changeDireccion={(e) => this.changeDirection(e)}
+                                />
+                                <Ordenador
+                                    id="precio_vigente"
+                                    clase="justify-content-end"
+                                    texto="Precio"
+                                    orden={orden}
+                                    direccion={direccion}
+                                    changeDireccion={(e) => this.changeDirection(e)}
+                                />
+                                <th className="text-right pr-5">
+                                    Margen
+                                </th>
                                 <th>Operaciones</th>
                             </tr>
                         </thead>

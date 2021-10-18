@@ -33,7 +33,9 @@ const filtrosIniciales = {
     nombre: "",
     categoria: "",
     paginaActual: 1,
-    registrosPorPagina: 10
+    registrosPorPagina: 10,
+    orden: 'nombre',
+    direccion: 'ASC',
 }
 
 function productosById(state = {
