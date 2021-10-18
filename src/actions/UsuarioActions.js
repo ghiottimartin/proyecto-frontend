@@ -533,7 +533,16 @@ export function saveDeleteUsuario(id) {
                         dispatch(logout());
                         return Promise.reject(error);
                     default:
-                        dispatch(errorDeleteUsuario(errorMessages.GENERAL_ERROR));
+                        error.json()
+                            .then(error => {
+                                if (error.message !== "")
+                                    dispatch(errorDeleteUsuario(error.message));
+                                else
+                                    dispatch(errorDeleteUsuario(errorMessages.GENERAL_ERROR));
+                            })
+                            .catch(error => {
+                                dispatch(errorDeleteUsuario(errorMessages.GENERAL_ERROR));
+                            });
                         return;
                 }
             });

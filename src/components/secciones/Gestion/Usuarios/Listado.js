@@ -112,14 +112,14 @@ class Listado extends React.Component {
         let logueado   = this.props.usuarios.update.logueado;
         let rutaEditar = rutas.getUrl(rutas.USUARIOS, id, rutas.ACCION_EDITAR, rutas.TIPO_ADMIN, rutas.USUARIOS_LISTAR);
         let borrar =
-            <p onClick={() => this.modalBorrar(usuario)} title="Borrar"
+            <div style={{display: usuario.puede_borrarse ? "block" : "none"}} onClick={() => this.modalBorrar(usuario)} title="Borrar"
                className="operacion">
                 <img src={tacho} className="icono-operacion" alt="Borrar usuario"/>
                 Borrar
-            </p>;
+            </div>;
         return (
-            <div>
-                <a href={rutaEditar} title="Editar "
+            <div className="d-flex">
+                <a onClick={() => history.push(rutaEditar)} title="Editar"
                    className="operacion">
                     <img src={lapiz} className="icono-operacion" alt="Editar usuario"/>
                     Editar
