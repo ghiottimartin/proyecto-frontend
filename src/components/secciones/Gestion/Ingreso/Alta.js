@@ -25,10 +25,11 @@ import { formatearMoneda } from "../../../../utils/formateador"
 function Alta(props) {
     const titulo = "Alta de ingreso"
     const ingreso = props.ingresos.create.nuevo
+    const buscando = props.productos.byId.isFetching
 
     useEffect(() => {
         props.fetchProductosIfNeeded()
-    }, [props.productos.allIds])
+    }, [])
 
     /**
      * Agrega una línea de ingreso.
@@ -77,7 +78,6 @@ function Alta(props) {
      * @returns {array}
      */
     const getOpcionesProductos = () => {
-        const buscando = props.productos.byId.isFetching
         if (buscando) {
             return []
         }
@@ -212,9 +212,9 @@ function Alta(props) {
     let Filas = []
     if (ingreso && Array.isArray(ingreso.lineas)) {
         Filas = ingreso.lineas.map(linea => {
+            const costo = linea.costo ? linea.costo : ''
             const producto = linea.producto
             const cantidad = linea.cantidad ? linea.cantidad : ''
-            const costo = linea.costo ? linea.costo : ''
             const subtotal = cantidad !== costo !== '' ? costo * cantidad : 0.00
             return (
                 <tr key={producto.id}>
@@ -252,7 +252,6 @@ function Alta(props) {
     </tr>
 
     const isCreating = props.ingresos.create.isCreating
-    const buscandoProductos = props.productos.byId.isFetching
 
     return (
         <div className="ingreso-mercaderia tarjeta-body">
@@ -261,7 +260,8 @@ function Alta(props) {
                 <div className="col-lg-4">
                     <div className="ingreso-mercaderia-articulos">
                         <h5>Productos</h5>
-                        <ul>{buscandoProductos ? <Loader display={true} /> : Opciones}</ul>
+                        <ul>{buscando ? <Loader display={true} /> : Opciones}</ul>
+                        {Opciones.length === 0 && !buscando ? <p>No se han cargado productos de compra directa</p> : <></>}
                     </div>
                 </div>
                 <div className="col-lg-8 position-relative">
