@@ -22,7 +22,7 @@ import Swal from "sweetalert2";
 //Components
 import Loader from "../../elementos/Loader";
 import Paginacion from "../../elementos/Paginacion";
-import Filtros from "../../elementos/Pedidos/Filtros";
+import Filtros from "./Filtros";
 import Titulo from "../../elementos/Titulo";
 
 class Listado extends React.Component {
