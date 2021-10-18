@@ -1,21 +1,23 @@
 import React from "react";
-import {withRouter} from "react-router-dom";
-import {connect} from "react-redux";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 
 //Actions
-import {resetProductos, fetchProductosIfNeeded, saveDeleteProducto, updateProducto} from "../../../../actions/ProductoActions";
+import { resetProductos, fetchProductos, saveDeleteProducto, updateProducto, updateFiltros } from "../../../../actions/ProductoActions";
 
 //CSS
 import "../../../../assets/css/Productos/Listado.css";
 import "../../../../assets/css/Listado.css";
 
 //Constants
+import c from "../../../../constants/constants";
 import * as rutas from "../../../../constants/rutas";
 
 //Componentes
 import AddBoxIcon from "@material-ui/icons/AddBox";
 import Loader from "../../../elementos/Loader";
 import Titulo from "../../../elementos/Titulo";
+import Filtros from "./Filtros";
 
 //Images
 import productoVacio from "../../../../assets/img/emptyImg.jpg";
@@ -32,22 +34,23 @@ class Listado extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            buscando:       true,
+            buscando: true,
+            paginaUno: true,
             noHayProductos: false
         }
     }
 
     componentDidMount() {
         this.props.resetProductos();
-        this.props.fetchProductosIfNeeded();
+        this.props.fetchProductos();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        let allIds       = this.props.productos.allIds;
-        let borrados     = this.props.productos.delete;
-        let productos    = this.props.productos.byId;
+        let allIds = this.props.productos.allIds;
+        let borrados = this.props.productos.delete;
+        let productos = this.props.productos.byId;
         let preProductos = prevProps.productos.byId;
-        let sinIds       = allIds.length === 0;
+        let sinIds = allIds.length === 0;
         if (sinIds && ((preProductos.isFetching && !productos.isFetching) || (!borrados.isDeleting && prevProps.productos.delete.isDeleting))) {
             this.setState({
                 noHayProductos: true,
@@ -61,7 +64,7 @@ class Listado extends React.Component {
     }
 
     clickEditar(producto) {
-        let id         = producto.id;
+        let id = producto.id;
         let rutaEditar = rutas.getUrl(rutas.PRODUCTOS, id, rutas.ACCION_EDITAR, rutas.TIPO_ADMIN, rutas.PRODUCTOS_LISTAR_ADMIN);
         this.props.updateProducto(producto);
         history.push(rutaEditar);
@@ -71,13 +74,13 @@ class Listado extends React.Component {
         return (
             <div>
                 <p onClick={() => this.clickEditar(producto)} title="Editar "
-                   className="operacion">
-                    <img src={lapiz} className="icono-operacion" alt="Editar producto"/>
+                    className="operacion">
+                    <img src={lapiz} className="icono-operacion" alt="Editar producto" />
                     Editar
                 </p>
-                <p onClick={() => this.modalBorrar(producto)} title="Borrar"  style={{display: producto.puede_borrarse ? "inline" : "none"}} 
-                   className="operacion">
-                    <img src={tacho} className="icono-operacion" alt="Borrar producto"/>
+                <p onClick={() => this.modalBorrar(producto)} title="Borrar" style={{ display: producto.puede_borrarse ? "inline" : "none" }}
+                    className="operacion">
+                    <img src={tacho} className="icono-operacion" alt="Borrar producto" />
                     Borrar
                 </p>
             </div>
@@ -110,10 +113,11 @@ class Listado extends React.Component {
                 let path = productoVacio;
                 if (producto.imagen) {
                     try {
-                        path = producto.imagen;
+                        path = c.BASE_PUBLIC + producto.imagen;
                     } catch (e) {
                     }
                 }
+                console.log(path)
                 Productos.push(
                     <div key={producto.id + "-responsive"} className="productos-responsive-item">
                         <ul>
@@ -154,16 +158,59 @@ class Listado extends React.Component {
      * @param {Object} producto 
      * @returns 
      */
-     getVentaDirecta(producto) {
+    getVentaDirecta(producto) {
         const directa = producto.venta_directa;
         return this.getIconoBooleano(directa)
     }
 
+    /**
+     * Devuelve el ícono booleano para compra directa y venta directa.
+     * 
+     * @param {Boolean} verdadero 
+     * @param {String} title 
+     * @returns 
+     */
     getIconoBooleano(verdadero, title) {
         if (verdadero) {
             return <img src={check} className="icono-operacion" alt={title} />
         }
         return <img src={cruz} className="icono-operacion" alt={title} />
+    }
+
+    /**
+     * Filtra los productos.
+     * 
+     * @param {SyntheticBaseEvent} e 
+     */
+     filtrarProductos(e) {
+        e.preventDefault();
+        if (this.state.paginaUno) {
+            var cambio = {
+                target: {
+                    id: 'paginaActual',
+                    value: 1
+                }
+            };
+            this.onChangeBusqueda(cambio);
+        }
+        this.props.fetchProductos();
+    }
+
+     /**
+     * Cambia los filtros a aplicar, si cambia un filtro que no sea la paginación
+     * vuelve a la página inicial.
+     * 
+     * @param {SyntheticBaseEvent} e 
+     */
+      onChangeBusqueda(e) {
+        var cambio = {};
+        cambio[e.target.id] = e.target.value;
+        if (e.target.id !== "paginaActual") {
+            this.setState({paginaUno: true})
+        } else {
+            this.setState({paginaUno: false})
+        }
+        this.props.updateFiltros(cambio);
     }
 
     render() {
@@ -172,7 +219,7 @@ class Listado extends React.Component {
         if (noHayProductos) {
             Productos =
                 <tr className="text-center">
-                    <td colSpan={9}>No hay productos cargados</td>
+                    <td colSpan={10}>No hay productos cargados</td>
                 </tr>;
         }
         this.props.productos.allIds.map(idProducto => {
@@ -182,7 +229,7 @@ class Listado extends React.Component {
                 let path = productoVacio;
                 if (producto.imagen) {
                     try {
-                        path = producto.imagen;
+                        path = c.BASE_PUBLIC + producto.imagen;
                     } catch (e) {
                     }
                 }
@@ -212,7 +259,7 @@ class Listado extends React.Component {
         });
         const Cargando =
             <tr>
-                <td colSpan={9}><Loader display={true} /></td>
+                <td colSpan={10}><Loader display={true} /></td>
             </tr>;
         let operacion = {
             'ruta': rutas.CATEGORIAS_LISTAR_ADMIN + '?volverA=' + rutas.PRODUCTOS_LISTAR_ADMIN,
@@ -227,27 +274,32 @@ class Listado extends React.Component {
                         <Titulo ruta={rutas.GESTION} titulo={"Productos"} clase="tabla-listado-titulo" operaciones={[operacion]} />
                         <a href="#"
                             onClick={() => history.push(rutas.PRODUCTO_ALTA + "?volverA=" + rutas.PRODUCTOS_LISTAR_ADMIN)}
-                           data-toggle="tooltip" data-original-title="" title="">
-                            <AddBoxIcon style={{ color:  '#5cb860'}}/>
+                            data-toggle="tooltip" data-original-title="" title="">
+                            <AddBoxIcon style={{ color: '#5cb860' }} />
                         </a>
                     </div>
+                    <Filtros
+                        {...this.props}
+                        filtrar={(e) => this.filtrarProductos(e)}
+                        onChangeBusqueda={(e) => this.onChangeBusqueda(e)}
+                    />
                     <table className="table">
                         <thead>
-                        <tr>
-                            <th>Imagen</th>
-                            <th>Nombre</th>
-                            <th>Categoria</th>
-                            <th className="text-center">Compra directa</th>
-                            <th className="text-center">Venta directa</th>
-                            <th className="text-right px-5">Stock</th>
-                            <th className="text-right px-5">Costo</th>
-                            <th className="text-right px-5">Precio</th>
-                            <th className="text-right px-5">Margen</th>
-                            <th>Operaciones</th>
-                        </tr>
+                            <tr>
+                                <th>Imagen</th>
+                                <th>Nombre</th>
+                                <th>Categoria</th>
+                                <th className="text-center">Compra directa</th>
+                                <th className="text-center">Venta directa</th>
+                                <th className="text-right px-5">Stock</th>
+                                <th className="text-right px-5">Costo</th>
+                                <th className="text-right px-5">Precio</th>
+                                <th className="text-right px-5">Margen</th>
+                                <th>Operaciones</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        {buscando ? Cargando : Productos}
+                            {buscando ? Cargando : Productos}
                         </tbody>
                     </table>
                     <div className="productos-responsive">
@@ -270,15 +322,18 @@ const mapDispatchToProps = (dispatch) => {
         resetProductos: () => {
             dispatch(resetProductos())
         },
-        fetchProductosIfNeeded: () => {
-            dispatch(fetchProductosIfNeeded())
+        fetchProductos: () => {
+            dispatch(fetchProductos())
         },
         saveDeleteProducto: (id) => {
             dispatch(saveDeleteProducto(id))
         },
         updateProducto: (producto) => {
             dispatch(updateProducto(producto))
-        }
+        },
+        updateFiltros: (filtros) => {
+            dispatch(updateFiltros(filtros))
+        },
     }
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Listado));

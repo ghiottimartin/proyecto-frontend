@@ -22,17 +22,26 @@ import {
     REQUEST_PRODUCTO_ID,
     RECEIVE_PRODUCTO_ID,
     ERROR_PRODUCTO_ID,
-    RESET_PRODUCTO_ID, RESET_DELETE_PRODUCTO, REQUEST_DELETE_PRODUCTO, RECEIVE_DELETE_PRODUCTO, ERROR_DELETE_PRODUCTO
+    RESET_PRODUCTO_ID, RESET_DELETE_PRODUCTO, REQUEST_DELETE_PRODUCTO, RECEIVE_DELETE_PRODUCTO, ERROR_DELETE_PRODUCTO, UPDATE_FILTROS, RESET_FILTROS
 
 } from '../actions/ProductoActions';
 import {LOGOUT_SUCCESS} from "../actions/AuthenticationActions";
 import pickBy from "lodash/pickBy";
+
+const filtrosIniciales = {
+    tipo: "",
+    nombre: "",
+    categoria: "",
+    paginaActual: 1,
+    registrosPorPagina: 10
+}
 
 function productosById(state = {
     isFetching: false,
     isFetchingProducto: false,
     didInvalidate: true,
     didInvalidateProducto: true,
+    filtros: filtrosIniciales,
     productos: [],
     producto: {},
     error: null,
@@ -114,6 +123,15 @@ function productosById(state = {
                 productos: pickBy(state.productos, function (value, key) {
                     return parseInt(key) !== parseInt(action.idProducto);
                 })
+            });
+        // FILTROS
+        case UPDATE_FILTROS:
+            return Object.assign({}, state, {
+                filtros: merge({}, state.filtros, action.filtros)
+            });
+        case RESET_FILTROS:
+            return Object.assign({}, state, {
+                filtros: filtrosIniciales
             });
         default:
             return state

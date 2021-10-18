@@ -200,7 +200,9 @@ function requestProductos() {
 function receiveProductos(json) {
     return {
         type: RECEIVE_PRODUCTOS,
-        productos: normalizeDatos(json),
+        productos: normalizeDatos(json.productos),
+        total: json.total,
+        registros: json.registros,
         receivedAt: Date.now()
     }
 }
@@ -213,9 +215,9 @@ function errorProductos(error) {
 }
 
 export function fetchProductos() {
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch(requestProductos());
-        return productos.getAll()
+        return productos.getAll(getState().productos.byId.filtros)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
@@ -225,7 +227,7 @@ export function fetchProductos() {
                 }
             })
             .then(function (data) {
-                dispatch(receiveProductos(data));
+                dispatch(receiveProductos(data.datos));
             })
             .catch(function (error) {
                 //dispatch(logout());
@@ -421,5 +423,22 @@ export function saveDeleteProducto(id) {
                         return;
                 }
             });
+    }
+}
+
+// FILTROS PRODUCTOS
+export const UPDATE_FILTROS = 'UPDATE_FILTROS';
+export const RESET_FILTROS  = 'RESET_FILTROS';
+
+export function updateFiltros(filtros) {
+    return {
+        type: UPDATE_FILTROS,
+        filtros
+    }
+}
+
+export function resetFiltros() {
+    return {
+        type: RESET_FILTROS
     }
 }

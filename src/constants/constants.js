@@ -3,10 +3,10 @@
  */
 let develop = true;
 let BASE_URL = "https://ancient-oasis-22601.herokuapp.com/api";
-let BASE_PUBLIC = "https://ancient-oasis-22601.herokuapp.com/";
+let BASE_PUBLIC = "https://ancient-oasis-22601.herokuapp.com";
 if (develop) {
     BASE_URL = "http://localhost:8000/api";
-    BASE_PUBLIC = "http://localhost:8000/";
+    BASE_PUBLIC = "http://localhost:8000";
 }
 
 export default {

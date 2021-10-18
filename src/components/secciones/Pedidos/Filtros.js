@@ -9,7 +9,7 @@ import { resetFiltros } from "../../../actions/PedidoActions";
 import Form from "react-bootstrap/Form";
 
 //CSS
-import '../../../assets/css/Pedidos/Filtros.css';
+import '../../../assets/css/Filtros.css';
 
 //Librerías
 import moment from 'moment';

@@ -81,8 +81,8 @@
     font-weight: bold;
 }
 
-.form-filtros .filter-by.edadAproximada input {
-    width: 140px;
+.form-filtros .filter-by input, .form-filtros .filter-by select {
+    width: 200px;
 }
 
 .filtros .boton-filtrar {

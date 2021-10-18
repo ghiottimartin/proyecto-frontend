@@ -4,7 +4,16 @@ require('isomorphic-fetch');
 
 var productos = {
 
-    getAll() {
+    getAll(filtros) {
+        var esc = encodeURIComponent;
+        var query = "";
+        if (filtros) {
+            query = "?"
+            query += Object.keys(filtros)
+                .map(k => esc(k) + '=' + esc(filtros[k]))
+                .join('&')
+        }
+
         let defaultOptions = {
             method: 'GET',
             headers: {
@@ -12,7 +21,7 @@ var productos = {
             }
         };
 
-        return fetch(c.BASE_URL + '/producto/', defaultOptions);
+        return fetch(c.BASE_URL + '/producto/' + query, defaultOptions);
     },
 
     saveCreate(producto) {
@@ -53,7 +62,7 @@ var productos = {
                 xhr.setRequestHeader('Authorization', "Token " + localStorage.token);
             },
             type: 'PUT',
-            contentType: false, 
+            contentType: false,
             processData: false,
             enctype: 'multipart/form-data',
         });
