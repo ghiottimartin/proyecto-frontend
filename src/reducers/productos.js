@@ -46,6 +46,8 @@ function productosById(state = {
     producto: {},
     error: null,
     success: "",
+    total: 0,
+    registros: 0
 }, action) {
     switch (action.type) {
         case LOGOUT_SUCCESS:
@@ -69,6 +71,8 @@ function productosById(state = {
                 isFetching: false,
                 didInvalidate: false,
                 productos: action.productos.entities.productos,
+                total: action.total,
+                registros: action.registros,
                 lastUpdated: action.receivedAt,
                 error: null
             });

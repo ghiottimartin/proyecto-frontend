@@ -18,6 +18,7 @@ import AddBoxIcon from "@material-ui/icons/AddBox";
 import Loader from "../../../elementos/Loader";
 import Titulo from "../../../elementos/Titulo";
 import Filtros from "./Filtros";
+import Paginacion from "../../../elementos/Paginacion";
 
 //Images
 import productoVacio from "../../../../assets/img/emptyImg.jpg";
@@ -60,6 +61,11 @@ class Listado extends React.Component {
             this.setState({
                 buscando: false,
             })
+        }
+
+        if (prevProps.productos.byId.filtros.paginaActual !== this.props.productos.byId.filtros.paginaActual) {
+            this.props.resetProductos();
+            this.props.fetchProductos();
         }
     }
 
@@ -117,7 +123,6 @@ class Listado extends React.Component {
                     } catch (e) {
                     }
                 }
-                console.log(path)
                 Productos.push(
                     <div key={producto.id + "-responsive"} className="productos-responsive-item">
                         <ul>
@@ -182,7 +187,7 @@ class Listado extends React.Component {
      * 
      * @param {SyntheticBaseEvent} e 
      */
-     filtrarProductos(e) {
+    filtrarProductos(e) {
         e.preventDefault();
         if (this.state.paginaUno) {
             var cambio = {
@@ -196,20 +201,36 @@ class Listado extends React.Component {
         this.props.fetchProductos();
     }
 
-     /**
-     * Cambia los filtros a aplicar, si cambia un filtro que no sea la paginación
-     * vuelve a la página inicial.
-     * 
-     * @param {SyntheticBaseEvent} e 
-     */
-      onChangeBusqueda(e) {
+    /**
+    * Cambia los filtros a aplicar, si cambia un filtro que no sea la paginación
+    * vuelve a la página inicial.
+    * 
+    * @param {SyntheticBaseEvent} e 
+    */
+    onChangeBusqueda(e) {
         var cambio = {};
         cambio[e.target.id] = e.target.value;
         if (e.target.id !== "paginaActual") {
-            this.setState({paginaUno: true})
+            this.setState({ paginaUno: true })
         } else {
-            this.setState({paginaUno: false})
+            this.setState({ paginaUno: false })
         }
+        this.props.updateFiltros(cambio);
+    }
+
+    /**
+    * Cambia la página del filtro de paginación.
+    * 
+    * @param {Number} pagina 
+    * @returns 
+    */
+    cambiarDePagina(pagina) {
+        if (isNaN(pagina)) {
+            return;
+        }
+
+        let cambio = {};
+        cambio['paginaActual'] = pagina;
         this.props.updateFiltros(cambio);
     }
 
@@ -267,6 +288,10 @@ class Listado extends React.Component {
             'clase': 'btn-success',
         };
         const tableResponsive = this.getHtmlListadoResponsive();
+        const total = this.props.productos.byId.total;
+        const totalCero = parseInt(total) === 0;
+        const filtros = this.props.productos.byId.filtros
+        const registros = this.props.productos.byId.registros
         return (
             <div className="tabla-listado">
                 <div className="table-responsive tarjeta-body productos-listado">
@@ -305,6 +330,18 @@ class Listado extends React.Component {
                     <div className="productos-responsive">
                         {tableResponsive}
                     </div>
+                    {
+                        buscando || totalCero ?
+                            ''
+                            :
+                            <Paginacion
+                                activePage={filtros.paginaActual}
+                                itemsCountPerPage={filtros.registrosPorPagina}
+                                totalItemsCount={registros}
+                                pageRangeDisplayed={5}
+                                onChange={(e) => this.cambiarDePagina(e)}
+                            />
+                    }
                 </div>
             </div>
         )
