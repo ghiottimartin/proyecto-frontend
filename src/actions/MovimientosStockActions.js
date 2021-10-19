@@ -52,10 +52,11 @@ function errorMovimientos(error) {
     }
 }
 
-export function fetchMovimientos() {
+export function fetchMovimientos(idProducto) {
     return (dispatch, getState) => {
         dispatch(requestMovimientos());
-        const filtros = getState().movimientos.byId.filtros;
+        let filtros = getState().movimientos.byId.filtros;
+        filtros.producto = idProducto
         return movimientos.getAll(filtros)
             .then(function (response) {
                 if (response.status >= 400) {

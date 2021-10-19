@@ -13,6 +13,7 @@ import Titulo from "../../../../elementos/Titulo"
 import Loader from "../../../../elementos/Loader"
 import Filtros from "./Filtros"
 import Paginacion from '../../../../elementos/Paginacion'
+import AddBoxIcon from "@material-ui/icons/AddBox"
 
 //CSS
 import "../../../../../assets/css/Productos/Movimientos.css"
@@ -21,12 +22,25 @@ import "../../../../../assets/css/Productos/Movimientos.css"
 import history from '../../../../../history'
 
 function Listado(props) {
-    const titulo = "Stock de productos"
-    const buscando = props.movimientos.byId.isFetching
     const total = props.movimientos.byId.total
-    const totalCero = parseInt(total) == 0
     const filtros = props.movimientos.byId.filtros
+    const buscando = props.movimientos.byId.isFetching
+    const totalCero = parseInt(total) == 0
     const registros = props.movimientos.byId.registros
+
+    let titulo = "Stock de productos"
+    let producto = {}
+    props.productos.allIds.map(idProducto => {
+        let actual = props.productos.byId.productos[idProducto]
+        if (actual && actual.id && parseInt(actual.id) === parseInt(props.match.params.id)) {
+            producto = actual
+        }
+    })
+    
+    if (producto && producto.nombre) {
+        titulo = "Movimientos de stock de '" + producto.nombre + "'"
+    }
+
 
     const [paginaUno, setPaginaUno] = useState(false)
 
@@ -38,8 +52,13 @@ function Listado(props) {
      * Busca los movimientos de stock según los filtros aplicados.
      */
     const buscarMovimientos = () => {
+        const id = props.match.params.id
+        if (isNaN(id)) {
+            history.push(rutas.PRODUCTOS_LISTAR_ADMIN)
+        }
+
         props.resetMovimientos()
-        props.fetchMovimientos()
+        props.fetchMovimientos(id)
     }
 
     let Movimientos = []
@@ -161,8 +180,8 @@ const mapDispatchToProps = (dispatch) => {
         resetMovimientos: () => {
             dispatch(resetMovimientos())
         },
-        fetchMovimientos: () => {
-            dispatch(fetchMovimientos())
+        fetchMovimientos: (idProducto) => {
+            dispatch(fetchMovimientos(idProducto))
         },
         updateFiltros: (filtros) => {
             dispatch(updateFiltros(filtros))

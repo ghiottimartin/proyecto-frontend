@@ -19,7 +19,6 @@ function Visualizar(props) {
 
     useEffect(() => {
         const ingreso = props.ingresos.update.activo
-        console.log(ingreso, props.match.params.id)
         if (ingreso && !ingreso.id) {
             props.fetchIngresoById(props.match.params.id)
         }

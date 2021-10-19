@@ -29,16 +29,6 @@ function Filtros(props) {
     const changeFiltros = (e) => {
         props.onChangeBusqueda(e)
     }
-
-    let productos = [<option key={0} value={0}>Todos</option>]
-    props.productos.allIds.map(id => {
-        const producto = props.productos.byId.productos[id]
-        if (producto && producto.id) {
-            productos.push(
-                <option key={producto.id} value={producto.id}>{producto.nombre}</option>
-            )
-        }
-    })
     
     let maximo = moment().format("YYYY-MM-DD");
     return (
@@ -69,17 +59,6 @@ function Filtros(props) {
                                     onChange={(e) => changeFiltros(e)}
                                     value={filtros.fechaHasta}
                                 ></Form.Control>
-                            </Form.Group>
-                            <Form.Group>
-                                <Form.Label>Producto:</Form.Label>
-                                <Form.Control
-                                    id="producto"
-                                    as="select"
-                                    onChange={(e) => changeFiltros(e)}
-                                    value={filtros.producto ? filtros.producto : ""}
-                                >
-                                    {productos}
-                                </Form.Control>
                             </Form.Group>
                         </div>
                     </div>
