@@ -12,6 +12,7 @@ import * as rutas from "../../../../../constants/rutas"
 import Titulo from "../../../../elementos/Titulo"
 import Loader from "../../../../elementos/Loader"
 import Filtros from "./Filtros"
+import Paginacion from '../../../../elementos/Paginacion'
 
 //CSS
 import "../../../../../assets/css/Productos/Movimientos.css"
@@ -22,11 +23,16 @@ import history from '../../../../../history'
 function Listado(props) {
     const titulo = "Stock de productos"
     const buscando = props.movimientos.byId.isFetching
+    const total = props.movimientos.byId.total
+    const totalCero = parseInt(total) == 0
+    const filtros = props.movimientos.byId.filtros
+    const registros = props.movimientos.byId.registros
+
     const [paginaUno, setPaginaUno] = useState(false)
 
     useEffect(() => {
         buscarMovimientos()
-    }, [])
+    }, [filtros.paginaActual])
 
     /**
      * Busca los movimientos de stock según los filtros aplicados.
@@ -87,6 +93,22 @@ function Listado(props) {
         props.updateFiltros(cambio);
     }
 
+    /**
+     * Cambia la página del filtro de paginación.
+     * 
+     * @param {Number} pagina 
+     * @returns 
+     */
+     const cambiarDePagina = (pagina) => {
+        if (isNaN(pagina)) {
+            return;
+        }
+
+        let cambio = {};
+        cambio['paginaActual'] = pagina;
+        props.updateFiltros(cambio);
+    }
+
     return (
         <section className="movimiento-listado tarjeta-body">
             <div className="d-flex justify-content-between">
@@ -110,6 +132,18 @@ function Listado(props) {
                     {buscando ? <tr><td colSpan={6}><Loader display={true} /></td></tr> : Movimientos}
                 </tbody>
             </table>
+            {
+                buscando || totalCero ?
+                    ''
+                    :
+                    <Paginacion
+                        activePage={filtros.paginaActual}
+                        itemsCountPerPage={filtros.registrosPorPagina}
+                        totalItemsCount={registros}
+                        pageRangeDisplayed={5}
+                        onChange={(e) => cambiarDePagina(e)}
+                    />
+            }
         </section>
     )
 
