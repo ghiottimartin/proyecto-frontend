@@ -23,7 +23,7 @@ var auth = {
             return;
         }
         usuario.username = usuario.email;
-        fetch(c.BASE_PUBLIC + 'auth/', {
+        fetch(c.BASE_PUBLIC + '/auth/', {
             'method': 'POST',
             headers: {
                 'Content-Type': 'application/json',
