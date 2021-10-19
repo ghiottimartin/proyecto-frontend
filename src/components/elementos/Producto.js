@@ -62,7 +62,7 @@ class Producto extends React.Component {
         let path = productoVacio;
         if (producto.imagen) {
             try {
-                path = producto.imagen;
+                path = c.BASE_PUBLIC + producto.imagen;
             } catch (e) {
             }
         }
