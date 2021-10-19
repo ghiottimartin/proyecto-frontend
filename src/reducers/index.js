@@ -5,6 +5,7 @@ import productos from './productos';
 import categorias from './categorias';
 import pedidos from './pedidos';
 import ingresos from './ingresos';
+import movimientos from './movimientos';
 
 const appReducers = combineReducers({
     authentication,
@@ -12,7 +13,8 @@ const appReducers = combineReducers({
 	productos,
     categorias,
     pedidos,
-    ingresos
+    ingresos,
+    movimientos
 });
 
 export default appReducers;

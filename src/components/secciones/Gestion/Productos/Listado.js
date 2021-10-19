@@ -27,6 +27,7 @@ import tacho from "../../../../assets/icon/delete.png";
 import lapiz from "../../../../assets/icon/pencil.png";
 import check from "../../../../assets/icon/checked.png";
 import cruz from "../../../../assets/icon/close.png";
+import movimiento from "../../../../assets/icon/movimiento.png";
 
 //Librerias
 import Swal from "sweetalert2";
@@ -71,11 +72,19 @@ class Listado extends React.Component {
         }
     }
 
+    /**
+     * Busca los productos de la base de datos.
+     */
     buscarProductos() {
         this.props.resetProductos();
         this.props.fetchProductos();
     }
 
+    /**
+     * Rediriga a la ruta de edición de producto.
+     * 
+     * @param {Object} producto 
+     */
     clickEditar(producto) {
         let id = producto.id;
         let rutaEditar = rutas.getUrl(rutas.PRODUCTOS, id, rutas.ACCION_EDITAR, rutas.TIPO_ADMIN, rutas.PRODUCTOS_LISTAR_ADMIN);
@@ -83,9 +92,31 @@ class Listado extends React.Component {
         history.push(rutaEditar);
     }
 
+    /**
+     * Rediriga a la ruta de movimientos de stock.
+     * 
+     * @param {Object} producto 
+     */
+    redirigirMovimientos(producto) {
+        let ruta = rutas.MOVIMIENTOS_STOCK
+        ruta += producto.id
+        history.push(ruta)
+    }
+
+    /**
+     * Devuelve las posibles operaciones del producto.
+     * 
+     * @param {Object} producto 
+     * @returns 
+     */
     getOperacionesProducto(producto) {
         return (
             <div>
+                <p onClick={() => this.redirigirMovimientos(producto)} title="Movimientos producto"
+                    className="operacion" style={{ display: producto.tiene_movimientos ? "inline" : "none" }}>
+                    <img src={movimiento} className="icono-operacion" alt="Movimientos producto" />
+                    Movimientos
+                </p>
                 <p onClick={() => this.clickEditar(producto)} title="Editar "
                     className="operacion">
                     <img src={lapiz} className="icono-operacion" alt="Editar producto" />
@@ -100,6 +131,11 @@ class Listado extends React.Component {
         );
     }
 
+    /**
+     * Abre el modal para confirmar el borrado del producto.
+     * 
+     * @param {Object} producto 
+     */
     modalBorrar(producto) {
         Swal.fire({
             title: `Está seguro de borrar el producto '${producto.nombre}'`,

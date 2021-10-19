@@ -102,8 +102,13 @@ class Navegador extends React.Component {
         let esListadoProductos = rutaActual.indexOf(rutas.PRODUCTOS_LISTAR_ADMIN) === 0;
         let esAltaProductos = rutaActual.indexOf(rutas.PRODUCTO_ALTA) === 0;
         let esListadoPedidos = rutaActual.indexOf(rutas.PEDIDO_VISUALIZAR_VENDEDOR) === 0 || rutaActual.indexOf(rutas.PEDIDOS_VENDEDOR) === 0;
+        let esListadoIngresos = rutaActual.indexOf(rutas.INGRESO_MERCADERIA) === 0;
+        let esListadoMovimientos = rutaActual.indexOf(rutas.MOVIMIENTOS_STOCK) === 0;
         return ruta === rutas.GESTION
-            && (esAltaUsuarios || esListadoUsuarios || esEditarUsuarios || esListadoProductos || esAltaProductos || esListadoPedidos);
+            && (
+                esAltaUsuarios || esListadoUsuarios || esEditarUsuarios || esListadoProductos || esAltaProductos || esListadoPedidos
+                || esListadoIngresos || esListadoMovimientos
+            );
     }
 
     toogleResponsive(e) {

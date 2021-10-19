@@ -57,6 +57,10 @@ export const INGRESO_MERCADERIA_ALTA          = '/ingreso-mercaderia/alta';
 export const INGRESO_MERCADERIA_VISUALIZAR    = '/ingreso-mercaderia/visualizar/';
 export const INGRESO_MERCADERIA_VISUALIZAR_ID = '/ingreso-mercaderia/visualizar/:id';
 
+//Movimientos de stock
+export const MOVIMIENTOS_STOCK = '/producto/movimientos/';
+export const MOVIMIENTOS_STOCK_ID = '/producto/movimientos/:id';
+
 /**
  * Devuelve la url de usuarios
  *
@@ -111,7 +115,8 @@ const RUTAS = [
     PEDIDOS_COMENSAL,
     PEDIDOS_VENDEDOR,
     CATEGORIAS_LISTAR,
-    CATEGORIAS_LISTAR_ADMIN
+    CATEGORIAS_LISTAR_ADMIN,
+    MOVIMIENTOS_STOCK
 ];
 
 /**

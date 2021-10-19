@@ -184,7 +184,7 @@ export function saveCerrarPedido(id) {
     }
 }
 
-//PEDIDO LOGUEADO
+// BUSCAR PEDIDOS
 export const INVALIDATE_PEDIDOS = 'INVALIDATE_PEDIDOS';
 export const REQUEST_PEDIDOS    = "REQUEST_PEDIDOS";
 export const RECEIVE_PEDIDOS    = "RECEIVE_PEDIDOS";

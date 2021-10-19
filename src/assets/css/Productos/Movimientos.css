@@ -1,0 +1,5 @@
+.movimiento-stock, .movimiento-listado {
+    height: calc(100vh - 100px) !important;
+    margin: 0 20px !important;
+    overflow: auto;
+  }
