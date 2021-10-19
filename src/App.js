@@ -35,7 +35,7 @@ import PedidoVisualizar from "./components/secciones/Pedidos/Visualizar";
 import IngresoAlta from './components/secciones/Gestion/Ingreso/Alta';
 import IngresoListado from './components/secciones/Gestion/Ingreso/Listado';
 import IngresoVisualizar from './components/secciones/Gestion/Ingreso/Visualizar';
-import MovimientosStock from './components/secciones/Gestion/Productos/MovimientosStock';
+import MovimientosStock from './components/secciones/Gestion/Productos/MovimientosStock/Listado';
 
 //CSS
 import "./App.css";
