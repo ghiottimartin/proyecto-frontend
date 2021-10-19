@@ -70,6 +70,7 @@ function Listado(props) {
                     <td>{movimiento.id_texto}</td>
                     <td>{movimiento.fecha_texto}</td>
                     <td>{movimiento.producto.nombre}</td>
+                    <td>{movimiento.descripcion}</td>
                     <td className="text-right pr-5">{movimiento.cantidad}</td>
                 </tr>
             );
@@ -144,11 +145,12 @@ function Listado(props) {
                         <th>Número</th>
                         <th>Fecha</th>
                         <th>Producto</th>
+                        <th>Observaciones</th>
                         <th className="text-right pr-5">Cantidad</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {buscando ? <tr><td colSpan={6}><Loader display={true} /></td></tr> : Movimientos}
+                    {buscando ? <tr><td colSpan={5}><Loader display={true} /></td></tr> : Movimientos}
                 </tbody>
             </table>
             {

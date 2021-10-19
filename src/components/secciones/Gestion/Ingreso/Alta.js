@@ -39,7 +39,14 @@ function Alta(props) {
      */
     const addLineaIngreso = (producto) => {
         let nuevas = ingreso.lineas
-        let linea = ingreso.lineas.find(linea => linea.producto.id === producto.id)
+        if (!Array.isArray(nuevas)) {
+            nuevas = []
+        }
+        let anteriores = ingreso.lineas
+        if (!Array.isArray(anteriores)) {
+            anteriores = []
+        }
+        let linea = anteriores.find(linea => linea.producto.id === producto.id)
         if (linea === undefined) {
             linea = {
                 'costo': producto.costo_vigente,
