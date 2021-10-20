@@ -166,7 +166,8 @@ function Listado(props) {
             </tr>;
     }
 
-    const volverA = !isNaN(id_ingreso) ? rutas.INGRESO_MERCADERIA : rutas.PRODUCTOS_LISTAR_ADMIN
+    const listadoDesdeIngresos = !isNaN(id_ingreso)
+    const volverA = listadoDesdeIngresos ? rutas.INGRESO_MERCADERIA : rutas.PRODUCTOS_LISTAR_ADMIN
     return (
         <section className="movimiento-listado tarjeta-body">
             <div className="d-flex justify-content-between">
@@ -174,6 +175,7 @@ function Listado(props) {
             </div>
             <Filtros
                 {...props}
+                usuarios={listadoDesdeIngresos}
                 filtrar={(e) => filtrarMovimientos(e)}
                 onChangeBusqueda={(e) => onChangeBusqueda(e)}
             />
