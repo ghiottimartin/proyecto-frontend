@@ -122,10 +122,11 @@ function requestUpdateUsuario() {
     }
 }
 
-function receiveUpdateUsuario() {
+function receiveUpdateUsuario(message) {
     return {
         type: RECEIVE_UPDATE_USUARIO,
-        receivedAt: Date.now()
+        receivedAt: Date.now(),
+        message: message,
     }
 }
 
@@ -149,10 +150,10 @@ export function updateUsuario(usuario) {
     }
 }
 
-export function saveUpdateUsuario() {
+export function saveUpdateUsuario(habilitar) {
     return (dispatch, getState) => {
         dispatch(requestUpdateUsuario());
-        return usuarios.saveUpdate(getState().usuarios.update.activo)
+        return usuarios.saveUpdate(getState().usuarios.update.activo, habilitar)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
@@ -162,6 +163,12 @@ export function saveUpdateUsuario() {
                 }
             })
             .then((respuesta) => {
+                if (habilitar) {
+                    dispatch(receiveUpdateUsuario("Usuario habilitado con éxito"));
+                    dispatch(resetUsuarios())
+                    dispatch(fetchUsuarios())
+                    return;
+                }
                 let usuario  = respuesta.datos.usuario;
                 let logueado = getState().usuarios.update.logueado;
                 dispatch(resetUpdateUsuario());

@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 //Actions
-import { resetUsuarios, fetchUsuarios, saveDeleteUsuario } from "../../../../actions/UsuarioActions";
+import { resetUsuarios, fetchUsuarios, saveDeleteUsuario, saveUpdateUsuario, updateUsuario } from "../../../../actions/UsuarioActions";
 
 //Constants
 import * as rutas from '../../../../constants/rutas.js';
@@ -23,6 +23,7 @@ import AddBoxIcon from "@material-ui/icons/AddBox"
 //Images
 import lapiz from "../../../../assets/icon/pencil.png";
 import tacho from "../../../../assets/icon/delete.png";
+import habilitarImg from "../../../../assets/icon/checked.png";
 import cruz from "../../../../assets/icon/close.png";
 
 class Listado extends React.Component {
@@ -156,6 +157,25 @@ class Listado extends React.Component {
         })
     }
 
+    modalHabilitar(usuario) {
+        Swal.fire({
+            title: `¿Está seguro de habilitar el usuario '${usuario.first_name}'? `,
+            icon: 'question',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            confirmButtonText: 'Habilitar',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: 'rgb(92, 184, 96)',
+            cancelButtonColor: '#bfbfbf',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                this.props.updateUsuario(usuario);
+                this.props.saveUpdateUsuario(true);
+            }
+        });
+    }
+
     getOperacionesUsuario(usuario) {
         let id = usuario.id;
         let logueado = this.props.usuarios.update.logueado;
@@ -169,8 +189,14 @@ class Listado extends React.Component {
         let deshabilitar =
             <a onClick={() => this.modalDeshabilitar(usuario)} title="Deshabilitar"
                 className="operacion">
-                <img src={cruz} className="icono-operacion" alt="Editar usuario" />
+                <img src={cruz} className="icono-operacion" alt="Deshabilitar usuario" />
                 Deshabilitar
+            </a>;
+        let habilitar =
+            <a onClick={() => this.modalHabilitar(usuario)} title="Habilitar"
+                className="operacion">
+                <img src={habilitarImg} className="icono-operacion" alt="Habilitar usuario" />
+                Habilitar
             </a>;
         return (
             <div className="d-flex">
@@ -181,6 +207,7 @@ class Listado extends React.Component {
                 </a>
                 {id !== logueado.id ? borrar : ""}
                 {usuario.puede_deshabilitarse ? deshabilitar : ""}
+                {usuario.puede_habilitarse ? habilitar : ""}
             </div>
         );
     }
@@ -265,6 +292,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         saveDeleteUsuario: (id, motivo) => {
             dispatch(saveDeleteUsuario(id, motivo))
+        },
+        saveUpdateUsuario: (habilitar) => {
+            dispatch(saveUpdateUsuario(habilitar))
+        },
+        updateUsuario: (usuario) => {
+            dispatch(updateUsuario(usuario))
         }
     }
 };

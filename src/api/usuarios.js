@@ -35,7 +35,7 @@ var usuarios = {
         return fetch(c.BASE_URL + '/usuarios/' + localStorage.idUsuario + "/", defaultOptions);
     },
 
-    saveUpdate(usuario) {
+    saveUpdate(usuario, habilitar) {
 
         let defaultOptions = {
             method: 'PUT',
@@ -46,7 +46,12 @@ var usuarios = {
             body: JSON.stringify(usuario)
         };
 
-        return fetch(c.BASE_URL + '/usuarios/' + usuario.id + "/", defaultOptions);
+        let query = ""
+        if (habilitar) {
+            query = "?habilitado=true"
+        }
+
+        return fetch(c.BASE_URL + '/usuarios/' + usuario.id + "/" + query, defaultOptions);
     },
 
     getUsuarios() {
