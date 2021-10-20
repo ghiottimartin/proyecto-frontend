@@ -66,6 +66,8 @@ class Producto extends React.Component {
             } catch (e) {
             }
         }
+
+        const buscandoPedidoAbierto = this.props.pedidos.byId.isFetchingPedido;
         let gestionCantidad = cantidad === 0 ?
             <Button variant="outlined" color="primary" className="cancelar no-cerrar-carrito" onClick={() => this.props.agregarProducto(producto, 1)}>
                 <ShoppingCartIcon className="icono-material hvr-grow"/>Agregar
@@ -97,7 +99,7 @@ class Producto extends React.Component {
                     <div className="producto-derecha-carrito">
                         <div className="producto-derecha-carrito-cantidad">
                             {
-                                loader ? <Loader display={true} /> : gestionCantidad
+                                loader || buscandoPedidoAbierto ? <Loader display={true} /> : gestionCantidad
                             }
                         </div>
                         <p className="producto-derecha-precio font-weight-bold text-right pr-2 m-0 text-nowrap">

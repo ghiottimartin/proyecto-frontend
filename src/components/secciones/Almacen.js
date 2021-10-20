@@ -3,7 +3,8 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 //Actions
-import { resetProductos,  fetchProductos} from "../../actions/ProductoActions";
+import { resetProductos, fetchProductos } from "../../actions/ProductoActions";
+import { fetchPedidoAbierto, resetPedidoAbierto } from "../../actions/PedidoActions";
 
 //Components
 import Producto from "../elementos/Producto";
@@ -18,8 +19,14 @@ class Almacen extends React.Component {
     }
 
     componentDidMount() {
+        this.props.resetPedidoAbierto();
+        this.props.fetchPedidoAbierto();
         this.props.resetProductos();
         this.props.fetchProductos();
+    }
+
+    componentWillUnmount() {
+        this.props.resetPedidoAbierto();
     }
 
     render() {
@@ -79,6 +86,12 @@ const mapDispatchToProps = (dispatch) => {
         resetProductos: () => {
             dispatch(resetProductos())
         },
+        resetPedidoAbierto: () => {
+            dispatch(resetPedidoAbierto())
+        },
+        fetchPedidoAbierto: () => {
+            dispatch(fetchPedidoAbierto())
+        }
     }
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Almacen));

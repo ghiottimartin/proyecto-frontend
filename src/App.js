@@ -5,7 +5,7 @@ import history from "./history";
 import auth from "./api/authentication";
 
 //Actions
-import { createPedido, fetchPedidoAbierto , saveCreatePedido, saveDeletePedido, resetPedidoAbierto} from "./actions/PedidoActions";
+import { createPedido , saveCreatePedido, saveDeletePedido, resetPedidoAbierto} from "./actions/PedidoActions";
 import { fetchProductos } from "./actions/ProductoActions";
 import { fetchUsuarioLogueadoIfNeeded } from "./actions/UsuarioActions";
 
@@ -69,7 +69,6 @@ class App extends React.Component {
 
     componentDidMount() {
         this.props.fetchProductos();
-        this.props.fetchPedidoAbierto();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -138,8 +137,6 @@ class App extends React.Component {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         this.crearPedidoAbierto(producto, pedido);
-                    } else {
-                        this.props.resetPedidoAbierto();
                     }
                 });
             } else {
@@ -286,9 +283,6 @@ const mapDispatchToProps = (dispatch) => {
         },
         fetchProductos: () => {
             dispatch(fetchProductos())
-        },
-        fetchPedidoAbierto: () => {
-            dispatch(fetchPedidoAbierto())
         },
         createPedido: (pedido) => {
             dispatch(createPedido(pedido))
