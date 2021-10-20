@@ -95,6 +95,11 @@ function Listado(props) {
                     <td>{movimiento.id_texto}</td>
                     <td>{movimiento.fecha_texto}</td>
                     <td>{movimiento.producto.nombre}</td>
+                    <td>
+                        <span>{movimiento.usuario_nombre}</span>
+                        <br/>
+                        <span className="texto-chico">{movimiento.usuario_email}</span>
+                    </td>
                     <td>{movimiento.descripcion}</td>
                     <td className="text-right pr-5">{movimiento.cantidad}</td>
                 </tr>
@@ -154,6 +159,13 @@ function Listado(props) {
         props.updateFiltros(cambio);
     }
 
+    if (totalCero) {
+        Movimientos =
+            <tr className="text-center">
+                <td colSpan={6}>No hay movimientos cargados</td>
+            </tr>;
+    }
+
     const volverA = !isNaN(id_ingreso) ? rutas.INGRESO_MERCADERIA : rutas.PRODUCTOS_LISTAR_ADMIN
     return (
         <section className="movimiento-listado tarjeta-body">
@@ -171,12 +183,13 @@ function Listado(props) {
                         <th>Número</th>
                         <th>Fecha</th>
                         <th>Producto</th>
+                        <th>Usuario</th>
                         <th>Observaciones</th>
                         <th className="text-right pr-5">Cantidad</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {buscando ? <tr><td colSpan={5}><Loader display={true} /></td></tr> : Movimientos}
+                    {buscando ? <tr><td colSpan={6}><Loader display={true} /></td></tr> : Movimientos}
                 </tbody>
             </table>
             {
