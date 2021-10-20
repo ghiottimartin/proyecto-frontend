@@ -175,7 +175,7 @@ class Listado extends React.Component {
      */
     visualizarPedido(pedido) {
         this.props.updatePedido(pedido);
-        
+
         let listadoVendedor = this.comprobarRutaTipoVendedor();
         let ruta = rutas.PEDIDO_VISUALIZAR_COMENSAL;
         if (listadoVendedor) {
@@ -233,23 +233,66 @@ class Listado extends React.Component {
             });
             return;
         }
-        Swal.fire({
-            title: `¿Está seguro de cancelar el pedido? `,
-            icon: 'question',
-            showCloseButton: true,
-            showCancelButton: true,
-            focusConfirm: true,
-            confirmButtonText: 'Aceptar',
-            confirmButtonColor: 'rgb(88, 219, 131)',
-            cancelButtonColor: '#bfbfbf',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                let idUsuario = auth.idUsuario();
-                this.setState({ buscando: true });
-                let listadoVendedor = this.comprobarRutaTipoVendedor();
-                this.props.cancelarPedido(pedido.id, idUsuario, listadoVendedor);
-            }
-        });
+        let listadoVendedor = this.comprobarRutaTipoVendedor();
+        if (listadoVendedor) {
+            Swal.fire({
+                title: `¿Está seguro de cancelar el pedido? `,
+                icon: 'question',
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: true,
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+                cancelButtonColor: '#bfbfbf',
+                input: 'textarea',
+                inputLabel: 'Motivo',
+                inputPlaceholder: 'Indique un motivo de cancelación...',
+                inputAttributes: {
+                    'aria-label': 'Indique un motivo de cancelación',
+                    required: true,
+                    minlength: 10
+                },
+                inputValidator: (value) => {
+                    console.log(value)
+                    return new Promise((resolve) => {
+                        if (value.length < 10 && value.length > 0) {
+                            resolve('La longitud del mensaje debe ser de al menos 10 caracteres.')
+                        } else if (value.length === 0) {
+                            resolve('Debe indicar un motivo.')
+                        } else {
+                            resolve()
+                        }
+                    })
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let idUsuario = auth.idUsuario();
+                    this.setState({ buscando: true });
+                    let listadoVendedor = this.comprobarRutaTipoVendedor();
+
+                    let motivo = result.value;
+                    this.props.cancelarPedido(pedido.id, idUsuario, listadoVendedor, motivo);
+                }
+            });
+        } else {
+            Swal.fire({
+                title: `¿Está seguro de cancelar el pedido? `,
+                icon: 'question',
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: true,
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+                cancelButtonColor: '#bfbfbf',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let idUsuario = auth.idUsuario();
+                    this.setState({ buscando: true });
+                    let listadoVendedor = this.comprobarRutaTipoVendedor();
+                    this.props.cancelarPedido(pedido.id, idUsuario, listadoVendedor);
+                }
+            });
+        }
     }
     /**
      * Devuelve las operaciones de un pedido.
@@ -260,12 +303,14 @@ class Listado extends React.Component {
     getOperacionesPedido(pedido) {
         let operaciones = [];
         let rutaComensal = this.comprobarRutaTipoComensal();
+        console.log(pedido)
         pedido.operaciones.forEach(operacion => {
             let accion = operacion.accion;
-            if (rutaComensal && accion === 'entregar') {
+            const no_puede_cancelar = accion === 'cancelar' && pedido.ultimo_estado === 'en curso' && rutaComensal
+            if (rutaComensal && accion === 'entregar' || no_puede_cancelar) {
                 return;
             }
-            
+
             operaciones.push(
                 <div key={operacion.key} onClick={() => this.ejecutarOperacion(pedido, accion)} className={operacion.clase + " operacion"} >
                     <i className={operacion.icono} aria-hidden="true"></i> {operacion.texto}
@@ -362,9 +407,9 @@ class Listado extends React.Component {
             if (total > 0) {
                 placeholder = "No hay pedidos para los filtros aplicados";
             }
-            Pedidos = 
+            Pedidos =
                 <tr className="text-center">
-                    <td colSpan={rolVendedor ? 6 : 5}>{placeholder}</td>
+                    <td colSpan={rolVendedor ? 7 : 5}>{placeholder}</td>
                 </tr>;
         }
 
@@ -378,8 +423,11 @@ class Listado extends React.Component {
                         <td>{pedido.fecha_texto}</td>
                         <td style={{ display: rolVendedor ? "table-cell" : "none" }}>
                             <span>{pedido.usuario_nombre}</span>
-                            <br/>
+                            <br />
                             <span className="texto-chico">{pedido.usuario_email}</span>
+                        </td>
+                        <td style={{ display: rolVendedor ? "table-cell" : "none" }}>
+                            {pedido.observaciones}
                         </td>
                         <td className={pedido.estado_clase}>{pedido.estado_texto}</td>
                         <td>{pedido.total_texto}</td>
@@ -390,7 +438,7 @@ class Listado extends React.Component {
         });
         const Cargando =
             <tr>
-                <td colSpan={rolVendedor ? 6 : 5}><Loader display={true} /></td>
+                <td colSpan={rolVendedor ? 7 : 5}><Loader display={true} /></td>
             </tr>;
         const pedidosResponsive = this.getHtmlPedidosResponsive(rolVendedor);
         const filtros = this.props.pedidos.byId.filtros;
@@ -411,6 +459,7 @@ class Listado extends React.Component {
                                 <th>Número</th>
                                 <th>Fecha</th>
                                 <th style={{ display: rolVendedor ? "table-cell" : "none" }}>Usuario</th>
+                                <th style={{ display: rolVendedor ? "table-cell" : "none" }}>Observaciones</th>
                                 <th>Estado</th>
                                 <th>Total</th>
                                 <th>Operaciones</th>
@@ -432,7 +481,7 @@ class Listado extends React.Component {
                                 onChange={(e) => this.cambiarDePagina(e)}
                             />
                     }
-                    
+
                     <div className="pedidos-responsive">
                         {pedidosResponsive}
                     </div>
@@ -463,8 +512,8 @@ const mapDispatchToProps = (dispatch) => {
         entregarPedido: (id, idUsuario, listadoVendedor) => {
             dispatch(entregarPedido(id, idUsuario, listadoVendedor))
         },
-        cancelarPedido: (id, idUsuario, listadoVendedor) => {
-            dispatch(cancelarPedido(id, idUsuario, listadoVendedor))
+        cancelarPedido: (id, idUsuario, listadoVendedor, motivo) => {
+            dispatch(cancelarPedido(id, idUsuario, listadoVendedor, motivo))
         },
         fetchPedidosVendedor: () => {
             dispatch(fetchPedidosVendedor())

@@ -643,10 +643,10 @@ function errorCancelarPedido(error) {
     }
 }
 
-export function cancelarPedido(id, idUsuario, listadoVendedor) {
+export function cancelarPedido(id, idUsuario, listadoVendedor, motivo) {
     return dispatch => {
         dispatch(requestCancelarPedido());
-        return pedidos.cancelarPedido(id)
+        return pedidos.cancelarPedido(id, motivo)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);

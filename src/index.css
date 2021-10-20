@@ -47,6 +47,11 @@ input, textarea, select, select option {
   font-weight: bold !important;
 }
 
+.swal2-content textarea {
+  background-color: white !important;
+  color: black !important;
+}
+
 .listado {
   border-top: 5px solid #006187;
 }
