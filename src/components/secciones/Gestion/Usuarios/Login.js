@@ -7,6 +7,7 @@ import { changeLogin, login, olvideMiPassword } from "../../../../actions/Authen
 
 //Constants
 import * as rutas from '../../../../constants/rutas.js';
+import c from '../../../../constants/constants.js';
 
 //Components
 import Loader from "../../../elementos/Loader";
@@ -24,12 +25,15 @@ import whiteEye from "../../../../assets/img/view.png";
 
 //Librerias
 import history from "../../../../history";
+import ReCAPTCHA from "react-google-recaptcha";
+import Swal from 'sweetalert2';
 
 class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             imgPassword: blackEye,
+            captcha: false,
             tipo: 'password'
         };
 
@@ -95,6 +99,17 @@ class Login extends React.Component {
         if (!valido) {
             volverA = "";
         }
+        if (!this.state.captcha) {
+            Swal.fire({
+                title: `Debe completar el captcha`,
+                icon: 'warning',
+                showCloseButton: true,
+                confirmButtonText: 'Continuar',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+                cancelButtonColor: '#bfbfbf',
+            })
+            return;
+        }
         this.props.login(this.props.authentication.usuario, volverA);
     }
 
@@ -113,9 +128,15 @@ class Login extends React.Component {
 
     }
 
+    onChangeCaptcha(valor) {
+        if (valor) {
+            this.setState({ captcha: true });
+        }
+    }
+
     render() {
+        const { imgPassword, tipo } = this.state;
         const nuevoUsuario = this.props.usuarios.create.nuevo;
-        const {imgPassword, tipo} = this.state;
         return (
             <div className="login">
                 <div className="login-contenedor">
@@ -157,9 +178,15 @@ class Login extends React.Component {
                             this.props.authentication.currentlySending ?
                                 <Loader display={true} />
                                 :
-                                <Button className="boton-submit" variant="primary" type="submit">
-                                    Iniciar sesión
-                                </Button>
+                                <div className="d-flex flex-column align-items-center">
+                                    <ReCAPTCHA
+                                        sitekey={c.CAPTCHA_KEY}
+                                        onChange={(valor) => this.onChangeCaptcha(valor)}
+                                    />
+                                    <Button className="boton-submit" variant="primary" type="submit">
+                                        Iniciar sesión
+                                    </Button>
+                                </div>
                         }
                     </Form>
                 </div>

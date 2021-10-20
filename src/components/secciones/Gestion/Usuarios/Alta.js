@@ -8,6 +8,7 @@ import {createUsuario, saveCreateUsuario, resetCreateUsuario} from "../../../../
 
 //Constants
 import * as rutas from '../../../../constants/rutas.js';
+import c from '../../../../constants/constants.js';
 
 //Boostrap
 import Button from "react-bootstrap/Button";
@@ -27,6 +28,7 @@ import whiteEye from "../../../../assets/img/view.png";
 //Librerias
 import history from "../../../../history";
 import Swal from 'sweetalert2';
+import ReCAPTCHA from "react-google-recaptcha";
 
 class Alta extends React.Component {
     constructor(props) {
@@ -180,6 +182,18 @@ class Alta extends React.Component {
 
     submitForm(e) {
         e.preventDefault();
+        if (!this.state.captcha) {
+            Swal.fire({
+                title: `Debe completar el captcha`,
+                icon: 'warning',
+                showCloseButton: true,
+                confirmButtonText: 'Continuar',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+                cancelButtonColor: '#bfbfbf',
+            })
+            return;
+        }
+
         let tipoRuta   = this.props.match.params['tipo'];
         let tipoAdmin  = tipoRuta === rutas.TIPO_ADMIN;
         let valido     = this.validarUsuario();
@@ -191,6 +205,12 @@ class Alta extends React.Component {
             this.props.saveCreateUsuario(false, linkVolver);
         } else if (tipoAdmin) {
             this.props.saveCreateUsuario(true, linkVolver);
+        }
+    }
+
+    onChangeCaptcha(valor) {
+        if (valor) {
+            this.setState({ captcha: true });
         }
     }
 
@@ -206,6 +226,14 @@ class Alta extends React.Component {
         };
         var titulo = tipoAdmin ? "Alta de usuario" : "Registro";
         var ruta = tipoAdmin ? rutas.USUARIOS_LISTAR : null;
+        let captchaHTML = "";
+        if (!tipoAdmin) {
+            captchaHTML =
+                <ReCAPTCHA
+                    sitekey={c.CAPTCHA_KEY}
+                    onChange={(valor) => this.onChangeCaptcha(valor)}
+                />;
+        }
         return (
             <div className="registro">
                 <div className="registro-contenedor">
@@ -317,11 +345,16 @@ class Alta extends React.Component {
                             this.props.usuarios.create.isCreating ?
                                 <Loader display={true}/>
                                 :
-                                <div className="d-flex">
-                                    <Button className="boton-submit" variant="primary" type="submit" >
-                                        {!tipoAdmin ? "Registrarse" : "Guardar"}
-                                    </Button>
-                                    {volverAValido ? botonVolverA : ""}
+                                <div className="d-flex flex-column align-items-center">
+                                    <div>
+                                        {captchaHTML}
+                                    </div>
+                                    <div className="d-flex">
+                                        <Button className="boton-submit" variant="primary" type="submit" >
+                                            {!tipoAdmin ? "Registrarse" : "Guardar"}
+                                        </Button>
+                                        {volverAValido ? botonVolverA : ""}
+                                    </div>
                                 </div>
                         }
                     </Form>
