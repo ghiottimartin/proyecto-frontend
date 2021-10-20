@@ -73,6 +73,7 @@ function IngresoListado(props) {
                 onClick={() => redirigirMovimientos(ingreso)}
                 title="Movimientos ingreso"
                 className="operacion"
+                style={{display: ingreso.tiene_movimientos ? "block" : "none"}}
             >
                 <img src={movimiento} className="icono-operacion" alt="Movimientos producto" />
                 Movimientos
