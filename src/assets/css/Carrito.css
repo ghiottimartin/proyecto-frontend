@@ -26,19 +26,24 @@
 
 .carrito-botones button {
     border-radius: 15px;
+    padding: 5px 15px;
+    border: none;
+    text-transform: uppercase;
+    color: black !important;
+    font-weight: bold;
 }
 
-.carrito-botones .entregar {
+.carrito-botones .bg-success {
     color: white;
-    background-color: #ea2a2a;
 }
 
-.carrito-botones .entregar:hover {
-    background-color: #ff0000;
+.carrito-botones button:hover {
+    transform: scale(1.1);
 }
 
-.carrito-botones .entregar:disabled {
-    color: #c6c6c6;
+.carrito-botones button:disabled {
+    cursor: no-drop !important;
+    transform: none;
 }
 
 .carrito-botones .cancelar {

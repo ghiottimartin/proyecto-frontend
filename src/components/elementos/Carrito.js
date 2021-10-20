@@ -137,12 +137,12 @@ class Carrito extends React.Component {
             <nav ref={this.carrito} className={`carrito ${claseBlur}`} style={{ right: !mostrar ? "-300px" : "0" }}>
                 <img className="volverA" src={imgVolver} alt="Icono volver" onClick={() => this.props.changeMostrar()} />
                 <div className="carrito-botones">
-                    <Button variant="outlined" color="secondary" className="entregar" disabled={deshabilitar} onClick={() => this.entregarPedido(deshabilitar)}>
+                    <button className="entregar bg-success" disabled={deshabilitar} onClick={() => this.entregarPedido(deshabilitar)}>
                         Enviar pedido
-                    </Button>
-                    <Button variant="outlined" color="primary" className="cancelar" disabled={deshabilitar} onClick={() => this.props.cancelarPedido(deshabilitar)}>
+                    </button>
+                    <button className="cancelar" disabled={deshabilitar} onClick={() => this.props.cancelarPedido(deshabilitar)}>
                         Cancelar
-                    </Button>
+                    </button>
                 </div>
                 <div className="carrito-compras">
                     {compras}

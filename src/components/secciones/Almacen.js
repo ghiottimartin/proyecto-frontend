@@ -6,7 +6,6 @@ import { connect } from "react-redux";
 import { resetProductos,  fetchProductos} from "../../actions/ProductoActions";
 
 //Components
-import Button from '@material-ui/core/Button';
 import Producto from "../elementos/Producto";
 import Loader from "../elementos/Loader";
 
@@ -53,9 +52,9 @@ class Almacen extends React.Component {
                 <div className="tarjeta-body d-flex flex-column">
                     <h1>Almacén</h1>
                     <div className="carrito-botones justify-content-end no-cerrar-carrito align-self-end">
-                        <Button variant="outlined" color="secondary" className="entregar" onClick={() => this.props.changeMostrar()}>
+                        <button className="entregar bg-success" onClick={() => this.props.changeMostrar()}>
                             Carrito
-                        </Button>
+                        </button>
                     </div>
                     <div className={clase}>
                         {productos}

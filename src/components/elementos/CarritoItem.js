@@ -17,6 +17,9 @@ import productoVacio from "../../assets/img/emptyImg.jpg";
 //Material
 import DeleteIcon from '@material-ui/icons/Delete';
 
+//Utils
+import { formatearMoneda } from "../../utils/formateador"
+
 class ItemCarrito extends React.Component {
     constructor(props) {
         super(props);
@@ -27,10 +30,16 @@ class ItemCarrito extends React.Component {
         if (!linea) {
             return "";
         }
-        let path      = productoVacio;
-        let cantidad  = linea.cantidad ? linea.cantidad : 0;
-        let subtotal  = linea.subtotal ? linea.subtotal : 0;
-        let productoLinea  = linea.producto ? linea.producto : {};
+        let path = productoVacio;
+        
+        let cantidad = linea.cantidad ? linea.cantidad : 0;
+        let subtotal = linea.total ? linea.total : 0;
+        let subtotal_formateado = formatearMoneda(subtotal)
+        
+        let productoLinea = linea.producto ? linea.producto : {};        
+        let precio = productoLinea && productoLinea.precio_vigente ? productoLinea.precio_vigente : "";
+        let precio_formateado = precio !== "" ? formatearMoneda(precio) : "";
+
         let loader         = guardando && productoGuardando === productoLinea.id;
         let loaderBorrando = borrando && productoGuardando === productoLinea.id;
         if (productoLinea.imagen) {
@@ -65,7 +74,8 @@ class ItemCarrito extends React.Component {
                 <div style={{display: loaderBorrando ? "none" : "flex"}} className="carrito-item-bottom">
                     {loader ? <Loader display={true}/> : gestionBotones}
                     <div className="carrito-item-bottom-subtotal font-weight-bold">
-                        <span style={{display: loader ? "none" : "block"}}>$ {subtotal}</span>
+                        <span style={{display: loader ? "none" : "block"}}>P: {precio_formateado}</span>
+                        <span style={{ display: loader ? "none" : "block" }}>ST: {subtotal_formateado}</span>
                     </div>
                     <div className="carrito-item-bottom-tacho">
                         <DeleteIcon className="cursor-pointer" onClick={() => this.props.agregarProducto(productoLinea, 0)}/>
