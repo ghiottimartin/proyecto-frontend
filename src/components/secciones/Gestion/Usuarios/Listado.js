@@ -1,9 +1,9 @@
 import React from "react";
-import {withRouter} from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 //Actions
-import {resetUsuarios, fetchUsuarios, saveDeleteUsuario} from "../../../../actions/UsuarioActions";
+import { resetUsuarios, fetchUsuarios, saveDeleteUsuario } from "../../../../actions/UsuarioActions";
 
 //Constants
 import * as rutas from '../../../../constants/rutas.js';
@@ -23,12 +23,13 @@ import AddBoxIcon from "@material-ui/icons/AddBox"
 //Images
 import lapiz from "../../../../assets/icon/pencil.png";
 import tacho from "../../../../assets/icon/delete.png";
+import cruz from "../../../../assets/icon/close.png";
 
 class Listado extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            buscando:      true,
+            buscando: true,
             noHayUsuarios: false
         }
     }
@@ -39,10 +40,10 @@ class Listado extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        let allIds      = this.props.usuarios.allIds;
-        let usuarios    = this.props.usuarios.byId;
+        let allIds = this.props.usuarios.allIds;
+        let usuarios = this.props.usuarios.byId;
         let preUsuarios = prevProps.usuarios.byId;
-        let deleting    = this.props.usuarios.delete;
+        let deleting = this.props.usuarios.delete;
         let preDeleting = prevProps.usuarios.delete;
         let busco = preUsuarios.isFetching && !usuarios.isFetching;
         let borro = preDeleting.isDeleting && !deleting.isDeleting;
@@ -60,7 +61,7 @@ class Listado extends React.Component {
 
     getRolesUsuario(usuario) {
         let roles = [];
-        let esAdmin    = usuario.esAdmin;
+        let esAdmin = usuario.esAdmin;
         if (esAdmin) {
             roles.push('Administrador');
         }
@@ -68,11 +69,11 @@ class Listado extends React.Component {
         if (esVendedor) {
             roles.push('Vendedor');
         }
-        let esMozo     = usuario.esMozo;
+        let esMozo = usuario.esMozo;
         if (esMozo) {
             roles.push('Mozo');
         }
-        let esComensal     = usuario.esComensal;
+        let esComensal = usuario.esComensal;
         if (esComensal) {
             roles.push('Comensal');
         }
@@ -107,24 +108,79 @@ class Listado extends React.Component {
         })
     }
 
+    modalDeshabilitar(usuario) {
+        let logueado = this.props.usuarios.update.logueado;
+        Swal.fire({
+            title: `Está seguro de deshabilitar el usuario '${usuario.first_name}'`,
+            icon: 'warning',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: 'rgb(88, 219, 131)',
+            cancelButtonColor: '#bfbfbf',
+            input: 'textarea',
+            inputLabel: 'Motivo',
+            inputPlaceholder: 'Indique un motivo...',
+            inputAttributes: {
+                'aria-label': 'Indique un motivo',
+                required: true,
+                minlength: 10
+            },
+            inputValidator: (value) => {
+                return new Promise((resolve) => {
+                    if (value.length < 10 && value.length > 0) {
+                        resolve('La longitud del motivo debe ser de al menos 10 caracteres.')
+                    } else if (value.length === 0) {
+                        resolve('Debe indicar un motivo.')
+                    } else {
+                        resolve()
+                    }
+                })
+            }
+        }).then((result) => {
+            if (result.isConfirmed && logueado.id !== usuario.id) {
+                let motivo = result.value;
+                this.props.saveDeleteUsuario(usuario.id, motivo);
+            } else if (result.isConfirmed) {
+                Swal.fire({
+                    title: `No es posible borrar al usuario logueado`,
+                    icon: 'warning',
+                    showCloseButton: true,
+                    showCancelButton: false,
+                    focusConfirm: true,
+                    confirmButtonText: 'Continuar',
+                    confirmButtonColor: 'rgb(88, 219, 131)',
+                })
+            }
+        })
+    }
+
     getOperacionesUsuario(usuario) {
-        let id         = usuario.id;
-        let logueado   = this.props.usuarios.update.logueado;
+        let id = usuario.id;
+        let logueado = this.props.usuarios.update.logueado;
         let rutaEditar = rutas.getUrl(rutas.USUARIOS, id, rutas.ACCION_EDITAR, rutas.TIPO_ADMIN, rutas.USUARIOS_LISTAR);
         let borrar =
-            <div style={{display: usuario.puede_borrarse ? "block" : "none"}} onClick={() => this.modalBorrar(usuario)} title="Borrar"
-               className="operacion">
-                <img src={tacho} className="icono-operacion" alt="Borrar usuario"/>
+            <div style={{ display: usuario.puede_borrarse ? "block" : "none" }} onClick={() => this.modalBorrar(usuario)} title="Borrar"
+                className="operacion">
+                <img src={tacho} className="icono-operacion" alt="Borrar usuario" />
                 Borrar
             </div>;
+        let deshabilitar =
+            <a onClick={() => this.modalDeshabilitar(usuario)} title="Deshabilitar"
+                className="operacion">
+                <img src={cruz} className="icono-operacion" alt="Editar usuario" />
+                Deshabilitar
+            </a>;
         return (
             <div className="d-flex">
                 <a onClick={() => history.push(rutaEditar)} title="Editar"
-                   className="operacion">
-                    <img src={lapiz} className="icono-operacion" alt="Editar usuario"/>
+                    className="operacion">
+                    <img src={lapiz} className="icono-operacion" alt="Editar usuario" />
                     Editar
                 </a>
                 {id !== logueado.id ? borrar : ""}
+                {usuario.puede_deshabilitarse ? deshabilitar : ""}
             </div>
         );
     }
@@ -135,13 +191,13 @@ class Listado extends React.Component {
         if (noHayUsuarios) {
             Usuarios =
                 <tr className="text-center">
-                    <td colSpan="5">No hay usuarios cargados</td>
+                    <td colSpan="7">No hay usuarios cargados</td>
                 </tr>;
         }
         this.props.usuarios.allIds.map(idUsuario => {
             let usuario = this.props.usuarios.byId.usuarios[idUsuario];
-            if (usuario && usuario.id) {
-                let roles       = this.getRolesUsuario(usuario);
+            if (!noHayUsuarios && usuario && usuario.id) {
+                let roles = this.getRolesUsuario(usuario);
                 let operaciones = this.getOperacionesUsuario(usuario);
                 Usuarios.push(
                     <tr key={usuario.id}>
@@ -149,19 +205,17 @@ class Listado extends React.Component {
                         <td>{usuario.email}</td>
                         <td>{usuario.dni}</td>
                         <td>{roles}</td>
+                        <td><span className={usuario.habilitado_clase}>{usuario.habilitado_texto}</span></td>
+                        <td>{usuario.observaciones}</td>
                         <td>{operaciones}</td>
                     </tr>
                 );
             }
         });
         const Cargando =
-        <tr>
-            <td></td>
-            <td></td>
-            <td><Loader display={true}/></td>
-            <td></td>
-            <td></td>
-        </tr>;
+            <tr>
+                <td colSpan={7}><Loader display={true} /></td>
+            </tr>;
         return (
             <div className="tabla-listado">
                 <div className="table-responsive tarjeta-body listado">
@@ -170,18 +224,20 @@ class Listado extends React.Component {
                         <a href="#"
                             onClick={() => history.push(rutas.USUARIOS_ALTA_ADMIN + "?volverA=" + rutas.USUARIOS_LISTAR)}
                             data-toggle="tooltip" data-original-title="" title="">
-                            <AddBoxIcon style={{ color:  '#5cb860'}}/>
+                            <AddBoxIcon style={{ color: '#5cb860' }} />
                         </a>
                     </div>
                     <table className="table">
                         <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>Dni</th>
-                            <th>Roles</th>
-                            <th>Operaciones</th>
-                        </tr>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Dni</th>
+                                <th>Roles</th>
+                                <th>Estado</th>
+                                <th>Observaciones</th>
+                                <th>Operaciones</th>
+                            </tr>
                         </thead>
                         <tbody>
                             {buscando ? Cargando : Usuarios}
@@ -207,8 +263,8 @@ const mapDispatchToProps = (dispatch) => {
         resetUsuarios: () => {
             dispatch(resetUsuarios())
         },
-        saveDeleteUsuario: (id) => {
-            dispatch(saveDeleteUsuario(id))
+        saveDeleteUsuario: (id, motivo) => {
+            dispatch(saveDeleteUsuario(id, motivo))
         }
     }
 };

@@ -482,7 +482,8 @@ export function fetchUsuarioByIdIfNeeded(id) {
 export const RESET_DELETE_USUARIO   = "RESET_DELETE_USUARIO";
 export const REQUEST_DELETE_USUARIO = "REQUEST_DELETE_USUARIO";
 export const RECEIVE_DELETE_USUARIO = "RECEIVE_DELETE_USUARIO";
-export const ERROR_DELETE_USUARIO   = "ERROR_DELETE_USUARIO";
+export const ERROR_DELETE_USUARIO = "ERROR_DELETE_USUARIO";
+export const RECEIVE_INHABILITAR_USUARIO   = "RECEIVE_INHABILITAR_USUARIO";
 
 function requestDeleteUsuario() {
     return {
@@ -495,6 +496,14 @@ function receiveDeleteUsuario(id, mensaje) {
         type: RECEIVE_DELETE_USUARIO,
         receivedAt: Date.now(),
         idUsuario: id,
+        success: mensaje
+    }
+}
+
+function receiveInhabilitarUsuario(mensaje) {
+    return {
+        type: RECEIVE_INHABILITAR_USUARIO,
+        receivedAt: Date.now(),
         success: mensaje
     }
 }
@@ -512,10 +521,10 @@ export function resetDeleteUsuario() {
     }
 }
 
-export function saveDeleteUsuario(id) {
+export function saveDeleteUsuario(id, motivo) {
     return (dispatch, getState) => {
         dispatch(requestDeleteUsuario());
-        return usuarios.borrarUsuario(id)
+        return usuarios.borrarUsuario(id, motivo)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
@@ -523,8 +532,15 @@ export function saveDeleteUsuario(id) {
             })
             .then(() => {
                 let mensaje = "Usuario borrado con éxito";
-                dispatch(receiveDeleteUsuario(id, mensaje));
-                dispatch(resetDeleteUsuario());
+                if (motivo) {
+                    mensaje = "Usuario inhabilitado con éxito";
+                    dispatch(receiveInhabilitarUsuario(mensaje))
+                    dispatch(resetUsuarios());
+                    dispatch(fetchUsuarios());
+                } else {
+                    dispatch(resetDeleteUsuario());
+                    dispatch(receiveDeleteUsuario(id, mensaje));
+                }
             })
             .catch(function (error) {
                 switch (error.status) {

@@ -233,8 +233,25 @@ class Listado extends React.Component {
             });
             return;
         }
-        let listadoVendedor = this.comprobarRutaTipoVendedor();
-        if (listadoVendedor) {
+        if (pedido.ultimo_estado === 'abierto') {
+            Swal.fire({
+                title: `¿Está seguro de cancelar el pedido? `,
+                icon: 'question',
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: true,
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+                cancelButtonColor: '#bfbfbf',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let idUsuario = auth.idUsuario();
+                    this.setState({ buscando: true });
+                    let listadoVendedor = this.comprobarRutaTipoVendedor();
+                    this.props.cancelarPedido(pedido.id, idUsuario, listadoVendedor);
+                }
+            });
+        } else {
             Swal.fire({
                 title: `¿Está seguro de cancelar el pedido? `,
                 icon: 'question',
@@ -253,7 +270,6 @@ class Listado extends React.Component {
                     minlength: 10
                 },
                 inputValidator: (value) => {
-                    console.log(value)
                     return new Promise((resolve) => {
                         if (value.length < 10 && value.length > 0) {
                             resolve('La longitud del mensaje debe ser de al menos 10 caracteres.')
@@ -274,24 +290,6 @@ class Listado extends React.Component {
                     this.props.cancelarPedido(pedido.id, idUsuario, listadoVendedor, motivo);
                 }
             });
-        } else {
-            Swal.fire({
-                title: `¿Está seguro de cancelar el pedido? `,
-                icon: 'question',
-                showCloseButton: true,
-                showCancelButton: true,
-                focusConfirm: true,
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: 'rgb(88, 219, 131)',
-                cancelButtonColor: '#bfbfbf',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    let idUsuario = auth.idUsuario();
-                    this.setState({ buscando: true });
-                    let listadoVendedor = this.comprobarRutaTipoVendedor();
-                    this.props.cancelarPedido(pedido.id, idUsuario, listadoVendedor);
-                }
-            });
         }
     }
     /**
@@ -303,11 +301,9 @@ class Listado extends React.Component {
     getOperacionesPedido(pedido) {
         let operaciones = [];
         let rutaComensal = this.comprobarRutaTipoComensal();
-        console.log(pedido)
         pedido.operaciones.forEach(operacion => {
             let accion = operacion.accion;
-            const no_puede_cancelar = accion === 'cancelar' && pedido.ultimo_estado === 'en curso' && rutaComensal
-            if (rutaComensal && accion === 'entregar' || no_puede_cancelar) {
+            if (rutaComensal && accion === 'entregar') {
                 return;
             }
 

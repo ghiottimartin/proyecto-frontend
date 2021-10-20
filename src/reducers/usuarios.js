@@ -27,7 +27,7 @@ import {
     REQUEST_USUARIO_ID,
     RECEIVE_USUARIO_ID,
     ERROR_USUARIO_ID,
-    RESET_USUARIO_ID, RESET_DELETE_USUARIO, REQUEST_DELETE_USUARIO, RECEIVE_DELETE_USUARIO, ERROR_DELETE_USUARIO
+    RESET_USUARIO_ID, RESET_DELETE_USUARIO, REQUEST_DELETE_USUARIO, RECEIVE_DELETE_USUARIO, ERROR_DELETE_USUARIO, RECEIVE_INHABILITAR_USUARIO
 
 } from '../actions/UsuarioActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions";
@@ -308,6 +308,12 @@ function borrar(state = {
                 isDeleting: false,
                 success: "",
                 error: action.error
+            });
+        case RECEIVE_INHABILITAR_USUARIO:
+            return Object.assign({}, state, {
+                isDeleting: false,
+                success: action.success,
+                error: null,
             });
         default:
             return state

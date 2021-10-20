@@ -75,7 +75,7 @@ var usuarios = {
         return fetch(c.BASE_URL + '/usuarios/' + id + '/', defaultOptions);
     },
 
-    borrarUsuario(id) {
+    borrarUsuario(id, motivo) {
 
         let defaultOptions = {
             method: 'DELETE',
@@ -84,8 +84,10 @@ var usuarios = {
                 "Authorization": "Token " + localStorage.token
             }
         };
-
-        return fetch(c.BASE_URL + '/usuarios/' + id + '/', defaultOptions);
+        if (!motivo) {
+            motivo = ""
+        }
+        return fetch(c.BASE_URL + '/usuarios/' + id + '/' + "?motivo=" + motivo, defaultOptions);
     },
 };
 
