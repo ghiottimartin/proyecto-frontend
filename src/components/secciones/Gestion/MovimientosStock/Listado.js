@@ -3,23 +3,23 @@ import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
 
 //Actions
-import { resetMovimientos, fetchMovimientos, updateFiltros } from "../../../../../actions/MovimientosStockActions"
+import { resetMovimientos, fetchMovimientos, updateFiltros } from "../../../../actions/MovimientosStockActions"
+import { fetchIngresoById } from "../../../../actions/IngresoActions"
 
 //Constants
-import * as rutas from "../../../../../constants/rutas"
+import * as rutas from "../../../../constants/rutas"
 
 //Components
-import Titulo from "../../../../elementos/Titulo"
-import Loader from "../../../../elementos/Loader"
+import Titulo from "../../../elementos/Titulo"
+import Loader from "../../../elementos/Loader"
 import Filtros from "./Filtros"
-import Paginacion from '../../../../elementos/Paginacion'
-import AddBoxIcon from "@material-ui/icons/AddBox"
+import Paginacion from '../../../elementos/Paginacion'
 
 //CSS
-import "../../../../../assets/css/Productos/Movimientos.css"
+import "../../../../assets/css/Productos/Movimientos.css"
 
 //Librerias
-import history from '../../../../../history'
+import history from '../../../../history'
 
 function Listado(props) {
     const total = props.movimientos.byId.total
@@ -27,8 +27,16 @@ function Listado(props) {
     const buscando = props.movimientos.byId.isFetching
     const totalCero = parseInt(total) == 0
     const registros = props.movimientos.byId.registros
+    const id_ingreso = props.match.params.id_ingreso
+
+    useEffect(() => {
+        if (id_ingreso) {
+            props.fetchIngresoById(id_ingreso)
+        }
+    }, [])
 
     let titulo = "Stock de productos"
+    
     let producto = {}
     props.productos.allIds.map(idProducto => {
         let actual = props.productos.byId.productos[idProducto]
@@ -39,6 +47,18 @@ function Listado(props) {
     
     if (producto && producto.nombre) {
         titulo = "Movimientos de stock de '" + producto.nombre + "'"
+    }
+
+    let ingreso = {}
+    props.ingresos.allIds.map(idIngreso => {
+        let actual = props.ingresos.byId.ingresos[idIngreso]
+        if (actual && actual.id && parseInt(actual.id) === parseInt(id_ingreso)) {
+            ingreso = actual
+        }
+    })
+
+    if (ingreso && ingreso.id) {
+        titulo = "Movimientos de stock del Ingreso '" + ingreso.id_texto + "'"
     }
 
 
@@ -52,13 +72,18 @@ function Listado(props) {
      * Busca los movimientos de stock según los filtros aplicados.
      */
     const buscarMovimientos = () => {
-        const id = props.match.params.id
-        if (isNaN(id)) {
-            history.push(rutas.PRODUCTOS_LISTAR_ADMIN)
+        let id = props.match.params.id
+        if (isNaN(id) && isNaN(id_ingreso)) {
+            history.push(rutas.GESTION)
         }
 
-        props.resetMovimientos()
-        props.fetchMovimientos(id)
+        if (!isNaN(id)) {
+            props.resetMovimientos()
+            props.fetchMovimientos(id)
+        } else if (!isNaN(id_ingreso)) {
+            props.resetMovimientos()
+            props.fetchMovimientos(null, id_ingreso)
+        }
     }
 
     let Movimientos = []
@@ -129,10 +154,11 @@ function Listado(props) {
         props.updateFiltros(cambio);
     }
 
+    const volverA = !isNaN(id_ingreso) ? rutas.INGRESO_MERCADERIA : rutas.PRODUCTOS_LISTAR_ADMIN
     return (
         <section className="movimiento-listado tarjeta-body">
             <div className="d-flex justify-content-between">
-                <Titulo ruta={rutas.PRODUCTOS_LISTAR_ADMIN} titulo={titulo} />
+                <Titulo ruta={volverA} titulo={titulo} />
             </div>
             <Filtros
                 {...props}
@@ -174,6 +200,7 @@ function mapStateToProps(state) {
     return {
         movimientos: state.movimientos,
         productos: state.productos,
+        ingresos: state.ingresos,
     };
 }
 
@@ -182,11 +209,14 @@ const mapDispatchToProps = (dispatch) => {
         resetMovimientos: () => {
             dispatch(resetMovimientos())
         },
-        fetchMovimientos: (idProducto) => {
-            dispatch(fetchMovimientos(idProducto))
+        fetchMovimientos: (idProducto, idIngreso) => {
+            dispatch(fetchMovimientos(idProducto, idIngreso))
         },
         updateFiltros: (filtros) => {
             dispatch(updateFiltros(filtros))
+        },
+        fetchIngresoById: (id) => {
+            dispatch(fetchIngresoById(id))
         }
     }
 };

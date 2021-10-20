@@ -18,6 +18,9 @@ import Filtros from "./Filtros"
 import Paginacion from "../../../elementos/Paginacion"
 import AddBoxIcon from "@material-ui/icons/AddBox"
 
+//Images
+import movimiento from "../../../../assets/icon/movimiento.png";
+
 //Librerías
 import Swal from 'sweetalert2';
 import history from "../../../../history";
@@ -48,12 +51,33 @@ function IngresoListado(props) {
     }, [props.ingresos.allIds])
 
     /**
+     * Rediriga a la ruta de movimientos de stock.
+     * 
+     * @param {Object} producto 
+     */
+     const redirigirMovimientos = (ingreso) => {
+        let ruta = rutas.MOVIMIENTOS_STOCK_INGRESO
+        ruta += ingreso.id
+        history.push(ruta)
+    }
+
+    /**
      * Devuelve una array de elementos html con las operaciones del ingreso.
      * 
      * @returns {Array}
      */
     const getOperacionesIngreso = (ingreso) => {
         let operaciones = [];
+        operaciones.push(
+            <p
+                onClick={() => redirigirMovimientos(ingreso)}
+                title="Movimientos ingreso"
+                className="operacion"
+            >
+                <img src={movimiento} className="icono-operacion" alt="Movimientos producto" />
+                Movimientos
+            </p>
+        )
         ingreso.operaciones.forEach(operacion => {
             let accion = operacion.accion;            
             operaciones.push(

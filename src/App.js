@@ -35,7 +35,7 @@ import PedidoVisualizar from "./components/secciones/Pedidos/Visualizar";
 import IngresoAlta from './components/secciones/Gestion/Ingreso/Alta';
 import IngresoListado from './components/secciones/Gestion/Ingreso/Listado';
 import IngresoVisualizar from './components/secciones/Gestion/Ingreso/Visualizar';
-import MovimientosStock from './components/secciones/Gestion/Productos/MovimientosStock/Listado';
+import MovimientosStock from './components/secciones/Gestion/MovimientosStock/Listado';
 
 //CSS
 import "./App.css";
@@ -262,7 +262,7 @@ class App extends React.Component {
                         <Route exact path={rutas.INGRESO_MERCADERIA} component={IngresoListado} />
                         <Route exact path={rutas.INGRESO_MERCADERIA_ALTA} component={IngresoAlta} />
                         <Route exact path={rutas.INGRESO_MERCADERIA_VISUALIZAR_ID} component={IngresoVisualizar} />
-                        <Route exact path={rutas.MOVIMIENTOS_STOCK_ID} component={MovimientosStock} />
+                        <Route exact path={[rutas.MOVIMIENTOS_STOCK_ID, rutas.MOVIMIENTOS_STOCK_INGRESO_ID]} component={MovimientosStock} />
                         <Route exact path="*" component={NotFound} />
                     </Switch>
                 </div>

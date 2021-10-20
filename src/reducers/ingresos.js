@@ -19,7 +19,10 @@ import {
     UPDATE_INGRESO,
     RECEIVE_ANULAR_INGRESO,
     REQUEST_ANULAR_INGRESO,
-    ERROR_ANULAR_INGRESO
+    ERROR_ANULAR_INGRESO,
+    REQUEST_INGRESO_ID,
+    RECEIVE_INGRESO_ID,
+    ERROR_INGRESO_ID
 
 } from '../actions/IngresoActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions"
@@ -91,6 +94,28 @@ function ingresosById(state = {
                 lastUpdated: null,
                 ingresos: [],
             });
+        // INGRESO ID
+        case REQUEST_INGRESO_ID:
+            return Object.assign({}, state, {
+                isFetching: true,
+                didInvalidate: false
+            });
+        case RECEIVE_INGRESO_ID:
+            return Object.assign({}, state, {
+                isFetching: false,
+                didInvalidate: false,
+                ingresos: action.ingreso.entities.ingreso,
+                total: 1,
+                registros: 1,
+                lastUpdated: action.receivedAt,
+                error: null
+            });
+        case ERROR_INGRESO_ID:
+            return Object.assign({}, state, {
+                isFetching: false,
+                didInvalidate: true,
+                error: action.error
+            });
         // FILTROS
         case UPDATE_FILTROS:
             return Object.assign({}, state, {
@@ -109,6 +134,8 @@ function ingresosAllIds(state = [], action) {
     switch (action.type) {
         case RECEIVE_INGRESOS:
             return action.ingresos.result ? action.ingresos.result : [];
+        case RECEIVE_INGRESO_ID:
+                return action.ingreso.result ? [action.ingreso.result] : [];
         case RESET_INGRESOS:
              return [];
         default:

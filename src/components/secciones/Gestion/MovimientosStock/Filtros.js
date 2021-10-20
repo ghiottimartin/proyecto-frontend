@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 //Actions
-import { resetFiltros } from "../../../../../actions/MovimientosStockActions";
+import { resetFiltros } from "../../../../actions/MovimientosStockActions"
 
 //Boostrap
 import Form from "react-bootstrap/Form";

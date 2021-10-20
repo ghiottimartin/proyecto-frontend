@@ -52,11 +52,16 @@ function errorMovimientos(error) {
     }
 }
 
-export function fetchMovimientos(idProducto) {
+export function fetchMovimientos(idProducto, idIngreso) {
     return (dispatch, getState) => {
         dispatch(requestMovimientos());
         let filtros = getState().movimientos.byId.filtros;
-        filtros.producto = idProducto
+        if (!isNaN(idProducto)) {
+            filtros.producto = idProducto
+        }
+        if (!isNaN(idIngreso)) {
+            filtros.ingreso = idIngreso
+        }
         return movimientos.getAll(filtros)
             .then(function (response) {
                 if (response.status >= 400) {

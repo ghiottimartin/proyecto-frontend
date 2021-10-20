@@ -61,6 +61,8 @@ export const INGRESO_MERCADERIA_VISUALIZAR_ID = '/ingreso-mercaderia/visualizar/
 export const MOVIMIENTOS_STOCK = '/producto/movimientos/';
 export const MOVIMIENTOS_STOCK_ID = '/producto/movimientos/:id';
 export const MOVIMIENTOS_STOCK_ALTA = '/producto/movimientos/alta';
+export const MOVIMIENTOS_STOCK_INGRESO = '/producto/movimientos/ingreso/';
+export const MOVIMIENTOS_STOCK_INGRESO_ID = '/producto/movimientos/ingreso/:id_ingreso';
 
 /**
  * Devuelve la url de usuarios

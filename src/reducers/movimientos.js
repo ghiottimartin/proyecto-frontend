@@ -56,7 +56,6 @@ function movimientosById(state = {
                 didInvalidate: false
             });
         case RECEIVE_MOVIMIENTOS:
-            console.log(action)
             return Object.assign({}, state, {
                 isFetching: false,
                 didInvalidate: false,
