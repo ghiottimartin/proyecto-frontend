@@ -20,7 +20,6 @@ import CambiarPassword from "./components/secciones/Gestion/Usuarios/CambiarPass
 import Carrito from "./components/elementos/Carrito";
 import Editar from "./components/secciones/Gestion/Usuarios/Editar";
 import Gestion from "./components/secciones/Gestion";
-import Inicio from "./components/secciones/Inicio";
 import ListadoProductos from "./components/secciones/Gestion/Productos/Listado";
 import ListadoUsuarios from "./components/secciones/Gestion/Usuarios/Listado";
 import LoaderLarge from "./components/elementos/LoaderLarge";
@@ -39,6 +38,7 @@ import MovimientosStock from './components/secciones/Gestion/MovimientosStock/Li
 
 //CSS
 import "./App.css";
+import "./assets/css/Inicio.css";
 
 //Redux
 import { connect } from 'react-redux';
@@ -232,7 +232,6 @@ class App extends React.Component {
                 />
                 <div className={`contenedor ${claseBlur}`} style={{ width: mostrar ? "calc(100% - 300px)" : "100%" }}>
                     <Switch>
-                        <Route exact path={rutas.INICIO} component={Inicio} />
                         <Route exact path={rutas.LOGIN} component={Login} />
                         <Route exact path={rutas.RESET_PASSWORD} component={CambiarPassword} />
                         <Route exact path={rutas.VALIDAR_EMAIL} component={ValidarEmail} />
@@ -244,7 +243,7 @@ class App extends React.Component {
                         <Route exact path={rutas.PRODUCTOS_ACCIONES} component={AltaEdicionProducto} />
                         <Route exact path={rutas.CATEGORIAS_LISTAR_ADMIN} component={ListadoCategorias} />
                         <Route exact path={rutas.CATEGORIAS_ACCIONES} component={AltaEdicionCategoria} />
-                        <Route exact path={[rutas.ALMACEN]} render={(props) =>
+                        <Route exact path={[rutas.ALMACEN, "/"]} render={(props) =>
                             <Almacen
                                 {...props}
                                 getCantidad={(producto) => this.getCantidad(producto)}
