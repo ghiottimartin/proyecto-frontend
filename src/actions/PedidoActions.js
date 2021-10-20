@@ -376,12 +376,17 @@ function requestPedidoAbierto() {
 }
 
 function receivePedidoAbierto(json) {
-    if (json && json.datos && json.datos.id) {
-        json = normalizeDato(json);
+    const datos = json.datos ? json.datos : {};
+    const id = datos.id ? datos.id : {};
+    if (!isNaN(id)) {
+        json = normalizeDato(json.datos);
     }
+
+    const en_curso = datos && datos.en_curso !== undefined && datos.en_curso === true;
     return {
         type: RECEIVE_PEDIDO_ABIERTO,
         pedido: json,
+        en_curso: en_curso,
         receivedAt: Date.now()
     }
 }

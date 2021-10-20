@@ -182,12 +182,14 @@ function pedidosById(state = {
         case RECEIVE_PEDIDO_ABIERTO:
             let abierto = {};
             if (action.pedido && action.pedido.entities && action.pedido.entities.pedido) {
-                abierto = Object.values(action.pedido.entities.pedido)[0].datos;
+                abierto = Object.values(action.pedido.entities.pedido)[0];
             }
-            if (action.pedido.exito && action.pedido.datos && action.pedido.datos.en_curso) {
+            if (action.en_curso) {
                 abierto.en_curso = true;
             }
-            if (abierto.lineas === undefined) {
+            if (action.pedido && action.pedido.entities && action.pedido.entities.lineas) {
+                abierto.lineas = Object.values(action.pedido.entities.lineas);
+            } else {
                 abierto.lineas = [];
             }
             var ids = [];

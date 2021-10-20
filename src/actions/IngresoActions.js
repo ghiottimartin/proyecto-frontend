@@ -285,7 +285,6 @@ export function fetchIngresoById(id) {
                 }
             })
             .then(function (data) {
-                console.log(data)
                 dispatch(receiveIngresoById(data))
                 dispatch(updateIngreso(data));
             })

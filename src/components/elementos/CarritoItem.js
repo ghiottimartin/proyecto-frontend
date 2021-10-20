@@ -19,10 +19,22 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 //Utils
 import { formatearMoneda } from "../../utils/formateador"
+import { isEmpty } from 'lodash';
 
 class ItemCarrito extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    buscarProducto(idBuscar) {
+        let producto = {}
+        this.props.productos.allIds.map(idProducto => {
+            let actual = this.props.productos.byId.productos[idProducto]
+            if (actual && actual.id && parseInt(actual.id) === parseInt(idBuscar)) {
+                producto = actual
+            }
+        })
+        return producto
     }
 
     render() {
@@ -36,7 +48,11 @@ class ItemCarrito extends React.Component {
         let subtotal = linea.total ? linea.total : 0;
         let subtotal_formateado = formatearMoneda(subtotal)
         
-        let productoLinea = linea.producto ? linea.producto : {};        
+        let productoLinea = linea.producto ? linea.producto : {};
+        if (!isNaN(productoLinea) || isEmpty(productoLinea)) {
+            productoLinea = this.buscarProducto(linea.producto);
+        }
+
         let precio = productoLinea && productoLinea.precio_vigente ? productoLinea.precio_vigente : "";
         let precio_formateado = precio !== "" ? formatearMoneda(precio) : "";
 

@@ -1,6 +1,6 @@
 import { normalize, schema } from 'normalizr';
 
-export function normalizeDato(myData){
+export function normalizeDato(myData) {
     const lineas   = new schema.Entity('lineas', {}, {idAttribute: "id"});
     const pedido  = new schema.Entity('pedido', {lineas: [lineas]}, {idAttribute: "id"});
 
