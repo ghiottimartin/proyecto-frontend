@@ -206,6 +206,7 @@ class Alta extends React.Component {
         } else if (tipoAdmin) {
             this.props.saveCreateUsuario(true, linkVolver);
         }
+        this.setState({ captcha: false });
     }
 
     onChangeCaptcha(valor) {

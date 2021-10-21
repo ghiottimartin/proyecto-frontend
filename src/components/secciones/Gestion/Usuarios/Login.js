@@ -111,6 +111,7 @@ class Login extends React.Component {
             return;
         }
         this.props.login(this.props.authentication.usuario, volverA);
+        this.setState({ captcha: false });
     }
 
     olvideMiPassword(e) {
