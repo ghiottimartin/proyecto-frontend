@@ -90,6 +90,10 @@ class Navegador extends React.Component {
 
     getRutaActiva(ruta) {
         let rutaActual = window.location.pathname;
+        if (ruta === rutas.ALMACEN && rutaActual === "/") {
+            return true;
+        }
+        
         let esActual = rutaActual === ruta;
         let esRutaGestion = this.comprobarEsRutaGestion(ruta, rutaActual);
         return esActual || esRutaGestion;
@@ -101,13 +105,18 @@ class Navegador extends React.Component {
         let esListadoUsuarios = rutaActual.indexOf(rutas.USUARIOS_LISTAR) === 0;
         let esListadoProductos = rutaActual.indexOf(rutas.PRODUCTOS_LISTAR_ADMIN) === 0;
         let esAltaProductos = rutaActual.indexOf(rutas.PRODUCTO_ALTA) === 0;
+        let esEdicionProducto = rutaActual.indexOf(rutas.PRODUCTOS_EDITAR_ADMIN) === 0;
         let esListadoPedidos = rutaActual.indexOf(rutas.PEDIDO_VISUALIZAR_VENDEDOR) === 0 || rutaActual.indexOf(rutas.PEDIDOS_VENDEDOR) === 0;
         let esListadoIngresos = rutaActual.indexOf(rutas.INGRESO_MERCADERIA) === 0;
         let esListadoMovimientos = rutaActual.indexOf(rutas.MOVIMIENTOS_STOCK) === 0;
+        let esListadoCategorias = rutaActual.indexOf(rutas.CATEGORIAS_LISTAR_ADMIN) === 0;
+        let esAltaCategorias = rutaActual.indexOf(rutas.CATEGORIA_ALTA) === 0;
+        let esEdicionCategorias = rutaActual.indexOf(rutas.CATEGORIA_EDITAR) === 0;
         return ruta === rutas.GESTION
             && (
                 esAltaUsuarios || esListadoUsuarios || esEditarUsuarios || esListadoProductos || esAltaProductos || esListadoPedidos
-                || esListadoIngresos || esListadoMovimientos
+                || esListadoIngresos || esListadoMovimientos || esListadoCategorias || esAltaCategorias || esEdicionCategorias
+                || esEdicionProducto
             );
     }
 

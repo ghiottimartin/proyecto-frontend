@@ -212,6 +212,11 @@ class Listado extends React.Component {
         );
     }
 
+    redirigirListado() {
+        const ruta = rutas.USUARIOS_ALTA_ADMIN + "?volverA=" + rutas.USUARIOS_LISTAR
+        history.push(ruta);
+    }
+
     render() {
         const { noHayUsuarios, buscando } = this.state;
         let Usuarios = [];
@@ -249,7 +254,7 @@ class Listado extends React.Component {
                     <div className="d-flex justify-content-between">
                         <Titulo ruta={rutas.GESTION} titulo={"Usuarios"} clase="tabla-listado-titulo" />
                         <a href="#"
-                            onClick={() => history.push(rutas.USUARIOS_ALTA_ADMIN + "?volverA=" + rutas.USUARIOS_LISTAR)}
+                            onClick={() => this.redirigirListado()}
                             data-toggle="tooltip" data-original-title="" title="">
                             <AddBoxIcon style={{ color: '#5cb860' }} />
                         </a>

@@ -59,7 +59,7 @@ class Alta extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         let tipoRuta  = this.props.match.params['tipo'];
-        let logueado  = this.props.usuarios.update.activo;
+        let logueado  = this.props.usuarios.update.logueado;
         let tipoAdmin = tipoRuta === rutas.TIPO_ADMIN;
         if ((!tipoAdmin && this.props.authentication.token) || (tipoAdmin && logueado && logueado.id && !logueado.esAdmin) ) {
             history.push(rutas.INICIO);

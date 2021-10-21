@@ -28,12 +28,13 @@ export const USUARIOS_EDITAR_ADMIN = '/usuarios/editar/admin';
 export const USUARIOS_EDITAR_COMUN = '/usuarios/editar/comun';
 
 //Gestión de productos
-export const PRODUCTOS              = '/productos';
-export const PRODUCTOS_ACCIONES     = '/productos/:accion/:tipo?/:id?';
-export const PRODUCTO_ALTA          = '/productos/alta';
-export const PRODUCTOS_LISTAR       = '/productos/listar';
-export const PRODUCTOS_LISTAR_ADMIN = '/productos/listar/admin';
-export const PRODUCTOS_EDITAR_ADMIN = '/productos/editar/admin/:id';
+export const PRODUCTOS                 = '/productos';
+export const PRODUCTOS_ACCIONES        = '/productos/:accion/:tipo?/:id?';
+export const PRODUCTO_ALTA             = '/productos/alta';
+export const PRODUCTOS_LISTAR          = '/productos/listar';
+export const PRODUCTOS_LISTAR_ADMIN    = '/productos/listar/admin';
+export const PRODUCTOS_EDITAR_ADMIN    = '/productos/editar/admin/';
+export const PRODUCTOS_EDITAR_ADMIN_ID = '/productos/editar/admin/:id';
 
 //Gestión de categorias
 export const CATEGORIAS              = '/categorias';
@@ -41,7 +42,8 @@ export const CATEGORIAS_ACCIONES     = '/categorias/:accion/:id?';
 export const CATEGORIA_ALTA          = '/categorias/alta';
 export const CATEGORIAS_LISTAR       = '/categorias/listar';
 export const CATEGORIAS_LISTAR_ADMIN = '/categorias/listar/admin';
-export const CATEGORIAS_EDITAR_ADMIN = '/categorias/editar/admin/:id';
+export const CATEGORIA_EDITAR        = '/categorias/editar';
+export const CATEGORIAS_EDITAR_ID    = '/categorias/editar/:id';
 
 //Gestión de pedidos
 export const PEDIDOS = '/pedidos/:rol';
