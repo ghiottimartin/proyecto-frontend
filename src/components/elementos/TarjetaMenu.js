@@ -13,8 +13,7 @@ class TarjetaMenu extends React.Component {
         this.state = {}
     }
 
-    getColorRol() {
-        let rol = this.props.rol;
+    getColorRol(rol) {
         switch (rol) {
             case roles.ROL_ADMIN:
                 return "red";
@@ -27,8 +26,7 @@ class TarjetaMenu extends React.Component {
         }
     }
 
-    getColorTextoRol() {
-        let rol = this.props.rol;
+    getColorTextoRol(rol) {
         switch (rol) {
             case roles.ROL_ADMIN:
                 return "white";
@@ -38,15 +36,34 @@ class TarjetaMenu extends React.Component {
         }
     }
 
+    getTextoRoles() {
+        let roles = [];
+        let usuario    = this.props.usuarios.update.logueado;
+        let rolesArray = usuario && usuario.rolesArray ? usuario.rolesArray : [];
+        this.props.roles.map(rol => {
+            const key        = this.props.roles.indexOf(rol) + 1;
+            const color      = this.getColorRol(rol);
+            const colorTexto = this.getColorTextoRol(rol);
+            const tieneRol = rolesArray.includes(rol);
+            if (tieneRol) {
+                roles.push(
+                    <span key={key} className="text-capitalize rol" style={{backgroundColor: color, color: colorTexto}}>{rol}</span>
+                )
+            }
+        })
+        return roles
+    }
+
     render() {
-        const props      = this.props;
-        const color      = this.getColorRol();
-        const colorTexto = this.getColorTextoRol();
+        const props = this.props;
+        const rolesTexto = this.getTextoRoles();
         const margenLeftImg = this.props.margenLeftImg;
         return (
             <button onClick={() => history.push(props.ruta)} key={props.key} className="tarjeta-menu">
                 <div className={"tarjeta hvr-grow"} onClick={props.click}>
-                    <span className="text-capitalize rol" style={{backgroundColor: color, color: colorTexto}}>{props.rol}</span>
+                    <div className="roles text-capítalize">
+                        {rolesTexto}
+                    </div>
                     <h2>{props.titulo}</h2>
                     <img src={props.img} alt={props.alt} title={props.title} style={{marginLeft: margenLeftImg}}/>
                     <p>{props.descripcion}</p>
@@ -58,6 +75,7 @@ class TarjetaMenu extends React.Component {
 
 function mapStateToProps(state) {
     return {
+        usuarios: state.usuarios
     };
 }
 

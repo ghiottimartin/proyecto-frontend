@@ -52,10 +52,17 @@ class Gestion extends React.Component {
     }
 
     getOperacion(operacion) {
-        let rol        = operacion.rol;
+        let roles      = operacion.roles;
         let usuario    = this.props.usuarios.update.logueado;
-        let roles      = usuario && usuario.rolesArray ? usuario.rolesArray : [];
-        let autorizado = roles.includes(rol);
+        let rolesArray = usuario && usuario.rolesArray ? usuario.rolesArray : [];
+        let autorizado = false;
+        rolesArray.map(rol => {
+            const contiene = roles.includes(rol)
+            if (contiene) {
+                autorizado = true;
+            }
+        });
+        
         if (!autorizado) {
             return;
         }
@@ -79,7 +86,7 @@ class Gestion extends React.Component {
                 title={titulo}
                 ruta={ruta}
                 img={imagen}
-                rol={rol}
+                roles={roles}
                 margenLeftImg={margenLeftImg}
             />
         );
