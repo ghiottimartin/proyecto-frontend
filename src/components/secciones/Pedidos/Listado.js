@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 //Actions
-import { cancelarPedido, entregarPedido, fetchPedidos, fetchPedidosVendedor, resetPedidos, resetPedidosVendedor, updateFiltros, updatePedido } from "../../../actions/PedidoActions";
+import { cancelarPedido, entregarPedido, fetchPedidos, fetchPedidosVendedor, resetPedidos, resetPedidosVendedor, updateFiltros, updatePedido, pedidoDisponible } from "../../../actions/PedidoActions";
 
 //Api
 import auth from "../../../api/authentication";
@@ -165,6 +165,10 @@ class Listado extends React.Component {
             case 'cancelar':
                 this.cancelarPedido(pedido);
                 break;
+            
+            case 'disponible':
+                this.pedidoDisponible(pedido);
+                break;
         }
     }
 
@@ -292,6 +296,27 @@ class Listado extends React.Component {
             });
         }
     }
+
+    pedidoDisponible(pedido) {
+        Swal.fire({
+            title: `¿Está seguro de marcar el pedido como disponible? `,
+            icon: 'question',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: 'rgb(88, 219, 131)',
+            cancelButtonColor: '#bfbfbf',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                let idUsuario = auth.idUsuario();
+                this.setState({ buscando: true });
+                let listadoVendedor = this.comprobarRutaTipoVendedor();
+                this.props.pedidoDisponible(pedido.id, idUsuario, listadoVendedor);
+            }
+        });
+    }
+
     /**
      * Devuelve las operaciones de un pedido.
      * 
@@ -519,7 +544,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         updateFiltros: (filtros) => {
             dispatch(updateFiltros(filtros))
-        }
+        },
+        pedidoDisponible: (id, idUsuario, listadoVendedor) => {
+            dispatch(pedidoDisponible(id, idUsuario, listadoVendedor))
+        },
     }
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Listado));

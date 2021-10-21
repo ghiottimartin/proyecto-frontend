@@ -128,6 +128,19 @@ var pedidos = {
 
         return fetch(c.BASE_URL + '/gastronomia/pedido/' + id + '/cancelar/' + "?motivo=" + motivo, defaultOptions);
     },
+
+    pedidoDisponible(id) {
+        let defaultOptions = {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "Authorization": "Token " + localStorage.token
+            },
+            dataType: 'json',
+        };
+
+        return fetch(c.BASE_URL + '/gastronomia/pedido/' + id + '/disponible/', defaultOptions);
+    },
     
 
 };

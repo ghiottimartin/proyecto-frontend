@@ -45,7 +45,10 @@ import {
     ERROR_PEDIDOS_VENDEDOR,
     RESET_PEDIDOS_VENDEDOR,
     UPDATE_FILTROS,
-    RESET_FILTROS
+    RESET_FILTROS,
+    RECEIVE_PEDIDO_DISPONIBLE,
+    REQUEST_PEDIDO_DISPONIBLE,
+    ERROR_PEDIDO_DISPONIBLE
 
 } from '../actions/PedidoActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions";
@@ -187,6 +190,9 @@ function pedidosById(state = {
             if (action.en_curso) {
                 abierto.en_curso = true;
             }
+            if (action.disponible) {
+                abierto.disponible = true;
+            }
             if (action.pedido && action.pedido.entities && action.pedido.entities.lineas) {
                 abierto.lineas = Object.values(action.pedido.entities.lineas);
             } else {
@@ -237,6 +243,8 @@ function pedidosById(state = {
                     return parseInt(key) !== parseInt(action.idPedido);
                 })
             });
+        
+            // CANCELAR PEDIDO
         case RECEIVE_CANCELAR_PEDIDO:
             return Object.assign({}, state, {
                 isCanceling: false,
@@ -411,6 +419,25 @@ function update(state = {
                 error: null,
             });
         case ERROR_ENTREGAR_PEDIDO:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                success: "",
+                error: action.error
+            });
+         // PEDIDO DISPONIBLE
+         case RECEIVE_PEDIDO_DISPONIBLE:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                success: action.success,
+                error: null,
+            });
+        case REQUEST_PEDIDO_DISPONIBLE:
+            return Object.assign({}, state, {
+                isUpdating: true,
+                success: "",
+                error: null,
+            });
+        case ERROR_PEDIDO_DISPONIBLE:
             return Object.assign({}, state, {
                 isUpdating: false,
                 success: "",

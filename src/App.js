@@ -5,7 +5,7 @@ import history from "./history";
 import auth from "./api/authentication";
 
 //Actions
-import { createPedido , saveCreatePedido, saveDeletePedido, resetPedidoAbierto} from "./actions/PedidoActions";
+import { createPedido, saveCreatePedido, saveDeletePedido, resetPedidoAbierto } from "./actions/PedidoActions";
 import { fetchProductos } from "./actions/ProductoActions";
 import { fetchUsuarioLogueadoIfNeeded } from "./actions/UsuarioActions";
 
@@ -126,7 +126,7 @@ class App extends React.Component {
             let pedido = this.actualizarPedido(producto, cantidad);
             if (pedido.en_curso) {
                 Swal.fire({
-                    title: "Ya tiene un pedido por retirar. ¿Está seguro de comenzar otro pedido?",
+                    title: "Ya tiene un pedido en curso. ¿Está seguro de comenzar otro pedido?",
                     icon: 'question',
                     showCloseButton: true,
                     showCancelButton: true,
@@ -138,6 +138,16 @@ class App extends React.Component {
                     if (result.isConfirmed) {
                         this.crearPedidoAbierto(producto, pedido);
                     }
+                });
+            } else if (pedido.disponible) {
+                Swal.fire({
+                    title: "No puede realizar otro pedido en este momento",
+                    text: 'Ya tiene un pedido por retirar, debe retirarlo por el local o cancelarlo',
+                    icon: 'question',
+                    showCloseButton: true,
+                    focusConfirm: true,
+                    confirmButtonText: 'Continuar',
+                    confirmButtonColor: 'rgb(88, 219, 131)',
                 });
             } else {
                 this.crearPedidoAbierto(producto, pedido);

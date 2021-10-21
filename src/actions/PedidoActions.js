@@ -383,10 +383,12 @@ function receivePedidoAbierto(json) {
     }
 
     const en_curso = datos && datos.en_curso !== undefined && datos.en_curso === true;
+    const disponible = datos && datos.disponible !== undefined && datos.disponible === true;
     return {
         type: RECEIVE_PEDIDO_ABIERTO,
         pedido: json,
         en_curso: en_curso,
+        disponible: disponible,
         receivedAt: Date.now()
     }
 }
@@ -593,6 +595,14 @@ export function entregarPedido(id, idUsuario, listadoVendedor) {
                 }
             })
             .catch(function (error) {
+                dispatch(resetPedidos())
+                if (listadoVendedor) {
+                    dispatch(fetchPedidosVendedor())
+                    history.push(rutas.PEDIDOS_VENDEDOR)
+                } else {
+                    dispatch(fetchPedidos(idUsuario))
+                    history.push(rutas.PEDIDOS_COMENSAL)
+                }
                 switch (error.status) {
                     case 401:
                         dispatch(errorEntregarPedido(errorMessages.UNAUTHORIZED_TOKEN));
@@ -667,6 +677,14 @@ export function cancelarPedido(id, idUsuario, listadoVendedor, motivo) {
                 }
             })
             .catch(function (error) {
+                dispatch(resetPedidos())
+                if (listadoVendedor) {
+                    dispatch(fetchPedidosVendedor())
+                    history.push(rutas.PEDIDOS_VENDEDOR)
+                } else {
+                    dispatch(fetchPedidos(idUsuario))
+                    history.push(rutas.PEDIDOS_COMENSAL)
+                }
                 switch (error.status) {
                     case 401:
                         dispatch(errorCancelarPedido(errorMessages.UNAUTHORIZED_TOKEN));
@@ -781,5 +799,81 @@ export function updateFiltros(filtros) {
 export function resetFiltros() {
     return {
         type: RESET_FILTROS
+    }
+}
+
+// PEDIDO DISPONIBLE
+export const REQUEST_PEDIDO_DISPONIBLE = "REQUEST_PEDIDO_DISPONIBLE";
+export const RECEIVE_PEDIDO_DISPONIBLE = "RECEIVE_PEDIDO_DISPONIBLE";
+export const ERROR_PEDIDO_DISPONIBLE   = "ERROR_PEDIDO_DISPONIBLE";
+
+
+function requestPedidoDisponible() {
+    return {
+        type: REQUEST_PEDIDO_DISPONIBLE,
+    }
+}
+
+function receivePedidoDisponible(message) {
+    return {
+        type: RECEIVE_PEDIDO_DISPONIBLE,
+        success: message,
+        receivedAt: Date.now()
+    }
+}
+
+function errorPedidoDisponible(error) {
+    return {
+        type: ERROR_PEDIDO_DISPONIBLE,
+        error: error,
+    }
+}
+
+export function pedidoDisponible(id, idUsuario, listadoVendedor) {
+    return dispatch => {
+        dispatch(requestPedidoDisponible());
+        return pedidos.pedidoDisponible(id)
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    var data = response.json();
+                    return data;
+                }
+            })
+            .then(function (data) {
+                dispatch(receivePedidoDisponible(data.message));
+                dispatch(resetPedidos())
+                dispatch(resetPedidoAbierto())
+                dispatch(fetchPedidoAbierto())
+                if (listadoVendedor) {
+                    dispatch(fetchPedidosVendedor())
+                } else {
+                    dispatch(fetchPedidos(idUsuario))
+                }
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorPedidoDisponible(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(logout());
+                        return;
+                    case 404:
+                        dispatch(errorPedidoDisponible(errorMessages.GENERAL_ERROR));
+                        return;
+                    default:
+                        error.json()
+                            .then(error => {
+                                if (error.message !== "")
+                                    dispatch(errorPedidoDisponible(error.message));
+                                else
+                                    dispatch(errorPedidoDisponible(errorMessages.GENERAL_ERROR));
+                            })
+                            .catch(error => {
+                                dispatch(errorPedidoDisponible(errorMessages.GENERAL_ERROR));
+                            });
+                        return;
+                }
+            });
     }
 }
