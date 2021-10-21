@@ -267,6 +267,21 @@ class AltaEdicion extends React.Component {
                         />
                     </Form.Group>
                     <Form.Group>
+                        <Form.Label>Aleta de stock</Form.Label>
+                        <Form.Control
+                            id="stock_seguridad"
+                            type="number"
+                            min={0}
+                            onChange={(e) => this.onChangeProducto(e)}
+                            value={producto.stock_seguridad ? producto.stock_seguridad : 0}
+                            placeholder="Ingresar stock"
+                            required={true}
+                        />
+                        <Form.Text id="stock_seguridad" muted>
+                            Cantidad de alerta sobre faltante de stock
+                        </Form.Text>
+                    </Form.Group>
+                    <Form.Group>
                         <Form.Label>Descripción</Form.Label>
                         <Form.Control
                             id="descripcion"

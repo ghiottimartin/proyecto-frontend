@@ -154,6 +154,7 @@ let creadoDefecto = {
     compra_directa: false,
     venta_directa: true,
     stock: 0,
+    stock_seguridad: 20,
     habilitado: 1
 };
 

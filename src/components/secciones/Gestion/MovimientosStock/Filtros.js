@@ -60,19 +60,15 @@ function Filtros(props) {
                                     value={filtros.fechaHasta}
                                 ></Form.Control>
                             </Form.Group>
-                            {
-                                props.usuarios ?
-                                    <Form.Group>
-                                        <Form.Label>Usuario:</Form.Label>
-                                        <Form.Control
-                                            id="usuario"
-                                            type="text"
-                                            onChange={(e) => changeFiltros(e)}
-                                            value={filtros.usuario}
-                                        ></Form.Control>
-                                    </Form.Group>
-                                : ""
-                            }
+                            <Form.Group>
+                                <Form.Label>Usuario:</Form.Label>
+                                <Form.Control
+                                    id="usuario"
+                                    type="text"
+                                    onChange={(e) => changeFiltros(e)}
+                                    value={filtros.usuario}
+                                ></Form.Control>
+                            </Form.Group>
                         </div>
                     </div>
                 </div>

@@ -90,6 +90,7 @@ var productos = {
         formData.append("compra_directa", producto.compra_directa);
         formData.append("venta_directa", producto.venta_directa);
         formData.append("stock", producto.stock);
+        formData.append("stock_seguridad", producto.stock_seguridad);
 
         if (producto.imagen.name) {
             formData.append("imagen", producto.imagen);

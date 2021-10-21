@@ -2,6 +2,11 @@
     display: none;
 }
 
+.productos-listado .img-alerta-stock {
+    width: 20px;
+    margin: 0 0 3px 5px;
+}
+
 @media (max-width: 875px) { 
     .productos-listado .table {
         display: none;

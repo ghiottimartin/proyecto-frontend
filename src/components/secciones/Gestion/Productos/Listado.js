@@ -28,6 +28,7 @@ import lapiz from "../../../../assets/icon/pencil.png";
 import check from "../../../../assets/icon/checked.png";
 import cruz from "../../../../assets/icon/close.png";
 import movimiento from "../../../../assets/icon/movimiento.png";
+import alerta from "../../../../assets/icon/alert.png";
 
 //Librerias
 import Swal from "sweetalert2";
@@ -325,6 +326,8 @@ class Listado extends React.Component {
                     } catch (e) {
                     }
                 }
+                const alertar = producto.alertar;
+                const alertaHTML = <img src={alerta} className="img-alerta-stock" title="El stock actual es menor al stock de alerta" alt="Alerta de stock"/>
                 Productos.push(
                     <tr key={producto.id}>
                         <td className="td-imagen">
@@ -334,7 +337,18 @@ class Listado extends React.Component {
                         <td>{producto.categoria_texto}</td>
                         <td className="text-center">{this.getCompraDirecta(producto)}</td>
                         <td className="text-center">{this.getVentaDirecta(producto)}</td>
-                        <td className="text-right px-5">{producto.stock}</td>
+                        <td className="text-right px-5">
+                            <div className="d-flex justify-content-center align-items-center">
+                                <span>{producto.stock}</span>
+                                <span>{alertar ? alertaHTML : ""}</span>
+                            </div>
+                        </td>
+                        <td className="text-right px-5">
+                            <div className="d-flex justify-content-center align-items-center">
+                                <span>{producto.stock_seguridad}</span>
+                                <span>{alertar ? alertaHTML : ""}</span>
+                            </div>
+                        </td>
                         <td className="font-weight-bold text-right px-5">
                             {producto.costo_texto}
                         </td>
@@ -421,6 +435,14 @@ class Listado extends React.Component {
                                     id="stock"
                                     clase="justify-content-end"
                                     texto="Stock"
+                                    orden={orden}
+                                    direccion={direccion}
+                                    changeDireccion={(e) => this.changeDirection(e)}
+                                />
+                                <Ordenador
+                                    id="stock_seguridad"
+                                    clase="justify-content-end"
+                                    texto="Stock de alerta"
                                     orden={orden}
                                     direccion={direccion}
                                     changeDireccion={(e) => this.changeDirection(e)}
