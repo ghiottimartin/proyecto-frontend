@@ -21,7 +21,6 @@ export const REQUEST_CREATE_INGRESO = "REQUEST_CREATE_INGRESO";
 export const RECEIVE_CREATE_INGRESO = "RECEIVE_CREATE_INGRESO";
 export const ERROR_CREATE_INGRESO = "ERROR_CREATE_INGRESO";
 
-// INGRESO CREATE
 function requestCreateIngreso() {
     return {
         type: REQUEST_CREATE_INGRESO,

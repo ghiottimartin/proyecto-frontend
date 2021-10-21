@@ -45,6 +45,7 @@ class Gestion extends React.Component {
             case rutas.USUARIOS_LISTAR:
                 return imgUsuarios;
             case rutas.PRODUCTOS_LISTAR_ADMIN:
+            case rutas.REEMPLAZO_MERCADERIA_LISTAR:
                 return imgProductos;
             case rutas.PEDIDOS_VENDEDOR:
                 return imgPedidos;
@@ -64,7 +65,7 @@ class Gestion extends React.Component {
         });
         
         if (!autorizado) {
-            return;
+            return null;
         }
 
         let alt         = operacion && operacion.alt ? operacion.alt : "";
@@ -97,9 +98,9 @@ class Gestion extends React.Component {
         const convertir   = logueado && logueado.id ? logueado.operaciones : [];
         let   operaciones = [];
         convertir.map((operacion) => {
-            let existe = this.getOperacion(operacion);
-            if (existe) {
-                operaciones.push(existe);
+            let encontrada = this.getOperacion(operacion);
+            if (encontrada !== null) {
+                operaciones.push(encontrada);
             }
         });
 

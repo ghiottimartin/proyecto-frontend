@@ -6,6 +6,7 @@ import categorias from './categorias';
 import pedidos from './pedidos';
 import ingresos from './ingresos';
 import movimientos from './movimientos';
+import reemplazos from './reemplazos';
 
 const appReducers = combineReducers({
     authentication,
@@ -14,7 +15,8 @@ const appReducers = combineReducers({
     categorias,
     pedidos,
     ingresos,
-    movimientos
+    movimientos,
+    reemplazos
 });
 
 export default appReducers;
