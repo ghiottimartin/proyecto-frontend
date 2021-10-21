@@ -79,7 +79,7 @@ class ListadoCategorias extends React.Component {
 
     modalBorrar(categoria) {
         Swal.fire({
-            title: `Está seguro de borrar la categoria '${categoria.nombre}'`,
+            title: `¿Está seguro de borrar la categoria '${categoria.nombre}'?`,
             icon: 'warning',
             showCloseButton: true,
             showCancelButton: true,

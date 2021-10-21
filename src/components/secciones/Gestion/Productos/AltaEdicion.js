@@ -146,12 +146,104 @@ class AltaEdicion extends React.Component {
         }
     }
 
+    /**
+     * Comprueba que existan productos con nombres que contegan el nombre del producto que
+     * se intenta crear, en caso de existir alerta mediante un modal antes de guardarlo.
+     * 
+     * @returns Boolean
+     */
+    comprobarProductosSimilares() {
+        const nuevo = this.props.productos.create.nuevo;
+        const nombre = nuevo.nombre;
+        let existentes = [];
+        this.props.productos.allIds.map(id => {
+            const producto = this.props.productos.byId.productos[id];
+            if (producto && producto.id && producto.nombre) {
+                const actual = producto.nombre;
+                const contiene = actual.includes(nombre);
+                if (contiene) {
+                    existentes.push(actual);
+                }
+            }
+        })
+        
+        const linkVolver = rutas.getQuery('volverA');
+        if (existentes.length > 0) {
+            const nombres = existentes.join(", ");
+            Swal.fire({
+                title: `Existen productos similares al que intenta crear. ¿Está seguro de continuar?`,
+                text: `Los nombres son: ${nombres}`,
+                icon: 'question',
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: true,
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+                cancelButtonColor: '#bfbfbf',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.props.saveCreateProducto(linkVolver);
+                }
+            });
+        } else {
+            this.props.saveCreateProducto(linkVolver);
+        }
+
+        return existentes.length > 0;
+    }
+
+    /**
+     * Comprueba que los datos del producto sean válidos.
+     * 
+     * @returns Boolean
+     */
+    comprobarProductoValido() {
+        let errores = [];
+        const nuevo = this.props.productos.create.nuevo;
+        
+        const costo = nuevo.costo_vigente;
+        if (isNaN(costo) || parseFloat(costo) <= 0.00) {
+            errores.push("El costo del producto debe ser mayor o igual a cero.");
+        }
+
+        const precio = nuevo.precio_vigente;
+        if (isNaN(precio) || parseFloat(precio) <= 0.00) {
+            errores.push("El precio del producto debe ser mayor o igual a cero.");
+        }
+
+        if (!isNaN(costo) && !isNaN(precio) && parseFloat(costo) >= parseFloat(precio)) {
+            errores.push("El precio del producto debe ser mayor al costo del mismo.");
+        }
+
+        if (errores.length > 0) {
+            let texto = `<p className="text-left">${errores.join("<br/>")}</p>`;
+            Swal.fire({
+                title: `Hubo un error al crear el producto`,
+                html: texto,
+                icon: 'warning',
+                showCloseButton: true,
+                focusConfirm: true,
+                confirmButtonText: 'Continaur',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+            })
+        }
+        return errores.length === 0;
+    }
+
     submitForm(e) {
         e.preventDefault();
         let linkVolver = rutas.getQuery('volverA');
         let accion = this.props.match.params['accion'];
+
+        let valido = this.comprobarProductoValido();
+        if (!valido) {
+            return;
+        }
         if (accion === rutas.ACCION_ALTA) {
-            this.props.saveCreateProducto(linkVolver);
+            let hayExistentes = this.comprobarProductosSimilares();
+            if (!hayExistentes) {
+                this.props.saveCreateProducto(linkVolver);
+            }
         }
         if (accion === rutas.ACCION_EDITAR) {
             this.props.saveUpdateProducto(linkVolver);
@@ -267,7 +359,7 @@ class AltaEdicion extends React.Component {
                         />
                     </Form.Group>
                     <Form.Group>
-                        <Form.Label>Aleta de stock</Form.Label>
+                        <Form.Label>Alerta de stock</Form.Label>
                         <Form.Control
                             id="stock_seguridad"
                             type="number"

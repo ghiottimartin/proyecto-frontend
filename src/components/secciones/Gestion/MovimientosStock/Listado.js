@@ -27,7 +27,7 @@ function Listado(props) {
     const buscando = props.movimientos.byId.isFetching
     const totalCero = parseInt(total) == 0
     const registros = props.movimientos.byId.registros
-    const id_ingreso = props.match.params.id_ingreso
+    const id_ingreso = props.match.params.id_ingreso    
 
     useEffect(() => {
         if (id_ingreso) {

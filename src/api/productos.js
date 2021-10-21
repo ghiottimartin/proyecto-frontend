@@ -92,7 +92,7 @@ var productos = {
         formData.append("stock", producto.stock);
         formData.append("stock_seguridad", producto.stock_seguridad);
 
-        if (producto.imagen.name) {
+        if (producto && producto.imagen && producto.imagen.name) {
             formData.append("imagen", producto.imagen);
             formData.append("imagen_nombre", producto.imagen_nombre);
         }
