@@ -100,3 +100,100 @@ export function saveCreateReemplazo() {
             });
     }
 }
+
+// FILTROS REEMPLAZOS
+export const UPDATE_FILTROS = 'UPDATE_FILTROS';
+export const RESET_FILTROS = 'RESET_FILTROS';
+
+export function updateFiltros(filtros) {
+    return {
+        type: UPDATE_FILTROS,
+        filtros
+    }
+}
+
+export function resetFiltros() {
+    return {
+        type: RESET_FILTROS
+    }
+}
+
+//REEMPLAZOS LOGUEADO
+export const INVALIDATE_REEMPLAZOS = 'INVALIDATE_REEMPLAZOS';
+export const REQUEST_REEMPLAZOS = "REQUEST_REEMPLAZOS";
+export const RECEIVE_REEMPLAZOS = "RECEIVE_REEMPLAZOS";
+export const ERROR_REEMPLAZOS = "ERROR_REEMPLAZOS";
+export const RESET_REEMPLAZOS = "RESET_REEMPLAZOS";
+
+export function invalidateReemplazos() {
+    return {
+        type: INVALIDATE_REEMPLAZOS,
+    }
+}
+
+export function resetReemplazos() {
+    return {
+        type: RESET_REEMPLAZOS
+    }
+}
+
+function requestReemplazos() {
+    return {
+        type: REQUEST_REEMPLAZOS,
+    }
+}
+
+function receiveReemplazos(json) {
+    return {
+        type: RECEIVE_REEMPLAZOS,
+        reemplazos: normalizeDatos(json.reemplazos),
+        total: json.total,
+        registros: json.registros,
+        receivedAt: Date.now()
+    }
+}
+
+function errorReemplazos(error) {
+    return {
+        type: ERROR_REEMPLAZOS,
+        error: error,
+    }
+}
+
+export function fetchReemplazos() {
+    return (dispatch, getState) => {
+        dispatch(requestReemplazos());
+        return reemplazos.getAll(getState().reemplazos.byId.filtros)
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    var data = response.json();
+                    return data;
+                }
+            })
+            .then(function (data) {
+                dispatch(receiveReemplazos(data.datos));
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorReemplazos(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(logout())
+                        return;
+                    default:
+                        error.json()
+                            .then(error => {
+                                if (error.message !== "")
+                                    dispatch(errorReemplazos(error.message));
+                                else
+                                    dispatch(errorReemplazos(errorMessages.GENERAL_ERROR));
+                            })
+                            .catch(error => {
+                                dispatch(errorReemplazos(errorMessages.GENERAL_ERROR));
+                            });
+                        return;
+                }
+            });
+    }
+}
