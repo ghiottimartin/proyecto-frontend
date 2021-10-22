@@ -260,6 +260,18 @@ function Alta(props) {
 
     const isCreating = props.ingresos.create.isCreating
 
+    let cantidadProductosCompraDirecta = 0
+    props.productos.allIds.map(idProducto => {
+        const productoActual = props.productos.byId.productos[idProducto]
+        if (productoActual && productoActual.id && productoActual.compra_directa) {
+            cantidadProductosCompraDirecta++;
+        }
+    })
+    let placeholder = "No hay productos de compra directa cargados.";
+    if (cantidadProductosCompraDirecta > 0) {
+        placeholder = "No quedan más productos de compra directa para agregar."
+    }
+
     return (
         <div className="ingreso-mercaderia tarjeta-body">
             <Titulo ruta={rutas.INGRESO_MERCADERIA} titulo={titulo} />
@@ -268,7 +280,7 @@ function Alta(props) {
                     <div className="ingreso-mercaderia-articulos">
                         <h5>Productos</h5>
                         <ul>{buscando ? <Loader display={true} /> : Opciones}</ul>
-                        {Opciones.length === 0 && !buscando ? <p>No se han cargado productos de compra directa</p> : <></>}
+                        {Opciones.length === 0 && !buscando ? <p>{placeholder}</p> : <></>}
                     </div>
                 </div>
                 <div className="col-lg-8 position-relative">

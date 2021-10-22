@@ -243,9 +243,9 @@ function Alta(props) {
             cantidadProductosStock++;
         }
     })
-    let placeholder = "No se han cargado productos con stock.";
+    let placeholder = "No hay productos de compra directa con stock.";
     if (cantidadProductosStock > 0) {
-        placeholder = "No quedan productos con stock por reemplazar"
+        placeholder = "No quedan más productos de compra directa con stock mayor a cero para agregar."
     }
     
 
