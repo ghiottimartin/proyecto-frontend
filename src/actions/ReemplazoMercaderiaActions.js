@@ -277,3 +277,74 @@ export function fetchReemplazoById(id) {
             });
     }
 }
+
+// ANULAR REEMPLAZO
+export const REQUEST_ANULAR_REEMPLAZO = "REQUEST_ANULAR_REEMPLAZO";
+export const RECEIVE_ANULAR_REEMPLAZO = "RECEIVE_ANULAR_REEMPLAZO";
+export const ERROR_ANULAR_REEMPLAZO   = "ERROR_ANULAR_REEMPLAZO";
+
+
+function requestAnularReemplazo() {
+    return {
+        type: REQUEST_ANULAR_REEMPLAZO,
+    }
+}
+
+function receiveAnularReemplazo(id, message) {
+    return {
+        type: RECEIVE_ANULAR_REEMPLAZO,
+        idCancelado: id,
+        message: message,
+        receivedAt: Date.now()
+    }
+}
+
+function errorAnularReemplazo(error) {
+    return {
+        type: ERROR_ANULAR_REEMPLAZO,
+        error: error,
+    }
+}
+
+export function anularReemplazo(id) {
+    return dispatch => {
+        dispatch(requestAnularReemplazo());
+        return reemplazos.anularReemplazo(id)
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    var data = response.json();
+                    return data;
+                }
+            })
+            .then(function (data) {
+                dispatch(receiveAnularReemplazo(id, data.message));
+                dispatch(resetReemplazos())
+                dispatch(fetchReemplazos())
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorAnularReemplazo(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(logout());
+                        return;
+                    case 404:
+                        dispatch(errorAnularReemplazo(errorMessages.GENERAL_ERROR));
+                        return;
+                    default:
+                        error.json()
+                            .then(error => {
+                                if (error.message !== "")
+                                    dispatch(errorAnularReemplazo(error.message));
+                                else
+                                    dispatch(errorAnularReemplazo(errorMessages.GENERAL_ERROR));
+                            })
+                            .catch(error => {
+                                dispatch(errorAnularReemplazo(errorMessages.GENERAL_ERROR));
+                            });
+                        return;
+                }
+            });
+    }
+}

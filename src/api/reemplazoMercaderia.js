@@ -46,6 +46,19 @@ var reemplazoMercaderia = {
 
         return fetch(c.BASE_URL + '/producto/reemplazos//' + id, defaultOptions);
     },
+
+    anularReemplazo(id) {
+        let defaultOptions = {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "Authorization": "Token " + localStorage.token
+            },
+            dataType: 'json',
+        };
+
+        return fetch(c.BASE_URL + '/producto/reemplazos//' + id + '/anular/', defaultOptions);
+    },
     
 
 };

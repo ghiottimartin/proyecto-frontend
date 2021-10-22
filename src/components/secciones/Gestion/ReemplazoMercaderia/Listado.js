@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
 
 //Actions
-import { updateFiltros, fetchReemplazos, updateReemplazo } from "../../../../actions/ReemplazoMercaderiaActions"
+import { updateFiltros, fetchReemplazos, updateReemplazo, anularReemplazo } from "../../../../actions/ReemplazoMercaderiaActions"
 
 //Constants
 import * as rutas from "../../../../constants/rutas"
@@ -20,6 +20,7 @@ import "../../../../assets/css/Gestion/ReemplazoMercaderia.css"
 //Librerias
 import AddBoxIcon from "@material-ui/icons/AddBox"
 import history from '../../../../history'
+import Swal from 'sweetalert2'
 
 function Listado(props) {
     const reemplazos = props.reemplazos
@@ -43,7 +44,7 @@ function Listado(props) {
         if (props.reemplazos.allIds.length === 0) {
             noHayReemplazos = true
         }
-        setNoHayReemplazos(noHayReemplazos)      
+        setNoHayReemplazos(noHayReemplazos)
     }, [props.reemplazos.allIds])
 
     /**
@@ -67,7 +68,7 @@ function Listado(props) {
      * 
      * @param {SyntheticBaseEvent} e 
      */
-     const filtrarReemplazos = (e) => {
+    const filtrarReemplazos = (e) => {
         e.preventDefault()
         if (paginaUno) {
             var cambio = {
@@ -87,7 +88,7 @@ function Listado(props) {
      * 
      * @param {SyntheticBaseEvent} e 
      */
-     const onChangeBusqueda = (e) => {
+    const onChangeBusqueda = (e) => {
         var cambio = {}
         cambio[e.target.id] = e.target.value
         if (e.target.id !== "paginaActual") {
@@ -103,10 +104,10 @@ function Listado(props) {
      * 
      * @returns {Array}
      */
-     const getOperacionesReemplazo = (reemplazo) => {
+    const getOperacionesReemplazo = (reemplazo) => {
         let operaciones = [];
         reemplazo.operaciones.forEach(operacion => {
-            let accion = operacion.accion;            
+            let accion = operacion.accion;
             operaciones.push(
                 <div key={operacion.key} onClick={() => ejecutarOperacion(reemplazo, accion)} className={operacion.clase + " operacion"} >
                     <i className={operacion.icono} aria-hidden="true"></i> {operacion.texto}
@@ -126,12 +127,16 @@ function Listado(props) {
      * @param {Object} reemplazo 
      * @param {String} accion 
      */
-     const ejecutarOperacion = (reemplazo, accion)  => {
+    const ejecutarOperacion = (reemplazo, accion) => {
         switch (accion) {
             case 'visualizar':
                 visualizarReemplazo(reemplazo);
                 break;
             
+            case 'anular':
+                anularReemplazo(reemplazo);
+                break;
+
         }
     }
 
@@ -140,12 +145,34 @@ function Listado(props) {
      * 
      * @param {Object} reemplazo 
      */
-     const visualizarReemplazo = (reemplazo) => {
+    const visualizarReemplazo = (reemplazo) => {
         props.updateReemplazo(reemplazo);
-        
+
         let ruta = rutas.REEMPLAZO_MERCADERIA_VISUALIZAR;
         ruta += reemplazo.id;
         history.push(ruta);
+    }
+
+    /**
+     * Anula el reemplazo de mercadería.
+     * 
+     * @param {Object} reemplazo 
+     */
+     const anularReemplazo = (reemplazo) => {
+        Swal.fire({
+            title: `¿Está seguro de anular el reemplazo de mercadería ${reemplazo.id_texto}? `,
+            icon: 'question',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            confirmButtonText: 'Aceptar',
+            confirmButtonColor: 'rgb(88, 219, 131)',
+            cancelButtonColor: '#bfbfbf',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                props.anularReemplazo(reemplazo.id);
+            }
+        });
     }
 
     let Reemplazos = []
@@ -159,7 +186,7 @@ function Listado(props) {
                     <td>{reemplazo.fecha_texto}</td>
                     <td>
                         <span>{reemplazo.usuario_nombre}</span>
-                        <br/>
+                        <br />
                         <span className="texto-chico">{reemplazo.usuario_email}</span>
                     </td>
                     <td>
@@ -177,7 +204,7 @@ function Listado(props) {
         if (!totalCero) {
             placeholder = "No hay reemplazos para los filtros aplicados"
         }
-        Reemplazos = 
+        Reemplazos =
             <tr className="text-center">
                 <td colSpan={5}>{placeholder}</td>
             </tr>
@@ -245,6 +272,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         updateReemplazo: (reemplazo) => {
             dispatch(updateReemplazo(reemplazo))
+        },
+        anularReemplazo: (id) => {
+            dispatch(anularReemplazo(id))
         }
     }
 }

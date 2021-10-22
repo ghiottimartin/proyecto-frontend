@@ -7,7 +7,7 @@ import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions"
 import {
     CREATE_REEMPLAZO, ERROR_CREATE_REEMPLAZO, ERROR_REEMPLAZOS, ERROR_REEMPLAZO_ID, INVALIDATE_REEMPLAZOS, RECEIVE_CREATE_REEMPLAZO,
     RECEIVE_REEMPLAZOS, RECEIVE_REEMPLAZO_ID, REQUEST_CREATE_REEMPLAZO, REQUEST_REEMPLAZOS, REQUEST_REEMPLAZO_ID, RESET_CREATE_REEMPLAZO, RESET_FILTROS,
-    RESET_REEMPLAZOS, UPDATE_FILTROS, UPDATE_REEMPLAZO
+    RESET_REEMPLAZOS, UPDATE_FILTROS, UPDATE_REEMPLAZO, RECEIVE_ANULAR_REEMPLAZO, REQUEST_ANULAR_REEMPLAZO, ERROR_ANULAR_REEMPLAZO
 } from '../actions/ReemplazoMercaderiaActions'
 
 function create(state = {
@@ -195,6 +195,25 @@ function update(state = {
                 activo: merge({}, state.activo, action.reemplazo),
                 success: "",
                 error: null,
+            });
+        // CANCELACIÓN
+        case RECEIVE_ANULAR_REEMPLAZO:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                success: action.message,
+                error: null,
+            });
+        case REQUEST_ANULAR_REEMPLAZO:
+            return Object.assign({}, state, {
+                isUpdating: true,
+                success: "",
+                error: null,
+            });
+        case ERROR_ANULAR_REEMPLAZO:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                success: "",
+                error: action.error
             });
         default:
             return state
