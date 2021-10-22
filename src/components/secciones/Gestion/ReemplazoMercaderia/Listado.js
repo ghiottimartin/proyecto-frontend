@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
 
 //Actions
-import { updateFiltros, fetchReemplazos } from "../../../../actions/ReemplazoMercaderiaActions"
+import { updateFiltros, fetchReemplazos, updateReemplazo } from "../../../../actions/ReemplazoMercaderiaActions"
 
 //Constants
 import * as rutas from "../../../../constants/rutas"
@@ -98,8 +98,54 @@ function Listado(props) {
         props.updateFiltros(cambio)
     }
 
-    const getOperacionesReemplazo = () => {
-        return []
+    /**
+     * Devuelve una array de elementos html con las operaciones del reemplazo de mercadería.
+     * 
+     * @returns {Array}
+     */
+     const getOperacionesReemplazo = (reemplazo) => {
+        let operaciones = [];
+        reemplazo.operaciones.forEach(operacion => {
+            let accion = operacion.accion;            
+            operaciones.push(
+                <div key={operacion.key} onClick={() => ejecutarOperacion(reemplazo, accion)} className={operacion.clase + " operacion"} >
+                    <i className={operacion.icono} aria-hidden="true"></i> {operacion.texto}
+                </div>
+            );
+        })
+        return (
+            <div className="fila-operaciones">
+                {operaciones}
+            </div>
+        );
+    }
+
+    /**
+     * Ejecuta la operación del listado de reemplazos de mercadería según el caso.
+     * 
+     * @param {Object} reemplazo 
+     * @param {String} accion 
+     */
+     const ejecutarOperacion = (reemplazo, accion)  => {
+        switch (accion) {
+            case 'visualizar':
+                visualizarReemplazo(reemplazo);
+                break;
+            
+        }
+    }
+
+    /**
+     * Redirige a la visualización del reemplazo de mercadería.
+     * 
+     * @param {Object} reemplazo 
+     */
+     const visualizarReemplazo = (reemplazo) => {
+        props.updateReemplazo(reemplazo);
+        
+        let ruta = rutas.REEMPLAZO_MERCADERIA_VISUALIZAR;
+        ruta += reemplazo.id;
+        history.push(ruta);
     }
 
     let Reemplazos = []
@@ -196,6 +242,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         fetchReemplazos: () => {
             dispatch(fetchReemplazos())
+        },
+        updateReemplazo: (reemplazo) => {
+            dispatch(updateReemplazo(reemplazo))
         }
     }
 }

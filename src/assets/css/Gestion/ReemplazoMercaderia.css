@@ -71,3 +71,17 @@
 .reemplazo-mercaderia-alta table tfoot {
   font-weight: bold;
 }
+
+.reemplazo-visualizar {
+  max-width: 1200px;
+}
+
+.reemplazo-visualizar ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.reemplazo-visualizar li label {
+  width: 70px !important;
+  font-weight: bold;
+}

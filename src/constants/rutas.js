@@ -67,8 +67,10 @@ export const MOVIMIENTOS_STOCK_INGRESO = '/producto/movimientos/ingreso/';
 export const MOVIMIENTOS_STOCK_INGRESO_ID = '/producto/movimientos/ingreso/:id_ingreso';
 
 //Reemplazo de mercadería
-export const REEMPLAZO_MERCADERIA_ALTA   = '/reemplazo-mercaderia/alta/';
-export const REEMPLAZO_MERCADERIA_LISTAR = '/reemplazo-mercaderia/';
+export const REEMPLAZO_MERCADERIA_ALTA          = '/reemplazo-mercaderia/alta/';
+export const REEMPLAZO_MERCADERIA_LISTAR        = '/reemplazo-mercaderia/';
+export const REEMPLAZO_MERCADERIA_VISUALIZAR    = '/reemplazo-mercaderia/visualizar/';
+export const REEMPLAZO_MERCADERIA_VISUALIZAR_ID = '/reemplazo-mercaderia/visualizar/:id';
 
 /**
  * Devuelve la url de usuarios
@@ -127,7 +129,8 @@ const RUTAS = [
     CATEGORIAS_LISTAR_ADMIN,
     MOVIMIENTOS_STOCK,
     REEMPLAZO_MERCADERIA_ALTA,
-    REEMPLAZO_MERCADERIA_LISTAR
+    REEMPLAZO_MERCADERIA_LISTAR,
+    REEMPLAZO_MERCADERIA_VISUALIZAR
 ];
 
 /**

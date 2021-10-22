@@ -197,3 +197,83 @@ export function fetchReemplazos() {
             });
     }
 }
+
+// REEMPLAZO UPDATE
+export const UPDATE_REEMPLAZO = 'UPDATE_REEMPLAZO';
+
+export function updateReemplazo(reemplazo) {
+    return {
+        type: UPDATE_REEMPLAZO,
+        reemplazo: reemplazo
+    }
+}
+
+// BUSCAR REEMPLAZO
+export const INVALIDATE_REEMPLAZO_ID = 'INVALIDATE_REEMPLAZO_ID';
+export const REQUEST_REEMPLAZO_ID = "REQUEST_REEMPLAZO_ID";
+export const RECEIVE_REEMPLAZO_ID = "RECEIVE_REEMPLAZO_ID";
+export const ERROR_REEMPLAZO_ID = "ERROR_REEMPLAZO_ID";
+export const RESET_REEMPLAZO_ID = "RESET_REEMPLAZO_ID";
+
+export function invalidateReemplazoById() {
+    return {
+        type: INVALIDATE_REEMPLAZO_ID,
+    }
+}
+
+export function resetReemplazoById() {
+    return {
+        type: RESET_REEMPLAZO_ID
+    }
+}
+
+function requestReemplazoById() {
+    return {
+        type: REQUEST_REEMPLAZO_ID,
+    }
+}
+
+function receiveReemplazoById(json) {
+    return {
+        type: RECEIVE_REEMPLAZO_ID,
+        reemplazo: normalizeDato(json),
+        receivedAt: Date.now()
+    }
+}
+
+function errorReemplazoById(error) {
+    return {
+        type: ERROR_REEMPLAZO_ID,
+        error: error,
+    }
+}
+
+export function fetchReemplazoById(id) {
+    return dispatch => {
+        dispatch(requestReemplazoById());
+        return reemplazos.getReemplazo(id)
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    var data = response.json();
+                    return data;
+                }
+            })
+            .then(function (data) {
+                dispatch(receiveReemplazoById(data))
+                dispatch(updateReemplazo(data));
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(logout())
+                        dispatch(errorReemplazoById(errorMessages.UNAUTHORIZED_TOKEN));
+                        return;
+                    default:
+                        dispatch(errorReemplazoById(errorMessages.GENERAL_ERROR));
+                        return;
+                }
+            });
+    }
+}

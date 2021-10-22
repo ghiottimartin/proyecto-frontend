@@ -5,9 +5,9 @@ import moment from 'moment'
 //Actions
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions"
 import {
-    CREATE_REEMPLAZO, ERROR_CREATE_REEMPLAZO, ERROR_REEMPLAZOS, INVALIDATE_REEMPLAZOS, RECEIVE_CREATE_REEMPLAZO,
-    RECEIVE_REEMPLAZOS, REQUEST_CREATE_REEMPLAZO, REQUEST_REEMPLAZOS, RESET_CREATE_REEMPLAZO, RESET_FILTROS,
-    RESET_REEMPLAZOS, UPDATE_FILTROS
+    CREATE_REEMPLAZO, ERROR_CREATE_REEMPLAZO, ERROR_REEMPLAZOS, ERROR_REEMPLAZO_ID, INVALIDATE_REEMPLAZOS, RECEIVE_CREATE_REEMPLAZO,
+    RECEIVE_REEMPLAZOS, RECEIVE_REEMPLAZO_ID, REQUEST_CREATE_REEMPLAZO, REQUEST_REEMPLAZOS, REQUEST_REEMPLAZO_ID, RESET_CREATE_REEMPLAZO, RESET_FILTROS,
+    RESET_REEMPLAZOS, UPDATE_FILTROS, UPDATE_REEMPLAZO
 } from '../actions/ReemplazoMercaderiaActions'
 
 function create(state = {
@@ -134,6 +134,29 @@ function reemplazosById(state = {
                 lastUpdated: null,
                 reemplazos: [],
             });
+        
+        // REEMPLAZO ID
+        case REQUEST_REEMPLAZO_ID:
+            return Object.assign({}, state, {
+                isFetching: true,
+                didInvalidate: false
+            });
+        case RECEIVE_REEMPLAZO_ID:
+            return Object.assign({}, state, {
+                isFetching: false,
+                didInvalidate: false,
+                reemplazos: action.reemplazo.entities.reemplazo,
+                total: 1,
+                registros: 1,
+                lastUpdated: action.receivedAt,
+                error: null
+            });
+        case ERROR_REEMPLAZO_ID:
+            return Object.assign({}, state, {
+                isFetching: false,
+                didInvalidate: true,
+                error: action.error
+            });
         // FILTROS
         case UPDATE_FILTROS:
             return Object.assign({}, state, {
@@ -159,10 +182,30 @@ function reemplazosAllIds(state = [], action) {
     }
 }
 
+function update(state = {
+    isUpdating: false,
+    activo: {},
+    success: "",
+    error: null
+}, action) {
+    switch (action.type) {
+        case UPDATE_REEMPLAZO:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                activo: merge({}, state.activo, action.reemplazo),
+                success: "",
+                error: null,
+            });
+        default:
+            return state
+    }
+}
+
 const reemplazos = combineReducers({
     create: create,
     allIds: reemplazosAllIds,
     byId: reemplazosById,
+    update: update,
 });
 
 export default reemplazos;
