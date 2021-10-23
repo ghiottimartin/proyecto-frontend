@@ -61,16 +61,18 @@ class ListadoCategorias extends React.Component {
     }
 
     getOperacionesCategoria(categoria) {
+        const titleEditar = "Editar Categoría " + categoria.id_texto
+        const titleBorrar = "Borrar Categoría " + categoria.id_texto
         return (
             <div>
-                <a href="#" onClick={() => this.clickEditar(categoria)} title="Editar "
+                <a href="#" onClick={() => this.clickEditar(categoria)} title={titleEditar}
                    className="operacion">
-                    <img src={lapiz} className="icono-operacion" alt="Editar categoria"/>
+                    <img src={lapiz} className="icono-operacion" alt={`Imagen ${titleEditar}`}/>
                     Editar
                 </a>
-                <a href="#" style={{display: categoria.puede_borrarse ? "inline" : "none"}} onClick={() => this.modalBorrar(categoria)} title="Borrar"
+                <a href="#" style={{display: categoria.puede_borrarse ? "inline" : "none"}} onClick={() => this.modalBorrar(categoria)} title={titleBorrar}
                    className="operacion">
-                    <img src={tacho} className="icono-operacion" alt="Borrar categoria"/>
+                    <img src={tacho} className="icono-operacion" alt={`Imagen ${titleBorrar}`}/>
                     Borrar
                 </a>
             </div>
@@ -100,7 +102,7 @@ class ListadoCategorias extends React.Component {
         if (noHayCategorias) {
             Categorias =
                 <tr className="text-center">
-                    <td colSpan="5">No hay categorias cargadas</td>
+                    <td colSpan="4">No hay categorias cargadas</td>
                 </tr>;
         }
         this.props.categorias.allIds.map(idCategoria => {
@@ -110,7 +112,7 @@ class ListadoCategorias extends React.Component {
           
                 Categorias.push(
                     <tr key={categoria.id}>
-                    
+                        <td>{categoria.id_texto}</td>
                         <td>{categoria.nombre}</td>
                         <td>{categoria.descripcion}</td>
                         <td>{operaciones}</td>
@@ -120,7 +122,7 @@ class ListadoCategorias extends React.Component {
         });
         const Cargando =
             <tr>
-                <td colSpan={3}><Loader display={true} /></td>
+                <td colSpan={4}><Loader display={true} /></td>
             </tr>;
         return (
             <div className="tabla-listado">
@@ -135,11 +137,12 @@ class ListadoCategorias extends React.Component {
                     </div>
                     <table className="table">
                         <thead>
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Descripción</th>
-                            <th>Operaciones</th>
-                        </tr>
+                            <tr>
+                                <th>Número</th>
+                                <th>Nombre</th>
+                                <th>Descripción</th>
+                                <th>Operaciones</th>
+                            </tr>
                         </thead>
                         <tbody>
                         {buscando ? Cargando : Categorias}
