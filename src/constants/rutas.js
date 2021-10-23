@@ -7,7 +7,7 @@ export const RESET_PASSWORD = '/reset-password/:token';
 
 //Registro
 export const MENU            = '/menu';
-export const ALMACEN         = '/almacen';
+export const ALTA_PEDIDO     = '/pedido/alta';
 export const GESTION         = '/gestion';
 
 export const ACCION_ALTA   = 'alta';
@@ -113,7 +113,7 @@ const RUTAS = [
     VALIDAR_EMAIL,
     RESET_PASSWORD,
     MENU,
-    ALMACEN,
+    ALTA_PEDIDO,
     GESTION,
     INGRESO_MERCADERIA,
     INGRESO_MERCADERIA_ALTA,

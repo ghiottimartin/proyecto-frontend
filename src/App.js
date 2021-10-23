@@ -13,7 +13,7 @@ import { fetchUsuarioLogueadoIfNeeded } from "./actions/UsuarioActions";
 import * as rutas from './constants/rutas.js';
 
 //Components
-import Almacen from "./components/secciones/Almacen";
+import AltaPedido from "./components/secciones/AltaPedido";
 import AltaEdicionCategoria from "./components/secciones/Gestion/Productos/Categorias/AltaEdicion";
 import AltaEdicionProducto from "./components/secciones/Gestion/Productos/AltaEdicion";
 import CambiarPassword from "./components/secciones/Gestion/Usuarios/CambiarPassword";
@@ -121,7 +121,7 @@ class App extends React.Component {
                 cancelButtonColor: '#bfbfbf',
             }).then((result) => {
                 if (result.isConfirmed) {
-                    let ruta = `${rutas.LOGIN}?volverA=${rutas.ALMACEN}`
+                    let ruta = `${rutas.LOGIN}?volverA=${rutas.ALTA_PEDIDO}`
                     history.push(ruta);
                 }
             });
@@ -256,8 +256,8 @@ class App extends React.Component {
                         <Route exact path={rutas.PRODUCTOS_ACCIONES} component={AltaEdicionProducto} />
                         <Route exact path={rutas.CATEGORIAS_LISTAR_ADMIN} component={ListadoCategorias} />
                         <Route exact path={rutas.CATEGORIAS_ACCIONES} component={AltaEdicionCategoria} />
-                        <Route exact path={[rutas.ALMACEN, "/"]} render={(props) =>
-                            <Almacen
+                        <Route exact path={[rutas.ALTA_PEDIDO, "/"]} render={(props) =>
+                            <AltaPedido
                                 {...props}
                                 getCantidad={(producto) => this.getCantidad(producto)}
                                 changeMostrar={() => this.changeMostrar()}

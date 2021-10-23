@@ -90,7 +90,7 @@ class Navegador extends React.Component {
 
     getRutaActiva(ruta) {
         let rutaActual = window.location.pathname;
-        if (ruta === rutas.ALMACEN && rutaActual === "/") {
+        if (ruta === rutas.ALTA_PEDIDO && rutaActual === "/") {
             return true;
         }
         
@@ -158,8 +158,8 @@ class Navegador extends React.Component {
                 <ItemMenu
                     mostrar={props.mostrar}
                     grow={true}
-                    texto={"Almacén"}
-                    ruta={rutas.ALMACEN}
+                    texto={"Pedido"}
+                    ruta={rutas.ALTA_PEDIDO}
                 />
                 <ItemMenu
                     mostrar={false}
