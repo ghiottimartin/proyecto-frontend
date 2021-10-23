@@ -254,13 +254,14 @@ class AltaEdicion extends React.Component {
     render() {
         const {botonVolverA, volverAValido} = this.state;
         let producto = {};
-        let accion = this.props.match.params['accion'];
+        const accion = this.props.match.params['accion'];
         if (accion === rutas.ACCION_ALTA) {
             producto = this.props.productos.create.nuevo;
         }
         let path   = this.state.imagen;
         let titulo = "Nuevo producto";
-        if (accion === rutas.ACCION_EDITAR) {
+        const esEdicion = accion === rutas.ACCION_EDITAR
+        if (esEdicion) {
             titulo = "Editar producto";
             producto = this.props.productos.update.activo;
             if (this.state.imagen === emptyImg) {
@@ -272,7 +273,7 @@ class AltaEdicion extends React.Component {
         }
 
 
-        var opcionesCategoria = this.props.categorias.allIds.map((key) => {
+        const opcionesCategoria = this.props.categorias.allIds.map((key) => {
             var categoria = this.props.categorias.byId.categorias[key];
             if (categoria !== undefined && categoria.id) {
                 return (
@@ -282,9 +283,9 @@ class AltaEdicion extends React.Component {
 
         });
 
-        let buscando = this.props.categorias.byId.isFetching;
-        let rutaCategoria = rutas.CATEGORIA_ALTA + '?volverA=' + rutas.PRODUCTO_ALTA;
-
+        const buscando = this.props.categorias.byId.isFetching;
+        const rutaCategoria = rutas.CATEGORIA_ALTA + '?volverA=' + rutas.PRODUCTO_ALTA;
+        const stockDeshabilitado = producto.compra_directa && esEdicion;
         return (
             <div className="producto-alta">
                 <Form className="tarjeta-body" onSubmit={(e) => {this.submitForm(e)}}>
@@ -352,11 +353,15 @@ class AltaEdicion extends React.Component {
                             id="stock"
                             type="number"
                             min={0}
+                            disabled={stockDeshabilitado}
                             onChange={(e) => this.onChangeProducto(e)}
                             value={producto.stock ? producto.stock : 0}
                             placeholder="Ingresar stock"
                             required={true}
                         />
+                        <Form.Text className="text-muted" style={{display: esEdicion ? "block" : "none"}}>
+                            El stock sólo es editable si el producto no es de compra directa.
+                        </Form.Text>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Alerta de stock</Form.Label>
