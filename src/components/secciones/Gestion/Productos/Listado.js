@@ -477,7 +477,7 @@ class Listado extends React.Component {
                                 <th className="text-right pr-5">
                                     Margen
                                 </th>
-                                <th>Operaciones</th>
+                                <th className="fila-tabla-operaciones">Operaciones</th>
                             </tr>
                         </thead>
                         <tbody>
