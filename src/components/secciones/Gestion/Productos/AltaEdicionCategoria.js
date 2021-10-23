@@ -81,11 +81,14 @@ class AltaEdicionCategoria extends React.Component {
 
 
         let buscando = this.props.categorias.byId.isFetching;
-
+        const volverA = rutas.getQuery("volverA")
+        if (!volverA || volverA === "") {
+            volverA = rutas.CATEGORIAS_LISTAR_ADMIN
+        }
         return (
             <div className="categoria-alta">
                 <Form className="tarjeta-body" onSubmit={(e) => {this.submitForm(e)}}>
-                    <Titulo ruta={rutas.CATEGORIAS_LISTAR_ADMIN} titulo={titulo}/>
+                    <Titulo ruta={volverA} titulo={titulo}/>
                     <Form.Group>
                         <Form.Label>Nombre</Form.Label>
                         <Form.Control
