@@ -165,7 +165,7 @@ class Listado extends React.Component {
             case 'cancelar':
                 this.cancelarPedido(pedido);
                 break;
-            
+
             case 'disponible':
                 this.pedidoDisponible(pedido);
                 break;
@@ -209,10 +209,23 @@ class Listado extends React.Component {
                 cancelButtonColor: '#bfbfbf',
             });
         } else {
-            let idUsuario = auth.idUsuario();
-            this.setState({ buscando: true });
-            let listadoVendedor = this.comprobarRutaTipoVendedor();
-            this.props.entregarPedido(pedido.id, idUsuario, listadoVendedor);
+            Swal.fire({
+                title: `¿Está seguro de entregar el pedido? `,
+                icon: 'question',
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: true,
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+                cancelButtonColor: '#bfbfbf',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    let idUsuario = auth.idUsuario();
+                    this.setState({ buscando: true });
+                    let listadoVendedor = this.comprobarRutaTipoVendedor();
+                    this.props.entregarPedido(pedido.id, idUsuario, listadoVendedor);
+                }
+            });
         }
     }
 
@@ -333,7 +346,7 @@ class Listado extends React.Component {
             }
 
             operaciones.push(
-                <div key={operacion.key} onClick={() => this.ejecutarOperacion(pedido, accion)} className={operacion.clase + " operacion"} >
+                <div key={operacion.key} title={operacion.title} onClick={() => this.ejecutarOperacion(pedido, accion)} className={operacion.clase + " operacion"} >
                     <i className={operacion.icono} aria-hidden="true"></i> {operacion.texto}
                 </div>
             );

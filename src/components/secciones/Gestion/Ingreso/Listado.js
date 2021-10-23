@@ -71,18 +71,18 @@ function IngresoListado(props) {
         operaciones.push(
             <p
                 onClick={() => redirigirMovimientos(ingreso)}
-                title="Movimientos ingreso"
+                title={`Ver movimientos de stock del Ingreso ` + ingreso.id_texto}
                 className="operacion"
                 style={{display: ingreso.tiene_movimientos ? "block" : "none"}}
             >
-                <img src={movimiento} className="icono-operacion" alt="Movimientos producto" />
-                Movimientos
+                <img src={movimiento} className="icono-operacion" alt="Stock producto" />
+                Stock
             </p>
         )
         ingreso.operaciones.forEach(operacion => {
             let accion = operacion.accion;            
             operaciones.push(
-                <div key={operacion.key} onClick={() => ejecutarOperacion(ingreso, accion)} className={operacion.clase + " operacion"} >
+                <div key={operacion.key} title={operacion.title} onClick={() => ejecutarOperacion(ingreso, accion)} className={operacion.clase + " operacion"} >
                     <i className={operacion.icono} aria-hidden="true"></i> {operacion.texto}
                 </div>
             );
@@ -186,7 +186,7 @@ function IngresoListado(props) {
      */
     const anularIngreso = (ingreso) => {
         Swal.fire({
-            title: `¿Está seguro de anular el ingreso? `,
+            title: `¿Está seguro de anular el Ingreso ${ingreso.id_texto}? `,
             icon: 'question',
             showCloseButton: true,
             showCancelButton: true,

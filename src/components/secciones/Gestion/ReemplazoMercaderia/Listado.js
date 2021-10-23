@@ -109,7 +109,7 @@ function Listado(props) {
         reemplazo.operaciones.forEach(operacion => {
             let accion = operacion.accion;
             operaciones.push(
-                <div key={operacion.key} onClick={() => ejecutarOperacion(reemplazo, accion)} className={operacion.clase + " operacion"} >
+                <div key={operacion.key} title={operacion.title}onClick={() => ejecutarOperacion(reemplazo, accion)} className={operacion.clase + " operacion"} >
                     <i className={operacion.icono} aria-hidden="true"></i> {operacion.texto}
                 </div>
             );

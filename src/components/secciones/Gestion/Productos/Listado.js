@@ -111,21 +111,25 @@ class Listado extends React.Component {
      * @returns 
      */
     getOperacionesProducto(producto) {
+        const titleStock = "Ver movimientos de stock del Producto " + producto.id_texto
+        const titleBorrar = "Borrar Producto " + producto.id_texto
+        const titleEditar = "Editar Producto " + producto.id_texto
         return (
-            <div>
-                <p onClick={() => this.redirigirMovimientos(producto)} title="Movimientos producto"
+            <div className="d-flex flex-wrap">
+                <p onClick={() => this.redirigirMovimientos(producto)} title={titleStock}
                     className="operacion" style={{ display: producto.tiene_movimientos ? "inline" : "none" }}>
-                    <img src={movimiento} className="icono-operacion" alt="Movimientos producto" />
-                    Movimientos
+                    <img src={movimiento} className="icono-operacion" alt={titleStock} />
+                    Stock
                 </p>
-                <p onClick={() => this.clickEditar(producto)} title="Editar "
+                <p onClick={() => this.clickEditar(producto)} title={titleEditar}
                     className="operacion">
-                    <img src={lapiz} className="icono-operacion" alt="Editar producto" />
+                    <img src={lapiz} className="icono-operacion" alt={titleEditar} />
                     Editar
                 </p>
                 <p onClick={() => this.modalBorrar(producto)} title="Borrar" style={{ display: producto.puede_borrarse ? "inline" : "none" }}
+                    title={titleBorrar}
                     className="operacion">
-                    <img src={tacho} className="icono-operacion" alt="Borrar producto" />
+                    <img src={tacho} className="icono-operacion" alt={titleBorrar} />
                     Borrar
                 </p>
             </div>
@@ -170,6 +174,7 @@ class Listado extends React.Component {
                 Productos.push(
                     <div key={producto.id + "-responsive"} className="productos-responsive-item">
                         <ul>
+                            <li><b>Número:</b> {producto.id_texto}</li>
                             <li className="td-imagen">
                                 <img src={path} onError={(e) => e.target.src = productoVacio} alt="Imagen de producto" />
                             </li>
@@ -285,7 +290,7 @@ class Listado extends React.Component {
      */
     changeDirection(e) {
         const filtros = this.props.productos.byId.filtros
-        
+
         let nuevos = {};
         nuevos.target = {};
         nuevos.target.id = "orden";
@@ -327,9 +332,10 @@ class Listado extends React.Component {
                     }
                 }
                 const alertar = producto.alertar;
-                const alertaHTML = <img src={alerta} className="img-alerta-stock" title="El stock actual es menor al stock de alerta" alt="Alerta de stock"/>
+                const alertaHTML = <img src={alerta} className="img-alerta-stock" title="El stock actual es menor al stock de alerta" alt="Alerta de stock" />
                 Productos.push(
                     <tr key={producto.id}>
+                        <td>{producto.id_texto}</td>
                         <td className="td-imagen">
                             <img src={path} onError={(e) => e.target.src = productoVacio} alt="Imagen de producto" />
                         </td>
@@ -349,10 +355,10 @@ class Listado extends React.Component {
                                 <span>{alertar ? alertaHTML : ""}</span>
                             </div>
                         </td>
-                        <td className="font-weight-bold text-right px-5">
+                        <td className="font-weight-bold text-right px-5 text-nowrap">
                             {producto.costo_texto}
                         </td>
-                        <td className="font-weight-bold text-right px-5">
+                        <td className="font-weight-bold text-right px-5 text-nowrap">
                             {producto.precio_texto}
                         </td>
                         <td className="text-right px-5">
@@ -398,6 +404,13 @@ class Listado extends React.Component {
                     <table className="table">
                         <thead>
                             <tr>
+                                <Ordenador
+                                    id="id"
+                                    texto="Número"
+                                    orden={orden}
+                                    direccion={direccion}
+                                    changeDireccion={(e) => this.changeDirection(e)}
+                                />
                                 <th>
                                     Imagen
                                 </th>
