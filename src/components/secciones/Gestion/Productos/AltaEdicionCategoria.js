@@ -3,7 +3,7 @@ import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 
 //Actions  
-import {createCategoria, saveCreateCategoria, updateCategoria, saveUpdateCategoria, fetchCategoriaById} from '../../../../actions/CategoriaActions'
+import {createCategoria, saveCreateCategoria, updateCategoria, saveUpdateCategoria, fetchCategoriaById, resetCreateCategoria} from '../../../../actions/CategoriaActions'
 
 
 //Constants
@@ -33,6 +33,10 @@ class AltaEdicionCategoria extends React.Component {
         if (id) {
             this.props.fetchCategoriaById(id);
         }
+    }
+
+    componentWillUnmount() {
+        this.props.resetCreateCategoria();
     }
 
     onChangeCategoria(e) {
@@ -143,8 +147,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         fetchCategoriaById: (id) => {
             dispatch(fetchCategoriaById(id))
-        },    
-
+        },
+        resetCreateCategoria: () => {
+            dispatch(resetCreateCategoria())
+        },
     }
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AltaEdicionCategoria));
