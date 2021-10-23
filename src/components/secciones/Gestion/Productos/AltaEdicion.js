@@ -1,10 +1,10 @@
 import React from 'react';
-import {withRouter} from 'react-router-dom'
-import {connect} from 'react-redux';
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux';
 
 //Actions
-import {createProducto, updateProducto, saveCreateProducto, saveUpdateProducto, fetchProductoById} from "../../../../actions/ProductoActions";
-import {fetchCategorias} from "../../../../actions/CategoriaActions";
+import { createProducto, updateProducto, saveCreateProducto, saveUpdateProducto, fetchProductoById } from "../../../../actions/ProductoActions";
+import { fetchCategorias } from "../../../../actions/CategoriaActions";
 
 //Constants
 import * as rutas from '../../../../constants/rutas.js';
@@ -28,12 +28,15 @@ import Swal from 'sweetalert2';
 //Imagenes
 import emptyImg from "../../../../assets/img/emptyImg.jpg";
 
+//Utils
+import { similarity, quitarAcentos } from "../../../../utils/cadenas";
+
 class AltaEdicion extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             imagen: emptyImg,
-            botonVolverA:  '',
+            botonVolverA: '',
             volverAValido: false
         };
     }
@@ -59,13 +62,13 @@ class AltaEdicion extends React.Component {
                 focusConfirm: true,
                 confirmButtonText: 'Continuar',
             })
-            
+
         }
     }
 
     actualizarBotonVolverA() {
-        const volverA    = rutas.getQuery('volverA');
-        const valido     = rutas.validarRuta(volverA);
+        const volverA = rutas.getQuery('volverA');
+        const valido = rutas.validarRuta(volverA);
         let botonVolverA = "";
         if (valido) {
             botonVolverA =
@@ -77,7 +80,7 @@ class AltaEdicion extends React.Component {
     }
 
     onChangeProducto(e, imagen) {
-        var cambio          = {};
+        var cambio = {};
         cambio[e.target.id] = e.target.value;
         if (imagen) {
             cambio = imagen;
@@ -99,7 +102,7 @@ class AltaEdicion extends React.Component {
         }
         let imagen = URL.createObjectURL(archivo);
         if (e.target.id === 'imagen')
-            this.setState({ imagen: imagen});
+            this.setState({ imagen: imagen });
 
         var file = e.target.files[0];
         var reader = new FileReader();
@@ -114,9 +117,9 @@ class AltaEdicion extends React.Component {
     }
 
     onChangeCheckbox(id) {
-        var cambio  = {};
+        var cambio = {};
         var valor = true;
-        
+
         let accion = this.props.match.params['accion'];
         let producto = this.props.productos.create.nuevo;
         if (accion === rutas.ACCION_EDITAR) {
@@ -129,7 +132,7 @@ class AltaEdicion extends React.Component {
                     valor = false;
                 }
                 break;
-            
+
             case 'venta_directa':
                 if (producto.venta_directa) {
                     valor = false;
@@ -147,26 +150,67 @@ class AltaEdicion extends React.Component {
     }
 
     /**
-     * Comprueba que existan productos con nombres que contegan el nombre del producto que
-     * se intenta crear, en caso de existir alerta mediante un modal antes de guardarlo.
+     * Devuelve el producto a crear o editar dependiendo de la ruta.
+     * 
+     * @returns Object
+     */
+    getProductoAltaEdicion() {
+        let producto = {};
+        let accion = this.props.match.params['accion'];
+        if (accion === rutas.ACCION_ALTA) {
+            producto = this.props.productos.create.nuevo;
+        } else {
+            producto = this.props.productos.update.activo;
+        }
+        return producto;
+    }
+
+    /**
+     * Comprueba si existen nombre similares al que se intenta editar o crear, en caso de que existan
+     * se alerta al usuario y consulta sobre si desea guardar o cancelar.
      * 
      * @returns Boolean
      */
-    comprobarProductosSimilares() {
-        const nuevo = this.props.productos.create.nuevo;
-        const nombre = nuevo.nombre;
+    comprobarGuardarConProductosSimilares() {
+        let exacta = false;
+        const idEdicion = parseInt(this.props.match.params.id);
+        const productoAltaEdicion = this.getProductoAltaEdicion();
+        const nombreNuevo = productoAltaEdicion.nombre;
+
         let existentes = [];
         this.props.productos.allIds.map(id => {
             const producto = this.props.productos.byId.productos[id];
-            if (producto && producto.id && producto.nombre) {
-                const actual = producto.nombre;
-                const contiene = actual.includes(nombre);
-                if (contiene) {
-                    existentes.push(actual);
+            const nombreActual = producto.nombre;
+            const idActual = producto.id;
+            if (producto && idActual && nombreActual && idActual !== idEdicion) {
+                const nombreActual = producto.nombre;
+                let actualSinAcentos = quitarAcentos(nombreActual);
+                let nuevaSinAcentos = quitarAcentos(nombreNuevo);
+                var indice = similarity(actualSinAcentos, nuevaSinAcentos);
+                console.log(`Porcentaje de similitud entre '${actualSinAcentos}' y '${nuevaSinAcentos}': ${indice} `)
+                if (indice > 0.6) {
+                    existentes.push(nombreActual);
+                }
+                if (nuevaSinAcentos === actualSinAcentos) {
+                    exacta = true;
                 }
             }
         })
-        
+
+        if (exacta) {
+            Swal.fire({
+                title: 'Ya existe un producto con ese nombre.',
+                icon: 'warning',
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: true,
+                confirmButtonText: 'Continuar',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+                cancelButtonColor: '#bfbfbf',
+            });
+            return false;
+        }
+
         const linkVolver = rutas.getQuery('volverA');
         if (existentes.length > 0) {
             const nombres = existentes.join(", ");
@@ -183,13 +227,13 @@ class AltaEdicion extends React.Component {
             }).then((result) => {
                 if (result.isConfirmed) {
                     this.props.saveCreateProducto(linkVolver);
+                } else {
+                    return false;
                 }
             });
-        } else {
-            this.props.saveCreateProducto(linkVolver);
         }
 
-        return existentes.length > 0;
+        return existentes.length === 0;
     }
 
     /**
@@ -200,7 +244,6 @@ class AltaEdicion extends React.Component {
     comprobarProductoValido() {
         let errores = [];
         const nuevo = this.props.productos.create.nuevo;
-        
         const costo = nuevo.costo_vigente;
         if (isNaN(costo) || parseFloat(costo) <= 0.00) {
             errores.push("El costo del producto debe ser mayor o igual a cero.");
@@ -230,7 +273,13 @@ class AltaEdicion extends React.Component {
         return errores.length === 0;
     }
 
-    submitForm(e) {
+    /**
+     * Guarda el producto.
+     * 
+     * @param {SyntheticBaseEvent} e 
+     * @returns 
+     */
+    guardarAltaEdicion(e) {
         e.preventDefault();
         let linkVolver = rutas.getQuery('volverA');
         let accion = this.props.match.params['accion'];
@@ -239,11 +288,14 @@ class AltaEdicion extends React.Component {
         if (!valido) {
             return;
         }
+
+        let guardar = this.comprobarGuardarConProductosSimilares();
+        if (!guardar) {
+            return;
+        }
+
         if (accion === rutas.ACCION_ALTA) {
-            let hayExistentes = this.comprobarProductosSimilares();
-            if (!hayExistentes) {
-                this.props.saveCreateProducto(linkVolver);
-            }
+            this.props.saveCreateProducto(linkVolver);
         }
         if (accion === rutas.ACCION_EDITAR) {
             this.props.saveUpdateProducto(linkVolver);
@@ -252,13 +304,13 @@ class AltaEdicion extends React.Component {
     }
 
     render() {
-        const {botonVolverA, volverAValido} = this.state;
+        const { botonVolverA, volverAValido } = this.state;
         let producto = {};
         const accion = this.props.match.params['accion'];
         if (accion === rutas.ACCION_ALTA) {
             producto = this.props.productos.create.nuevo;
         }
-        let path   = this.state.imagen;
+        let path = this.state.imagen;
         let titulo = "Nuevo producto";
         const esEdicion = accion === rutas.ACCION_EDITAR
         if (esEdicion) {
@@ -288,8 +340,8 @@ class AltaEdicion extends React.Component {
         const stockDeshabilitado = producto.compra_directa && esEdicion;
         return (
             <div className="producto-alta">
-                <Form className="tarjeta-body" onSubmit={(e) => {this.submitForm(e)}}>
-                    <Titulo ruta={rutas.PRODUCTOS_LISTAR_ADMIN} titulo={titulo}/>
+                <Form className="tarjeta-body" onSubmit={(e) => { this.guardarAltaEdicion(e) }}>
+                    <Titulo ruta={rutas.PRODUCTOS_LISTAR_ADMIN} titulo={titulo} />
                     <Form.Group>
                         <Form.Label>Categoría</Form.Label>
                         <div className="d-flex">
@@ -305,10 +357,10 @@ class AltaEdicion extends React.Component {
                                 <option key={0} value="">Seleccionar categoría</option>
                                 {opcionesCategoria}
                             </Form.Control>
-                            <Button variant="success" onClick={()=> history.push(rutaCategoria)}> 
-                            +
+                            <Button variant="success" onClick={() => history.push(rutaCategoria)}>
+                                +
                             </Button>
-                         </div>
+                        </div>
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Nombre</Form.Label>
@@ -328,7 +380,7 @@ class AltaEdicion extends React.Component {
                             checked={producto.compra_directa ? producto.compra_directa : false}
                             id="compra_directa"
                             onClick={() => this.onChangeCheckbox('compra_directa')}
-                            onChange={() => {}}
+                            onChange={() => { }}
                         />
                         <label className="form-check-label" htmlFor="compra_directa">
                             Compra directa
@@ -341,7 +393,7 @@ class AltaEdicion extends React.Component {
                             checked={producto.venta_directa ? producto.venta_directa : false}
                             id="venta_directa"
                             onClick={() => this.onChangeCheckbox('venta_directa')}
-                            onChange={() => {}}
+                            onChange={() => { }}
                         />
                         <label className="form-check-label" htmlFor="venta_directa">
                             Venta directa
@@ -359,7 +411,7 @@ class AltaEdicion extends React.Component {
                             placeholder="Ingresar stock"
                             required={true}
                         />
-                        <Form.Text className="text-muted" style={{display: esEdicion ? "block" : "none"}}>
+                        <Form.Text className="text-muted" style={{ display: esEdicion ? "block" : "none" }}>
                             El stock sólo es editable si el producto no es de compra directa.
                         </Form.Text>
                     </Form.Group>
@@ -428,7 +480,7 @@ class AltaEdicion extends React.Component {
                     </Form.Group>
                     {
                         this.props.productos.create.isCreating || this.props.productos.update.isUpdating ?
-                            <Loader display={true}/>
+                            <Loader display={true} />
                             :
                             <div className="d-flex">
                                 <Button className="boton-submit" variant="success" type="submit" disabled={buscando}>
