@@ -32,6 +32,7 @@ const filtrosIniciales = {
     tipo: "",
     nombre: "",
     categoria: "",
+    alerta_stock: "",
     paginaActual: 1,
     registrosPorPagina: 10,
     orden: 'nombre',

@@ -39,8 +39,7 @@ class Listado extends React.Component {
         super(props);
         this.state = {
             buscando: true,
-            paginaUno: true,
-            noHayProductos: false
+            paginaUno: true
         }
     }
 
@@ -50,15 +49,8 @@ class Listado extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshot) {
         let allIds = this.props.productos.allIds;
-        let borrados = this.props.productos.delete;
         let productos = this.props.productos.byId;
         let preProductos = prevProps.productos.byId;
-        let sinIds = allIds.length === 0;
-        if (sinIds && ((preProductos.isFetching && !productos.isFetching) || (!borrados.isDeleting && prevProps.productos.delete.isDeleting))) {
-            this.setState({
-                noHayProductos: true,
-            })
-        }
         if (preProductos.isFetching && !productos.isFetching) {
             this.setState({
                 buscando: false,
@@ -311,13 +303,15 @@ class Listado extends React.Component {
     }
 
     render() {
-        const { noHayProductos, buscando } = this.state;
+        const { buscando } = this.state;
         const productosById = this.props.productos.byId;
         let Productos = [];
-        if (noHayProductos) {
+        const total = productosById.total;
+        const totalCero = parseInt(total) === 0;
+        if (totalCero) {
             Productos =
                 <tr className="text-center">
-                    <td colSpan={10}>No hay productos cargados</td>
+                    <td colSpan={12}>No hay productos cargados</td>
                 </tr>;
         }
         this.props.productos.allIds.map(idProducto => {
@@ -369,9 +363,15 @@ class Listado extends React.Component {
                 );
             }
         });
+        if (this.props.productos.allIds.length === 0) {
+            Productos =
+                <tr className="text-center">
+                    <td colSpan={12}>No hay productos para los filtros aplicados.</td>
+                </tr>;
+        }
         const Cargando =
             <tr>
-                <td colSpan={10}><Loader display={true} /></td>
+                <td colSpan={12}><Loader display={true} /></td>
             </tr>;
         let operacion = {
             'ruta': rutas.CATEGORIAS_LISTAR_ADMIN + '?volverA=' + rutas.PRODUCTOS_LISTAR_ADMIN,
@@ -379,8 +379,6 @@ class Listado extends React.Component {
             'clase': 'btn-success',
         };
         const tableResponsive = this.getHtmlListadoResponsive();
-        const total = productosById.total;
-        const totalCero = parseInt(total) === 0;
         const filtros = productosById.filtros
         const registros = productosById.registros
         const orden = productosById.filtros.orden

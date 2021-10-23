@@ -33,12 +33,6 @@ function Filtros(props) {
         }
     })
 
-    let tipos = [
-        <option key={0} value={""}>Indistinto</option>,
-        <option key={1} value={"compra"}>Compra directa</option>,
-        <option key={2} value={"venta"}>Venta directa</option>
-    ]
-
     const filtros = props.productos.byId.filtros
     return (
         <div className="filtros">
@@ -75,7 +69,22 @@ function Filtros(props) {
                                     onChange={(e) => changeFiltros(e)}
                                     value={filtros.tipo ? filtros.tipo : ""}
                                 >
-                                    {tipos}
+                                    <option key={0} value={""}>Indistinto</option>
+                                    <option key={1} value={"compra"}>Compra directa</option>
+                                    <option key={2} value={"venta"}>Venta directa</option>
+                                </Form.Control>
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Alerta stock:</Form.Label>
+                                <Form.Control
+                                    id="alerta_stock"
+                                    as="select"
+                                    onChange={(e) => changeFiltros(e)}
+                                    value={filtros.alerta_stock ? filtros.alerta_stock : ""}
+                                >
+                                    <option key={0} value={""}>Indistinto</option>
+                                    <option key={1} value={"con"}>Con alerta stock</option>
+                                    <option key={2} value={"sin"}>Sin alerta stock</option>
                                 </Form.Control>
                             </Form.Group>
                         </div>
