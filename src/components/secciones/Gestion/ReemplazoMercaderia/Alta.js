@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
 
 //Actions
-import { createReemplazo, saveCreateReemplazo } from "../../../../actions/ReemplazoMercaderiaActions"
+import { createReemplazo, saveCreateReemplazo, resetCreateReemplazo } from "../../../../actions/ReemplazoMercaderiaActions"
 import { fetchProductosIfNeeded } from "../../../../actions/ProductoActions"
 
 //Constants
@@ -27,6 +27,9 @@ function Alta(props) {
 
     useEffect(() => {
         props.fetchProductosIfNeeded()
+        return function limpiarAltaReemplazo() {
+            props.resetCreateReemplazo()
+        }
     }, [])
 
     /**
@@ -307,6 +310,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         saveCreateReemplazo: () => {
             dispatch(saveCreateReemplazo())
+        },
+        resetCreateReemplazo: () => {
+            dispatch(resetCreateReemplazo())
         }
     }
 };
