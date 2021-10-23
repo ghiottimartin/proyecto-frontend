@@ -209,7 +209,7 @@ function requestCategorias() {
 function receiveCategorias(json) {
     return {
         type: RECEIVE_CATEGORIAS,
-        categorias: normalizeDatos(json),
+        categorias: normalizeDatos(json.categorias),
         receivedAt: Date.now()
     }
 }
@@ -234,7 +234,7 @@ export function fetchCategorias() {
                 }
             })
             .then(function (data) {
-                dispatch(receiveCategorias(data));
+                dispatch(receiveCategorias(data.datos));
             })
             .catch(function (error) {
                 switch (error.status) {
