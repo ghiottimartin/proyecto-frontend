@@ -29,7 +29,7 @@ function Filtros(props) {
     const changeFiltros = (e) => {
         props.onChangeBusqueda(e)
     }
-    
+
     let maximo = moment().format("YYYY-MM-DD");
     return (
         <div className="filtros">
@@ -37,7 +37,7 @@ function Filtros(props) {
             <Form onSubmit={(e) => props.filtrar(e)}>
                 <div className="form-filtros">
                     <div className="contenedor-filtros">
-                        <div className="filter-by text-nowrap">                       
+                        <div className="filter-by text-nowrap">
                             <Form.Group>
                                 <Form.Label>Fecha desde:</Form.Label>
                                 <Form.Control
@@ -79,6 +79,19 @@ function Filtros(props) {
                                     value={filtros.usuario}
                                 ></Form.Control>
                             </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Estado:</Form.Label>
+                                <Form.Control
+                                    id="estado"
+                                    as="select"
+                                    onChange={(e) => changeFiltros(e)}
+                                    value={filtros.estado ? filtros.estado : ""}
+                                >
+                                    <option key={0} value="">Todos</option>
+                                    <option key={1} value="activo">Activos</option>
+                                    <option key={2} value="anulado">Anulados</option>
+                                </Form.Control>
+                            </Form.Group>
                         </div>
                     </div>
                 </div>
@@ -88,7 +101,7 @@ function Filtros(props) {
             </Form>
         </div>
     );
-    
+
 }
 
 function mapStateToProps(state) {
