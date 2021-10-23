@@ -14,7 +14,7 @@ import * as rutas from './constants/rutas.js';
 
 //Components
 import Almacen from "./components/secciones/Almacen";
-import AltaEdicionCategoria from "./components/secciones/Gestion/Productos/AltaEdicionCategoria";
+import AltaEdicionCategoria from "./components/secciones/Gestion/Productos/Categorias/AltaEdicion";
 import AltaEdicionProducto from "./components/secciones/Gestion/Productos/AltaEdicion";
 import CambiarPassword from "./components/secciones/Gestion/Usuarios/CambiarPassword";
 import Carrito from "./components/elementos/Carrito";
@@ -28,7 +28,7 @@ import Navegador from "./components/elementos/Navegador";
 import NotFound from "./components/secciones/NotFound";
 import Registro from "./components/secciones/Gestion/Usuarios/Alta";
 import ValidarEmail from "./components/secciones/Gestion/Usuarios/ValidarEmail";
-import ListadoCategorias from "./components/secciones/Gestion/Productos/ListadoCategorias.js";
+import ListadoCategorias from "./components/secciones/Gestion/Productos/Categorias/Listado";
 import PedidoListado from "./components/secciones/Pedidos/Listado";
 import PedidoVisualizar from "./components/secciones/Pedidos/Visualizar";
 import IngresoAlta from './components/secciones/Gestion/Ingreso/Alta';

@@ -3,24 +3,24 @@ import {withRouter} from 'react-router-dom'
 import {connect} from 'react-redux';
 
 //Actions  
-import {createCategoria, saveCreateCategoria, updateCategoria, saveUpdateCategoria, fetchCategoriaById, resetCreateCategoria} from '../../../../actions/CategoriaActions'
+import {createCategoria, saveCreateCategoria, updateCategoria, saveUpdateCategoria, fetchCategoriaById, resetCreateCategoria} from '../../../../../actions/CategoriaActions'
 
 
 //Constants
-import * as rutas from '../../../../constants/rutas.js';
+import * as rutas from '../../../../../constants/rutas.js';
 
 //Boostrap
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 
 //Components
-import Loader from "../../../elementos/Loader";
-import Titulo from "../../../elementos/Titulo";
+import Loader from "../../../../elementos/Loader";
+import Titulo from "../../../../elementos/Titulo";
 
 //CSS
-import '../../../../assets/css/Productos/Categoria.css';
+import '../../../../../assets/css/Productos/Categoria.css';
 
-class AltaEdicionCategoria extends React.Component {
+class AltaEdicion extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -156,4 +156,4 @@ const mapDispatchToProps = (dispatch) => {
         },
     }
 };
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AltaEdicionCategoria));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AltaEdicion));

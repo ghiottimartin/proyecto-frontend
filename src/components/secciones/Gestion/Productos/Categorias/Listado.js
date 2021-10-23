@@ -3,25 +3,25 @@ import {withRouter} from "react-router-dom";
 import {connect} from "react-redux";
 
 //Actions
-import {resetCategorias, fetchCategoriasIfNeeded, saveDeleteCategoria, updateCategoria} from "../../../../actions/CategoriaActions";
+import {resetCategorias, fetchCategoriasIfNeeded, saveDeleteCategoria, updateCategoria} from "../../../../../actions/CategoriaActions";
 
 //Constants
-import * as rutas from "../../../../constants/rutas";
+import * as rutas from "../../../../../constants/rutas";
 
 //Componentes
 import AddBoxIcon from "@material-ui/icons/AddBox"
 
-//Librerias
-import history from "../../../../history";
-
 //Imagenes
-import tacho from "../../../../assets/icon/delete.png";
-import lapiz from "../../../../assets/icon/pencil.png";
-import Swal from "sweetalert2";
-import Loader from "../../../elementos/Loader";
-import Titulo from "../../../elementos/Titulo";
+import tacho from "../../../../../assets/icon/delete.png";
+import lapiz from "../../../../../assets/icon/pencil.png";
+import Loader from "../../../../elementos/Loader";
+import Titulo from "../../../../elementos/Titulo";
 
-class ListadoCategorias extends React.Component {
+//Librerias
+import history from "../../../../../history";
+import Swal from "sweetalert2";
+
+class Listado extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -176,4 +176,4 @@ const mapDispatchToProps = (dispatch) => {
         }
     }
 };
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(ListadoCategorias));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Listado));
