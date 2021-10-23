@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 
 //Actions
 import { fetchProductosIfNeeded } from "../../../../actions/ProductoActions"
-import { createIngreso, saveCreateIngreso } from "../../../../actions/IngresoActions"
+import { createIngreso, saveCreateIngreso, resetCreateIngreso } from "../../../../actions/IngresoActions"
 
 //CSS
 import "../../../../assets/css/Gestion/Ingreso.css"
@@ -29,6 +29,9 @@ function Alta(props) {
 
     useEffect(() => {
         props.fetchProductosIfNeeded()
+        return function limpiarAlta() {
+            props.resetCreateIngreso()
+        }
     }, [])
 
     /**
@@ -331,6 +334,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         saveCreateIngreso: () => {
             dispatch(saveCreateIngreso())
+        },
+        resetCreateIngreso: () => {
+            dispatch(resetCreateIngreso())
         }
     }
 }
