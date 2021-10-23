@@ -38,6 +38,12 @@ class Gestion extends React.Component {
         }
     }
 
+    /**
+     * Devuelve una imagen según la ruta.
+     * 
+     * @param {String} ruta 
+     * @returns 
+     */
     getImagenPorRuta(ruta) {
         switch (ruta) {
             case rutas.INGRESO_MERCADERIA:
@@ -48,10 +54,18 @@ class Gestion extends React.Component {
             case rutas.REEMPLAZO_MERCADERIA_LISTAR:
                 return imgProductos;
             case rutas.PEDIDOS_VENDEDOR:
+            case rutas.VENTA_ALMACEN_LISTADO:
                 return imgPedidos;
+            
         }
     }
 
+    /**
+     * Devuelve una TarjetaMenu para crear una operación.
+     * 
+     * @param {Object} operacion 
+     * @returns TarjetaMenu
+     */
     getOperacion(operacion) {
         let roles      = operacion.roles;
         let usuario    = this.props.usuarios.update.logueado;
@@ -93,6 +107,11 @@ class Gestion extends React.Component {
         );
     }
 
+    /**
+     * Devuelve las operaciones de gestión.
+     * 
+     * @returns Array
+     */
     getOperaciones() {
         const logueado    = this.props.usuarios.update.logueado;
         const convertir   = logueado && logueado.id ? logueado.operaciones : [];
