@@ -79,6 +79,19 @@ function Filtros(props) {
                                     value={filtros.usuario}
                                 ></Form.Control>
                             </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Estado:</Form.Label>
+                                <Form.Control
+                                    id="estado"
+                                    as="select"
+                                    onChange={(e) => changeFiltros(e)}
+                                    value={filtros.estado ? filtros.estado : ""}
+                                >
+                                    <option key={0} value="">Todos</option>
+                                    <option key={1} value="activo">Activos</option>
+                                    <option key={2} value="anulado">Anulados</option>
+                                </Form.Control>
+                            </Form.Group>
                         </div>
                     </div>
                 </div>
