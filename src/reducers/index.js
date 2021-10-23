@@ -7,6 +7,7 @@ import pedidos from './pedidos';
 import ingresos from './ingresos';
 import movimientos from './movimientos';
 import reemplazos from './reemplazos';
+import ventas from './ventas';
 
 const appReducers = combineReducers({
     authentication,
@@ -16,7 +17,8 @@ const appReducers = combineReducers({
     pedidos,
     ingresos,
     movimientos,
-    reemplazos
+    reemplazos,
+    ventas
 });
 
 export default appReducers;

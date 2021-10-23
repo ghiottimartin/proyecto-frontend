@@ -72,6 +72,10 @@ export const REEMPLAZO_MERCADERIA_LISTAR        = '/reemplazo-mercaderia/';
 export const REEMPLAZO_MERCADERIA_VISUALIZAR    = '/reemplazo-mercaderia/visualizar/';
 export const REEMPLAZO_MERCADERIA_VISUALIZAR_ID = '/reemplazo-mercaderia/visualizar/:id';
 
+//Venta en Almacén
+export const VENTA_ALMACEN_ALTA    = '/venta-almacen/alta';
+export const VENTA_ALMACEN_LISTADO = '/venta-almacen/listado';
+
 /**
  * Devuelve la url de usuarios
  *
@@ -130,7 +134,9 @@ const RUTAS = [
     MOVIMIENTOS_STOCK,
     REEMPLAZO_MERCADERIA_ALTA,
     REEMPLAZO_MERCADERIA_LISTAR,
-    REEMPLAZO_MERCADERIA_VISUALIZAR
+    REEMPLAZO_MERCADERIA_VISUALIZAR,
+    VENTA_ALMACEN_ALTA,
+    VENTA_ALMACEN_LISTADO,
 ];
 
 /**
