@@ -1,0 +1,21 @@
+.titulo-generico {
+  font-size: 15px;
+}
+
+.titulo-generico img {
+  width: 15px !important;
+}
+
+/* Extra small devices (phones, less than 768px) */
+/* No media query since this is the default in Bootstrap */
+
+/* Small devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .titulo-generico {
+    font-size: 25px;
+  }
+
+  .titulo-generico img {
+    width: 20px !important;
+  }
+}

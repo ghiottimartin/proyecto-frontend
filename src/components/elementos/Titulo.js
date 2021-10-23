@@ -1,8 +1,11 @@
-//History
-import history from "../../history";
-
 //Constantes
 import * as rutas from "../../constants/rutas";
+
+//CSS
+import "../../assets/css/Elementos/Titulo.css";
+
+//History
+import history from "../../history";
 
 //Images
 import imgVolver from "../../assets/img/arrow.png";
@@ -49,7 +52,7 @@ export default function Titulo(props) {
     })
     let claseBorder = props.border ? " tabla-listado-titulo-border" : "";
     return (
-        <h4 className={clase + claseBorder} >
+        <h4 className={`titulo-generico ${clase} ${claseBorder}`} >
             {flecha}
             {props.titulo}
             {botones}
