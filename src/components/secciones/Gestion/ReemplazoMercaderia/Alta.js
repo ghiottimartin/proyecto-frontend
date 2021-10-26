@@ -281,8 +281,8 @@ function Alta(props) {
                         </tbody>
                     </table>
                     <button className="btn btn-success float-right boton-guardar" onClick={() => guardarReemplazo()}>
-                        <div style={{ display: isCreating ? "inline-block" : "none" }} class="spinner spinner-border text-light" role="status">
-                            <span class="sr-only"></span>
+                        <div style={{ display: isCreating ? "inline-block" : "none" }} className="spinner spinner-border text-light" role="status">
+                            <span className="sr-only"></span>
                         </div>
                         <span className="ml-1">Guardar</span>
                     </button>
