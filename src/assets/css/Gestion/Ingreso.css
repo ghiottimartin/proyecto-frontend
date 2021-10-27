@@ -8,27 +8,6 @@
   padding: 20px 20px 50px 20px;
 }
 
-.ingreso-mercaderia .ingreso-mercaderia-articulos ul {
-  list-style: none;
-  padding: 0;
-  max-height: 500px;
-  overflow: auto;
-}
-
-.ingreso-mercaderia .ingreso-mercaderia-articulos ul li {
-  margin: 10px 0;
-  padding: 10px 5px;
-  border: 1px solid rgb(128 128 128 / 30%);
-  border-radius: 6px;
-}
-
-.ingreso-mercaderia .ingreso-mercaderia-articulos ul li:hover {
-  color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
-  cursor: pointer;
-}
-
 .ingreso-mercaderia table {
   table-layout: fixed;
 }

@@ -280,7 +280,7 @@ function Alta(props) {
             <Titulo ruta={rutas.INGRESO_MERCADERIA} titulo={titulo} />
             <div className="row ingreso-mercaderia-contenedor">
                 <div className="col-lg-4">
-                    <div className="ingreso-mercaderia-articulos">
+                    <div className="lista-seleccionable">
                         <h5>Productos</h5>
                         <ul>{buscando ? <Loader display={true} /> : Opciones}</ul>
                         {Opciones.length === 0 && !buscando ? <p>{placeholder}</p> : <></>}
@@ -306,8 +306,8 @@ function Alta(props) {
                         </tfoot>
                     </table>
                     <button className="btn btn-success float-right boton-guardar" onClick={() => guardarIngreso()}>
-                        <div style={{ display: isCreating ? "inline-block" : "none" }} class="spinner spinner-border text-light" role="status">
-                            <span class="sr-only"></span>
+                        <div style={{ display: isCreating ? "inline-block" : "none" }} className="spinner spinner-border text-light" role="status">
+                            <span className="sr-only"></span>
                         </div>
                         <span className="ml-1">Guardar</span>
                     </button>

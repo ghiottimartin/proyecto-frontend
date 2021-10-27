@@ -55,3 +55,24 @@
 .fila-operaciones .btn:hover {
   background-color: rgba(128, 128, 128, 0.13) !important;
 }
+
+.lista-seleccionable ul {
+  list-style: none;
+  padding: 0;
+  max-height: 500px;
+  overflow: auto;
+}
+
+.lista-seleccionable ul li {
+  margin: 10px 0;
+  padding: 10px 5px;
+  border: 1px solid rgb(128 128 128 / 30%);
+  border-radius: 6px;
+}
+
+.lista-seleccionable ul li:hover {
+  color: #fff;
+  background-color: #007bff;
+  border-color: #007bff;
+  cursor: pointer;
+}
