@@ -145,7 +145,7 @@ function ventasAllIds(state = [], action) {
 
 function create(state = {
     isCreating: false,
-    nuevo: {
+    nueva: {
         lineas: [],
     },
     success: "",
@@ -158,7 +158,7 @@ function create(state = {
             return Object.assign({}, state, {
                 isCreating: false,
                 success: "",
-                nuevo: merge({}, state.nuevo, action.venta),
+                nueva: merge({}, state.nueva, action.venta),
                 error: null,
             });
         case RESET_CREATE_VENTA:
@@ -166,7 +166,7 @@ function create(state = {
                 isCreating: false,
                 success: "",
                 error: null,
-                nuevo:  {
+                nueva:  {
                     lineas: [],
                 },
             });
@@ -195,7 +195,7 @@ function create(state = {
                 isCreating: false,
                 success: "",
                 error: "",
-                nuevo: {}
+                nueva: {}
             });
         default:
             return state

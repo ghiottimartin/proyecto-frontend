@@ -60,7 +60,7 @@ export function createVenta(venta) {
 export function saveCreateVenta() {
     return (dispatch, getState) => {
         dispatch(requestCreateVenta());
-        return ventas.saveCreate(getState().ventas.create.nuevo)
+        return ventas.saveCreate(getState().ventas.create.nueva)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);

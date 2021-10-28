@@ -38,6 +38,8 @@ import MovimientosStock from './components/secciones/Gestion/MovimientosStock/Li
 import AltaReemplazoMercaderia from './components/secciones/Gestion/ReemplazoMercaderia/Alta';
 import ListadoReemplazoMercaderia from './components/secciones/Gestion/ReemplazoMercaderia/Listado';
 import ReemplazoVisualizar from './components/secciones/Gestion/ReemplazoMercaderia/Visualizar';
+import AltaVentaAlmacen from './components/secciones/Gestion/VentaAlmacen/Alta';
+import ListadoVentaAlmacen from './components/secciones/Gestion/VentaAlmacen/Listado';
 
 //CSS
 import "./App.css";
@@ -275,6 +277,8 @@ class App extends React.Component {
                         <Route exact path={rutas.REEMPLAZO_MERCADERIA_LISTAR} component={ListadoReemplazoMercaderia} />
                         <Route exact path={rutas.REEMPLAZO_MERCADERIA_ALTA} component={AltaReemplazoMercaderia} />
                         <Route exact path={rutas.REEMPLAZO_MERCADERIA_VISUALIZAR_ID} component={ReemplazoVisualizar} />
+                        <Route exact path={rutas.VENTA_ALMACEN_LISTADO} component={ListadoVentaAlmacen} />
+                        <Route exact path={rutas.VENTA_ALMACEN_ALTA} component={AltaVentaAlmacen} />
                         <Route exact path="*" component={NotFound} />
                     </Switch>
                 </div>

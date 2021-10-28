@@ -32,7 +32,10 @@ function Producto(props) {
                 </div>
                 <div className="producto-derecha-carrito d-flex flex-column">
                     <p className="producto-derecha-precio font-weight-bold text-right pr-2 m-0 text-nowrap font-weight-bold">
-                        {formatearMoneda(props.subtotal)}
+                        <b>P:</b> {formatearMoneda(producto.precio_vigente)}
+                    </p>
+                    <p className="producto-derecha-precio font-weight-bold text-right pr-2 m-0 text-nowrap font-weight-bold">
+                        <b>ST:</b> {formatearMoneda(props.subtotal)}
                     </p>
                     <div className="producto-derecha-carrito-cantidad-gestion">
                         <button

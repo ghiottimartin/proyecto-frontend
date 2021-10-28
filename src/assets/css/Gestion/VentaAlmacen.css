@@ -1,0 +1,139 @@
+.venta-almacen {
+  height: calc(100vh - 100px) !important;
+  margin: 0 20px !important;
+  overflow: auto;
+}
+
+.venta-alta-escritorio {
+  display: none;
+}
+
+.venta-almacen thead {
+  background: #879799;
+  color: #fff;
+}
+
+.venta-almacen table thead tr th:first-child {
+  border-top-left-radius: 6px;
+}
+
+.venta-almacen table thead tr th:last-child {
+  border-top-right-radius: 6px;
+}
+
+.venta-almacen table tr {
+  border: 1px solid #efefef;
+  border-right: 0;
+  border-left: 0;
+  vertical-align: middle;
+}
+
+.venta-almacen table tfoot {
+  font-weight: bold;
+}
+
+.venta-almacen table th,
+.venta-almacen tr {
+  font-size: 13px;
+  padding: 5px;
+}
+
+.venta-almacen input {
+  width: 200px;
+}
+
+.venta-almacen .boton-modal svg {
+  width: 0.8em;
+  margin-right: 2px;
+}
+
+.venta-almacen .boton-modal {
+  border: none;
+  font-weight: bold;
+}
+
+.venta-almacen .boton-modal-responsive {
+  border-radius: 6px;
+  border: 1px solid grey;
+}
+
+.venta-almacen .venta-productos {
+  display: grid;
+  justify-items: center;
+  grid-template-columns: 100%;
+}
+
+.venta-almacen .venta-productos .producto {
+  margin: 10px 0;
+  width: 300px !important;
+  position: relative;
+}
+
+.venta-almacen .venta-productos .boton-icono-quitar-responsive {
+  background: #fa5858;
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 18px;
+  height: 18px;
+}
+
+.venta-almacen .venta-productos svg {
+  width: 6px;
+  padding-bottom: 5px;
+}
+
+.venta-almacen .venta-footer {
+  display: grid;
+  column-gap: 15px;
+  grid-template-columns: 45% 50%;
+}
+
+.venta-almacen .venta-footer .venta-footer-total {
+  text-align: right;
+}
+
+/* 
+X-Small devices (portrait phones, less than 576px)
+No media query for `xs` since this is the default in Bootstrap
+*/
+
+/* 
+Small devices (landscape phones, 576px and up)
+*/
+@media (min-width: 720px) {
+  .venta-almacen .venta-productos {
+    grid-template-columns: 50% 50%;
+  }
+  
+}
+
+/* 
+Medium devices (tablets, 768px and up)
+*/
+@media (min-width: 768px) {
+}
+
+/* 
+Large devices (desktops, 992px and up)
+*/
+@media (min-width: 992px) {
+  .venta-alta-escritorio {
+    display: block;
+  }
+  .venta-alta-responsive {
+    display: none;
+  }
+}
+
+/*
+X-Large devices (large desktops, 1200px and up)
+*/
+@media (min-width: 1200px) {
+}
+
+/*
+XX-Large devices (larger desktops, 1400px and up)
+*/
+@media (min-width: 1400px) {
+}
