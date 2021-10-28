@@ -299,7 +299,7 @@ function Alta(props) {
                             </tr>
                         </thead>
                         <tbody>
-                            {Filas.length === 0 ? <tr className="text-center"><td colspan={5}>Agregue productos a ingresar</td></tr> : Filas}
+                            {Filas.length === 0 ? <tr className="text-center"><td colSpan={5}>Agregue productos a ingresar</td></tr> : Filas}
                         </tbody>
                         <tfoot>
                             {Filas.length === 0 ? '' : Total}
