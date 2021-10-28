@@ -7,6 +7,9 @@ import "../../../assets/css/Producto.css";
 //Images
 import productoVacio from "../../../assets/img/emptyImg.jpg";
 
+//Utils
+import { formatearMoneda } from "../../../utils/formateador"
+
 function Producto(props) {
     const cantidad = parseInt(props.cantidad)
     const producto = props.producto
@@ -27,24 +30,24 @@ function Producto(props) {
                     <h2>{producto.nombre}</h2>
                     <h3>{producto.descripcion}</h3>
                 </div>
-                <div className="producto-derecha-carrito">
+                <div className="producto-derecha-carrito d-flex flex-column">
+                    <p className="producto-derecha-precio font-weight-bold text-right pr-2 m-0 text-nowrap font-weight-bold">
+                        {formatearMoneda(props.subtotal)}
+                    </p>
                     <div className="producto-derecha-carrito-cantidad-gestion">
                         <button
                             className="mr-2"
-                            style={{display: cantidad > 1 ? "inline-block" : "none"}}
+                            style={{ display: cantidad > 1 ? "inline-block" : "none" }}
                             onClick={() => props.agregarCantidad(producto, -1)}>
                             -
                         </button>
-                        <span style={{marginLeft: cantidad > 1 ? "" : "28px"}}>{cantidad}</span>
+                        <span style={{ marginLeft: cantidad > 1 ? "" : "28px" }}>{cantidad}</span>
                         <button
                             className="ml-2"
                             onClick={() => props.agregarCantidad(producto, 1)}>
                             +
                         </button>
                     </div>
-                    <p className="producto-derecha-precio font-weight-bold text-right pr-2 m-0 text-nowrap">
-                        $ {props.subtotal}
-                    </p>
                 </div>
             </div>
             <button className="boton-icono-quitar boton-icono-quitar-responsive" data-id={producto.id} onClick={(e) => props.quitarProducto(e)}>
