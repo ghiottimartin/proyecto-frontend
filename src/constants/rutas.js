@@ -73,8 +73,10 @@ export const REEMPLAZO_MERCADERIA_VISUALIZAR    = '/reemplazo-mercaderia/visuali
 export const REEMPLAZO_MERCADERIA_VISUALIZAR_ID = '/reemplazo-mercaderia/visualizar/:id';
 
 //Venta en Almacén
-export const VENTA_ALMACEN_ALTA    = '/venta-almacen/alta';
-export const VENTA_ALMACEN_LISTADO = '/venta-almacen/listado';
+export const VENTA_ALMACEN_ALTA          = '/venta-almacen/alta';
+export const VENTA_ALMACEN_LISTADO       = '/venta-almacen/listado';
+export const VENTA_ALMACEN_VISUALIZAR    = '/venta-almacen/visualizar/';
+export const VENTA_ALMACEN_VISUALIZAR_ID = '/venta-almacen/visualizar/:id';
 
 /**
  * Devuelve la url de usuarios
