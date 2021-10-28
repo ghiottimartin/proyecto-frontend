@@ -22,7 +22,7 @@ function SeleccionProductos(props) {
         let Opciones = []
         if (Array.isArray(elegir)) {
             elegir.map(producto => {
-                if (producto && !isNaN(producto.id)) {
+                if (producto && !isNaN(producto.id) && producto.stock > 0) {
                     const title = "Agregar " + producto.nombre
                     Opciones.push(<li key={producto.id} data-id={producto.id} title={title} onClick={(e) => props.addProducto(e)}>{producto.nombre}</li>)
                 }

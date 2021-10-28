@@ -337,7 +337,11 @@ function Alta(props) {
             const producto = linea.producto
             const nombre = producto.nombre
             if (isNaN(cantidad) || parseFloat(cantidad) <= 0.00) {
-                errores.push("La cantidad de producto " + nombre + " debe ser mayor a cero.\n")
+                errores.push("La cantidad de producto '" + nombre + "' debe ser mayor a cero.\n")
+            }
+            const stock = producto.stock
+            if (cantidad > stock) {
+                errores.push("No hay suficiente stock para el producto '" + nombre + "', quedan " + stock + "\n")
             }
         })
 

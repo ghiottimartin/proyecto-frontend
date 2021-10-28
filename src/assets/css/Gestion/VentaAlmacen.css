@@ -30,6 +30,10 @@
   vertical-align: middle;
 }
 
+.venta-almacen td {
+  vertical-align: middle;
+}
+
 .venta-almacen table thead tr th:first-child {
   border-top-left-radius: 6px;
 }
