@@ -224,6 +224,11 @@ function Listado(props) {
                     <AddBoxIcon style={{ color: '#5cb860' }} />
                 </a>
             </div>
+            <Filtros
+                {...props}
+                filtrar={(e) => filtrarVentas(e)}
+                onChangeBusqueda={(e) => onChangeBusqueda(e)}
+            />
             <table className="table tabla-listado">
                 <thead>
                     <tr>
