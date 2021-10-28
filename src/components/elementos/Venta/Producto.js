@@ -1,0 +1,57 @@
+//Constants
+import c from "../../../constants/constants";
+
+//CSS
+import "../../../assets/css/Producto.css";
+
+//Images
+import productoVacio from "../../../assets/img/emptyImg.jpg";
+
+function Producto(props) {
+    const cantidad = parseInt(props.cantidad)
+    const producto = props.producto
+    let path = productoVacio;
+    if (producto.imagen) {
+        try {
+            path = c.BASE_PUBLIC + producto.imagen;
+        } catch (e) {
+        }
+    }
+    return (
+        <article key={producto.id} className="producto no-cerrar-carrito">
+            <div className="producto-izquierda">
+                <img src={path} onError={(e) => e.target.src = productoVacio} alt="Imagen de producto" />
+            </div>
+            <div className="producto-derecha">
+                <div className="producto-derecha-titulos">
+                    <h2>{producto.nombre}</h2>
+                    <h3>{producto.descripcion}</h3>
+                </div>
+                <div className="producto-derecha-carrito">
+                    <div className="producto-derecha-carrito-cantidad-gestion">
+                        <button
+                            className="mr-2"
+                            style={{display: cantidad > 1 ? "inline-block" : "none"}}
+                            onClick={() => props.agregarCantidad(producto, -1)}>
+                            -
+                        </button>
+                        <span style={{marginLeft: cantidad > 1 ? "" : "28px"}}>{cantidad}</span>
+                        <button
+                            className="ml-2"
+                            onClick={() => props.agregarCantidad(producto, 1)}>
+                            +
+                        </button>
+                    </div>
+                    <p className="producto-derecha-precio font-weight-bold text-right pr-2 m-0 text-nowrap">
+                        $ {props.subtotal}
+                    </p>
+                </div>
+            </div>
+            <button className="boton-icono-quitar boton-icono-quitar-responsive" data-id={producto.id} onClick={(e) => props.quitarProducto(e)}>
+                <i data-id={producto.id} className="fa fa-times"></i>
+            </button>
+        </article>
+    )
+}
+
+export default Producto;
