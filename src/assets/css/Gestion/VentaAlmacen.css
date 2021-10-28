@@ -1,16 +1,33 @@
-.venta-almacen {
+.venta-almacen, .venta-listado {
   height: calc(100vh - 100px) !important;
   margin: 0 20px !important;
   overflow: auto;
+}
+
+.venta-almacen-contenedor {
+  padding: 20px 20px 50px 20px;
 }
 
 .venta-alta-escritorio {
   display: none;
 }
 
-.venta-almacen thead {
-  background: #879799;
-  color: #fff;
+.venta-almacen table {
+  table-layout: fixed;
+}
+
+.venta-almacen .tabla-columna-quitar {
+  width: 45px;
+}
+
+.venta-almacen table thead th {
+  padding: 0.75rem;
+  background-color: transparent;
+  border-top: 0;
+  border: 1px solid #efefef;
+  border-right: 0;
+  border-left: 0;
+  vertical-align: middle;
 }
 
 .venta-almacen table thead tr th:first-child {
@@ -30,12 +47,6 @@
 
 .venta-almacen table tfoot {
   font-weight: bold;
-}
-
-.venta-almacen table th,
-.venta-almacen tr {
-  font-size: 13px;
-  padding: 5px;
 }
 
 .venta-almacen input {
