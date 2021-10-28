@@ -253,7 +253,7 @@ function Alta(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {FilasHTML.length === 0 ? <tr className="text-center"><td colSpan={4}>Agregue productos a vender</td></tr> : FilasHTML}
+                    {FilasHTML.length === 0 ? <tr className="text-center"><td colSpan={5}>Agregue productos a vender</td></tr> : FilasHTML}
                     <tr>
                         <td colSpan={5} className="text-right text-success font-weight-bold">
                             <div onClick={() => abrirModalProductos()} className="d-flex justify-content-end align-items-center">
