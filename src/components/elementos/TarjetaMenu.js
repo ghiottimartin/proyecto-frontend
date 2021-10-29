@@ -27,12 +27,9 @@ class TarjetaMenu extends React.Component {
     }
 
     getColorTextoRol(rol) {
-        switch (rol) {
-            case roles.ROL_ADMIN:
-                return "white";
-            
+        switch (rol) {            
             default:
-                return "black";
+                return "white";
         }
     }
 
