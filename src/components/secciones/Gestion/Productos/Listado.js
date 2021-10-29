@@ -27,7 +27,6 @@ import tacho from "../../../../assets/icon/delete.png";
 import lapiz from "../../../../assets/icon/pencil.png";
 import check from "../../../../assets/icon/checked.png";
 import cruz from "../../../../assets/icon/close.png";
-import movimiento from "../../../../assets/icon/movimiento.png";
 import alerta from "../../../../assets/icon/alert.png";
 
 //Librerias
@@ -78,7 +77,7 @@ class Listado extends React.Component {
      * 
      * @param {Object} producto 
      */
-    clickEditar(producto) {
+    editarProducto(producto) {
         let id = producto.id;
         let rutaEditar = rutas.getUrl(rutas.PRODUCTOS, id, rutas.ACCION_EDITAR, rutas.TIPO_ADMIN, rutas.PRODUCTOS_LISTAR_ADMIN);
         this.props.updateProducto(producto);
@@ -103,29 +102,43 @@ class Listado extends React.Component {
      * @returns 
      */
     getOperacionesProducto(producto) {
-        const titleStock = "Ver movimientos de stock del Producto " + producto.id_texto
-        const titleBorrar = "Borrar Producto " + producto.id_texto
-        const titleEditar = "Editar Producto " + producto.id_texto
+        let operaciones = [];
+        producto.operaciones.forEach(operacion => {
+            let accion = operacion.accion;
+            operaciones.push(
+                <div key={operacion.key} title={operacion.title} onClick={() => this.ejecutarOperacion(producto, accion)} className={operacion.clase + " operacion"} >
+                    <i className={operacion.icono} aria-hidden="true"></i> {operacion.texto}
+                </div>
+            );
+        })
         return (
-            <div className="d-flex flex-wrap">
-                <p onClick={() => this.redirigirMovimientos(producto)} title={titleStock}
-                    className="operacion" style={{ display: producto.tiene_movimientos ? "inline" : "none" }}>
-                    <img src={movimiento} className="icono-operacion" alt={titleStock} />
-                    Stock
-                </p>
-                <p onClick={() => this.clickEditar(producto)} title={titleEditar}
-                    className="operacion">
-                    <img src={lapiz} className="icono-operacion" alt={titleEditar} />
-                    Editar
-                </p>
-                <p onClick={() => this.modalBorrar(producto)} title="Borrar" style={{ display: producto.puede_borrarse ? "inline" : "none" }}
-                    title={titleBorrar}
-                    className="operacion">
-                    <img src={tacho} className="icono-operacion" alt={titleBorrar} />
-                    Borrar
-                </p>
+            <div className="fila-operaciones">
+                {operaciones}
             </div>
-        );
+        )
+    }
+
+    /**
+     * Ejecuta la operación del listado de productos según el caso.
+     * 
+     * @param {Object} producto 
+     * @param {String} accion 
+     */
+     ejecutarOperacion(producto, accion) {
+        switch (accion) {
+            case 'editar':
+                this.editarProducto(producto);
+                break;
+            
+            case 'borrar':
+                this.borrarProducto(producto);
+                break;
+            
+            case 'stock':
+                this.redirigirMovimientos(producto)
+                break;
+            
+        }
     }
 
     /**
@@ -133,7 +146,7 @@ class Listado extends React.Component {
      * 
      * @param {Object} producto 
      */
-    modalBorrar(producto) {
+    borrarProducto(producto) {
         Swal.fire({
             title: `¿Está seguro de borrar el producto '${producto.nombre}?'`,
             icon: 'warning',

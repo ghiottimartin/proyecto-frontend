@@ -18,9 +18,6 @@ import Filtros from "./Filtros"
 import Paginacion from "../../../elementos/Paginacion"
 import AddBoxIcon from "@material-ui/icons/AddBox"
 
-//Images
-import movimiento from "../../../../assets/icon/movimiento.png";
-
 //Librerías
 import Swal from 'sweetalert2';
 import history from "../../../../history";
@@ -68,17 +65,6 @@ function IngresoListado(props) {
      */
     const getOperacionesIngreso = (ingreso) => {
         let operaciones = [];
-        operaciones.push(
-            <p
-                onClick={() => redirigirMovimientos(ingreso)}
-                title={`Ver movimientos de stock del Ingreso ` + ingreso.id_texto}
-                className="operacion"
-                style={{display: ingreso.tiene_movimientos ? "block" : "none"}}
-            >
-                <img src={movimiento} className="icono-operacion" alt="Stock producto" />
-                Stock
-            </p>
-        )
         ingreso.operaciones.forEach(operacion => {
             let accion = operacion.accion;            
             operaciones.push(
@@ -160,6 +146,10 @@ function IngresoListado(props) {
             
             case 'anular':
                 anularIngreso(ingreso);
+                break;
+            
+            case 'stock':
+                redirigirMovimientos(ingreso)
                 break;
             
         }
