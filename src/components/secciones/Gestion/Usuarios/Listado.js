@@ -177,39 +177,49 @@ class Listado extends React.Component {
     }
 
     getOperacionesUsuario(usuario) {
-        let id = usuario.id;
-        let logueado = this.props.usuarios.update.logueado;
-        let rutaEditar = rutas.getUrl(rutas.USUARIOS, id, rutas.ACCION_EDITAR, rutas.TIPO_ADMIN, rutas.USUARIOS_LISTAR);
-        let borrar =
-            <div style={{ display: usuario.puede_borrarse ? "block" : "none" }} onClick={() => this.modalBorrar(usuario)} title="Borrar"
-                className="operacion">
-                <img src={tacho} className="icono-operacion" alt="Borrar usuario" />
-                Borrar
-            </div>;
-        let deshabilitar =
-            <a onClick={() => this.modalDeshabilitar(usuario)} title="Deshabilitar"
-                className="operacion">
-                <img src={cruz} className="icono-operacion" alt="Deshabilitar usuario" />
-                Deshabilitar
-            </a>;
-        let habilitar =
-            <a onClick={() => this.modalHabilitar(usuario)} title="Habilitar"
-                className="operacion">
-                <img src={habilitarImg} className="icono-operacion" alt="Habilitar usuario" />
-                Habilitar
-            </a>;
+        let operaciones = [];
+        usuario.operaciones.forEach(operacion => {
+            let accion = operacion.accion;
+            operaciones.push(
+                <div key={operacion.key} title={operacion.title} onClick={() => this.ejecutarOperacion(usuario, accion)} className={operacion.clase + " operacion"} >
+                    <i className={operacion.icono} aria-hidden="true"></i> {operacion.texto}
+                </div>
+            );
+        })
         return (
-            <div className="d-flex">
-                <a onClick={() => history.push(rutaEditar)} title="Editar"
-                    className="operacion">
-                    <img src={lapiz} className="icono-operacion" alt="Editar usuario" />
-                    Editar
-                </a>
-                {id !== logueado.id ? borrar : ""}
-                {usuario.puede_deshabilitarse ? deshabilitar : ""}
-                {usuario.puede_habilitarse ? habilitar : ""}
+            <div className="fila-operaciones">
+                {operaciones}
             </div>
-        );
+        )
+    }
+
+    /**
+     * Ejecuta la operación del listado del usuarios según el caso.
+     * 
+     * @param {Object} usuario 
+     * @param {String} accion 
+     */
+    ejecutarOperacion(usuario, accion) {
+        switch (accion) {
+            case 'deshabilitar':
+                this.modalDeshabilitar(usuario);
+                break;
+
+            case 'habilitar':
+                this.modalHabilitar(usuario);
+                break;
+
+            case 'borrar':
+                this.modalBorrar(usuario);
+                break;
+
+            case 'editar':
+                let id = usuario.id;
+                let rutaEditar = rutas.getUrl(rutas.USUARIOS, id, rutas.ACCION_EDITAR, rutas.TIPO_ADMIN, rutas.USUARIOS_LISTAR);
+                history.push(rutaEditar);
+                break;
+        }
+
     }
 
     redirigirListado() {

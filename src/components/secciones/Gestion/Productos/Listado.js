@@ -23,8 +23,6 @@ import Ordenador from "../../../elementos/Tabla/Ordenador";
 
 //Images
 import productoVacio from "../../../../assets/img/emptyImg.jpg";
-import tacho from "../../../../assets/icon/delete.png";
-import lapiz from "../../../../assets/icon/pencil.png";
 import check from "../../../../assets/icon/checked.png";
 import cruz from "../../../../assets/icon/close.png";
 import alerta from "../../../../assets/icon/alert.png";

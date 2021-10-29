@@ -12,8 +12,6 @@ import * as rutas from "../../../../../constants/rutas";
 import AddBoxIcon from "@material-ui/icons/AddBox"
 
 //Imagenes
-import tacho from "../../../../../assets/icon/delete.png";
-import lapiz from "../../../../../assets/icon/pencil.png";
 import Loader from "../../../../elementos/Loader";
 import Titulo from "../../../../elementos/Titulo";
 
@@ -53,7 +51,7 @@ class Listado extends React.Component {
         }
     }
 
-    clickEditar(categoria) {
+    editarCategoria(categoria) {
         let id         = categoria.id;
         let rutaEditar = rutas.getUrl(rutas.CATEGORIAS, id, rutas.ACCION_EDITAR, '', rutas.CATEGORIAS_LISTAR);
         this.props.updateCategoria(categoria);
@@ -61,25 +59,42 @@ class Listado extends React.Component {
     }
 
     getOperacionesCategoria(categoria) {
-        const titleEditar = "Editar Categoría " + categoria.id_texto
-        const titleBorrar = "Borrar Categoría " + categoria.id_texto
+        let operaciones = [];
+        categoria.operaciones.forEach(operacion => {
+            let accion = operacion.accion;
+            operaciones.push(
+                <div key={operacion.key} title={operacion.title} onClick={() => this.ejecutarOperacion(categoria, accion)} className={operacion.clase + " operacion"} >
+                    <i className={operacion.icono} aria-hidden="true"></i> {operacion.texto}
+                </div>
+            );
+        })
         return (
-            <div>
-                <a href="#" onClick={() => this.clickEditar(categoria)} title={titleEditar}
-                   className="operacion">
-                    <img src={lapiz} className="icono-operacion" alt={`Imagen ${titleEditar}`}/>
-                    Editar
-                </a>
-                <a href="#" style={{display: categoria.puede_borrarse ? "inline" : "none"}} onClick={() => this.modalBorrar(categoria)} title={titleBorrar}
-                   className="operacion">
-                    <img src={tacho} className="icono-operacion" alt={`Imagen ${titleBorrar}`}/>
-                    Borrar
-                </a>
+            <div className="fila-operaciones">
+                {operaciones}
             </div>
-        );
+        )
     }
 
-    modalBorrar(categoria) {
+    /**
+     * Ejecuta la operación del listado de productos según el caso.
+     * 
+     * @param {Object} producto 
+     * @param {String} accion 
+     */
+     ejecutarOperacion(producto, accion) {
+        switch (accion) {
+            case 'editar':
+                this.editarCategoria(producto);
+                break;
+            
+            case 'borrar':
+                this.borrarCategoria(producto);
+                break;
+            
+        }
+    }
+
+    borrarCategoria(categoria) {
         Swal.fire({
             title: `¿Está seguro de borrar la categoria '${categoria.nombre}'?`,
             icon: 'warning',
