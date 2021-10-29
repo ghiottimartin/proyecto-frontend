@@ -67,7 +67,7 @@ class Gestion extends React.Component {
      * @returns TarjetaMenu
      */
     getOperacion(operacion) {
-        let roles      = operacion.roles;
+        let roles      = operacion.roles ? operacion.roles : [];
         let usuario    = this.props.usuarios.update.logueado;
         let rolesArray = usuario && usuario.rolesArray ? usuario.rolesArray : [];
         let autorizado = false;

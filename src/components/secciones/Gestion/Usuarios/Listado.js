@@ -199,7 +199,7 @@ class Listado extends React.Component {
      */
     getOperacionesUsuario(usuario) {
         let operaciones = [];
-        usuario.operaciones.forEach(operacion => {
+        usuario.operaciones_listado.forEach(operacion => {
             let accion = operacion.accion;
             operaciones.push(
                 <div key={operacion.key} title={operacion.title} onClick={() => this.ejecutarOperacion(usuario, accion)} className={operacion.clase + " operacion"} >
