@@ -11,17 +11,15 @@ import * as rutas from '../constants/rutas.js';
 import * as errorMessages from '../constants/MessageConstants';
 
 //Normalizer
-import {normalizeDato, normalizeDatos} from "../normalizers/normalizePedidos";
-
-//Librerias
-import Swal from 'sweetalert2';
+import { normalizeDato, normalizeDatos } from "../normalizers/normalizePedidos";
+import { fetchProductos, resetProductos } from "./ProductoActions";
 
 //PEDIDO CREATE
-export const CREATE_PEDIDO		 = 'CREATE_PEDIDO';
-export const RESET_CREATE_PEDIDO   = "RESET_CREATE_PEDIDO";
+export const CREATE_PEDIDO = 'CREATE_PEDIDO';
+export const RESET_CREATE_PEDIDO = "RESET_CREATE_PEDIDO";
 export const REQUEST_CREATE_PEDIDO = "REQUEST_CREATE_PEDIDO";
 export const RECEIVE_CREATE_PEDIDO = "RECEIVE_CREATE_PEDIDO";
-export const ERROR_CREATE_PEDIDO   = "ERROR_CREATE_PEDIDO";
+export const ERROR_CREATE_PEDIDO = "ERROR_CREATE_PEDIDO";
 
 //PEDIDOLOGUEADO CREATE
 function requestCreatePedido() {
@@ -86,6 +84,8 @@ export function saveCreatePedido(volverA) {
                 }
             })
             .catch(function (error) {
+                dispatch(resetPedidoAbierto())
+                dispatch(fetchPedidoAbierto())
                 switch (error.status) {
                     case 401:
                         dispatch(errorCreatePedido(errorMessages.UNAUTHORIZED_TOKEN));
@@ -109,11 +109,11 @@ export function saveCreatePedido(volverA) {
 }
 
 //PEDIDO CERRAR
-export const CERRAR_PEDIDO		 = 'CERRAR_PEDIDO';
-export const RESET_CERRAR_PEDIDO   = "RESET_CERRAR_PEDIDO";
+export const CERRAR_PEDIDO = 'CERRAR_PEDIDO';
+export const RESET_CERRAR_PEDIDO = "RESET_CERRAR_PEDIDO";
 export const REQUEST_CERRAR_PEDIDO = "REQUEST_CERRAR_PEDIDO";
 export const RECEIVE_CERRAR_PEDIDO = "RECEIVE_CERRAR_PEDIDO";
-export const ERROR_CERRAR_PEDIDO   = "ERROR_CERRAR_PEDIDO";
+export const ERROR_CERRAR_PEDIDO = "ERROR_CERRAR_PEDIDO";
 
 function requestCerrarPedido() {
     return {
@@ -159,6 +159,8 @@ export function saveCerrarPedido(id) {
                 if (data.message) {
                     dispatch(receiveCerrarPedido(data.message));
                     dispatch(fetchPedidoAbierto())
+                    dispatch(resetProductos())
+                    dispatch(fetchProductos())
                 }
             })
             .catch(function (error) {
@@ -186,10 +188,10 @@ export function saveCerrarPedido(id) {
 
 // BUSCAR PEDIDOS
 export const INVALIDATE_PEDIDOS = 'INVALIDATE_PEDIDOS';
-export const REQUEST_PEDIDOS    = "REQUEST_PEDIDOS";
-export const RECEIVE_PEDIDOS    = "RECEIVE_PEDIDOS";
-export const ERROR_PEDIDOS      = "ERROR_PEDIDOS";
-export const RESET_PEDIDOS      = "RESET_PEDIDOS";
+export const REQUEST_PEDIDOS = "REQUEST_PEDIDOS";
+export const RECEIVE_PEDIDOS = "RECEIVE_PEDIDOS";
+export const ERROR_PEDIDOS = "ERROR_PEDIDOS";
+export const RESET_PEDIDOS = "RESET_PEDIDOS";
 
 export function invalidatePedidos() {
     return {
@@ -257,7 +259,7 @@ export function fetchPedidos(idUsuario) {
 }
 
 function shouldFetchPedidos(state) {
-    const pedidosById   = state.pedidos.byId;
+    const pedidosById = state.pedidos.byId;
     const pedidosAllIds = state.pedidos.allIds;
     if (pedidosById.isFetching) {
         return false;
@@ -270,10 +272,10 @@ function shouldFetchPedidos(state) {
 
 //PEDIDO
 export const INVALIDATE_PEDIDO_ID = 'INVALIDATE_PEDIDO_ID';
-export const REQUEST_PEDIDO_ID    = "REQUEST_PEDIDO_ID";
-export const RECEIVE_PEDIDO_ID    = "RECEIVE_PEDIDO_ID";
-export const ERROR_PEDIDO_ID      = "ERROR_PEDIDO_ID";
-export const RESET_PEDIDO_ID      = "RESET_PEDIDO_ID";
+export const REQUEST_PEDIDO_ID = "REQUEST_PEDIDO_ID";
+export const RECEIVE_PEDIDO_ID = "RECEIVE_PEDIDO_ID";
+export const ERROR_PEDIDO_ID = "ERROR_PEDIDO_ID";
+export const RESET_PEDIDO_ID = "RESET_PEDIDO_ID";
 
 export function invalidatePedidoById() {
     return {
@@ -339,7 +341,7 @@ export function fetchPedidoById(id) {
 }
 
 function shouldFetchPedidoById(id, state) {
-    const pedidosById   = state.pedidos.byId;
+    const pedidosById = state.pedidos.byId;
     const pedidosAllIds = state.pedidos.allIds;
     if (pedidosById.isFetchingPedido) {
         return false;
@@ -352,10 +354,10 @@ function shouldFetchPedidoById(id, state) {
 
 //PEDIDO
 export const INVALIDATE_PEDIDO_ABIERTO = 'INVALIDATE_PEDIDO_ABIERTO';
-export const REQUEST_PEDIDO_ABIERTO    = "REQUEST_PEDIDO_ABIERTO";
-export const RECEIVE_PEDIDO_ABIERTO    = "RECEIVE_PEDIDO_ABIERTO";
-export const ERROR_PEDIDO_ABIERTO      = "ERROR_PEDIDO_ABIERTO";
-export const RESET_PEDIDO_ABIERTO      = "RESET_PEDIDO_ABIERTO";
+export const REQUEST_PEDIDO_ABIERTO = "REQUEST_PEDIDO_ABIERTO";
+export const RECEIVE_PEDIDO_ABIERTO = "RECEIVE_PEDIDO_ABIERTO";
+export const ERROR_PEDIDO_ABIERTO = "ERROR_PEDIDO_ABIERTO";
+export const RESET_PEDIDO_ABIERTO = "RESET_PEDIDO_ABIERTO";
 
 export function invalidatePedidoAbierto() {
     return {
@@ -415,7 +417,7 @@ export function fetchPedidoAbierto() {
             .then(function (data) {
                 if (data.exito) {
                     dispatch(receivePedidoAbierto(data));
-                }                
+                }
             })
             .catch(function (error) {
                 switch (error.status) {
@@ -442,7 +444,7 @@ export function fetchPedidoAbierto() {
 
 function shouldFetchPedidoAbierto(state) {
     const pedidosById = state.pedidos.byId;
-    const abierto     = pedidosById.abierto;
+    const abierto = pedidosById.abierto;
     if (pedidosById.isFetchingPedido) {
         return false;
     } else if (!abierto.id) {
@@ -461,10 +463,10 @@ export function fetchPedidoAbiertoIfNeeded() {
 }
 
 //PEDIDO DELETE
-export const RESET_DELETE_PEDIDO   = "RESET_DELETE_PEDIDO";
+export const RESET_DELETE_PEDIDO = "RESET_DELETE_PEDIDO";
 export const REQUEST_DELETE_PEDIDO = "REQUEST_DELETE_PEDIDO";
 export const RECEIVE_DELETE_PEDIDO = "RECEIVE_DELETE_PEDIDO";
-export const ERROR_DELETE_PEDIDO   = "ERROR_DELETE_PEDIDO";
+export const ERROR_DELETE_PEDIDO = "ERROR_DELETE_PEDIDO";
 
 function requestDeletePedido() {
     return {
@@ -547,7 +549,7 @@ export function updatePedido(pedido) {
 // ENTREGAR PEDIDO
 export const REQUEST_ENTREGAR_PEDIDO = "REQUEST_ENTREGAR_PEDIDO";
 export const RECEIVE_ENTREGAR_PEDIDO = "RECEIVE_ENTREGAR_PEDIDO";
-export const ERROR_ENTREGAR_PEDIDO   = "ERROR_ENTREGAR_PEDIDO";
+export const ERROR_ENTREGAR_PEDIDO = "ERROR_ENTREGAR_PEDIDO";
 
 
 function requestEntregarPedido() {
@@ -628,7 +630,7 @@ export function entregarPedido(id, idUsuario, listadoVendedor) {
 // CANCELAR PEDIDO
 export const REQUEST_CANCELAR_PEDIDO = "REQUEST_CANCELAR_PEDIDO";
 export const RECEIVE_CANCELAR_PEDIDO = "RECEIVE_CANCELAR_PEDIDO";
-export const ERROR_CANCELAR_PEDIDO   = "ERROR_CANCELAR_PEDIDO";
+export const ERROR_CANCELAR_PEDIDO = "ERROR_CANCELAR_PEDIDO";
 
 
 function requestCancelarPedido() {
@@ -712,10 +714,10 @@ export function cancelarPedido(id, idUsuario, listadoVendedor, motivo) {
 
 //PEDIDO VENDEDOR
 export const INVALIDATE_PEDIDOS_VENDEDOR = 'INVALIDATE_PEDIDOS_VENDEDOR';
-export const REQUEST_PEDIDOS_VENDEDOR    = "REQUEST_PEDIDOS_VENDEDOR";
-export const RECEIVE_PEDIDOS_VENDEDOR    = "RECEIVE_PEDIDOS_VENDEDOR";
-export const ERROR_PEDIDOS_VENDEDOR      = "ERROR_PEDIDOS_VENDEDOR";
-export const RESET_PEDIDOS_VENDEDOR      = "RESET_PEDIDOS_VENDEDOR";
+export const REQUEST_PEDIDOS_VENDEDOR = "REQUEST_PEDIDOS_VENDEDOR";
+export const RECEIVE_PEDIDOS_VENDEDOR = "RECEIVE_PEDIDOS_VENDEDOR";
+export const ERROR_PEDIDOS_VENDEDOR = "ERROR_PEDIDOS_VENDEDOR";
+export const RESET_PEDIDOS_VENDEDOR = "RESET_PEDIDOS_VENDEDOR";
 
 export function invalidatePedidosVendedor() {
     return {
@@ -787,7 +789,7 @@ export function fetchPedidosVendedor() {
 
 // FILTROS PEDIDO
 export const UPDATE_FILTROS = 'UPDATE_FILTROS';
-export const RESET_FILTROS  = 'RESET_FILTROS';
+export const RESET_FILTROS = 'RESET_FILTROS';
 
 export function updateFiltros(filtros) {
     return {
@@ -805,7 +807,7 @@ export function resetFiltros() {
 // PEDIDO DISPONIBLE
 export const REQUEST_PEDIDO_DISPONIBLE = "REQUEST_PEDIDO_DISPONIBLE";
 export const RECEIVE_PEDIDO_DISPONIBLE = "RECEIVE_PEDIDO_DISPONIBLE";
-export const ERROR_PEDIDO_DISPONIBLE   = "ERROR_PEDIDO_DISPONIBLE";
+export const ERROR_PEDIDO_DISPONIBLE = "ERROR_PEDIDO_DISPONIBLE";
 
 
 function requestPedidoDisponible() {

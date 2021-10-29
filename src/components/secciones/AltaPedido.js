@@ -33,7 +33,7 @@ class AltaPedido extends React.Component {
         const buscando = this.props.productos.byId.isFetching;
         let productos = this.props.productos.allIds.map(id => {
             let producto = this.props.productos.byId.productos[id];
-            if (producto !== undefined && producto.venta_directa && producto.stock > 0) {
+            if (producto !== undefined && producto.venta_directa && producto.stock > producto.stock_seguridad) {
                 return (
                     <Producto
                         key={Math.random()}
