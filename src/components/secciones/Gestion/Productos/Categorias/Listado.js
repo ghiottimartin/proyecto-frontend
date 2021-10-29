@@ -51,6 +51,11 @@ class Listado extends React.Component {
         }
     }
 
+    /**
+     * Redirige a la edición de la categoría.
+     * 
+     * @param {Object} categoria 
+     */
     editarCategoria(categoria) {
         let id         = categoria.id;
         let rutaEditar = rutas.getUrl(rutas.CATEGORIAS, id, rutas.ACCION_EDITAR, '', rutas.CATEGORIAS_LISTAR);
@@ -58,6 +63,12 @@ class Listado extends React.Component {
         history.push(rutaEditar);
     }
 
+    /**
+     * Devuelve las operaciones de la categorías.
+     * 
+     * @param {Object} categoria 
+     * @returns 
+     */
     getOperacionesCategoria(categoria) {
         let operaciones = [];
         categoria.operaciones.forEach(operacion => {
@@ -76,19 +87,19 @@ class Listado extends React.Component {
     }
 
     /**
-     * Ejecuta la operación del listado de productos según el caso.
+     * Ejecuta la operación del listado de categorías según el caso.
      * 
-     * @param {Object} producto 
+     * @param {Object} categoria 
      * @param {String} accion 
      */
-     ejecutarOperacion(producto, accion) {
+     ejecutarOperacion(categoria, accion) {
         switch (accion) {
             case 'editar':
-                this.editarCategoria(producto);
+                this.editarCategoria(categoria);
                 break;
             
             case 'borrar':
-                this.borrarCategoria(producto);
+                this.borrarCategoria(categoria);
                 break;
             
         }

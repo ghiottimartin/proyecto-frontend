@@ -20,12 +20,6 @@ import history from "../../../../history";
 import Swal from 'sweetalert2';
 import AddBoxIcon from "@material-ui/icons/AddBox"
 
-//Images
-import lapiz from "../../../../assets/icon/pencil.png";
-import tacho from "../../../../assets/icon/delete.png";
-import habilitarImg from "../../../../assets/icon/checked.png";
-import cruz from "../../../../assets/icon/close.png";
-
 class Listado extends React.Component {
     constructor(props) {
         super(props);
@@ -59,7 +53,13 @@ class Listado extends React.Component {
             })
         }
     }
-
+    
+    /**
+     * Devuelve los roles del usuario.
+     * 
+     * @param {Object} usuario 
+     * @returns 
+     */
     getRolesUsuario(usuario) {
         let roles = [];
         let esAdmin = usuario.esAdmin;
@@ -81,6 +81,11 @@ class Listado extends React.Component {
         return roles.join(", ");
     }
 
+    /**
+     * Abre el modal para confirmar el borrado del usuario.
+     * 
+     * @param {Object} usuario 
+     */
     modalBorrar(usuario) {
         let logueado = this.props.usuarios.update.logueado;
         Swal.fire({
@@ -109,6 +114,11 @@ class Listado extends React.Component {
         })
     }
 
+    /**
+     * Abre el modal para confirmar la deshabilitación del usuario.
+     * 
+     * @param {Object} usuario 
+     */
     modalDeshabilitar(usuario) {
         let logueado = this.props.usuarios.update.logueado;
         Swal.fire({
@@ -157,6 +167,11 @@ class Listado extends React.Component {
         })
     }
 
+    /**
+     * Abre el modal para confirmar la habilitación del usuario.
+     * 
+     * @param {Object} usuario 
+     */
     modalHabilitar(usuario) {
         Swal.fire({
             title: `¿Está seguro de habilitar el usuario '${usuario.first_name}'? `,
@@ -176,6 +191,12 @@ class Listado extends React.Component {
         });
     }
 
+    /**
+     * Devuelve las operaciones del listado de usuarios.
+     * 
+     * @param {Object} usuario 
+     * @returns 
+     */
     getOperacionesUsuario(usuario) {
         let operaciones = [];
         usuario.operaciones.forEach(operacion => {
@@ -222,6 +243,9 @@ class Listado extends React.Component {
 
     }
 
+    /**
+     * Redirige al listado de usuarios.
+     */
     redirigirListado() {
         const ruta = rutas.USUARIOS_ALTA_ADMIN + "?volverA=" + rutas.USUARIOS_LISTAR
         history.push(ruta);
