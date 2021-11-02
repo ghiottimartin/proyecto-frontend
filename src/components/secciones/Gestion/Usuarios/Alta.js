@@ -34,6 +34,7 @@ class Alta extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            captcha: false,
             tipo:          'password',
             imgPassword:   blackEye,
             botonVolverA:  '',
@@ -55,6 +56,12 @@ class Alta extends React.Component {
                 </button>;
         }
         this.setState({ botonVolverA: botonVolverA, volverAValido: valido });
+        
+        let tipoRuta  = this.props.match.params['tipo'];
+        let tipoAdmin = tipoRuta === rutas.TIPO_ADMIN;
+        if (tipoAdmin && this.state.captcha === false) {
+            this.onChangeCaptcha(true);
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -69,6 +76,9 @@ class Alta extends React.Component {
         }
         if (prevState.imgPassword !== this.state.imgPassword && this.state.imgPassword === whiteEye) {
             this.toogleClave(true);
+        }
+        if (tipoAdmin && this.state.captcha === false) {
+            this.onChangeCaptcha(true);
         }
 
     }
@@ -350,7 +360,7 @@ class Alta extends React.Component {
                                     <div>
                                         {captchaHTML}
                                     </div>
-                                    <div className="d-flex">
+                                    <div className="d-flex justify-content-between w-100">
                                         <Button className="boton-submit" variant="primary" type="submit" >
                                             {!tipoAdmin ? "Registrarse" : "Guardar"}
                                         </Button>
