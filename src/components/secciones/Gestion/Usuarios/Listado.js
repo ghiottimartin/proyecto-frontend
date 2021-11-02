@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 //Actions
-import { resetUsuarios, fetchUsuarios, saveDeleteUsuario, saveUpdateUsuario, updateUsuario } from "../../../../actions/UsuarioActions";
+import { resetUsuarios, fetchUsuarios, saveDeleteUsuario, saveUpdateUsuario, updateUsuario, updateFiltros } from "../../../../actions/UsuarioActions";
 
 //Constants
 import * as rutas from '../../../../constants/rutas.js';
@@ -11,6 +11,8 @@ import * as rutas from '../../../../constants/rutas.js';
 //Components
 import Loader from "../../../elementos/Loader";
 import Titulo from "../../../elementos/Titulo";
+import Filtros from "./Filtros";
+import Paginacion from "../../../elementos/Paginacion"
 
 //CSS
 import "../../../../assets/css/Listado.css";
@@ -24,36 +26,26 @@ class Listado extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            buscando: true,
-            noHayUsuarios: false
+            paginaUno: true
         }
     }
 
     componentDidMount() {
+        this.buscarUsuarios();
+    }
+
+    buscarUsuarios() {
         this.props.resetUsuarios();
         this.props.fetchUsuarios();
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        let allIds = this.props.usuarios.allIds;
-        let usuarios = this.props.usuarios.byId;
-        let preUsuarios = prevProps.usuarios.byId;
-        let deleting = this.props.usuarios.delete;
-        let preDeleting = prevProps.usuarios.delete;
-        let busco = preUsuarios.isFetching && !usuarios.isFetching;
-        let borro = preDeleting.isDeleting && !deleting.isDeleting;
-        if ((busco || borro) && allIds.length === 0) {
-            this.setState({
-                noHayUsuarios: true,
-            })
-        }
-        if (preUsuarios.isFetching && !usuarios.isFetching) {
-            this.setState({
-                buscando: false,
-            })
+    componentDidUpdate(prevProps) {
+        const cambioDePagina = prevProps.usuarios.byId.filtros.paginaActual !== this.props.usuarios.byId.filtros.paginaActual
+        if (cambioDePagina) {
+            this.buscarUsuarios();
         }
     }
-    
+
     /**
      * Devuelve los roles del usuario.
      * 
@@ -251,18 +243,78 @@ class Listado extends React.Component {
         history.push(ruta);
     }
 
+    /**
+     * Filtra los usuarios.
+     * 
+     * @param {SyntheticBaseEvent} e 
+     */
+    filtrarUsuarios(e) {
+        e.preventDefault();
+        if (this.state.paginaUno) {
+            var cambio = {
+                target: {
+                    id: 'paginaActual',
+                    value: 1
+                }
+            };
+            this.onChangeBusqueda(cambio);
+        }
+        this.props.fetchUsuarios();
+    }
+
+    /**
+     * Cambia los filtros a aplicar, si cambia un filtro que no sea la paginación
+     * vuelve a la página inicial.
+     * 
+     * @param {SyntheticBaseEvent} e 
+     */
+    onChangeBusqueda(e) {
+        var cambio = {};
+        cambio[e.target.id] = e.target.value;
+        if (e.target.id !== "paginaActual") {
+            this.setState({ paginaUno: true })
+        } else {
+            this.setState({ paginaUno: false })
+        }
+        this.props.updateFiltros(cambio);
+    }
+
+    /**
+    * Cambia la página del filtro de paginación.
+    * 
+    * @param {Number} pagina 
+    * @returns 
+    */
+    cambiarDePagina(pagina) {
+        if (isNaN(pagina)) {
+            return;
+        }
+
+        let cambio = {};
+        cambio['paginaActual'] = pagina;
+        this.props.updateFiltros(cambio);
+    }
+
     render() {
-        const { noHayUsuarios, buscando } = this.state;
+        const buscando = this.props.usuarios.byId.isFetching;
+        const filtros = this.props.usuarios.byId.filtros;
+        const totalCero = this.props.usuarios.byId.total == 0;
+        const registros = this.props.usuarios.byId.registros;
         let Usuarios = [];
-        if (noHayUsuarios) {
+        if (totalCero) {
             Usuarios =
                 <tr className="text-center">
                     <td colSpan="7">No hay usuarios cargados</td>
                 </tr>;
+        } else if (this.props.usuarios.allIds.length === 0) {
+            Usuarios =
+                <tr className="text-center">
+                    <td colSpan={12}>No hay usuarios para los filtros aplicados.</td>
+                </tr>;
         }
         this.props.usuarios.allIds.map(idUsuario => {
             let usuario = this.props.usuarios.byId.usuarios[idUsuario];
-            if (!noHayUsuarios && usuario && usuario.id) {
+            if (usuario && usuario.id) {
                 let roles = this.getRolesUsuario(usuario);
                 let operaciones = this.getOperacionesUsuario(usuario);
                 Usuarios.push(
@@ -293,6 +345,11 @@ class Listado extends React.Component {
                             <AddBoxIcon style={{ color: '#5cb860' }} />
                         </a>
                     </div>
+                    <Filtros
+                        {...this.props}
+                        filtrar={(e) => this.filtrarUsuarios(e)}
+                        onChangeBusqueda={(e) => this.onChangeBusqueda(e)}
+                    />
                     <table className="table">
                         <thead>
                             <tr>
@@ -309,6 +366,18 @@ class Listado extends React.Component {
                             {buscando ? Cargando : Usuarios}
                         </tbody>
                     </table>
+                    {
+                        buscando || totalCero ?
+                            ''
+                            :
+                            <Paginacion
+                                activePage={filtros.paginaActual}
+                                itemsCountPerPage={filtros.registrosPorPagina}
+                                totalItemsCount={registros}
+                                pageRangeDisplayed={5}
+                                onChange={(e) => this.cambiarDePagina(e)}
+                            />
+                    }
                 </div>
             </div>
         )
@@ -337,6 +406,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         updateUsuario: (usuario) => {
             dispatch(updateUsuario(usuario))
+        },
+        updateFiltros: (filtros) => {
+            dispatch(updateFiltros(filtros))
         }
     }
 };

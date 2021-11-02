@@ -54,7 +54,13 @@ var usuarios = {
         return fetch(c.BASE_URL + '/usuarios/' + usuario.id + "/" + query, defaultOptions);
     },
 
-    getUsuarios() {
+    getUsuarios(filtros) {
+        var esc = encodeURIComponent;
+        var query = "?";
+        if (filtros)
+            query += Object.keys(filtros)
+                .map(k => esc(k) + '=' + esc(filtros[k]))
+                .join('&');
 
         let defaultOptions = {
             method: 'GET',
@@ -64,7 +70,7 @@ var usuarios = {
             }
         };
 
-        return fetch(c.BASE_URL + '/usuarios/', defaultOptions);
+        return fetch(c.BASE_URL + '/usuarios/' + query, defaultOptions);
     },
 
     getUsuario(id) {

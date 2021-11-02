@@ -323,7 +323,9 @@ function requestUsuarios() {
 function receiveUsuarios(json) {
     return {
         type: RECEIVE_USUARIOS,
-        usuarios: normalizeDatos(json),
+        usuarios: normalizeDatos(json.usuarios),
+        total: json.total,
+        registros: json.registros,
         receivedAt: Date.now()
     }
 }
@@ -336,9 +338,9 @@ function errorUsuarios(error) {
 }
 
 export function fetchUsuarios() {
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch(requestUsuarios());
-        return usuarios.getUsuarios()
+        return usuarios.getUsuarios(getState().usuarios.byId.filtros)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
@@ -349,7 +351,7 @@ export function fetchUsuarios() {
             })
             .then(function (data) {
                 if (data.exito) {
-                    dispatch(receiveUsuarios(data.datos.usuarios));
+                    dispatch(receiveUsuarios(data.datos));
                 }
             })
             .catch(function (error) {
@@ -569,5 +571,22 @@ export function saveDeleteUsuario(id, motivo) {
                         return;
                 }
             });
+    }
+}
+
+// FILTROS INGRESO
+export const UPDATE_FILTROS = 'UPDATE_FILTROS';
+export const RESET_FILTROS = 'RESET_FILTROS';
+
+export function updateFiltros(filtros) {
+    return {
+        type: UPDATE_FILTROS,
+        filtros
+    }
+}
+
+export function resetFiltros() {
+    return {
+        type: RESET_FILTROS
     }
 }

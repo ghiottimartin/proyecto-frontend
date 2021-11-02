@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux';
 import merge from "lodash/merge";
+import pickBy from "lodash/pickBy";
 
 //Actions
 import {
@@ -27,11 +28,26 @@ import {
     REQUEST_USUARIO_ID,
     RECEIVE_USUARIO_ID,
     ERROR_USUARIO_ID,
-    RESET_USUARIO_ID, RESET_DELETE_USUARIO, REQUEST_DELETE_USUARIO, RECEIVE_DELETE_USUARIO, ERROR_DELETE_USUARIO, RECEIVE_INHABILITAR_USUARIO
+    RESET_USUARIO_ID,
+    RESET_DELETE_USUARIO,
+    REQUEST_DELETE_USUARIO,
+    RECEIVE_DELETE_USUARIO,
+    ERROR_DELETE_USUARIO,
+    RECEIVE_INHABILITAR_USUARIO,
+    UPDATE_FILTROS,
+    RESET_FILTROS
 
 } from '../actions/UsuarioActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions";
-import pickBy from "lodash/pickBy";
+
+const filtrosIniciales = {
+    estado: "",
+    nombre: "",
+    rol: "",
+    dni: "",
+    paginaActual: 1,
+    registrosPorPagina: 10,
+}
 
 
 function usuariosById(state = {
@@ -39,6 +55,10 @@ function usuariosById(state = {
     isFetchingUsuario: false,
     didInvalidate: true,
     didInvalidateUsuario: true,
+    filtros: filtrosIniciales,
+    resetFiltros: false,
+    total: 0,
+    registros: 0,
     usuarios: [],
     usuario: {},
     error: null,
@@ -66,6 +86,8 @@ function usuariosById(state = {
                 isFetching: false,
                 didInvalidate: false,
                 usuarios: action.usuarios.entities.usuarios,
+                total: action.total,
+                registros: action.registros,
                 lastUpdated: action.receivedAt,
                 error: null
             });
@@ -120,6 +142,15 @@ function usuariosById(state = {
                 usuarios: pickBy(state.usuarios, function (value, key) {
                     return parseInt(key) !== parseInt(action.idUsuario);
                 })
+            });
+        // FILTROS
+        case UPDATE_FILTROS:
+            return Object.assign({}, state, {
+                filtros: merge({}, state.filtros, action.filtros)
+            });
+        case RESET_FILTROS:
+            return Object.assign({}, state, {
+                filtros: filtrosIniciales
             });
         default:
             return state
