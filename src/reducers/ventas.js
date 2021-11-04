@@ -22,7 +22,10 @@ import {
     ERROR_ANULAR_VENTA,
     REQUEST_VENTA_ID,
     RECEIVE_VENTA_ID,
-    ERROR_VENTA_ID
+    ERROR_VENTA_ID,
+    RECEIVE_PDF_VENTA,
+    REQUEST_PDF_VENTA,
+    ERROR_PDF_VENTA
 
 } from '../actions/VentaActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions"
@@ -230,6 +233,19 @@ function update(state = {
                 error: null,
             });
         case ERROR_ANULAR_VENTA:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                success: "",
+                error: action.error
+            });
+        // PDF VENTA
+        case REQUEST_PDF_VENTA:
+            return Object.assign({}, state, {
+                isUpdating: true,
+                success: "",
+                error: null,
+            });
+        case ERROR_PDF_VENTA:
             return Object.assign({}, state, {
                 isUpdating: false,
                 success: "",

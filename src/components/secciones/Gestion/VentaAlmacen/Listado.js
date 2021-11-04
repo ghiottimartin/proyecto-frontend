@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 
 //Actions
-import { fetchVentas, updateFiltros, updateVenta, anularVenta } from "../../../../actions/VentaActions"
+import { fetchVentas, updateFiltros, updateVenta, anularVenta, pdfVenta } from "../../../../actions/VentaActions"
 
 //CSS
 import "../../../../assets/css/Gestion/VentaAlmacen.css"
@@ -109,7 +109,7 @@ function Listado(props) {
         venta.operaciones.forEach(operacion => {
             let accion = operacion.accion;            
             operaciones.push(
-                <div key={operacion.key} title={operacion.title} onClick={() => ejecutarOperacion(venta, accion)} className={operacion.clase + " operacion"} >
+                <div id={operacion.key} key={operacion.key} title={operacion.title} onClick={() => ejecutarOperacion(venta, accion)} className={operacion.clase + " operacion"} >
                     <i className={operacion.icono} aria-hidden="true"></i> {operacion.texto}
                 </div>
             );
@@ -124,17 +124,21 @@ function Listado(props) {
      /**
      * Ejecuta la operación del listado de ventas según el caso.
      * 
-     * @param {Object} ingreso 
+     * @param {Object} venta 
      * @param {String} accion 
      */
-      const ejecutarOperacion = (ingreso, accion)  => {
+      const ejecutarOperacion = (venta, accion)  => {
         switch (accion) {
             case 'visualizar':
-                visualizarVenta(ingreso);
+                visualizarVenta(venta);
                 break;
             
             case 'anular':
-                anularVenta(ingreso);
+                anularVenta(venta);
+                break;
+            
+            case 'pdf':
+                pdfVenta(venta);
                 break;
             
         }
@@ -174,6 +178,10 @@ function Listado(props) {
                 props.anularVenta(venta.id);
             }
         });
+    }
+
+    const pdfVenta = (venta) => {
+        props.pdfVenta(venta.id)
     }
 
     let Ventas = []
@@ -267,7 +275,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         anularVenta: (idVenta) => {
             dispatch(anularVenta(idVenta))
-        }
+        },
+        pdfVenta: (idVenta) => {
+            dispatch(pdfVenta(idVenta))
+        },
     }
 }
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Listado))

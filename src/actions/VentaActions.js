@@ -3,6 +3,7 @@ import history from "../history";
 //Actions
 import { logout } from "./AuthenticationActions";
 import { fetchProductos, resetProductos } from "./ProductoActions";
+import { downloadBlob } from "./FileActions";
 
 //Api
 import ventas from "../api/ventas";
@@ -103,7 +104,7 @@ export function saveCreateVenta() {
     }
 }
 
-//VENTAS LOGUEADO
+//BÚSQUEDA DE VENTAS
 export const INVALIDATE_VENTAS = 'INVALIDATE_VENTAS';
 export const REQUEST_VENTAS = "REQUEST_VENTAS";
 export const RECEIVE_VENTAS = "RECEIVE_VENTAS";
@@ -366,6 +367,82 @@ export function anularVenta(id) {
                             .catch(error => {
                                 dispatch(errorAnularVenta(errorMessages.GENERAL_ERROR));
                             });
+                        return;
+                }
+            });
+    }
+}
+
+// PDF VENTA
+export const REQUEST_PDF_VENTA = "REQUEST_PDF_VENTA";
+export const RECEIVE_PDF_VENTA = "RECEIVE_PDF_VENTA";
+export const ERROR_PDF_VENTA   = "ERROR_PDF_VENTA";
+
+
+function requestPdfVenta() {
+    return {
+        type: REQUEST_PDF_VENTA,
+    }
+}
+
+function receivePdfVenta(blob, nombre) {
+    downloadBlob(blob, nombre);
+    return {
+        type: RECEIVE_PDF_VENTA,
+        message: 'La venta se ha exportado a pdf con éxito',
+        receivedAt: Date.now()
+    }
+}
+
+function errorPdfVenta(error) {
+    return {
+        type: ERROR_PDF_VENTA,
+        error: error,
+    }
+}
+
+export function pdfVenta(id) {
+    return dispatch => {
+        dispatch(requestPdfVenta());
+        return ventas.pdf(id)
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    var data = response.blob();
+                    return data;
+                }
+            })
+            .then(function (blob) {
+                var id_texto = id.toString().padStart(5, 0);
+                var nombre = `Venta ${id_texto}.pdf`;
+                dispatch(receivePdfVenta(blob, nombre));
+            })
+            .catch(function (error) {
+                console.log(error)
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorPdfVenta(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(logout());
+                        return;
+                    case 404:
+                        dispatch(errorPdfVenta(errorMessages.GENERAL_ERROR));
+                        return;
+                    default:
+                        try {
+                            error.json()
+                            .then(error => {
+                                if (error.message !== "")
+                                    dispatch(errorPdfVenta(error.message));
+                                else
+                                    dispatch(errorPdfVenta(errorMessages.GENERAL_ERROR));
+                            })
+                            .catch(error => {
+                                dispatch(errorPdfVenta(errorMessages.GENERAL_ERROR));
+                            });
+                        } catch (e) {
+                            dispatch(errorPdfVenta(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });

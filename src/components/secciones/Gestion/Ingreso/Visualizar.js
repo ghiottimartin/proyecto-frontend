@@ -84,7 +84,7 @@ function Visualizar(props) {
 
     let titulo = "Visualizar Ingreso";
     if (ingreso && ingreso.id) {
-        titulo += " I" + ingreso.id.toString().padStart(5, 0);;
+        titulo += " I" + ingreso.id.toString().padStart(5, 0);
     }
     let html = getVisualizarHtml();
     return (
