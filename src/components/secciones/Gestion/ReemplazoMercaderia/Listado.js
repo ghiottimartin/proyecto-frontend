@@ -7,6 +7,7 @@ import { updateFiltros, fetchReemplazos, updateReemplazo, anularReemplazo } from
 
 //Constants
 import * as rutas from "../../../../constants/rutas"
+import * as colores from "../../../../constants/colores"
 
 //Components
 import Titulo from "../../../elementos/Titulo"
@@ -165,9 +166,10 @@ function Listado(props) {
             showCloseButton: true,
             showCancelButton: true,
             focusConfirm: true,
-            confirmButtonText: 'Aceptar',
-            confirmButtonColor: 'rgb(88, 219, 131)',
+            confirmButtonText: 'Cancelar',
+            confirmButtonColor: colores.COLOR_ROJO,
             cancelButtonColor: '#bfbfbf',
+            cancelButtonText: 'Continuar'
         }).then((result) => {
             if (result.isConfirmed) {
                 props.anularReemplazo(reemplazo.id);

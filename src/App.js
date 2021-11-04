@@ -11,6 +11,7 @@ import { fetchUsuarioLogueadoIfNeeded } from "./actions/UsuarioActions";
 
 //Constants
 import * as rutas from './constants/rutas.js';
+import * as colores from "./constants/colores";
 
 //Components
 import AltaPedido from "./components/secciones/AltaPedido";
@@ -218,7 +219,7 @@ class App extends React.Component {
                 focusConfirm: true,
                 confirmButtonText: 'Cancelar',
                 cancelButtonText: 'Continuar',
-                confirmButtonColor: '#ea2a2a',
+                confirmButtonColor: colores.COLOR_ROJO,
                 cancelButtonColor: '#bfbfbf',
             }).then((result) => {
                 if (result.isConfirmed) {

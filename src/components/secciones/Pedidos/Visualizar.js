@@ -99,7 +99,7 @@ class Visualizar extends React.Component {
 
     render() {
         let pedido = this.props.pedidos.update.activo;
-        let titulo = "Visualizar pedido";
+        let titulo = "Visualizar Pedido";
         if (pedido && pedido.id) {
             titulo += " P" + pedido.id.toString().padStart(5, 0);;
         }

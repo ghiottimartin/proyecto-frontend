@@ -46,7 +46,7 @@ function Listado(props) {
     })
     
     if (producto && producto.nombre) {
-        titulo = "Movimientos de stock de '" + producto.nombre + "'"
+        titulo = "Movimientos de stock de " + producto.nombre
     }
 
     let ingreso = {}
@@ -58,7 +58,7 @@ function Listado(props) {
     })
 
     if (ingreso && ingreso.id) {
-        titulo = "Movimientos de stock del Ingreso '" + ingreso.id_texto + "'"
+        titulo = "Movimientos de stock del Ingreso " + ingreso.id_texto
     }
 
 

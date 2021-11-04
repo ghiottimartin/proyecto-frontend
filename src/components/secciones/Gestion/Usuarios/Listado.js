@@ -7,6 +7,7 @@ import { resetUsuarios, fetchUsuarios, saveDeleteUsuario, saveUpdateUsuario, upd
 
 //Constants
 import * as rutas from '../../../../constants/rutas.js';
+import * as colores from '../../../../constants/colores.js';
 
 //Components
 import Loader from "../../../elementos/Loader";
@@ -86,9 +87,10 @@ class Listado extends React.Component {
             showCloseButton: true,
             showCancelButton: true,
             focusConfirm: true,
-            confirmButtonText: 'Aceptar',
-            confirmButtonColor: 'rgb(88, 219, 131)',
+            confirmButtonText: 'Borrar',
+            confirmButtonColor: colores.COLOR_ROJO,
             cancelButtonColor: '#bfbfbf',
+            cancelButtonText: 'Cancelar',
         }).then((result) => {
             if (result.isConfirmed && logueado.id !== usuario.id) {
                 this.props.saveDeleteUsuario(usuario.id);
@@ -119,9 +121,10 @@ class Listado extends React.Component {
             showCloseButton: true,
             showCancelButton: true,
             focusConfirm: true,
-            confirmButtonText: 'Aceptar',
-            confirmButtonColor: 'rgb(88, 219, 131)',
+            confirmButtonText: 'Deshabilitar',
+            confirmButtonColor: colores.COLOR_ROJO,
             cancelButtonColor: '#bfbfbf',
+            cancelButtonText: 'Cancelar',
             input: 'textarea',
             inputLabel: 'Motivo',
             inputPlaceholder: 'Indique un motivo...',

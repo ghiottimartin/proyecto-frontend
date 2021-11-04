@@ -10,6 +10,7 @@ import "../../../../assets/css/Gestion/Ingreso.css"
 
 //Constants
 import * as rutas from "../../../../constants/rutas"
+import * as colores from "../../../../constants/colores"
 
 //Components
 import Loader from "../../../elementos/Loader"
@@ -181,9 +182,10 @@ function IngresoListado(props) {
             showCloseButton: true,
             showCancelButton: true,
             focusConfirm: true,
-            confirmButtonText: 'Aceptar',
-            confirmButtonColor: 'rgb(88, 219, 131)',
+            confirmButtonText: 'Cancelar',
+            confirmButtonColor: colores.COLOR_ROJO,
             cancelButtonColor: '#bfbfbf',
+            cancelButtonText: 'Continuar'
         }).then((result) => {
             if (result.isConfirmed) {
                 props.anularIngreso(ingreso.id);

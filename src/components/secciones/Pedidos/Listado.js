@@ -14,6 +14,7 @@ import "../../../assets/css/Pedidos.css";
 //Constantes
 import * as roles from '../../../constants/roles.js';
 import * as rutas from '../../../constants/rutas.js';
+import * as colores from "../../../constants/colores";
 
 //Librerias
 import history from "../../../history";
@@ -210,7 +211,7 @@ class Listado extends React.Component {
             });
         } else {
             Swal.fire({
-                title: `¿Está seguro de entregar el pedido? `,
+                title: `¿Está seguro de entregar el Pedido ${pedido.id_texto}? `,
                 icon: 'question',
                 showCloseButton: true,
                 showCancelButton: true,
@@ -252,14 +253,15 @@ class Listado extends React.Component {
         }
         if (pedido.ultimo_estado === 'abierto') {
             Swal.fire({
-                title: `¿Está seguro de cancelar el pedido? `,
+                title: `¿Está seguro de cancelar el Pedido ${pedido.id_texto}? `,
                 icon: 'question',
                 showCloseButton: true,
                 showCancelButton: true,
                 focusConfirm: true,
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: 'rgb(88, 219, 131)',
+                confirmButtonText: 'Cancelar',
+                confirmButtonColor: colores.COLOR_ROJO,
                 cancelButtonColor: '#bfbfbf',
+                cancelButtonText: 'Continuar',
             }).then((result) => {
                 if (result.isConfirmed) {
                     let idUsuario = auth.idUsuario();
@@ -270,14 +272,15 @@ class Listado extends React.Component {
             });
         } else {
             Swal.fire({
-                title: `¿Está seguro de cancelar el pedido? `,
+                title: `¿Está seguro de cancelar el Pedido ${pedido.id_texto}? `,
                 icon: 'question',
                 showCloseButton: true,
                 showCancelButton: true,
                 focusConfirm: true,
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: 'rgb(88, 219, 131)',
+                confirmButtonText: 'Cancelar',
+                confirmButtonColor: colores.COLOR_ROJO,
                 cancelButtonColor: '#bfbfbf',
+                cancelButtonText: 'Continuar',
                 input: 'textarea',
                 inputLabel: 'Motivo',
                 inputPlaceholder: 'Indique un motivo de cancelación...',
@@ -312,7 +315,7 @@ class Listado extends React.Component {
 
     pedidoDisponible(pedido) {
         Swal.fire({
-            title: `¿Está seguro de marcar el pedido como disponible? `,
+            title: `¿Está seguro de marcar el Pedido ${pedido.id_texto} como disponible? `,
             icon: 'question',
             showCloseButton: true,
             showCancelButton: true,
