@@ -108,6 +108,19 @@
   text-align: right;
 }
 
+.venta-operacion-pdf {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+}
+
+.venta-operacion-pdf .operacion, .venta-operacion-pdf .operacion:focus, .venta-operacion-pdf .operacion:active, .venta-operacion-pdf .operacion:hover {
+  background: transparent !important;
+  text-decoration: none !important;
+  color: #007bff!important;
+  border-color: #007bff!important;
+}
+
 /* 
 X-Small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap

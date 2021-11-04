@@ -3,7 +3,7 @@ import { connect } from "react-redux"
 import { withRouter } from "react-router-dom"
 
 //Actions
-import { fetchVentaById } from "../../../../actions/VentaActions"
+import { fetchVentaById, pdfVenta } from "../../../../actions/VentaActions"
 
 //Components
 import Titulo from "../../../elementos/Titulo"
@@ -24,11 +24,38 @@ function Visualizar(props) {
         }
     }, [props.match.params.id])
 
-    const getVisualizarHtml = () => {
-        if (!venta || !venta.lineas) {
+    const pdfVenta = (venta) => {
+        props.pdfVenta(venta.id)
+    }
+
+    /**
+     * Devuelve una array de elementos html con las operaciones de la venta.
+     * 
+     * @returns {Array}
+     */
+    const getOperacionPdf = (venta) => {
+        if (!venta || !venta.id) {
             return "";
         }
-        let filas = [];
+
+        let pdf = ""
+        venta.operaciones.forEach(operacion => {
+            let accion = operacion.accion
+            if (accion === "pdf") {
+                pdf =
+                    <div id={operacion.key} key={operacion.key} title={operacion.title} onClick={() => pdfVenta(venta)} className={operacion.clase + " operacion"} >
+                        <i className={operacion.icono} aria-hidden="true"></i> {operacion.texto}
+                    </div>
+            }
+        })
+        return pdf
+    }
+
+    const getVisualizarHtml = () => {
+        if (!venta || !venta.lineas) {
+            return ""
+        }
+        let filas = []
         venta.lineas.forEach(linea => {
             filas.push(
                 <tr key={linea.id}>
@@ -37,8 +64,8 @@ function Visualizar(props) {
                     <td className="text-right">{linea.precio_texto}</td>
                     <td className="text-right">{linea.total_texto}</td>
                 </tr>
-            );
-        });
+            )
+        })
         return (
             <div className="venta-visualizar mt-4">
                 <ul>
@@ -79,17 +106,21 @@ function Visualizar(props) {
                     </tfoot>
                 </table>
             </div>
-        );
+        )
     }
 
-    let titulo = "Visualizar Venta";
+    let titulo = "Visualizar Venta"
     if (venta && venta.id) {
-        titulo += " I" + venta.id.toString().padStart(5, 0);;
+        titulo += " I" + venta.id.toString().padStart(5, 0)
     }
-    let html = getVisualizarHtml();
+    let html = getVisualizarHtml()
+    const pdf = getOperacionPdf(venta)
     return (
-        <div className="tarjeta-body ingreso-visualizar">
+        <div className="tarjeta-body ingreso-visualizar position-relative">
             <Titulo ruta={rutas.VENTA_ALMACEN_LISTADO} titulo={titulo} clase="tabla-listado-titulo" />
+            <div className="venta-operacion-pdf">
+                {pdf}
+            </div>
             {html}
         </div>
     )
@@ -98,14 +129,17 @@ function Visualizar(props) {
 function mapStateToProps(state) {
     return {
         ventas: state.ventas,
-    };
+    }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         fetchVentaById: (id) => {
             dispatch(fetchVentaById(id))
+        },
+        pdfVenta: (id) => {
+            dispatch(pdfVenta(id))
         }
     }
-};
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Visualizar));
+}
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Visualizar))
