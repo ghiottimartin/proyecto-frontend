@@ -64,6 +64,7 @@ export function login(usuario, ruta) {
                                     dispatch(errorLogin(errorMessages.GENERAL_ERROR));
                                 });
                         } catch (e) {
+                            dispatch(errorLogin(errorMessages.GENERAL_ERROR));
                         }
                         return;
                 }
@@ -176,6 +177,7 @@ export function olvideMiPassword(usuario) {
                                     dispatch(errorLogin(errorMessages.GENERAL_ERROR));
                                 });
                         } catch (e) {
+                            dispatch(errorLogin(errorMessages.GENERAL_ERROR));
                         }
                         return;
                 }
@@ -210,6 +212,7 @@ export function resetPassword(usuario) {
                                     dispatch(errorLogin(errorMessages.GENERAL_ERROR));
                                 });
                         } catch (e) {
+                            dispatch(errorLogin(errorMessages.GENERAL_ERROR));
                         }
                         return;
                 }

@@ -92,16 +92,20 @@ export function saveCreatePedido(volverA) {
                         dispatch(logout());
                         return;
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorCreatePedido(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorCreatePedido(error.message));
+                                    else
+                                        dispatch(errorCreatePedido(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorCreatePedido(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorCreatePedido(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorCreatePedido(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -170,16 +174,20 @@ export function saveCerrarPedido(id) {
                         dispatch(logout());
                         return Promise.reject(error);
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorCerrarPedido(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorCerrarPedido(error.message));
+                                    else
+                                        dispatch(errorCerrarPedido(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorCerrarPedido(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorCerrarPedido(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorCerrarPedido(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -426,16 +434,20 @@ export function fetchPedidoAbierto() {
                         //dispatch(logout()); No realizamos logout porque se le permite estar logueado.
                         return;
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorPedidoAbierto(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorPedidoAbierto(error.message));
+                                    else
+                                        dispatch(errorPedidoAbierto(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorPedidoAbierto(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorPedidoAbierto(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorPedidoAbierto(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -520,16 +532,20 @@ export function saveDeletePedido(id) {
                         dispatch(logout());
                         return Promise.reject(error);
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorDeletePedido(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorDeletePedido(error.message));
+                                    else
+                                        dispatch(errorDeletePedido(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorDeletePedido(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorDeletePedido(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorDeletePedido(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -611,16 +627,20 @@ export function entregarPedido(id, idUsuario, listadoVendedor) {
                         dispatch(logout());
                         return;
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorEntregarPedido(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorEntregarPedido(error.message));
+                                    else
+                                        dispatch(errorEntregarPedido(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(() => {
                                     dispatch(errorEntregarPedido(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorEntregarPedido(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorEntregarPedido(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -696,16 +716,21 @@ export function anularPedido(id, idUsuario, listadoVendedor, motivo) {
                         dispatch(errorAnularPedido(errorMessages.GENERAL_ERROR));
                         return;
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorAnularPedido(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorAnularPedido(error.message));
+                                    else
+                                        dispatch(errorAnularPedido(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorAnularPedido(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorAnularPedido(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorAnularPedido(errorMessages.GENERAL_ERROR));
+                        }
+
                         return;
                 }
             });
@@ -864,16 +889,20 @@ export function pedidoDisponible(id, idUsuario, listadoVendedor) {
                         dispatch(errorPedidoDisponible(errorMessages.GENERAL_ERROR));
                         return;
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorPedidoDisponible(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorPedidoDisponible(error.message));
+                                    else
+                                        dispatch(errorPedidoDisponible(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorPedidoDisponible(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorPedidoDisponible(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorPedidoDisponible(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });

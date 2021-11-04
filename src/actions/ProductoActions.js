@@ -11,14 +11,14 @@ import * as rutas from '../constants/rutas.js';
 import * as errorMessages from '../constants/MessageConstants';
 
 //Normalizer
-import {normalizeDato, normalizeDatos} from "../normalizers/normalizeProductos";
+import { normalizeDato, normalizeDatos } from "../normalizers/normalizeProductos";
 
 //PRODUCTO CREATE
-export const CREATE_PRODUCTO		 = 'CREATE_PRODUCTO';
-export const RESET_CREATE_PRODUCTO   = "RESET_CREATE_PRODUCTO";
+export const CREATE_PRODUCTO = 'CREATE_PRODUCTO';
+export const RESET_CREATE_PRODUCTO = "RESET_CREATE_PRODUCTO";
 export const REQUEST_CREATE_PRODUCTO = "REQUEST_CREATE_PRODUCTO";
 export const RECEIVE_CREATE_PRODUCTO = "RECEIVE_CREATE_PRODUCTO";
-export const ERROR_CREATE_PRODUCTO   = "ERROR_CREATE_PRODUCTO";
+export const ERROR_CREATE_PRODUCTO = "ERROR_CREATE_PRODUCTO";
 
 //PRODUCTOLOGUEADO CREATE
 function requestCreateProducto() {
@@ -97,11 +97,11 @@ export function saveCreateProducto(volverA) {
 }
 
 //PRODUCTO UPDATE
-export const UPDATE_PRODUCTO		 = 'UPDATE_PRODUCTO';
-export const RESET_UPDATE_PRODUCTO   = "RESET_UPDATE_PRODUCTO";
+export const UPDATE_PRODUCTO = 'UPDATE_PRODUCTO';
+export const RESET_UPDATE_PRODUCTO = "RESET_UPDATE_PRODUCTO";
 export const REQUEST_UPDATE_PRODUCTO = "REQUEST_UPDATE_PRODUCTO";
 export const RECEIVE_UPDATE_PRODUCTO = "RECEIVE_UPDATE_PRODUCTO";
-export const ERROR_UPDATE_PRODUCTO   = "ERROR_UPDATE_PRODUCTO";
+export const ERROR_UPDATE_PRODUCTO = "ERROR_UPDATE_PRODUCTO";
 
 function requestUpdateProducto() {
     return {
@@ -174,10 +174,10 @@ export function saveUpdateProducto(volverA) {
 
 //PRODUCTO LOGUEADO
 export const INVALIDATE_PRODUCTOS = 'INVALIDATE_PRODUCTOS';
-export const REQUEST_PRODUCTOS    = "REQUEST_PRODUCTOS";
-export const RECEIVE_PRODUCTOS    = "RECEIVE_PRODUCTOS";
-export const ERROR_PRODUCTOS      = "ERROR_PRODUCTOS";
-export const RESET_PRODUCTOS      = "RESET_PRODUCTOS";
+export const REQUEST_PRODUCTOS = "REQUEST_PRODUCTOS";
+export const RECEIVE_PRODUCTOS = "RECEIVE_PRODUCTOS";
+export const ERROR_PRODUCTOS = "ERROR_PRODUCTOS";
+export const RESET_PRODUCTOS = "RESET_PRODUCTOS";
 
 export function invalidateProductos() {
     return {
@@ -244,7 +244,7 @@ export function fetchProductos() {
 }
 
 function shouldFetchProductos(state) {
-    const productosById   = state.productos.byId;
+    const productosById = state.productos.byId;
     const productosAllIds = state.productos.allIds;
     if (productosById.isFetching) {
         return false;
@@ -265,10 +265,10 @@ export function fetchProductosIfNeeded() {
 
 //PRODUCTO
 export const INVALIDATE_PRODUCTO_ID = 'INVALIDATE_PRODUCTO_ID';
-export const REQUEST_PRODUCTO_ID    = "REQUEST_PRODUCTO_ID";
-export const RECEIVE_PRODUCTO_ID    = "RECEIVE_PRODUCTO_ID";
-export const ERROR_PRODUCTO_ID      = "ERROR_PRODUCTO_ID";
-export const RESET_PRODUCTO_ID      = "RESET_PRODUCTO_ID";
+export const REQUEST_PRODUCTO_ID = "REQUEST_PRODUCTO_ID";
+export const RECEIVE_PRODUCTO_ID = "RECEIVE_PRODUCTO_ID";
+export const ERROR_PRODUCTO_ID = "ERROR_PRODUCTO_ID";
+export const RESET_PRODUCTO_ID = "RESET_PRODUCTO_ID";
 
 export function invalidateProductoById() {
     return {
@@ -334,7 +334,7 @@ export function fetchProductoById(id) {
 }
 
 function shouldFetchProductoById(id, state) {
-    const productosById   = state.productos.byId;
+    const productosById = state.productos.byId;
     const productosAllIds = state.productos.allIds;
     if (productosById.isFetchingProducto) {
         return false;
@@ -354,10 +354,10 @@ export function fetchProductoByIdIfNeeded(id) {
 }
 
 //PRODUCTO DELETE
-export const RESET_DELETE_PRODUCTO   = "RESET_DELETE_PRODUCTO";
+export const RESET_DELETE_PRODUCTO = "RESET_DELETE_PRODUCTO";
 export const REQUEST_DELETE_PRODUCTO = "REQUEST_DELETE_PRODUCTO";
 export const RECEIVE_DELETE_PRODUCTO = "RECEIVE_DELETE_PRODUCTO";
-export const ERROR_DELETE_PRODUCTO   = "ERROR_DELETE_PRODUCTO";
+export const ERROR_DELETE_PRODUCTO = "ERROR_DELETE_PRODUCTO";
 
 function requestDeleteProducto() {
     return {
@@ -410,16 +410,20 @@ export function saveDeleteProducto(id) {
                         dispatch(logout());
                         return Promise.reject(error);
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorDeleteProducto(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorDeleteProducto(error.message));
+                                    else
+                                        dispatch(errorDeleteProducto(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorDeleteProducto(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorDeleteProducto(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorDeleteProducto(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -428,7 +432,7 @@ export function saveDeleteProducto(id) {
 
 // FILTROS PRODUCTOS
 export const UPDATE_FILTROS = 'UPDATE_FILTROS';
-export const RESET_FILTROS  = 'RESET_FILTROS';
+export const RESET_FILTROS = 'RESET_FILTROS';
 
 export function updateFiltros(filtros) {
     return {

@@ -85,16 +85,20 @@ export function saveCreateReemplazo() {
                         dispatch(logout());
                         return;
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorCreateReemplazo(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorCreateReemplazo(error.message));
+                                    else
+                                        dispatch(errorCreateReemplazo(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorCreateReemplazo(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorCreateReemplazo(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorCreateReemplazo(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -182,16 +186,20 @@ export function fetchReemplazos() {
                         dispatch(logout())
                         return;
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorReemplazos(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorReemplazos(error.message));
+                                    else
+                                        dispatch(errorReemplazos(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorReemplazos(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorReemplazos(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorReemplazos(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -281,7 +289,7 @@ export function fetchReemplazoById(id) {
 // ANULAR REEMPLAZO
 export const REQUEST_ANULAR_REEMPLAZO = "REQUEST_ANULAR_REEMPLAZO";
 export const RECEIVE_ANULAR_REEMPLAZO = "RECEIVE_ANULAR_REEMPLAZO";
-export const ERROR_ANULAR_REEMPLAZO   = "ERROR_ANULAR_REEMPLAZO";
+export const ERROR_ANULAR_REEMPLAZO = "ERROR_ANULAR_REEMPLAZO";
 
 
 function requestAnularReemplazo() {
@@ -333,16 +341,20 @@ export function anularReemplazo(id) {
                         dispatch(errorAnularReemplazo(errorMessages.GENERAL_ERROR));
                         return;
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorAnularReemplazo(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorAnularReemplazo(error.message));
+                                    else
+                                        dispatch(errorAnularReemplazo(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorAnularReemplazo(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorAnularReemplazo(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorAnularReemplazo(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });

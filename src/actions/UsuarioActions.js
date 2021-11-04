@@ -11,7 +11,7 @@ import * as rutas from '../constants/rutas.js';
 import * as errorMessages from '../constants/MessageConstants';
 
 //Normalizer
-import {normalizeDato, normalizeDatos} from "../normalizers/normalizeUsuarios";
+import { normalizeDato, normalizeDatos } from "../normalizers/normalizeUsuarios";
 
 //USUARIOLOGUEADO CREATE
 export const CREATE_USUARIO = 'CREATE_USUARIO';
@@ -81,7 +81,7 @@ export function saveCreateUsuario(admin, volverA) {
                 dispatch(resetCreateUsuario());
                 if (ruta) {
                     history.push(ruta);
-                } else if(data.admin) {
+                } else if (data.admin) {
                     history.push(rutas.GESTION);
                 } else {
                     history.push(rutas.LOGIN);
@@ -94,16 +94,20 @@ export function saveCreateUsuario(admin, volverA) {
                         dispatch(logout());
                         return;
                     default:
-                        error.json()
-                            .then((error) => {
-                                if (error.message)
-                                    dispatch(errorCreateUsuario(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then((error) => {
+                                    if (error.message)
+                                        dispatch(errorCreateUsuario(error.message));
+                                    else
+                                        dispatch(errorCreateUsuario(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch((error) => {
                                     dispatch(errorCreateUsuario(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch((error) => {
-                                dispatch(errorCreateUsuario(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorCreateUsuario(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -169,7 +173,7 @@ export function saveUpdateUsuario(habilitar) {
                     dispatch(fetchUsuarios())
                     return;
                 }
-                let usuario  = respuesta.datos.usuario;
+                let usuario = respuesta.datos.usuario;
                 let logueado = getState().usuarios.update.logueado;
                 dispatch(resetUpdateUsuario());
                 dispatch(updateUsuario(usuario));
@@ -177,7 +181,7 @@ export function saveUpdateUsuario(habilitar) {
                     dispatch(receiveUsuarioLogueado(usuario));
                 }
                 const volverA = rutas.getQuery('volverA');
-                const valido  = rutas.validarRuta(volverA);
+                const valido = rutas.validarRuta(volverA);
                 if (valido && respuesta.datos.esAdmin) {
                     history.push(volverA);
                 } else {
@@ -191,16 +195,20 @@ export function saveUpdateUsuario(habilitar) {
                         dispatch(logout());
                         return Promise.reject(error);
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorUpdateUsuario(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorUpdateUsuario(error.message));
+                                    else
+                                        dispatch(errorUpdateUsuario(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorUpdateUsuario(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorUpdateUsuario(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorUpdateUsuario(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -297,10 +305,10 @@ export function fetchUsuarioLogueadoIfNeeded() {
 
 //USUARIO LOGUEADO
 export const INVALIDATE_USUARIOS = 'INVALIDATE_USUARIOS';
-export const REQUEST_USUARIOS    = "REQUEST_USUARIOS";
-export const RECEIVE_USUARIOS    = "RECEIVE_USUARIOS";
-export const ERROR_USUARIOS      = "ERROR_USUARIOS";
-export const RESET_USUARIOS      = "RESET_USUARIOS";
+export const REQUEST_USUARIOS = "REQUEST_USUARIOS";
+export const RECEIVE_USUARIOS = "RECEIVE_USUARIOS";
+export const ERROR_USUARIOS = "ERROR_USUARIOS";
+export const RESET_USUARIOS = "RESET_USUARIOS";
 
 export function invalidateUsuarios() {
     return {
@@ -361,16 +369,20 @@ export function fetchUsuarios() {
                         dispatch(logout());
                         return;
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorUsuarios(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorUsuarios(error.message));
+                                    else
+                                        dispatch(errorUsuarios(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorUsuarios(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorUsuarios(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorUsuarios(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -378,7 +390,7 @@ export function fetchUsuarios() {
 }
 
 function shouldFetchUsuarios(state) {
-    const usuariosById   = state.usuarios.byId;
+    const usuariosById = state.usuarios.byId;
     const usuariosAllIds = state.usuarios.allIds;
     if (usuariosById.isFetching) {
         return false;
@@ -399,10 +411,10 @@ export function fetchUsuariosIfNeeded() {
 
 //USUARIO LOGUEADO
 export const INVALIDATE_USUARIO_ID = 'INVALIDATE_USUARIO_ID';
-export const REQUEST_USUARIO_ID    = "REQUEST_USUARIO_ID";
-export const RECEIVE_USUARIO_ID    = "RECEIVE_USUARIO_ID";
-export const ERROR_USUARIO_ID      = "ERROR_USUARIO_ID";
-export const RESET_USUARIO_ID      = "RESET_USUARIO_ID";
+export const REQUEST_USUARIO_ID = "REQUEST_USUARIO_ID";
+export const RECEIVE_USUARIO_ID = "RECEIVE_USUARIO_ID";
+export const ERROR_USUARIO_ID = "ERROR_USUARIO_ID";
+export const RESET_USUARIO_ID = "RESET_USUARIO_ID";
 
 export function invalidateUsuarioById() {
     return {
@@ -468,7 +480,7 @@ export function fetchUsuarioById(id) {
 }
 
 function shouldFetchUsuarioById(id, state) {
-    const usuariosById   = state.usuarios.byId;
+    const usuariosById = state.usuarios.byId;
     const usuariosAllIds = state.usuarios.allIds;
     if (usuariosById.isFetchingUsuario) {
         return false;
@@ -488,11 +500,11 @@ export function fetchUsuarioByIdIfNeeded(id) {
 }
 
 //USUARIO DELETE
-export const RESET_DELETE_USUARIO   = "RESET_DELETE_USUARIO";
+export const RESET_DELETE_USUARIO = "RESET_DELETE_USUARIO";
 export const REQUEST_DELETE_USUARIO = "REQUEST_DELETE_USUARIO";
 export const RECEIVE_DELETE_USUARIO = "RECEIVE_DELETE_USUARIO";
 export const ERROR_DELETE_USUARIO = "ERROR_DELETE_USUARIO";
-export const RECEIVE_INHABILITAR_USUARIO   = "RECEIVE_INHABILITAR_USUARIO";
+export const RECEIVE_INHABILITAR_USUARIO = "RECEIVE_INHABILITAR_USUARIO";
 
 function requestDeleteUsuario() {
     return {
@@ -558,16 +570,20 @@ export function saveDeleteUsuario(id, motivo) {
                         dispatch(logout());
                         return Promise.reject(error);
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorDeleteUsuario(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorDeleteUsuario(error.message));
+                                    else
+                                        dispatch(errorDeleteUsuario(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorDeleteUsuario(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorDeleteUsuario(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorDeleteUsuario(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });

@@ -88,16 +88,20 @@ export function saveCreateVenta() {
                         dispatch(logout());
                         return;
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorCreateVenta(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorCreateVenta(error.message));
+                                    else
+                                        dispatch(errorCreateVenta(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorCreateVenta(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorCreateVenta(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorCreateVenta(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -168,16 +172,20 @@ export function fetchVentas() {
                         dispatch(logout())
                         return;
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorVentas(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorVentas(error.message));
+                                    else
+                                        dispatch(errorVentas(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorVentas(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorVentas(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorVentas(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -305,7 +313,7 @@ export function fetchVentaById(id) {
 // ANULAR VENTA
 export const REQUEST_ANULAR_VENTA = "REQUEST_ANULAR_VENTA";
 export const RECEIVE_ANULAR_VENTA = "RECEIVE_ANULAR_VENTA";
-export const ERROR_ANULAR_VENTA   = "ERROR_ANULAR_VENTA";
+export const ERROR_ANULAR_VENTA = "ERROR_ANULAR_VENTA";
 
 
 function requestAnularVenta() {
@@ -357,16 +365,20 @@ export function anularVenta(id) {
                         dispatch(errorAnularVenta(errorMessages.GENERAL_ERROR));
                         return;
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorAnularVenta(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorAnularVenta(error.message));
+                                    else
+                                        dispatch(errorAnularVenta(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorAnularVenta(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorAnularVenta(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorAnularVenta(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -376,7 +388,7 @@ export function anularVenta(id) {
 // PDF VENTA
 export const REQUEST_PDF_VENTA = "REQUEST_PDF_VENTA";
 export const RECEIVE_PDF_VENTA = "RECEIVE_PDF_VENTA";
-export const ERROR_PDF_VENTA   = "ERROR_PDF_VENTA";
+export const ERROR_PDF_VENTA = "ERROR_PDF_VENTA";
 
 
 function requestPdfVenta() {
@@ -431,15 +443,15 @@ export function pdfVenta(id) {
                     default:
                         try {
                             error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorPdfVenta(error.message));
-                                else
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorPdfVenta(error.message));
+                                    else
+                                        dispatch(errorPdfVenta(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorPdfVenta(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorPdfVenta(errorMessages.GENERAL_ERROR));
-                            });
+                                });
                         } catch (e) {
                             dispatch(errorPdfVenta(errorMessages.GENERAL_ERROR));
                         }

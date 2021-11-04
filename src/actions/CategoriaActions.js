@@ -86,7 +86,8 @@ export function saveCreateCategoria(volverA) {
                         dispatch(logout());
                         return;
                     default:
-                        error.json()
+                        try {
+                            error.json()
                             .then((error) => {
                                 if (error.message !== "")
                                     dispatch(errorCreateCategoria(error.message));
@@ -96,6 +97,9 @@ export function saveCreateCategoria(volverA) {
                             .catch((error) => {
                                 dispatch(errorCreateCategoria(errorMessages.GENERAL_ERROR));
                             });
+                        } catch (e) {
+                            dispatch(errorCreateCategoria(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -165,16 +169,20 @@ export function saveUpdateCategoria() {
                         dispatch(logout());
                         return Promise.reject(error);
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorUpdateCategoria(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorUpdateCategoria(error.message));
+                                    else
+                                        dispatch(errorUpdateCategoria(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorUpdateCategoria(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorUpdateCategoria(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorUpdateCategoria(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -416,16 +424,20 @@ export function saveDeleteCategoria(id) {
                         dispatch(logout());
                         return Promise.reject(error);
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorDeleteCategoria(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorDeleteCategoria(error.message));
+                                    else
+                                        dispatch(errorDeleteCategoria(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorDeleteCategoria(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorDeleteCategoria(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorDeleteCategoria(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });

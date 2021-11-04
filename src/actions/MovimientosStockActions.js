@@ -8,14 +8,14 @@ import movimientos from "../api/movimientos";
 import * as errorMessages from '../constants/MessageConstants';
 
 //Normalizer
-import {normalizeDatos} from "../normalizers/normalizeMovimientos";
+import { normalizeDatos } from "../normalizers/normalizeMovimientos";
 
 // BUSCAR MOVIMIENTOS
 export const INVALIDATE_MOVIMIENTOS = 'INVALIDATE_MOVIMIENTOS';
-export const REQUEST_MOVIMIENTOS    = "REQUEST_MOVIMIENTOS";
-export const RECEIVE_MOVIMIENTOS    = "RECEIVE_MOVIMIENTOS";
-export const ERROR_MOVIMIENTOS      = "ERROR_MOVIMIENTOS";
-export const RESET_MOVIMIENTOS      = "RESET_MOVIMIENTOS";
+export const REQUEST_MOVIMIENTOS = "REQUEST_MOVIMIENTOS";
+export const RECEIVE_MOVIMIENTOS = "RECEIVE_MOVIMIENTOS";
+export const ERROR_MOVIMIENTOS = "ERROR_MOVIMIENTOS";
+export const RESET_MOVIMIENTOS = "RESET_MOVIMIENTOS";
 
 export function invalidateMovimientos() {
     return {
@@ -81,16 +81,20 @@ export function fetchMovimientos(idProducto, idIngreso) {
                         //dispatch(logout());
                         return;
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorMovimientos(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorMovimientos(error.message));
+                                    else
+                                        dispatch(errorMovimientos(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorMovimientos(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorMovimientos(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorMovimientos(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -98,7 +102,7 @@ export function fetchMovimientos(idProducto, idIngreso) {
 }
 
 function shouldFetchMovimientos(state) {
-    const movimientosById   = state.movimientos.byId;
+    const movimientosById = state.movimientos.byId;
     const movimientosAllIds = state.movimientos.allIds;
     if (movimientosById.isFetching) {
         return false;

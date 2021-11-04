@@ -87,16 +87,20 @@ export function saveCreateIngreso() {
                         dispatch(logout());
                         return;
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorCreateIngreso(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorCreateIngreso(error.message));
+                                    else
+                                        dispatch(errorCreateIngreso(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorCreateIngreso(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorCreateIngreso(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorCreateIngreso(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -167,16 +171,20 @@ export function fetchIngresos() {
                         dispatch(logout())
                         return;
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorIngresos(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorIngresos(error.message));
+                                    else
+                                        dispatch(errorIngresos(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorIngresos(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorIngresos(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorIngresos(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
@@ -304,7 +312,7 @@ export function fetchIngresoById(id) {
 // ANULAR INGRESO
 export const REQUEST_ANULAR_INGRESO = "REQUEST_ANULAR_INGRESO";
 export const RECEIVE_ANULAR_INGRESO = "RECEIVE_ANULAR_INGRESO";
-export const ERROR_ANULAR_INGRESO   = "ERROR_ANULAR_INGRESO";
+export const ERROR_ANULAR_INGRESO = "ERROR_ANULAR_INGRESO";
 
 
 function requestAnularIngreso() {
@@ -356,16 +364,20 @@ export function anularIngreso(id) {
                         dispatch(errorAnularIngreso(errorMessages.GENERAL_ERROR));
                         return;
                     default:
-                        error.json()
-                            .then(error => {
-                                if (error.message !== "")
-                                    dispatch(errorAnularIngreso(error.message));
-                                else
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorAnularIngreso(error.message));
+                                    else
+                                        dispatch(errorAnularIngreso(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
                                     dispatch(errorAnularIngreso(errorMessages.GENERAL_ERROR));
-                            })
-                            .catch(error => {
-                                dispatch(errorAnularIngreso(errorMessages.GENERAL_ERROR));
-                            });
+                                });
+                        } catch (e) {
+                            dispatch(errorAnularIngreso(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
