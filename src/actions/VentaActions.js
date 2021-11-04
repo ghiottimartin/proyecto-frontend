@@ -317,7 +317,7 @@ function requestAnularVenta() {
 function receiveAnularVenta(id, message) {
     return {
         type: RECEIVE_ANULAR_VENTA,
-        idCancelado: id,
+        idAnulado: id,
         message: message,
         receivedAt: Date.now()
     }

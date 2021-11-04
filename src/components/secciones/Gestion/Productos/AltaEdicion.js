@@ -167,7 +167,7 @@ class AltaEdicion extends React.Component {
 
     /**
      * Comprueba si existen nombre similares al que se intenta editar o crear, en caso de que existan
-     * se alerta al usuario y consulta sobre si desea guardar o cancelar.
+     * se alerta al usuario y consulta sobre si desea guardar o anular.
      * 
      * @returns Boolean
      */

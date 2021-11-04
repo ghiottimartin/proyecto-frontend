@@ -36,9 +36,9 @@ import {
     RECEIVE_ENTREGAR_PEDIDO,
     REQUEST_ENTREGAR_PEDIDO,
     ERROR_ENTREGAR_PEDIDO,
-    RECEIVE_CANCELAR_PEDIDO,
-    REQUEST_CANCELAR_PEDIDO,
-    ERROR_CANCELAR_PEDIDO,
+    RECEIVE_ANULAR_PEDIDO,
+    REQUEST_ANULAR_PEDIDO,
+    ERROR_ANULAR_PEDIDO,
     INVALIDATE_PEDIDOS_VENDEDOR,
     REQUEST_PEDIDOS_VENDEDOR,
     RECEIVE_PEDIDOS_VENDEDOR,
@@ -87,9 +87,9 @@ function pedidosById(state = {
     registros: 0,
 }, action) {
     switch (action.type) {
-        case RECEIVE_CANCELAR_PEDIDO:
+        case RECEIVE_ANULAR_PEDIDO:
             let pedidoAbierto = state.abierto;
-            if (action.idCancelado === state.abierto.id) {
+            if (action.idAnulado === state.abierto.id) {
                 pedidoAbierto = {
                     id: 0,
                     forzar: false,
@@ -244,20 +244,20 @@ function pedidosById(state = {
                 })
             });
         
-            // CANCELAR PEDIDO
-        case RECEIVE_CANCELAR_PEDIDO:
+            // ANULAR PEDIDO
+        case RECEIVE_ANULAR_PEDIDO:
             return Object.assign({}, state, {
                 isCanceling: false,
                 success: action.message,
                 error: null,
             });
-        case REQUEST_CANCELAR_PEDIDO:
+        case REQUEST_ANULAR_PEDIDO:
             return Object.assign({}, state, {
                 isCanceling: true,
                 success: "",
                 error: null,
             });
-        case ERROR_CANCELAR_PEDIDO:
+        case ERROR_ANULAR_PEDIDO:
             return Object.assign({}, state, {
                 isCanceling: false,
                 success: "",

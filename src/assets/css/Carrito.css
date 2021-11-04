@@ -46,12 +46,12 @@
     transform: none;
 }
 
-.carrito-botones .cancelar {
+.carrito-botones .anular {
     color: black;
     background-color: #ffffff;
 }
 
-.carrito-botones .cancelar:hover {
+.carrito-botones .anular:hover {
     background-color: #e3e3e3;
 }
 

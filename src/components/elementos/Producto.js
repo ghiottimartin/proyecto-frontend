@@ -69,7 +69,7 @@ class Producto extends React.Component {
 
         const buscandoPedidoAbierto = this.props.pedidos.byId.isFetchingPedido;
         let gestionCantidad = cantidad === 0 ?
-            <Button variant="outlined" color="primary" className="cancelar no-cerrar-carrito" onClick={() => this.props.agregarProducto(producto, 1)}>
+            <Button variant="outlined" color="primary" className="anular no-cerrar-carrito" onClick={() => this.props.agregarProducto(producto, 1)}>
                 <ShoppingCartIcon className="icono-material hvr-grow"/>Agregar
             </Button>
             :

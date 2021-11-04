@@ -90,7 +90,7 @@ class Listado extends React.Component {
             confirmButtonText: 'Borrar',
             confirmButtonColor: colores.COLOR_ROJO,
             cancelButtonColor: '#bfbfbf',
-            cancelButtonText: 'Cancelar',
+            cancelButtonText: 'Anular',
         }).then((result) => {
             if (result.isConfirmed && logueado.id !== usuario.id) {
                 this.props.saveDeleteUsuario(usuario.id);
@@ -124,7 +124,7 @@ class Listado extends React.Component {
             confirmButtonText: 'Deshabilitar',
             confirmButtonColor: colores.COLOR_ROJO,
             cancelButtonColor: '#bfbfbf',
-            cancelButtonText: 'Cancelar',
+            cancelButtonText: 'Anular',
             input: 'textarea',
             inputLabel: 'Motivo',
             inputPlaceholder: 'Indique un motivo...',
@@ -175,7 +175,7 @@ class Listado extends React.Component {
             showCancelButton: true,
             focusConfirm: true,
             confirmButtonText: 'Habilitar',
-            cancelButtonText: 'Cancelar',
+            cancelButtonText: 'Anular',
             confirmButtonColor: 'rgb(92, 184, 96)',
             cancelButtonColor: '#bfbfbf',
         }).then((result) => {

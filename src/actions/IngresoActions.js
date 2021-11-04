@@ -316,7 +316,7 @@ function requestAnularIngreso() {
 function receiveAnularIngreso(id, message) {
     return {
         type: RECEIVE_ANULAR_INGRESO,
-        idCancelado: id,
+        idAnulado: id,
         message: message,
         receivedAt: Date.now()
     }

@@ -293,7 +293,7 @@ function requestAnularReemplazo() {
 function receiveAnularReemplazo(id, message) {
     return {
         type: RECEIVE_ANULAR_REEMPLAZO,
-        idCancelado: id,
+        idAnulado: id,
         message: message,
         receivedAt: Date.now()
     }

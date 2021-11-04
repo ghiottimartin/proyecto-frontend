@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 //Actions
-import { cancelarPedido, entregarPedido, fetchPedidos, fetchPedidosVendedor, resetPedidos, resetPedidosVendedor, updateFiltros, updatePedido, pedidoDisponible } from "../../../actions/PedidoActions";
+import { anularPedido, entregarPedido, fetchPedidos, fetchPedidosVendedor, resetPedidos, resetPedidosVendedor, updateFiltros, updatePedido, pedidoDisponible } from "../../../actions/PedidoActions";
 
 //Api
 import auth from "../../../api/authentication";
@@ -163,8 +163,8 @@ class Listado extends React.Component {
                 this.entregarPedido(pedido);
                 break;
 
-            case 'cancelar':
-                this.cancelarPedido(pedido);
+            case 'anular':
+                this.anularPedido(pedido);
                 break;
 
             case 'disponible':
@@ -231,21 +231,21 @@ class Listado extends React.Component {
     }
 
     /**
-     * Marca el pedido como cancelado.
+     * Marca el pedido como anulado.
      * 
      * @param {Object} pedido 
      * @returns {void}
      */
-    cancelarPedido(pedido) {
+    anularPedido(pedido) {
         let id = pedido.id;
         if (!id) {
             Swal.fire({
-                title: `Hubo un error al cancelar el pedido intente refrescar la página.`,
+                title: `Hubo un error al anular el pedido intente refrescar la página.`,
                 icon: 'warning',
                 showCloseButton: true,
                 showCancelButton: false,
                 focusConfirm: true,
-                confirmButtonText: 'Cancelar',
+                confirmButtonText: 'Anular',
                 confirmButtonColor: 'rgb(88, 219, 131)',
                 cancelButtonColor: '#bfbfbf',
             });
@@ -253,39 +253,39 @@ class Listado extends React.Component {
         }
         if (pedido.ultimo_estado === 'abierto') {
             Swal.fire({
-                title: `¿Está seguro de cancelar el Pedido ${pedido.id_texto}? `,
+                title: `¿Está seguro de anular el Pedido ${pedido.id_texto}? `,
                 icon: 'question',
                 showCloseButton: true,
                 showCancelButton: true,
                 focusConfirm: true,
-                confirmButtonText: 'Cancelar',
+                confirmButtonText: 'Anular',
                 confirmButtonColor: colores.COLOR_ROJO,
                 cancelButtonColor: '#bfbfbf',
-                cancelButtonText: 'Continuar',
+                cancelButtonText: 'Cancelar',
             }).then((result) => {
                 if (result.isConfirmed) {
                     let idUsuario = auth.idUsuario();
                     this.setState({ buscando: true });
                     let listadoVendedor = this.comprobarRutaTipoVendedor();
-                    this.props.cancelarPedido(pedido.id, idUsuario, listadoVendedor);
+                    this.props.anularPedido(pedido.id, idUsuario, listadoVendedor);
                 }
             });
         } else {
             Swal.fire({
-                title: `¿Está seguro de cancelar el Pedido ${pedido.id_texto}? `,
+                title: `¿Está seguro de anular el Pedido ${pedido.id_texto}? `,
                 icon: 'question',
                 showCloseButton: true,
                 showCancelButton: true,
                 focusConfirm: true,
-                confirmButtonText: 'Cancelar',
+                confirmButtonText: 'Anular',
                 confirmButtonColor: colores.COLOR_ROJO,
                 cancelButtonColor: '#bfbfbf',
-                cancelButtonText: 'Continuar',
+                cancelButtonText: 'Cancelar',
                 input: 'textarea',
                 inputLabel: 'Motivo',
-                inputPlaceholder: 'Indique un motivo de cancelación...',
+                inputPlaceholder: 'Indique un motivo de anulación...',
                 inputAttributes: {
-                    'aria-label': 'Indique un motivo de cancelación',
+                    'aria-label': 'Indique un motivo de anulación',
                     required: true,
                     minlength: 10
                 },
@@ -307,7 +307,7 @@ class Listado extends React.Component {
                     let listadoVendedor = this.comprobarRutaTipoVendedor();
 
                     let motivo = result.value;
-                    this.props.cancelarPedido(pedido.id, idUsuario, listadoVendedor, motivo);
+                    this.props.anularPedido(pedido.id, idUsuario, listadoVendedor, motivo);
                 }
             });
         }
@@ -549,8 +549,8 @@ const mapDispatchToProps = (dispatch) => {
         entregarPedido: (id, idUsuario, listadoVendedor) => {
             dispatch(entregarPedido(id, idUsuario, listadoVendedor))
         },
-        cancelarPedido: (id, idUsuario, listadoVendedor, motivo) => {
-            dispatch(cancelarPedido(id, idUsuario, listadoVendedor, motivo))
+        anularPedido: (id, idUsuario, listadoVendedor, motivo) => {
+            dispatch(anularPedido(id, idUsuario, listadoVendedor, motivo))
         },
         fetchPedidosVendedor: () => {
             dispatch(fetchPedidosVendedor())

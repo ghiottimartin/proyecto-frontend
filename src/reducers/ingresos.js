@@ -216,7 +216,7 @@ function update(state = {
                 success: "",
                 error: null,
             });
-         // CANCELACIÓN
+         // ANULACIÓN
          case RECEIVE_ANULAR_INGRESO:
             return Object.assign({}, state, {
                 isUpdating: false,

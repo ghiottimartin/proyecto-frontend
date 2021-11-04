@@ -423,7 +423,7 @@ export function fetchPedidoAbierto() {
                 switch (error.status) {
                     case 401:
                         dispatch(errorPedidoAbierto(errorMessages.UNAUTHORIZED_TOKEN));
-                        dispatch(logout());
+                        //dispatch(logout()); No realizamos logout porque se le permite estar logueado.
                         return;
                     default:
                         error.json()
@@ -627,38 +627,38 @@ export function entregarPedido(id, idUsuario, listadoVendedor) {
     }
 }
 
-// CANCELAR PEDIDO
-export const REQUEST_CANCELAR_PEDIDO = "REQUEST_CANCELAR_PEDIDO";
-export const RECEIVE_CANCELAR_PEDIDO = "RECEIVE_CANCELAR_PEDIDO";
-export const ERROR_CANCELAR_PEDIDO = "ERROR_CANCELAR_PEDIDO";
+// ANULAR PEDIDO
+export const REQUEST_ANULAR_PEDIDO = "REQUEST_ANULAR_PEDIDO";
+export const RECEIVE_ANULAR_PEDIDO = "RECEIVE_ANULAR_PEDIDO";
+export const ERROR_ANULAR_PEDIDO = "ERROR_ANULAR_PEDIDO";
 
 
-function requestCancelarPedido() {
+function requestAnularPedido() {
     return {
-        type: REQUEST_CANCELAR_PEDIDO,
+        type: REQUEST_ANULAR_PEDIDO,
     }
 }
 
-function receiveCancelarPedido(id, message) {
+function receiveAnularPedido(id, message) {
     return {
-        type: RECEIVE_CANCELAR_PEDIDO,
-        idCancelado: id,
+        type: RECEIVE_ANULAR_PEDIDO,
+        idAnulado: id,
         success: message,
         receivedAt: Date.now()
     }
 }
 
-function errorCancelarPedido(error) {
+function errorAnularPedido(error) {
     return {
-        type: ERROR_CANCELAR_PEDIDO,
+        type: ERROR_ANULAR_PEDIDO,
         error: error,
     }
 }
 
-export function cancelarPedido(id, idUsuario, listadoVendedor, motivo) {
+export function anularPedido(id, idUsuario, listadoVendedor, motivo) {
     return dispatch => {
-        dispatch(requestCancelarPedido());
-        return pedidos.cancelarPedido(id, motivo)
+        dispatch(requestAnularPedido());
+        return pedidos.anularPedido(id, motivo)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
@@ -668,7 +668,7 @@ export function cancelarPedido(id, idUsuario, listadoVendedor, motivo) {
                 }
             })
             .then(function (data) {
-                dispatch(receiveCancelarPedido(id, data.message));
+                dispatch(receiveAnularPedido(id, data.message));
                 dispatch(resetPedidos())
                 dispatch(resetPedidoAbierto())
                 dispatch(fetchPedidoAbierto())
@@ -689,22 +689,22 @@ export function cancelarPedido(id, idUsuario, listadoVendedor, motivo) {
                 }
                 switch (error.status) {
                     case 401:
-                        dispatch(errorCancelarPedido(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(errorAnularPedido(errorMessages.UNAUTHORIZED_TOKEN));
                         dispatch(logout());
                         return;
                     case 404:
-                        dispatch(errorCancelarPedido(errorMessages.GENERAL_ERROR));
+                        dispatch(errorAnularPedido(errorMessages.GENERAL_ERROR));
                         return;
                     default:
                         error.json()
                             .then(error => {
                                 if (error.message !== "")
-                                    dispatch(errorCancelarPedido(error.message));
+                                    dispatch(errorAnularPedido(error.message));
                                 else
-                                    dispatch(errorCancelarPedido(errorMessages.GENERAL_ERROR));
+                                    dispatch(errorAnularPedido(errorMessages.GENERAL_ERROR));
                             })
                             .catch(error => {
-                                dispatch(errorCancelarPedido(errorMessages.GENERAL_ERROR));
+                                dispatch(errorAnularPedido(errorMessages.GENERAL_ERROR));
                             });
                         return;
                 }

@@ -35,7 +35,7 @@ class Filtros extends React.Component {
         opciones.push(<option key={2} value="en curso">En curso</option>);
         opciones.push(<option key={3} value="disponible">Disponible</option>);
         opciones.push(<option key={4} value="recibido">Entregado</option>);
-        opciones.push(<option key={5} value="cancelado">Cancelado</option>);
+        opciones.push(<option key={5} value="anulado">Anulado</option>);
         return opciones;
 
     }

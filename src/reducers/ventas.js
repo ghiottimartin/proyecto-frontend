@@ -219,7 +219,7 @@ function update(state = {
                 success: "",
                 error: null,
             });
-         // CANCELACIÓN
+         // ANULACIÓN
          case RECEIVE_ANULAR_VENTA:
             return Object.assign({}, state, {
                 isUpdating: false,

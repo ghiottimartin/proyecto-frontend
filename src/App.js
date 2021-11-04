@@ -123,6 +123,7 @@ class App extends React.Component {
                 confirmButtonText: 'Aceptar',
                 confirmButtonColor: 'rgb(88, 219, 131)',
                 cancelButtonColor: '#bfbfbf',
+                cancelButtonText: 'Cancelar',
             }).then((result) => {
                 if (result.isConfirmed) {
                     let ruta = `${rutas.LOGIN}?volverA=${rutas.ALTA_PEDIDO}`
@@ -149,7 +150,7 @@ class App extends React.Component {
             } else if (pedido.disponible) {
                 Swal.fire({
                     title: "No puede realizar otro pedido en este momento",
-                    text: 'Ya tiene un pedido por retirar, debe retirarlo por el local o cancelarlo',
+                    text: 'Ya tiene un pedido por retirar, debe retirarlo por el local o anularlo',
                     icon: 'question',
                     showCloseButton: true,
                     focusConfirm: true,
@@ -208,17 +209,17 @@ class App extends React.Component {
         return linea;
     }
 
-    cancelarPedido(sinLineas) {
+    anularPedido(sinLineas) {
         const abierto = this.props.pedidos.byId.abierto;
         if (abierto.id > 0 && !sinLineas) {
             Swal.fire({
-                title: `¿Está seguro de cancelar el pedido? `,
+                title: `¿Está seguro de anular el pedido? `,
                 icon: 'warning',
                 showCloseButton: true,
                 showCancelButton: true,
                 focusConfirm: true,
-                confirmButtonText: 'Cancelar',
-                cancelButtonText: 'Continuar',
+                confirmButtonText: 'Anular',
+                cancelButtonText: 'Cancelar',
                 confirmButtonColor: colores.COLOR_ROJO,
                 cancelButtonColor: '#bfbfbf',
             }).then((result) => {
@@ -244,11 +245,21 @@ class App extends React.Component {
                     guardando={guardando}
                     borrando={borrando}
                     changeMostrar={() => this.changeMostrar()}
-                    cancelarPedido={(sinLineas) => this.cancelarPedido(sinLineas)}
+                    anularPedido={(sinLineas) => this.anularPedido(sinLineas)}
                     agregarProducto={(producto, cantidad) => this.agregarProducto(producto, cantidad)}
                 />
                 <div className={`contenedor ${claseBlur}`} style={{ width: mostrar ? "calc(100% - 300px)" : "100%" }}>
                     <Switch>
+                        <Route exact path={[rutas.ALTA_PEDIDO, "/"]} render={(props) =>
+                            <AltaPedido
+                                {...props}
+                                getCantidad={(producto) => this.getCantidad(producto)}
+                                changeMostrar={() => this.changeMostrar()}
+                                agregarProducto={(producto, cantidad) => this.agregarProducto(producto, cantidad)}
+                                producto={producto}
+                                guardando={guardando}
+                            />}
+                        />
                         <Route exact path={rutas.LOGIN} component={Login} />
                         <Route exact path={rutas.RESET_PASSWORD} component={CambiarPassword} />
                         <Route exact path={rutas.VALIDAR_EMAIL} component={ValidarEmail} />
@@ -260,16 +271,6 @@ class App extends React.Component {
                         <Route exact path={rutas.PRODUCTOS_ACCIONES} component={AltaEdicionProducto} />
                         <Route exact path={rutas.CATEGORIAS_LISTAR_ADMIN} component={ListadoCategorias} />
                         <Route exact path={rutas.CATEGORIAS_ACCIONES} component={AltaEdicionCategoria} />
-                        <Route exact path={[rutas.ALTA_PEDIDO, "/"]} render={(props) =>
-                            <AltaPedido
-                                {...props}
-                                getCantidad={(producto) => this.getCantidad(producto)}
-                                changeMostrar={() => this.changeMostrar()}
-                                agregarProducto={(producto, cantidad) => this.agregarProducto(producto, cantidad)}
-                                producto={producto}
-                                guardando={guardando}
-                            />}
-                        />
                         <Route exact path={rutas.PEDIDOS} component={PedidoListado} />
                         <Route exact path={rutas.PEDIDO_VISUALIZAR} component={PedidoVisualizar} />
                         <Route exact path={rutas.INGRESO_MERCADERIA} component={IngresoListado} />

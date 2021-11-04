@@ -171,10 +171,10 @@ function Listado(props) {
             showCloseButton: true,
             showCancelButton: true,
             focusConfirm: true,
-            confirmButtonText: 'Cancelar',
+            confirmButtonText: 'Anular',
             confirmButtonColor: colores.COLOR_ROJO,
             cancelButtonColor: '#bfbfbf',
-            cancelButtonText: 'Continuar',
+            cancelButtonText: 'Cancelar',
         }).then((result) => {
             if (result.isConfirmed) {
                 props.anularVenta(venta.id);

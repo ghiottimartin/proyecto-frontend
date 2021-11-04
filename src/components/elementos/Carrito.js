@@ -140,8 +140,8 @@ class Carrito extends React.Component {
                     <button className="entregar bg-success" disabled={deshabilitar} onClick={() => this.entregarPedido(deshabilitar)}>
                         Enviar pedido
                     </button>
-                    <button className="cancelar" disabled={deshabilitar} onClick={() => this.props.cancelarPedido(deshabilitar)}>
-                        Cancelar
+                    <button className="anular" disabled={deshabilitar} onClick={() => this.props.anularPedido(deshabilitar)}>
+                        Anular
                     </button>
                 </div>
                 <div className="carrito-compras">
