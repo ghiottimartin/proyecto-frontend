@@ -303,7 +303,7 @@ export function fetchUsuarioLogueadoIfNeeded() {
     }
 }
 
-//USUARIO LOGUEADO
+// BUSQUEDA DE USUARIOS
 export const INVALIDATE_USUARIOS = 'INVALIDATE_USUARIOS';
 export const REQUEST_USUARIOS = "REQUEST_USUARIOS";
 export const RECEIVE_USUARIOS = "RECEIVE_USUARIOS";
@@ -604,5 +604,89 @@ export function updateFiltros(filtros) {
 export function resetFiltros() {
     return {
         type: RESET_FILTROS
+    }
+}
+
+// BUSQUEDA DE MOZOS
+export const INVALIDATE_MOZOS = 'INVALIDATE_MOZOS';
+export const REQUEST_MOZOS = "REQUEST_MOZOS";
+export const RECEIVE_MOZOS = "RECEIVE_MOZOS";
+export const ERROR_MOZOS = "ERROR_MOZOS";
+export const RESET_MOZOS = "RESET_MOZOS";
+
+export function invalidateMozos() {
+    return {
+        type: INVALIDATE_MOZOS,
+    }
+}
+
+export function resetMozos() {
+    return {
+        type: RESET_MOZOS
+    }
+}
+
+function requestMozos() {
+    return {
+        type: REQUEST_MOZOS,
+    }
+}
+
+function receiveMozos(json) {
+    return {
+        type: RECEIVE_MOZOS,
+        mozos: normalizeDatos(json.mozos),
+        receivedAt: Date.now()
+    }
+}
+
+function errorMozos(error) {
+    return {
+        type: ERROR_MOZOS,
+        error: error,
+    }
+}
+
+export function fetchMozos() {
+    return (dispatch) => {
+        dispatch(requestMozos());
+        return usuarios.getMozos()
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    var data = response.json();
+                    return data;
+                }
+            })
+            .then(function (data) {
+                if (data.exito) {
+                    dispatch(receiveMozos(data.datos));
+                }
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorMozos(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(logout());
+                        return;
+                    default:
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorMozos(error.message));
+                                    else
+                                        dispatch(errorMozos(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
+                                    dispatch(errorMozos(errorMessages.GENERAL_ERROR));
+                                });
+                        } catch (e) {
+                            dispatch(errorMozos(errorMessages.GENERAL_ERROR));
+                        }
+                        return;
+                }
+            });
     }
 }

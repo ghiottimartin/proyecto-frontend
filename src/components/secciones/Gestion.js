@@ -22,6 +22,7 @@ import imgUsuarios from "../../assets/img/menu/gestion-usuario.svg";
 import imgCompras from "../../assets/img/menu/compras.svg";
 import imgProductos from "../../assets/img/menu/productos.png";
 import imgPedidos from "../../assets/img/menu/pedidos.png";
+import imgMesa from "../../assets/img/menu/table.png";
 
 //Librerias
 import history from "../../history";
@@ -48,14 +49,20 @@ class Gestion extends React.Component {
         switch (ruta) {
             case rutas.INGRESO_MERCADERIA:
                 return imgCompras;
+            
             case rutas.USUARIOS_LISTAR:
                 return imgUsuarios;
+            
             case rutas.PRODUCTOS_LISTAR_ADMIN:
             case rutas.REEMPLAZO_MERCADERIA_LISTAR:
                 return imgProductos;
+            
             case rutas.PEDIDOS_VENDEDOR:
             case rutas.VENTA_ALMACEN_LISTADO:
                 return imgPedidos;
+            
+            case rutas.MESAS_LISTAR:
+                return imgMesa;
             
         }
     }

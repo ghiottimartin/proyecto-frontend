@@ -100,6 +100,18 @@ var usuarios = {
         }
         return fetch(c.BASE_URL + '/usuarios/' + id + '/' + "?motivo=" + motivo, defaultOptions);
     },
+
+    getMozos() {
+        let defaultOptions = {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "Authorization": "Token " + localStorage.token
+            }
+        };
+
+        return fetch(c.BASE_URL + '/usuarios/mozos/', defaultOptions);
+    }
 };
 
 export default usuarios;
