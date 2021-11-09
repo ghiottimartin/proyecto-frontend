@@ -66,6 +66,16 @@ input, textarea, select, select option {
   border-top: 5px solid #006187;
 }
 
+.table td {
+  border-top: 1px solid rgba(128, 128, 128, 0.658) !important;
+  border-bottom: 1px solid rgba(128, 128, 128, 0.658) !important;
+}
+
+.table th {
+  border-top: 2px solid rgba(128, 128, 128, 0.658) !important;
+  border-bottom: 2px solid rgba(128, 128, 128, 0.658) !important;
+}
+
 .tarjeta-body h4 {
   text-align: left;
   margin-bottom: 10px;
