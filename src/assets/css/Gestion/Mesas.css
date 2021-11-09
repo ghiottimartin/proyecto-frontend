@@ -1,0 +1,38 @@
+.seccion-mesas {
+  height: calc(100vh - 100px) !important;
+  margin: 0 20px !important;
+  overflow: auto;
+}
+
+.seccion-mesas .boton-modal-responsive {
+    border-radius: 6px;
+    border: 1px solid grey;
+}
+
+.seccion-mesas .boton-modal {
+    border: none;
+    font-weight: bold;
+}
+
+.seccion-mesas ul {
+  padding: 0;
+  list-style: none;
+}
+
+.seccion-mesas li {
+  background-color: white;
+  margin: 5px;
+  padding: 5px 10px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+
+.seccion-mesas li:hover {
+  background-color: #007bff!important;
+  color: white;
+}
+
+.seccion-mesas .boton-transparente {
+  width: 50px;
+  text-align: right;
+}

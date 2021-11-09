@@ -78,6 +78,13 @@ export const VENTA_ALMACEN_LISTADO       = '/venta-almacen/listado';
 export const VENTA_ALMACEN_VISUALIZAR    = '/venta-almacen/visualizar/';
 export const VENTA_ALMACEN_VISUALIZAR_ID = '/venta-almacen/visualizar/:id';
 
+//Mesa
+export const MESA_ABM       = '/mesas/:accion/:id?';
+export const MESA_ALTA      = '/mesas/alta';
+export const MESAS_LISTAR   = '/mesas/listar';
+export const MESA_EDITAR    = '/mesas/editar/';
+export const MESA_EDITAR_ID = '/mesas/editar/:id';
+
 /**
  * Devuelve la url de usuarios
  *
@@ -139,6 +146,9 @@ const RUTAS = [
     REEMPLAZO_MERCADERIA_VISUALIZAR,
     VENTA_ALMACEN_ALTA,
     VENTA_ALMACEN_LISTADO,
+    MESAS_LISTAR,
+    MESA_ALTA,
+    MESA_EDITAR,
 ];
 
 /**

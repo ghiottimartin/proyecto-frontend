@@ -91,6 +91,11 @@ input, textarea, select, select option {
   filter: blur(5px);
 }
 
+.boton-transparente {
+  background-color: transparent;
+  border: none;
+}
+
 .hvr-grow {
   display: inline-block;
   vertical-align: middle;
@@ -127,6 +132,6 @@ input, textarea, select, select option {
 
 @media (max-width: 450px) {
   .tarjeta-body {
-    width: 250px !important;
+    min-width: 250px !important;
   }
 }
