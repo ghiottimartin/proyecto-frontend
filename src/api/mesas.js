@@ -18,7 +18,7 @@ var mesas = {
                 "Authorization": "Token " + localStorage.token
             }
         };
-        return fetch(c.BASE_URL + '/mesas/' + query, defaultOptions);
+        return fetch(c.BASE_URL + '/mesas/mesa/' + query, defaultOptions);
     },
     
     saveCreate(mesa) {

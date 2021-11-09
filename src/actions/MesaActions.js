@@ -233,11 +233,11 @@ export function resetFiltros() {
 }
 
 //MESA UPDATE
-export const UPDATE_MESA = 'UPDATE_MESA';
-export const RESET_UPDATE_MESA = "RESET_UPDATE_MESA";
+export const UPDATE_MESA		 = 'UPDATE_MESA';
+export const RESET_UPDATE_MESA   = "RESET_UPDATE_MESA";
 export const REQUEST_UPDATE_MESA = "REQUEST_UPDATE_MESA";
 export const RECEIVE_UPDATE_MESA = "RECEIVE_UPDATE_MESA";
-export const ERROR_UPDATE_MESA = "ERROR_UPDATE_MESA";
+export const ERROR_UPDATE_MESA   = "ERROR_UPDATE_MESA";
 
 function requestUpdateMesa() {
     return {
@@ -317,10 +317,10 @@ export function saveUpdateMesa() {
 
 // BUSQUEDA DE MESA POR ID
 export const INVALIDATE_MESA_ID = 'INVALIDATE_MESA_ID';
-export const REQUEST_MESA_ID = "REQUEST_MESA_ID";
-export const RECEIVE_MESA_ID = "RECEIVE_MESA_ID";
-export const ERROR_MESA_ID = "ERROR_MESA_ID";
-export const RESET_MESA_ID = "RESET_MESA_ID";
+export const REQUEST_MESA_ID    = "REQUEST_MESA_ID";
+export const RECEIVE_MESA_ID    = "RECEIVE_MESA_ID";
+export const ERROR_MESA_ID      = "ERROR_MESA_ID";
+export const RESET_MESA_ID      = "RESET_MESA_ID";
 
 export function invalidateMesaById() {
     return {
@@ -386,7 +386,7 @@ export function fetchMesaById(id) {
 }
 
 function shouldFetchMesaById(id, state) {
-    const mesasById = state.mesas.byId;
+    const mesasById   = state.mesas.byId;
     const mesasAllIds = state.mesas.allIds;
     if (mesasById.isFetchingMesa) {
         return false;
