@@ -33,7 +33,7 @@ function Mesa(props) {
     let Operaciones = []
     Operaciones.push(
         <button onClick={() => gestionarTurno()} style={{backgroundColor: colores.COLOR_PRIMAY}}>
-            Turnos
+            Turno
         </button>
     )
 

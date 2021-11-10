@@ -4,7 +4,7 @@ import { withRouter } from "react-router-dom"
 
 //Actions
 import { createReemplazo, saveCreateReemplazo, resetCreateReemplazo } from "../../../../actions/ReemplazoMercaderiaActions"
-import { fetchProductosIfNeeded } from "../../../../actions/ProductoActions"
+import { fetchProductosIfNeeded, resetProductos } from "../../../../actions/ProductoActions"
 
 //Constants
 import * as rutas from "../../../../constants/rutas"
@@ -29,6 +29,7 @@ function Alta(props) {
         props.fetchProductosIfNeeded()
         return function limpiarAltaReemplazo() {
             props.resetCreateReemplazo()
+            props.resetProductos()
         }
     }, [])
 
@@ -313,6 +314,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         resetCreateReemplazo: () => {
             dispatch(resetCreateReemplazo())
+        },
+        resetProductos: () => {
+            dispatch(resetProductos())
         }
     }
 };

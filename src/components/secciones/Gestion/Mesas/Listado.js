@@ -11,6 +11,7 @@ import * as rutas from "../../../../constants/rutas"
 //Components
 import Mesa from "./Mesa"
 import Titulo from "../../../elementos/Titulo"
+import Loader from "../../../elementos/Loader"
 import AddBoxIcon from "@material-ui/icons/AddBox"
 
 //CSS
@@ -39,6 +40,7 @@ function Listado(props) {
             )
         }
     })
+    
     return (
         <section className="mesas-listado tarjeta-body">
             <div className="d-flex justify-content-between">
@@ -51,6 +53,7 @@ function Listado(props) {
             </div>
             <div className="mesas-listado-contenedor">
                 {Mesas}
+                <Loader display={buscando} />
             </div>
         </section>
     )
