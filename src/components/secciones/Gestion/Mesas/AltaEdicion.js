@@ -118,38 +118,42 @@ function AltaEdicion(props) {
     }
 
     return (
-        <section className="seccion-mesas seccion-mesas-abm tarjeta-body">
-            <Titulo ruta={rutas.MESAS_LISTAR} titulo={titulo} />
-            <Form id="formulario" onSubmit={(e) => guardar(e)}>
-                <Form.Group>
-                    <Form.Label>Número</Form.Label>
-                    <Form.Control
-                        id="numero"
-                        type="number"
-                        min={0}
-                        onChange={(e) => onChangeMesa(e)}
-                        value={mesa.numero ? mesa.numero : ""}
-                        placeholder="Ingrese un número de mesa"
-                        required={true}
-                    />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label>Observaciones</Form.Label>
-                    <Form.Control
-                        id="descripcion"
-                        as="textarea" rows={3}
-                        value={mesa.descripcion ? mesa.descripcion : ""}
-                        onChange={(e) => onChangeMesa(e)}
-                    />
-                </Form.Group>
-                <button className="btn btn-success float-right boton-guardar mt-2" type="submit">
-                    <div style={{ display: isCreating ? "inline-block" : "none" }} className="spinner spinner-border text-light" role="status">
-                        <span className="sr-only"></span>
-                    </div>
-                    <span className="ml-1">Guardar</span>
-                </button>
-            </Form>
-        </section>
+        <div className="row justify-content-md-center">
+            <div className="col-md-6">
+                <section className="seccion-mesas seccion-mesas-abm tarjeta-body">
+                    <Titulo ruta={rutas.MESAS_LISTAR} titulo={titulo} />
+                    <Form id="formulario" onSubmit={(e) => guardar(e)}>
+                        <Form.Group>
+                            <Form.Label>Número</Form.Label>
+                            <Form.Control
+                                id="numero"
+                                type="number"
+                                min={0}
+                                onChange={(e) => onChangeMesa(e)}
+                                value={mesa.numero ? mesa.numero : ""}
+                                placeholder="Ingrese un número de mesa"
+                                required={true}
+                            />
+                        </Form.Group>
+                        <Form.Group className="mb-3">
+                            <Form.Label>Observaciones</Form.Label>
+                            <Form.Control
+                                id="descripcion"
+                                as="textarea" rows={3}
+                                value={mesa.descripcion ? mesa.descripcion : ""}
+                                onChange={(e) => onChangeMesa(e)}
+                            />
+                        </Form.Group>
+                        <button className="btn btn-success float-right boton-guardar mt-2" type="submit">
+                            <div style={{ display: isCreating ? "inline-block" : "none" }} className="spinner spinner-border text-light" role="status">
+                                <span className="sr-only"></span>
+                            </div>
+                            <span className="ml-1">Guardar</span>
+                        </button>
+                    </Form>
+                </section>
+            </div>
+        </div>
     )
 }
 

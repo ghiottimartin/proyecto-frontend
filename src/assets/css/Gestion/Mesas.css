@@ -1,7 +1,10 @@
 .seccion-mesas, .mesas-listado {
-  height: calc(100vh - 100px) !important;
-  margin: 0 20px !important;
   overflow: auto;
+  margin: 0 20px !important;
+}
+
+.mesas-listado {
+  height: calc(100vh - 100px) !important;
 }
 
 .seccion-mesas .boton-modal-responsive {
@@ -17,6 +20,10 @@
 .seccion-mesas .boton-transparente {
   width: 50px;
   text-align: right;
+}
+
+.seccion-mesas input {
+  max-width: 250px;
 }
 
 .mesas-listado .mesas-listado-contenedor {
