@@ -14,24 +14,6 @@
     font-weight: bold;
 }
 
-.seccion-mesas ul {
-  padding: 0;
-  list-style: none;
-}
-
-.seccion-mesas li {
-  background-color: white;
-  margin: 5px;
-  padding: 5px 10px;
-  border-radius: 6px;
-  font-weight: 600;
-}
-
-.seccion-mesas li:hover {
-  background-color: #007bff!important;
-  color: white;
-}
-
 .seccion-mesas .boton-transparente {
   width: 50px;
   text-align: right;
@@ -52,9 +34,9 @@
 }
 
 .mesas-listado .mesa-tarjeta {
-  min-height: 200px;
+  min-height: 250px;
   position: relative;
-  width: 250px;
+  width: 280px;
   display: flex;
   -moz-flex-direction: row;
   flex-direction: column;
@@ -68,16 +50,13 @@
 }
 
 .mesas-listado .mesa-tarjeta header {
+  height: 50%;
   font-size: 14px;
   font-weight: bold;
-}
-
-.mesas-listado .mesa-tarjeta .icono-mesa {
-  position: absolute;
-  right: 15px;
-  top: 12px;
-  width: 20px;
-  height: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
 }
 
 .mesas-listado .mesa-tarjeta h5 {
@@ -85,16 +64,6 @@
   font-size: 15px;
   font-weight: 400;
   font-style: italic;
-}
-
-.mesas-listado .mesa-tarjeta ol {
-  list-style: none;
-  padding-left: 10px;
-}
-
-.mesas-listado .mesa-tarjeta ol img {
-  width: 15px;
-  margin-right: 10px;
 }
 
 .mesas-listado .mesa-tarjeta footer {

@@ -21,9 +21,10 @@ import "../../../../assets/css/Gestion/Mesas.css"
 import history from "../../../../history"
 
 function Listado(props) {
-    const titulo = "Listado de mesas"
     const mesas = props.mesas
+    const titulo = "Listado de mesas"
     const buscando = mesas.byId.isFetching
+    const cantidadMesas = mesas.allIds.length
 
     useEffect(() => {
         props.fetchMesas()
@@ -32,7 +33,7 @@ function Listado(props) {
         }
     }, [])
 
-    const Mesas = props.mesas.allIds.map(idMesa => {
+    let Mesas = props.mesas.allIds.map(idMesa => {
         const mesa = props.mesas.byId.mesas[idMesa]
         if (mesa && mesa.id) {
             return (
@@ -40,7 +41,14 @@ function Listado(props) {
             )
         }
     })
-    
+
+    if (cantidadMesas == 0 && !buscando) {
+        Mesas =
+            <div class="alert alert-warning" role="alert">
+                No hay mesas cargadas.
+            </div>
+    }
+
     return (
         <section className="mesas-listado tarjeta-body">
             <div className="d-flex justify-content-between">

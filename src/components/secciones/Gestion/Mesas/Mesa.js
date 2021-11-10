@@ -3,43 +3,47 @@ import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 
 //Constants
+import * as rutas from "../../../../constants/rutas"
 import * as colores from "../../../../constants/colores"
 
 //Imagenes
 import imgMesa from "../../../../assets/img/menu/table.png"
-import imgMozo from "../../../../assets/icon/waiter.png"
+
+//Librerías
+import history from "../../../../history"
 
 function Mesa(props) {
     const mesa = props.mesa
-    const mozos = mesa.mozos
 
-    const Mozos = mozos.map(mozo => {
-        return (
-            <li key={mozo.id}>
-                <img key={mozo.id} src={imgMozo} alt={"Mozo " + mozo.first_name}/>
-                {mozo.first_name}
-            </li>
-        )
-    })
-
-    const gestionarTurno = () => {
+    const gestionarTurno = (mesa) => {
 
     }
 
-    const historicoTurnos = () => {
+    const historicoTurnos = (mesa) => {
 
+    }
+
+    const editarMesa = (mesa) => {
+        const ruta = rutas.MESA_EDITAR + mesa.id
+        history.push(ruta)
     }
 
     let Operaciones = []
     Operaciones.push(
-        <button onClick={() => gestionarTurno()} style={{backgroundColor: colores.COLOR_PRIMAY}}>
+        <button onClick={() => gestionarTurno(mesa)} style={{backgroundColor: colores.COLOR_PRIMAY}}>
             Turno
         </button>
     )
 
     Operaciones.push(
-        <button onClick={() => historicoTurnos()} style={{backgroundColor: colores.COLOR_SECONDARY}}>
+        <button onClick={() => historicoTurnos(mesa)} style={{backgroundColor: colores.COLOR_SECONDARY}}>
             Histórico
+        </button>
+    )
+
+    Operaciones.push(
+        <button onClick={() => editarMesa(mesa)} style={{backgroundColor: colores.COLOR_SUCCESS}}>
+            Editar
         </button>
     )
 
@@ -49,10 +53,7 @@ function Mesa(props) {
                 <span>Mesa {mesa.numero_texto}</span>
                 <img className="icono-mesa" src={imgMesa} alt={"Mesa " + mesa.numero_texto} />
             </header>
-            <h5>Mozos:</h5>
-            <ol>
-                {Mozos}
-            </ol>
+            <span className="text-center">{mesa.descripcion_texto}</span>
             <footer>
                 {Operaciones}
             </footer>
