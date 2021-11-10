@@ -404,3 +404,80 @@ export function fetchMesaByIdIfNeeded(id) {
         }
     }
 }
+
+//MESA DELETE
+export const RESET_DELETE_MESA   = "RESET_DELETE_MESA";
+export const REQUEST_DELETE_MESA = "REQUEST_DELETE_MESA";
+export const RECEIVE_DELETE_MESA = "RECEIVE_DELETE_MESA";
+export const ERROR_DELETE_MESA   = "ERROR_DELETE_MESA";
+
+function requestDeleteMesa() {
+    return {
+        type: REQUEST_DELETE_MESA,
+    }
+}
+
+function receiveDeleteMesa(id, mensaje) {
+    return {
+        type: RECEIVE_DELETE_MESA,
+        receivedAt: Date.now(),
+        idMesa: id,
+        success: mensaje
+    }
+}
+
+function errorDeleteMesa(error) {
+    return {
+        type: ERROR_DELETE_MESA,
+        error: error,
+    }
+}
+
+export function resetDeleteMesa() {
+    return {
+        type: RESET_DELETE_MESA,
+    }
+}
+
+export function saveDeleteMesa(id) {
+    return (dispatch, getState) => {
+        dispatch(requestDeleteMesa());
+        return mesas.borrarMesa(id)
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    return response.json();
+                }
+            })
+            .then((respuesta) => {
+                let mensaje = respuesta.message;
+                dispatch(receiveDeleteMesa(id, mensaje));
+                dispatch(resetDeleteMesa());
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorDeleteMesa(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(logout());
+                        return Promise.reject(error);
+                    default:
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorDeleteMesa(error.message));
+                                    else
+                                        dispatch(errorDeleteMesa(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
+                                    dispatch(errorDeleteMesa(errorMessages.GENERAL_ERROR));
+                                });
+                        } catch (e) {
+                            dispatch(errorDeleteMesa(errorMessages.GENERAL_ERROR));
+                        }
+                        return;
+                }
+            });
+    }
+}

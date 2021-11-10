@@ -59,6 +59,12 @@
   flex-direction: column;
 }
 
+.mesas-listado .boton-icono-quitar {
+  position: absolute;
+  right: 15px;
+  background-color: #dc3545;
+}
+
 .mesas-listado .mesa-tarjeta h5 {
   margin-top: 5px;
   font-size: 15px;

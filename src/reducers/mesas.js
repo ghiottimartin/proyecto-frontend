@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import merge from "lodash/merge"
+import pickBy from "lodash/pickBy"
 
 //Actions
 import {
@@ -22,7 +23,11 @@ import {
     RESET_UPDATE_MESA,
     REQUEST_UPDATE_MESA,
     RECEIVE_UPDATE_MESA,
-    ERROR_UPDATE_MESA
+    ERROR_UPDATE_MESA,
+    RESET_DELETE_MESA,
+    REQUEST_DELETE_MESA,
+    RECEIVE_DELETE_MESA,
+    ERROR_DELETE_MESA
 
 } from '../actions/MesaActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions"
@@ -118,6 +123,12 @@ function mesasById(state = {
             return Object.assign({}, state, {
                 filtros: filtrosIniciales
             });
+        case RECEIVE_DELETE_MESA:
+            return Object.assign({}, state, {
+                mesas: pickBy(state.mesas, function (value, key) {
+                    return parseInt(key) !== parseInt(action.idMesa);
+                })
+            });
         default:
             return state
     }
@@ -130,7 +141,9 @@ function mesasAllIds(state = [], action) {
         case RECEIVE_MESA_ID:
                 return action.mesa.result ? [action.mesa.result] : [];
         case RESET_MESAS:
-             return [];
+            return [];
+        case RECEIVE_DELETE_MESA:
+            return state.filter(id => id != action.idMesa);
         default:
             return state
     }
@@ -250,11 +263,48 @@ function update(state = {
     }
 }
 
+function borrar(state = {
+    isDeleting: false,
+    success: "",
+    error: null
+}, action) {
+    switch (action.type) {
+        //DELETE
+        case RESET_DELETE_MESA:
+            return Object.assign({}, state, {
+                isDeleting: false,
+                success: "",
+                error: null,
+            });
+        case REQUEST_DELETE_MESA:
+            return Object.assign({}, state, {
+                isDeleting: true,
+                success: "",
+                error: null,
+            });
+        case RECEIVE_DELETE_MESA:
+            return Object.assign({}, state, {
+                isDeleting: false,
+                success: action.success,
+                error: null,
+            });
+        case ERROR_DELETE_MESA:
+            return Object.assign({}, state, {
+                isDeleting: false,
+                success: "",
+                error: action.error
+            });
+        default:
+            return state
+    }
+}
+
 const mesas = combineReducers({
     allIds: mesasAllIds,
     byId:   mesasById,
     create: create,
-    update: update
+    update: update,
+    delete: borrar,
 });
 
 export default mesas;

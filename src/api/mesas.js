@@ -59,6 +59,18 @@ var mesas = {
         return fetch(c.BASE_URL + '/mesas/mesa/' + id, defaultOptions);
     },
 
+    borrarMesa(id) {
+        let defaultOptions = {
+            method: 'DELETE',
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "Authorization": "Token " + localStorage.token
+            }
+        };
+
+        return fetch(c.BASE_URL + '/mesas/mesa/' + id, defaultOptions);
+    },
+
 };
 
 export default mesas;

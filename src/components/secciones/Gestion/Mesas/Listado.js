@@ -23,7 +23,7 @@ import history from "../../../../history"
 function Listado(props) {
     const mesas = props.mesas
     const titulo = "Listado de mesas"
-    const buscando = mesas.byId.isFetching
+    const buscando = mesas.byId.isFetching || mesas.delete.isDeleting
     const cantidadMesas = mesas.allIds.length
 
     useEffect(() => {
@@ -60,7 +60,7 @@ function Listado(props) {
                 </a>
             </div>
             <div className="mesas-listado-contenedor">
-                {Mesas}
+                {buscando ? '' : Mesas}
                 <Loader display={buscando} />
             </div>
         </section>
