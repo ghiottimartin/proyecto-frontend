@@ -37,14 +37,14 @@ function Listado(props) {
         const mesa = props.mesas.byId.mesas[idMesa]
         if (mesa && mesa.id) {
             return (
-                <Mesa key={mesa.id} mesa={mesa}/>
+                <Mesa mesa={mesa}/>
             )
         }
     })
 
     if (cantidadMesas == 0 && !buscando) {
         Mesas =
-            <div class="alert alert-warning" role="alert">
+            <div className="alert alert-warning" role="alert">
                 No hay mesas cargadas.
             </div>
     }

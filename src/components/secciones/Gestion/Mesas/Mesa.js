@@ -25,7 +25,7 @@ function Mesa(props) {
      * @param {Object} mesa 
      */
     const gestionarTurno = (mesa) => {
-
+        
     }
 
     /**
@@ -43,8 +43,8 @@ function Mesa(props) {
      * @param {Object} mesa 
      */
     const editarMesa = (mesa) => {
-        const ruta = rutas.MESA_EDITAR + mesa.id
-        history.push(ruta)
+        const rutaEdicion = rutas.MESA_EDITAR + mesa.id
+        history.push(rutaEdicion)
     }
 
     /**
@@ -71,29 +71,35 @@ function Mesa(props) {
 
     let Operaciones = []
     Operaciones.push(
-        <button onClick={() => gestionarTurno(mesa)} style={{ backgroundColor: colores.COLOR_PRIMAY }}>
+        <button key={mesa.id + "-turnos"} onClick={() => gestionarTurno(mesa)} style={{ backgroundColor: colores.COLOR_PRIMAY }}>
             Turno
         </button>
     )
 
     Operaciones.push(
-        <button onClick={() => historicoTurnos(mesa)} style={{ backgroundColor: colores.COLOR_SECONDARY }}>
+        <button key={mesa.id + "-historico"} onClick={() => historicoTurnos(mesa)} style={{ backgroundColor: colores.COLOR_SECONDARY }}>
             Histórico
         </button>
     )
 
     Operaciones.push(
-        <button onClick={() => editarMesa(mesa)} style={{ backgroundColor: colores.COLOR_SUCCESS }}>
+        <button key={mesa.id + "-editar"} onClick={() => editarMesa(mesa)} style={{ backgroundColor: colores.COLOR_SUCCESS }}>
             Editar
         </button>
     )
 
     return (
-        <article className="mesa-tarjeta">
+        <article key={mesa.id} className="mesa-tarjeta">
             <header>
                 <span>Mesa {mesa.numero_texto}</span>
                 <img className="icono-mesa" src={imgMesa} alt={"Mesa " + mesa.numero_texto} />
-                <button className="boton-icono-quitar" onClick={() => modalBorrarMesa(mesa)} title={"Borrar mesa " + mesa.numero_texto}>
+                <button
+                    key={mesa.id + "-quitar"}
+                    style={{ display: mesa.puede_borrarse ? "block" : "none" }}
+                    className="boton-icono-quitar"
+                    onClick={() => modalBorrarMesa(mesa)}
+                    title={"Borrar mesa " + mesa.numero_texto}
+                >
                     <i className="fa fa-times"></i>
                 </button>
             </header>
