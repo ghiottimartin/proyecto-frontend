@@ -82,11 +82,13 @@ function Mesa(props) {
         </button>
     )
 
-    Operaciones.push(
-        <button key={mesa.id + "-editar"} onClick={() => editarMesa(mesa)} style={{ backgroundColor: colores.COLOR_SUCCESS }}>
-            Editar
-        </button>
-    )
+    if (mesa.puede_editarse) {
+        Operaciones.push(
+            <button key={mesa.id + "-editar"} onClick={() => editarMesa(mesa)} style={{ backgroundColor: colores.COLOR_SUCCESS }}>
+                Editar
+            </button>
+        )
+    }
 
     return (
         <article key={mesa.id} className="mesa-tarjeta">
