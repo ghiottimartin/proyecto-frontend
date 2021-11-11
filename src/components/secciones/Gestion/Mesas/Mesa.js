@@ -25,7 +25,7 @@ function Mesa(props) {
      * @param {Object} mesa 
      */
     const gestionarTurno = (mesa) => {
-        
+
     }
 
     /**
@@ -91,6 +91,7 @@ function Mesa(props) {
     return (
         <article key={mesa.id} className="mesa-tarjeta">
             <header>
+                <span className={mesa.estado_clase}>{mesa.estado_texto}</span>
                 <span>Mesa {mesa.numero_texto}</span>
                 <img className="icono-mesa" src={imgMesa} alt={"Mesa " + mesa.numero_texto} />
                 <button

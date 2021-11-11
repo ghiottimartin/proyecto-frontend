@@ -66,10 +66,17 @@
   flex-direction: column;
 }
 
+.mesas-listado .mesa-tarjeta .badge {
+  position: absolute;
+  left: 10px;
+  top: 13px;
+}
+
 .mesas-listado .boton-icono-quitar {
   position: absolute;
   right: 15px;
   background-color: #dc3545;
+  padding: 0px 6px 2px 6px;
 }
 
 .mesas-listado .mesa-tarjeta h5 {
