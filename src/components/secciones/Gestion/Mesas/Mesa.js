@@ -25,10 +25,10 @@ function Mesa(props) {
      * @returns {Array}
      */
     const getOpcionesMozos = () => {
-        let mozos = []
+        let mozos = {}
         props.mozos.allIds.map(idMozo => {
             const mozo = props.mozos.byId.mozos[idMozo]
-            mozos.push(mozo.first_name)
+            mozos[idMozo] = mozo.first_name
         })
         return mozos
     }
@@ -41,14 +41,17 @@ function Mesa(props) {
     const gestionarTurno = (mesa) => {
         const estado = mesa.estado
         if (estado === 'disponible') {
-            const turno = mesa.ultimo_turno
-            let mozo = {}
-            if (turno !== null && turno.id && turno.mozo && turno.mozo.id) {
-                mozo = turno.mesa.mozo.first_name
-            }
             const mozos = getOpcionesMozos()
+            const turno = mesa.ultimo_turno
+            let mozo = ""
+            let texto = ""
+            if (turno !== null && turno.id && turno.mozo && !isNaN(turno.mozo.id)) {
+                mozo = turno.mozo.id
+                texto = `Último mozo: "${turno.mozo.first_name}".`
+            }
             Swal.fire({
                 title: `La mesa está disponible`,
+                text: texto,
                 icon: 'info',
                 input: 'select',
                 showCloseButton: true,
