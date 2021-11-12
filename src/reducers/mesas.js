@@ -27,7 +27,12 @@ import {
     RESET_DELETE_MESA,
     REQUEST_DELETE_MESA,
     RECEIVE_DELETE_MESA,
-    ERROR_DELETE_MESA
+    ERROR_DELETE_MESA,
+    ERROR_CREATE_TURNO_MESA,
+    RECEIVE_CREATE_TURNO_MESA,
+    REQUEST_CREATE_TURNO_MESA,
+    RESET_CREATE_TURNO_MESA,
+    CREATE_TURNO_MESA
 
 } from '../actions/MesaActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions"
@@ -150,7 +155,6 @@ function mesasAllIds(state = [], action) {
 }
 
 let mesaDefecto = {
-    mozos: [],
     numero: '',
     descripcion: '',
 };
@@ -165,9 +169,6 @@ function create(state = {
     switch (action.type) {
         //CREATE
         case CREATE_MESA:
-            if (action.mesa && Array.isArray(action.mesa.mozos) && action.mesa.mozos.length !== state.nuevo.mozos.lenght) {
-                state.nuevo.mozos = action.mesa.mozos
-            }
             return Object.assign({}, state, {
                 isCreating: false,
                 success: "",
@@ -179,9 +180,7 @@ function create(state = {
                 isCreating: false,
                 success: "",
                 error: null,
-                nuevo:  {
-                    mozos: [],
-                },
+                nuevo:  {},
             });
         case REQUEST_CREATE_MESA:
             return Object.assign({}, state, {
@@ -218,15 +217,13 @@ function create(state = {
 function update(state = {
     isUpdating: false,
     activo: mesaDefecto,
+    turno: {},
     success: "",
     error: null
 }, action) {
     switch (action.type) {
         //UPDATE MESA
         case UPDATE_MESA:
-            if (action.mesa && Array.isArray(action.mesa.mozos) && action.mesa.mozos.length !== state.activo.mozos.lenght) {
-                state.activo.mozos = action.mesa.mozos
-            }
             return Object.assign({}, state, {
                 isUpdating: false,
                 activo: merge({}, state.activo, action.mesa),
@@ -257,6 +254,41 @@ function update(state = {
                 isUpdating: false,
                 success: "",
                 error: action.error
+            });
+        //CREATE
+        case CREATE_TURNO_MESA:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                success: "",
+                nuevo: merge({}, state.nuevo, action.mesa),
+                error: null,
+            });
+        case RESET_CREATE_TURNO_MESA:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                success: "",
+                error: null,
+                nuevo:  {},
+            });
+        case REQUEST_CREATE_TURNO_MESA:
+            return Object.assign({}, state, {
+                isUpdating: true,
+                success: "",
+                error: null,
+            });
+        case RECEIVE_CREATE_TURNO_MESA:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                turno: action.turno,
+                error: null,
+                ruta: action.ruta,
+            });
+        case ERROR_CREATE_TURNO_MESA:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                success: "",
+                error: action.error,
+                errores: action.errores
             });
         default:
             return state

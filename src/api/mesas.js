@@ -71,6 +71,19 @@ var mesas = {
         return fetch(c.BASE_URL + '/mesas/mesa/' + id, defaultOptions);
     },
 
+    saveCreateTurno(id, nombreMozo) {
+        let defaultOptions = {
+            method: 'POST',
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "Authorization": "Token " + localStorage.token
+            },
+            body: JSON.stringify({'first_name': nombreMozo})
+        };
+
+        return fetch(c.BASE_URL + '/mesas/mesa/' + id + '/crear_turno/', defaultOptions);
+    },
+
 };
 
 export default mesas;

@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 
 //Actions
-import { saveDeleteMesa } from "../../../../actions/MesaActions"
+import { saveDeleteMesa, saveCreateTurnoMesa } from "../../../../actions/MesaActions"
 
 //Constants
 import * as rutas from "../../../../constants/rutas"
@@ -20,12 +20,62 @@ function Mesa(props) {
     const mesa = props.mesa
 
     /**
-     * Redirige a la gestión del turno de la mesa.
+     * Devuelve un array con los nombres de los mozos.
+     * 
+     * @returns {Array}
+     */
+    const getOpcionesMozos = () => {
+        let mozos = []
+        props.mozos.allIds.map(idMozo => {
+            const mozo = props.mozos.byId.mozos[idMozo]
+            mozos.push(mozo.first_name)
+        })
+        return mozos
+    }
+
+    /**
+     * Crea un turno y redirige a la gestión del turno de la mesa.
      * 
      * @param {Object} mesa 
      */
     const gestionarTurno = (mesa) => {
-
+        const estado = mesa.estado
+        if (estado === 'disponible') {
+            const turno = mesa.ultimo_turno
+            let mozo = {}
+            if (turno !== null && turno.id && turno.mozo && turno.mozo.id) {
+                mozo = turno.mesa.mozo.first_name
+            }
+            const mozos = getOpcionesMozos()
+            Swal.fire({
+                title: `La mesa está disponible`,
+                icon: 'info',
+                input: 'select',
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: true,
+                confirmButtonText: 'Abrir',
+                confirmButtonColor: colores.COLOR_SUCCESS,
+                cancelButtonColor: '#bfbfbf',
+                inputOptions: mozos,
+                inputValue: mozo,
+                inputPlaceholder: 'Seleccione un mozo',
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'Debe seleccionar un mozo.'
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const nombre = mozos[result.value]
+                    props.saveCreateTurnoMesa(mesa.id, nombre)
+                }
+            })
+        }
+        if (estado === 'ocupada') {
+            const ruta = rutas.MESA_TURNO + mesa.id
+            history.push(ruta)
+        }
     }
 
     /**
@@ -116,7 +166,8 @@ function Mesa(props) {
 
 function mapStateToProps(state) {
     return {
-        mesas: state.mesas
+        mesas: state.mesas,
+        mozos: state.mozos,
     }
 }
 
@@ -124,6 +175,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         saveDeleteMesa: (id) => {
             dispatch(saveDeleteMesa(id))
+        },
+        saveCreateTurnoMesa: (id, nombreMozo) => {
+            dispatch(saveCreateTurnoMesa(id, nombreMozo))
         }
     }
 }

@@ -84,6 +84,8 @@ export const MESA_ALTA      = '/mesas/alta';
 export const MESAS_LISTAR   = '/mesas/listar';
 export const MESA_EDITAR    = '/mesas/editar/';
 export const MESA_EDITAR_ID = '/mesas/editar/:id';
+export const MESA_TURNO     = '/mesa/turno/';
+export const MESA_TURNO_ID  = '/mesa/turno/:id';
 
 /**
  * Devuelve la url de usuarios

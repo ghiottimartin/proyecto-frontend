@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 
 //Actions
 import { fetchMesas, updateFiltros, updateMesa, resetMesas } from "../../../../actions/MesaActions"
+import { fetchMozos, resetMozos } from "../../../../actions/UsuarioActions"
 
 //Constants
 import * as rutas from "../../../../constants/rutas"
@@ -23,13 +24,15 @@ import history from "../../../../history"
 function Listado(props) {
     const mesas = props.mesas
     const titulo = "Listado de mesas"
-    const buscando = mesas.byId.isFetching || mesas.delete.isDeleting
+    const buscando = mesas.byId.isFetching || mesas.delete.isDeleting || mesas.update.isUpdating
     const cantidadMesas = mesas.allIds.length
 
     useEffect(() => {
         props.fetchMesas()
+        props.fetchMozos()
         return function limpiar() {
             props.resetMesas()
+            props.resetMozos()
         }
     }, [])
 
@@ -86,6 +89,12 @@ const mapDispatchToProps = (dispatch) => {
         },
         resetMesas: () => {
             dispatch(resetMesas())
+        },
+        fetchMozos: () => {
+            dispatch(fetchMozos())
+        },
+        resetMozos: () => {
+            dispatch(resetMozos())
         }
     }
 }
