@@ -243,13 +243,13 @@ class AltaEdicion extends React.Component {
      */
     comprobarProductoValido() {
         let errores = [];
-        const nuevo = this.props.productos.create.nuevo;
-        const costo = nuevo.costo_vigente;
+        const producto = this.getProductoAltaEdicion();
+        const costo = producto.costo_vigente;
         if (isNaN(costo) || parseFloat(costo) <= 0.00) {
             errores.push("El costo del producto debe ser mayor o igual a cero.");
         }
 
-        const precio = nuevo.precio_vigente;
+        const precio = producto.precio_vigente;
         if (isNaN(precio) || parseFloat(precio) <= 0.00) {
             errores.push("El precio del producto debe ser mayor o igual a cero.");
         }
