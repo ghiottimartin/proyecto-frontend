@@ -22,7 +22,7 @@ class AltaPedido extends React.Component {
         this.props.resetPedidoAbierto();
         this.props.fetchPedidoAbierto();
         this.props.resetProductos();
-        this.props.fetchProductos();
+        this.props.fetchProductos(false);
     }
 
     componentWillUnmount() {
@@ -80,8 +80,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchProductos: () => {
-            dispatch(fetchProductos())
+        fetchProductos: (paginar) => {
+            dispatch(fetchProductos(paginar))
         },
         resetProductos: () => {
             dispatch(resetProductos())

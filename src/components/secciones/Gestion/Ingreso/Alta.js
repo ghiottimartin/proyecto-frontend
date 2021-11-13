@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 
 //Actions
-import { fetchProductosIfNeeded } from "../../../../actions/ProductoActions"
+import { fetchProductos } from "../../../../actions/ProductoActions"
 import { createIngreso, saveCreateIngreso, resetCreateIngreso } from "../../../../actions/IngresoActions"
 
 //CSS
@@ -28,7 +28,7 @@ function Alta(props) {
     const buscando = props.productos.byId.isFetching
 
     useEffect(() => {
-        props.fetchProductosIfNeeded()
+        props.fetchProductos(false)
         return function limpiarAlta() {
             props.resetCreateIngreso()
         }
@@ -326,8 +326,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchProductosIfNeeded: () => {
-            dispatch(fetchProductosIfNeeded())
+        fetchProductos: (paginar) => {
+            dispatch(fetchProductos(paginar))
         },
         createIngreso: (ingreso) => {
             dispatch(createIngreso(ingreso))

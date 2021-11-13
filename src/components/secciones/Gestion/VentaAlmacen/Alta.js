@@ -4,7 +4,7 @@ import { connect } from "react-redux"
 
 //Actions
 import { resetCreateVenta, createVenta, saveCreateVenta } from "../../../../actions/VentaActions"
-import { fetchProductosIfNeeded } from "../../../../actions/ProductoActions"
+import { fetchProductos } from "../../../../actions/ProductoActions"
 
 //CSS
 import "../../../../assets/css/Gestion/VentaAlmacen.css"
@@ -28,7 +28,7 @@ function Alta(props) {
 
     useEffect(() => {
         props.resetCreateVenta()
-        props.fetchProductosIfNeeded()
+        props.fetchProductos(false)
 
         return function limpiarAlta() {
             props.resetCreateVenta()
@@ -407,8 +407,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchProductosIfNeeded: () => {
-            dispatch(fetchProductosIfNeeded())
+        fetchProductos: (paginar) => {
+            dispatch(fetchProductos(paginar))
         },
         resetCreateVenta: () => {
             dispatch(resetCreateVenta())

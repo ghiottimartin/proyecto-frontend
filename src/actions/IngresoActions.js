@@ -75,7 +75,7 @@ export function saveCreateIngreso() {
                     mensaje = data.message;
                 }
                 dispatch(resetProductos())
-                dispatch(fetchProductos())
+                dispatch(fetchProductos(false))
                 dispatch(reveiceCreateIngreso(mensaje));
                 dispatch(resetCreateIngreso());
                 history.push(rutas.INGRESO_MERCADERIA);

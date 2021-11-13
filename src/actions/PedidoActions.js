@@ -164,7 +164,7 @@ export function saveCerrarPedido(id) {
                     dispatch(receiveCerrarPedido(data.message));
                     dispatch(fetchPedidoAbierto())
                     dispatch(resetProductos())
-                    dispatch(fetchProductos())
+                    dispatch(fetchProductos(false))
                 }
             })
             .catch(function (error) {

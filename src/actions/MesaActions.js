@@ -1,25 +1,26 @@
-import history from "../history";
+import history from "../history"
 
 //Actions
-import { logout } from "./AuthenticationActions";
+import { logout } from "./AuthenticationActions"
+import { updateTurno } from "./TurnoActions"
 
 //Api
-import mesas from "../api/mesas";
+import mesas from "../api/mesas"
 
 //Constants
-import * as rutas from '../constants/rutas.js';
-import * as errorMessages from '../constants/MessageConstants';
+import * as rutas from '../constants/rutas.js'
+import * as errorMessages from '../constants/MessageConstants'
 
 //Normalizer
-import { normalizeDato, normalizeDatos } from "../normalizers/normalizeMesas";
+import { normalizeDato, normalizeDatos } from "../normalizers/normalizeMesas"
 
 
 // CREACION DE MESAS
-export const CREATE_MESA = 'CREATE_MESA';
-export const RESET_CREATE_MESA = "RESET_CREATE_MESA";
-export const REQUEST_CREATE_MESA = "REQUEST_CREATE_MESA";
-export const RECEIVE_CREATE_MESA = "RECEIVE_CREATE_MESA";
-export const ERROR_CREATE_MESA = "ERROR_CREATE_MESA";
+export const CREATE_MESA = 'CREATE_MESA'
+export const RESET_CREATE_MESA = "RESET_CREATE_MESA"
+export const REQUEST_CREATE_MESA = "REQUEST_CREATE_MESA"
+export const RECEIVE_CREATE_MESA = "RECEIVE_CREATE_MESA"
+export const ERROR_CREATE_MESA = "ERROR_CREATE_MESA"
 
 function requestCreateMesa() {
     return {
@@ -59,62 +60,62 @@ export function createMesa(mesa) {
 
 export function saveCreateMesa() {
     return (dispatch, getState) => {
-        dispatch(requestCreateMesa());
+        dispatch(requestCreateMesa())
         return mesas.saveCreate(getState().mesas.create.nuevo)
             .then(function (response) {
-                var data = response.json();
-                return data;
+                var data = response.json()
+                return data
             })
             .then(function (data) {
                 if (!data.exito) {
                     let mensaje = data.message ? data.message : errorMessages.GENERAL_ERROR
-                    dispatch(errorCreateMesa(mensaje));
-                    return;
+                    dispatch(errorCreateMesa(mensaje))
+                    return
                 } else {
                     let mensaje = "La mesa ha sido creada con éxito"
                     if (data.message) {
-                        mensaje = data.message;
+                        mensaje = data.message
                     }
                     dispatch(resetMesas())
                     dispatch(fetchMesas())
-                    dispatch(reveiceCreateMesa(mensaje));
-                    dispatch(resetCreateMesa());
-                    history.push(rutas.MESAS_LISTAR);
+                    dispatch(reveiceCreateMesa(mensaje))
+                    dispatch(resetCreateMesa())
+                    history.push(rutas.MESAS_LISTAR)
                 }
             })
             .catch(function (error) {
                 switch (error.status) {
                     case 401:
-                        dispatch(errorCreateMesa(errorMessages.UNAUTHORIZED_TOKEN));
-                        dispatch(logout());
-                        return;
+                        dispatch(errorCreateMesa(errorMessages.UNAUTHORIZED_TOKEN))
+                        dispatch(logout())
+                        return
                     default:
                         try {
                             error.json()
                                 .then(error => {
                                     if (error.message !== "")
-                                        dispatch(errorCreateMesa(error.message));
+                                        dispatch(errorCreateMesa(error.message))
                                     else
-                                        dispatch(errorCreateMesa(errorMessages.GENERAL_ERROR));
+                                        dispatch(errorCreateMesa(errorMessages.GENERAL_ERROR))
                                 })
                                 .catch(error => {
-                                    dispatch(errorCreateMesa(errorMessages.GENERAL_ERROR));
-                                });
+                                    dispatch(errorCreateMesa(errorMessages.GENERAL_ERROR))
+                                })
                         } catch (e) {
-                            dispatch(errorCreateMesa(errorMessages.GENERAL_ERROR));
+                            dispatch(errorCreateMesa(errorMessages.GENERAL_ERROR))
                         }
-                        return;
+                        return
                 }
-            });
+            })
     }
 }
 
 // BUSQUEDA DE MESAS
-export const INVALIDATE_MESAS = 'INVALIDATE_MESAS';
-export const REQUEST_MESAS = "REQUEST_MESAS";
-export const RECEIVE_MESAS = "RECEIVE_MESAS";
-export const ERROR_MESAS = "ERROR_MESAS";
-export const RESET_MESAS = "RESET_MESAS";
+export const INVALIDATE_MESAS = 'INVALIDATE_MESAS'
+export const REQUEST_MESAS = "REQUEST_MESAS"
+export const RECEIVE_MESAS = "RECEIVE_MESAS"
+export const ERROR_MESAS = "ERROR_MESAS"
+export const RESET_MESAS = "RESET_MESAS"
 
 export function invalidateMesas() {
     return {
@@ -153,55 +154,55 @@ function errorMesas(error) {
 
 export function fetchMesas() {
     return (dispatch, getState) => {
-        dispatch(requestMesas());
+        dispatch(requestMesas())
         return mesas.getAll(getState().mesas.byId.filtros)
             .then(function (response) {
                 if (response.status >= 400) {
-                    return Promise.reject(response);
+                    return Promise.reject(response)
                 } else {
-                    var data = response.json();
-                    return data;
+                    var data = response.json()
+                    return data
                 }
             })
             .then(function (data) {
-                dispatch(receiveMesas(data.datos));
+                dispatch(receiveMesas(data.datos))
             })
             .catch(function (error) {
                 switch (error.status) {
                     case 401:
-                        dispatch(errorMesas(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(errorMesas(errorMessages.UNAUTHORIZED_TOKEN))
                         dispatch(logout())
-                        return;
+                        return
                     default:
                         try {
                             error.json()
                                 .then(error => {
                                     if (error.message !== "")
-                                        dispatch(errorMesas(error.message));
+                                        dispatch(errorMesas(error.message))
                                     else
-                                        dispatch(errorMesas(errorMessages.GENERAL_ERROR));
+                                        dispatch(errorMesas(errorMessages.GENERAL_ERROR))
                                 })
                                 .catch(error => {
-                                    dispatch(errorMesas(errorMessages.GENERAL_ERROR));
-                                });
+                                    dispatch(errorMesas(errorMessages.GENERAL_ERROR))
+                                })
                         } catch (e) {
-                            dispatch(errorMesas(errorMessages.GENERAL_ERROR));
+                            dispatch(errorMesas(errorMessages.GENERAL_ERROR))
                         }
-                        return;
+                        return
                 }
-            });
+            })
     }
 }
 
 function shouldFetchMesas(state) {
-    const mesasById = state.mesas.byId;
-    const mesasAllIds = state.mesas.allIds;
+    const mesasById = state.mesas.byId
+    const mesasAllIds = state.mesas.allIds
     if (mesasById.isFetching) {
-        return false;
+        return false
     } else if (mesasAllIds.length === 0) {
-        return true;
+        return true
     } else {
-        return mesasById.didInvalidate;
+        return mesasById.didInvalidate
     }
 }
 
@@ -215,8 +216,8 @@ export function fetchMesasIfNeeded() {
 
 
 // FILTROS MESA
-export const UPDATE_FILTROS = 'UPDATE_FILTROS';
-export const RESET_FILTROS = 'RESET_FILTROS';
+export const UPDATE_FILTROS = 'UPDATE_FILTROS'
+export const RESET_FILTROS = 'RESET_FILTROS'
 
 export function updateFiltros(filtros) {
     return {
@@ -232,11 +233,11 @@ export function resetFiltros() {
 }
 
 //MESA UPDATE
-export const UPDATE_MESA		 = 'UPDATE_MESA';
-export const RESET_UPDATE_MESA   = "RESET_UPDATE_MESA";
-export const REQUEST_UPDATE_MESA = "REQUEST_UPDATE_MESA";
-export const RECEIVE_UPDATE_MESA = "RECEIVE_UPDATE_MESA";
-export const ERROR_UPDATE_MESA   = "ERROR_UPDATE_MESA";
+export const UPDATE_MESA		 = 'UPDATE_MESA'
+export const RESET_UPDATE_MESA   = "RESET_UPDATE_MESA"
+export const REQUEST_UPDATE_MESA = "REQUEST_UPDATE_MESA"
+export const RECEIVE_UPDATE_MESA = "RECEIVE_UPDATE_MESA"
+export const ERROR_UPDATE_MESA   = "ERROR_UPDATE_MESA"
 
 function requestUpdateMesa() {
     return {
@@ -273,53 +274,53 @@ export function updateMesa(mesa) {
 
 export function saveUpdateMesa() {
     return (dispatch, getState) => {
-        dispatch(requestUpdateMesa());
+        dispatch(requestUpdateMesa())
         return mesas.saveUpdate(getState().mesas.update.activo)
             .then(function (response) {
                 if (response.status >= 400) {
-                    return Promise.reject(response);
+                    return Promise.reject(response)
                 } else {
-                    dispatch(receiveUpdateMesa());
-                    return response.json();
+                    dispatch(receiveUpdateMesa())
+                    return response.json()
                 }
             })
             .then((respuesta) => {
-                dispatch(resetUpdateMesa());
-                history.push(rutas.MESAS_LISTAR);
+                dispatch(resetUpdateMesa())
+                history.push(rutas.MESAS_LISTAR)
             })
             .catch(function (error) {
                 switch (error.status) {
                     case 401:
-                        dispatch(errorUpdateMesa(errorMessages.UNAUTHORIZED_TOKEN));
-                        dispatch(logout());
-                        return Promise.reject(error);
+                        dispatch(errorUpdateMesa(errorMessages.UNAUTHORIZED_TOKEN))
+                        dispatch(logout())
+                        return Promise.reject(error)
                     default:
                         try {
                             error.json()
                                 .then(error => {
                                     if (error.message !== "")
-                                        dispatch(errorUpdateMesa(error.message));
+                                        dispatch(errorUpdateMesa(error.message))
                                     else
-                                        dispatch(errorUpdateMesa(errorMessages.GENERAL_ERROR));
+                                        dispatch(errorUpdateMesa(errorMessages.GENERAL_ERROR))
                                 })
                                 .catch(error => {
-                                    dispatch(errorUpdateMesa(errorMessages.GENERAL_ERROR));
-                                });
+                                    dispatch(errorUpdateMesa(errorMessages.GENERAL_ERROR))
+                                })
                         } catch (e) {
-                            dispatch(errorUpdateMesa(errorMessages.GENERAL_ERROR));
+                            dispatch(errorUpdateMesa(errorMessages.GENERAL_ERROR))
                         }
-                        return;
+                        return
                 }
-            });
+            })
     }
 }
 
 // BUSQUEDA DE MESA POR ID
-export const INVALIDATE_MESA_ID = 'INVALIDATE_MESA_ID';
-export const REQUEST_MESA_ID    = "REQUEST_MESA_ID";
-export const RECEIVE_MESA_ID    = "RECEIVE_MESA_ID";
-export const ERROR_MESA_ID      = "ERROR_MESA_ID";
-export const RESET_MESA_ID      = "RESET_MESA_ID";
+export const INVALIDATE_MESA_ID = 'INVALIDATE_MESA_ID'
+export const REQUEST_MESA_ID    = "REQUEST_MESA_ID"
+export const RECEIVE_MESA_ID    = "RECEIVE_MESA_ID"
+export const ERROR_MESA_ID      = "ERROR_MESA_ID"
+export const RESET_MESA_ID      = "RESET_MESA_ID"
 
 export function invalidateMesaById() {
     return {
@@ -356,43 +357,43 @@ function errorMesaById(error) {
 
 export function fetchMesaById(id) {
     return dispatch => {
-        dispatch(requestMesaById());
+        dispatch(requestMesaById())
         return mesas.getMesa(id)
             .then(function (response) {
                 if (response.status >= 400) {
-                    return Promise.reject(response);
+                    return Promise.reject(response)
                 } else {
-                    var data = response.json();
-                    return data;
+                    var data = response.json()
+                    return data
                 }
             })
             .then(function (data) {
-                dispatch(receiveMesaById(data));
-                dispatch(updateMesa(data));
+                dispatch(receiveMesaById(data))
+                dispatch(updateMesa(data))
             })
             .catch(function (error) {
                 switch (error.status) {
                     case 401:
-                        dispatch(logout());
-                        dispatch(errorMesas(errorMessages.UNAUTHORIZED_TOKEN));
-                        return;
+                        dispatch(logout())
+                        dispatch(errorMesas(errorMessages.UNAUTHORIZED_TOKEN))
+                        return
                     default:
-                        dispatch(errorMesas(errorMessages.GENERAL_ERROR));
-                        return;
+                        dispatch(errorMesas(errorMessages.GENERAL_ERROR))
+                        return
                 }
-            });
+            })
     }
 }
 
 function shouldFetchMesaById(id, state) {
-    const mesasById   = state.mesas.byId;
-    const mesasAllIds = state.mesas.allIds;
+    const mesasById   = state.mesas.byId
+    const mesasAllIds = state.mesas.allIds
     if (mesasById.isFetchingMesa) {
-        return false;
+        return false
     } else if (mesasAllIds.length === 0) {
-        return true;
+        return true
     } else {
-        return mesasById.didInvalidateMesa;
+        return mesasById.didInvalidateMesa
     }
 }
 
@@ -405,10 +406,10 @@ export function fetchMesaByIdIfNeeded(id) {
 }
 
 //MESA DELETE
-export const RESET_DELETE_MESA   = "RESET_DELETE_MESA";
-export const REQUEST_DELETE_MESA = "REQUEST_DELETE_MESA";
-export const RECEIVE_DELETE_MESA = "RECEIVE_DELETE_MESA";
-export const ERROR_DELETE_MESA   = "ERROR_DELETE_MESA";
+export const RESET_DELETE_MESA   = "RESET_DELETE_MESA"
+export const REQUEST_DELETE_MESA = "REQUEST_DELETE_MESA"
+export const RECEIVE_DELETE_MESA = "RECEIVE_DELETE_MESA"
+export const ERROR_DELETE_MESA   = "ERROR_DELETE_MESA"
 
 function requestDeleteMesa() {
     return {
@@ -440,53 +441,53 @@ export function resetDeleteMesa() {
 
 export function saveDeleteMesa(id) {
     return (dispatch, getState) => {
-        dispatch(requestDeleteMesa());
+        dispatch(requestDeleteMesa())
         return mesas.borrarMesa(id)
             .then(function (response) {
                 if (response.status >= 400) {
-                    return Promise.reject(response);
+                    return Promise.reject(response)
                 } else {
-                    return response.json();
+                    return response.json()
                 }
             })
             .then((respuesta) => {
-                let mensaje = respuesta.message;
-                dispatch(receiveDeleteMesa(id, mensaje));
-                dispatch(resetDeleteMesa());
+                let mensaje = respuesta.message
+                dispatch(receiveDeleteMesa(id, mensaje))
+                dispatch(resetDeleteMesa())
             })
             .catch(function (error) {
                 switch (error.status) {
                     case 401:
-                        dispatch(errorDeleteMesa(errorMessages.UNAUTHORIZED_TOKEN));
-                        dispatch(logout());
-                        return Promise.reject(error);
+                        dispatch(errorDeleteMesa(errorMessages.UNAUTHORIZED_TOKEN))
+                        dispatch(logout())
+                        return Promise.reject(error)
                     default:
                         try {
                             error.json()
                                 .then(error => {
                                     if (error.message !== "")
-                                        dispatch(errorDeleteMesa(error.message));
+                                        dispatch(errorDeleteMesa(error.message))
                                     else
-                                        dispatch(errorDeleteMesa(errorMessages.GENERAL_ERROR));
+                                        dispatch(errorDeleteMesa(errorMessages.GENERAL_ERROR))
                                 })
                                 .catch(error => {
-                                    dispatch(errorDeleteMesa(errorMessages.GENERAL_ERROR));
-                                });
+                                    dispatch(errorDeleteMesa(errorMessages.GENERAL_ERROR))
+                                })
                         } catch (e) {
-                            dispatch(errorDeleteMesa(errorMessages.GENERAL_ERROR));
+                            dispatch(errorDeleteMesa(errorMessages.GENERAL_ERROR))
                         }
-                        return;
+                        return
                 }
-            });
+            })
     }
 }
 
 // CREACION TURNO DE MESAS
-export const CREATE_TURNO_MESA = 'CREATE_TURNO_MESA';
-export const RESET_CREATE_TURNO_MESA = "RESET_CREATE_TURNO_MESA";
-export const REQUEST_CREATE_TURNO_MESA = "REQUEST_CREATE_TURNO_MESA";
-export const RECEIVE_CREATE_TURNO_MESA = "RECEIVE_CREATE_TURNO_MESA";
-export const ERROR_CREATE_TURNO_MESA = "ERROR_CREATE_TURNO_MESA";
+export const CREATE_TURNO_MESA = 'CREATE_TURNO_MESA'
+export const RESET_CREATE_TURNO_MESA = "RESET_CREATE_TURNO_MESA"
+export const REQUEST_CREATE_TURNO_MESA = "REQUEST_CREATE_TURNO_MESA"
+export const RECEIVE_CREATE_TURNO_MESA = "RECEIVE_CREATE_TURNO_MESA"
+export const ERROR_CREATE_TURNO_MESA = "ERROR_CREATE_TURNO_MESA"
 
 function requestCreateTurnoMesa() {
     return {
@@ -526,47 +527,48 @@ export function createTurnoMesa(turno) {
 
 export function saveCreateTurnoMesa(idMesa, nombreMozo) {
     return (dispatch, getState) => {
-        dispatch(requestCreateTurnoMesa());
+        dispatch(requestCreateTurnoMesa())
         return mesas.saveCreateTurno(idMesa, nombreMozo)
             .then(function (response) {
-                var data = response.json();
-                return data;
+                var data = response.json()
+                return data
             })
             .then(function (data) {
                 if (!data.exito) {
                     let mensaje = data.message ? data.message : errorMessages.GENERAL_ERROR
-                    dispatch(errorCreateTurnoMesa(mensaje));
-                    return;
+                    dispatch(errorCreateTurnoMesa(mensaje))
+                    return
                 } else {
-                    dispatch(reveiceCreateTurnoMesa());
-                    var mesa = data.datos.mesa
+                    const mesa = data.datos.mesa
+                    dispatch(updateTurno(mesa.ultimo_turno, mesa))
+                    dispatch(reveiceCreateTurnoMesa())
                     var ruta = rutas.MESA_TURNO + mesa.id
-                    history.push(ruta);
+                    history.push(ruta)
                 }
             })
             .catch(function (error) {
                 switch (error.status) {
                     case 401:
-                        dispatch(errorCreateTurnoMesa(errorMessages.UNAUTHORIZED_TOKEN));
-                        dispatch(logout());
-                        return;
+                        dispatch(errorCreateTurnoMesa(errorMessages.UNAUTHORIZED_TOKEN))
+                        dispatch(logout())
+                        return
                     default:
                         try {
                             error.json()
                                 .then(error => {
                                     if (error.message !== "")
-                                        dispatch(errorCreateTurnoMesa(error.message));
+                                        dispatch(errorCreateTurnoMesa(error.message))
                                     else
-                                        dispatch(errorCreateTurnoMesa(errorMessages.GENERAL_ERROR));
+                                        dispatch(errorCreateTurnoMesa(errorMessages.GENERAL_ERROR))
                                 })
                                 .catch(error => {
-                                    dispatch(errorCreateTurnoMesa(errorMessages.GENERAL_ERROR));
-                                });
+                                    dispatch(errorCreateTurnoMesa(errorMessages.GENERAL_ERROR))
+                                })
                         } catch (e) {
-                            dispatch(errorCreateTurnoMesa(errorMessages.GENERAL_ERROR));
+                            dispatch(errorCreateTurnoMesa(errorMessages.GENERAL_ERROR))
                         }
-                        return;
+                        return
                 }
-            });
+            })
     }
 }

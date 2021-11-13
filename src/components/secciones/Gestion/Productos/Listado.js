@@ -67,7 +67,7 @@ class Listado extends React.Component {
      */
     buscarProductos() {
         this.props.resetProductos();
-        this.props.fetchProductos();
+        this.props.fetchProductos(true);
     }
 
     /**
@@ -250,7 +250,7 @@ class Listado extends React.Component {
             };
             this.onChangeBusqueda(cambio);
         }
-        this.props.fetchProductos();
+        this.props.fetchProductos(true);
     }
 
     /**
@@ -527,8 +527,8 @@ const mapDispatchToProps = (dispatch) => {
         resetProductos: () => {
             dispatch(resetProductos())
         },
-        fetchProductos: () => {
-            dispatch(fetchProductos())
+        fetchProductos: (paginar) => {
+            dispatch(fetchProductos(paginar))
         },
         saveDeleteProducto: (id) => {
             dispatch(saveDeleteProducto(id))

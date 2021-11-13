@@ -76,7 +76,7 @@ export function saveCreateVenta() {
                     mensaje = data.message;
                 }
                 dispatch(resetProductos())
-                dispatch(fetchProductos())
+                dispatch(fetchProductos(false))
                 dispatch(reveiceCreateVenta(mensaje));
                 dispatch(resetCreateVenta());
                 history.push(rutas.VENTA_ALMACEN_LISTADO);

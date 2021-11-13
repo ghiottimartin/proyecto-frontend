@@ -76,7 +76,7 @@ export function saveCreateProducto(volverA) {
                 dispatch(reveiceCreateProducto(mensaje));
                 dispatch(resetCreateProducto());
                 dispatch(resetProductos());
-                dispatch(fetchProductos());
+                dispatch(fetchProductos(true));
                 history.push(rutas.PRODUCTOS_LISTAR_ADMIN);
             })
             .catch(function (error) {
@@ -214,10 +214,11 @@ function errorProductos(error) {
     }
 }
 
-export function fetchProductos() {
+export function fetchProductos(paginar) {
     return (dispatch, getState) => {
         dispatch(requestProductos());
-        return productos.getAll(getState().productos.byId.filtros)
+        const filtros = paginar ? getState().productos.byId.filtros : {}
+        return productos.getAll(filtros)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
