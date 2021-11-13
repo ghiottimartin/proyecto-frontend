@@ -6,7 +6,6 @@ import auth from "./api/authentication";
 
 //Actions
 import { createPedido, saveCreatePedido, saveDeletePedido, resetPedidoAbierto } from "./actions/PedidoActions";
-import { fetchProductos } from "./actions/ProductoActions";
 import { fetchUsuarioLogueadoIfNeeded } from "./actions/UsuarioActions";
 
 //Constants
@@ -44,6 +43,7 @@ import ListadoVentaAlmacen from './components/secciones/Gestion/VentaAlmacen/Lis
 import VisualizarVenta from './components/secciones/Gestion/VentaAlmacen/Visualizar';
 import AltaEdicionMesa from './components/secciones/Gestion/Mesas/AltaEdicion';
 import ListadoMesa from './components/secciones/Gestion/Mesas/Listado';
+import MesaTurno from './components/secciones/Gestion/Mesas/Turno'
 
 //CSS
 import "./App.css";
@@ -74,10 +74,6 @@ class App extends React.Component {
 
     setBlur(blur) {
         this.setState({ blur: blur });
-    }
-
-    componentDidMount() {
-        this.props.fetchProductos();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -287,6 +283,7 @@ class App extends React.Component {
                         <Route exact path={rutas.VENTA_ALMACEN_VISUALIZAR_ID} component={VisualizarVenta} />
                         <Route exact path={rutas.MESAS_LISTAR} component={ListadoMesa} />
                         <Route exact path={rutas.MESA_ABM} component={AltaEdicionMesa} />
+                        <Route exact path={rutas.MESA_TURNO_ID} component={MesaTurno} />
                         <Route exact path="*" component={NotFound} />
                     </Switch>
                 </div>
@@ -307,9 +304,6 @@ const mapDispatchToProps = (dispatch) => {
     return {
         fetchUsuarioLogueadoIfNeeded: () => {
             dispatch(fetchUsuarioLogueadoIfNeeded())
-        },
-        fetchProductos: () => {
-            dispatch(fetchProductos())
         },
         createPedido: (pedido) => {
             dispatch(createPedido(pedido))
