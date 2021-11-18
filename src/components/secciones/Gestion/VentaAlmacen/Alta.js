@@ -23,6 +23,7 @@ import Swal from 'sweetalert2'
 
 //Utils
 import { formatearMoneda } from "../../../../utils/formateador"
+import { getIconoConId } from "../../../../utils/utils"
 
 function Alta(props) {
 
@@ -91,7 +92,8 @@ function Alta(props) {
      */
     const addLineaVenta = (e) => {
         e.preventDefault()
-        const idProducto = e.target.dataset.id
+        const elemento = getIconoConId(e)
+        const idProducto = elemento.dataset.id
         const producto = buscarProducto(idProducto)
         let nuevas = venta.lineas
         if (!Array.isArray(nuevas)) {
@@ -127,7 +129,8 @@ function Alta(props) {
      */
     const removeLineaVenta = (e) => {
         let actualizado = venta
-        const idQuitar = e.target.dataset.id
+        const elemento = getIconoConId(e)
+        const idQuitar = elemento.dataset.id
         let producto = null
         const restantes = actualizado.lineas.filter(linea => {
             producto = linea.producto
@@ -182,7 +185,8 @@ function Alta(props) {
      *  @param {SyntheticBaseEvent} e 
      */
     const onChangeLineaVenta = (e) => {
-        const idProducto = e.target.dataset.id
+        const elemento = getIconoConId(e)
+        const idProducto = elemento.dataset.id
         let actualizada = venta.lineas.find(linea => {
             const producto = linea.producto
             const idBuscar = producto.id ? producto.id : 0
