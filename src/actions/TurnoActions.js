@@ -13,6 +13,96 @@ import * as errorMessages from '../constants/MessageConstants';
 //Normalizer
 import { normalizeDato, normalizeDatos } from "../normalizers/normalizeTurnos";
 
+// CREACION TURNO DE MESAS
+export const CREATE_TURNO = 'CREATE_TURNO'
+export const RESET_CREATE_TURNO = "RESET_CREATE_TURNO"
+export const REQUEST_CREATE_TURNO = "REQUEST_CREATE_TURNO"
+export const RECEIVE_CREATE_TURNO = "RECEIVE_CREATE_TURNO"
+export const ERROR_CREATE_TURNO = "ERROR_CREATE_TURNO"
+
+function requestCreateTurno() {
+    return {
+        type: REQUEST_CREATE_TURNO,
+    }
+}
+
+function reveiceCreateTurno(message) {
+    return {
+        type: RECEIVE_CREATE_TURNO,
+        message: message,
+        receivedAt: Date.now(),
+        turno: {},
+    }
+}
+
+export function errorCreateTurno(error) {
+    return {
+        type: ERROR_CREATE_TURNO,
+        error: error
+    }
+}
+
+export function resetCreateTurno() {
+    return {
+        type: RESET_CREATE_TURNO
+    }
+}
+
+export function createTurno(turno) {
+    return {
+        type: CREATE_TURNO,
+        turno: turno
+    }
+}
+
+export function saveCreateTurno(idMesa, nombreMozo) {
+    return (dispatch, getState) => {
+        dispatch(requestCreateTurno())
+        return turnos.saveCreate(idMesa, nombreMozo)
+            .then(function (response) {
+                var data = response.json()
+                return data
+            })
+            .then(function (data) {
+                if (!data.exito) {
+                    let mensaje = data.message ? data.message : errorMessages.GENERAL_ERROR
+                    dispatch(errorCreateTurno(mensaje))
+                    return
+                } else {
+                    const mesa = data.datos.mesa
+                    dispatch(updateTurno(mesa.ultimo_turno, mesa))
+                    dispatch(reveiceCreateTurno(data.message))
+                    var ruta = rutas.MESA_TURNO + mesa.id
+                    history.push(ruta)
+                }
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorCreateTurno(errorMessages.UNAUTHORIZED_TOKEN))
+                        dispatch(logout())
+                        return
+                    default:
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorCreateTurno(error.message))
+                                    else
+                                        dispatch(errorCreateTurno(errorMessages.GENERAL_ERROR))
+                                })
+                                .catch(error => {
+                                    dispatch(errorCreateTurno(errorMessages.GENERAL_ERROR))
+                                })
+                        } catch (e) {
+                            dispatch(errorCreateTurno(errorMessages.GENERAL_ERROR))
+                        }
+                        return
+                }
+            })
+    }
+}
+
 //TURNO UPDATE
 export const UPDATE_TURNO = 'UPDATE_TURNO';
 export const RESET_UPDATE_TURNO = "RESET_UPDATE_TURNO";

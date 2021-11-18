@@ -2,11 +2,58 @@ import {combineReducers} from 'redux'
 import merge from "lodash/merge"
 
 //Actions
-import { ERROR_UPDATE_TURNO, RECEIVE_UPDATE_TURNO, REQUEST_UPDATE_TURNO, RESET_UPDATE_TURNO, UPDATE_TURNO } from '../actions/TurnoActions'
+import { CREATE_TURNO, ERROR_CREATE_TURNO, ERROR_UPDATE_TURNO, RECEIVE_CREATE_TURNO, RECEIVE_UPDATE_TURNO, REQUEST_CREATE_TURNO, REQUEST_UPDATE_TURNO, RESET_CREATE_TURNO, RESET_UPDATE_TURNO, UPDATE_TURNO } from '../actions/TurnoActions'
 
 const defecto = {
     mozo: '',
     ordenes: [],
+}
+
+function create(state = {
+    isCreating: false,
+    nuevo: {},
+    success: "",
+    error: null,
+}, action) {
+    switch (action.type) {
+        //CREATE
+        case CREATE_TURNO:
+            return Object.assign({}, state, {
+                isCreating: false,
+                success: "",
+                nuevo: merge({}, state.nuevo, action.mesa),
+                error: null,
+            });
+        case RESET_CREATE_TURNO:
+            return Object.assign({}, state, {
+                isCreating: false,
+                success: "",
+                error: null,
+                nuevo:  {},
+            });
+        case REQUEST_CREATE_TURNO:
+            return Object.assign({}, state, {
+                isCreating: true,
+                success: "",
+                error: null,
+            });
+        case RECEIVE_CREATE_TURNO:
+            return Object.assign({}, state, {
+                isCreating: false,
+                turno: action.turno,
+                error: null,
+                success: action.message,
+            });
+        case ERROR_CREATE_TURNO:
+            return Object.assign({}, state, {
+                isCreating: false,
+                success: "",
+                error: action.error,
+                errores: action.errores
+            });
+        default:
+            return state
+    }
 }
 
 function update(state = {
@@ -55,6 +102,7 @@ function update(state = {
 
 const turnos = combineReducers({
     update: update,
+    create: create,
 })
 
 export default turnos

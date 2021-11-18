@@ -255,41 +255,6 @@ function update(state = {
                 success: "",
                 error: action.error
             });
-        //CREATE
-        case CREATE_TURNO_MESA:
-            return Object.assign({}, state, {
-                isUpdating: false,
-                success: "",
-                nuevo: merge({}, state.nuevo, action.mesa),
-                error: null,
-            });
-        case RESET_CREATE_TURNO_MESA:
-            return Object.assign({}, state, {
-                isUpdating: false,
-                success: "",
-                error: null,
-                nuevo:  {},
-            });
-        case REQUEST_CREATE_TURNO_MESA:
-            return Object.assign({}, state, {
-                isUpdating: true,
-                success: "",
-                error: null,
-            });
-        case RECEIVE_CREATE_TURNO_MESA:
-            return Object.assign({}, state, {
-                isUpdating: false,
-                turno: action.turno,
-                error: null,
-                ruta: action.ruta,
-            });
-        case ERROR_CREATE_TURNO_MESA:
-            return Object.assign({}, state, {
-                isUpdating: false,
-                success: "",
-                error: action.error,
-                errores: action.errores
-            });
         default:
             return state
     }

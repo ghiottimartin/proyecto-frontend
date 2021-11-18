@@ -3,8 +3,8 @@ import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 
 //Actions
-import { saveDeleteMesa, saveCreateTurnoMesa } from "../../../../actions/MesaActions"
-import { updateTurno } from "../../../../actions/TurnoActions"
+import { saveDeleteMesa } from "../../../../actions/MesaActions"
+import { updateTurno, saveCreateTurno } from "../../../../actions/TurnoActions"
 
 //Constants
 import * as rutas from "../../../../constants/rutas"
@@ -72,7 +72,7 @@ function Mesa(props) {
             }).then((result) => {
                 if (result.isConfirmed) {
                     const nombre = mozos[result.value]
-                    props.saveCreateTurnoMesa(mesa.id, nombre)
+                    props.saveCreateTurno(mesa.id, nombre)
                 }
             })
         }
@@ -181,8 +181,8 @@ const mapDispatchToProps = (dispatch) => {
         saveDeleteMesa: (id) => {
             dispatch(saveDeleteMesa(id))
         },
-        saveCreateTurnoMesa: (id, nombreMozo) => {
-            dispatch(saveCreateTurnoMesa(id, nombreMozo))
+        saveCreateTurno: (idMesa, nombreMozo) => {
+            dispatch(saveCreateTurno(idMesa, nombreMozo))
         },
         updateTurno: (turno, mesa) => {
             dispatch(updateTurno(turno, mesa))
