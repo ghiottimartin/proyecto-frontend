@@ -10,6 +10,7 @@ import reemplazos from './reemplazos';
 import ventas from './ventas';
 import mesas from './mesas';
 import mozos from './mozos';
+import turnos from './turnos';
 
 const appReducers = combineReducers({
     authentication,
@@ -22,7 +23,8 @@ const appReducers = combineReducers({
     reemplazos,
     ventas,
     mesas,
-    mozos
+    mozos,
+    turnos
 });
 
 export default appReducers;

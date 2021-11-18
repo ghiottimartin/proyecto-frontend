@@ -4,6 +4,7 @@ import { connect } from "react-redux"
 
 //Actions
 import { saveDeleteMesa, saveCreateTurnoMesa } from "../../../../actions/MesaActions"
+import { updateTurno } from "../../../../actions/TurnoActions"
 
 //Constants
 import * as rutas from "../../../../constants/rutas"
@@ -76,6 +77,7 @@ function Mesa(props) {
             })
         }
         if (estado === 'ocupada') {
+            props.updateTurno(mesa.ultimo_turno, mesa)
             const ruta = rutas.MESA_TURNO + mesa.id
             history.push(ruta)
         }
@@ -181,6 +183,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         saveCreateTurnoMesa: (id, nombreMozo) => {
             dispatch(saveCreateTurnoMesa(id, nombreMozo))
+        },
+        updateTurno: (turno, mesa) => {
+            dispatch(updateTurno(turno, mesa))
         }
     }
 }

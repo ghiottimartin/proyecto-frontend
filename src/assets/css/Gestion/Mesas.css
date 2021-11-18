@@ -1,6 +1,9 @@
-.seccion-mesas, .mesas-listado {
+.seccion-mesas,
+.mesas-listado,
+.mesa-turno {
   overflow: auto;
   margin: 0 20px !important;
+  height: calc(100vh - 100px) !important;
 }
 
 .mesas-listado {
@@ -8,13 +11,13 @@
 }
 
 .seccion-mesas .boton-modal-responsive {
-    border-radius: 6px;
-    border: 1px solid grey;
+  border-radius: 6px;
+  border: 1px solid grey;
 }
 
 .seccion-mesas .boton-modal {
-    border: none;
-    font-weight: bold;
+  border: none;
+  font-weight: bold;
 }
 
 .seccion-mesas .boton-transparente {
@@ -27,13 +30,13 @@
 }
 
 .mesas-listado .mesas-listado-contenedor {
-    margin-top: 20px;
-    display: grid;
-    grid-template-columns: 100%;
-    grid-template-rows: auto;
-    justify-items: center;
-    row-gap: 20px;
-    position: relative;
+  margin-top: 20px;
+  display: grid;
+  grid-template-columns: 100%;
+  grid-template-rows: auto;
+  justify-items: center;
+  row-gap: 20px;
+  position: relative;
 }
 
 .mesas-listado .mesas-listado-contenedor .half-circle-spinner {
@@ -76,7 +79,7 @@
   position: absolute;
   right: 15px;
   background-color: #dc3545;
-  padding: 0px 6px 2px 6px;
+  padding: 2px 6px 1px 6px;
 }
 
 .mesas-listado .mesa-tarjeta h5 {
@@ -109,10 +112,63 @@
   border-top-left-radius: 3px;
 }
 
-
 .mesas-listado .mesa-tarjeta footer button:last-child {
   border-top-right-radius: 3px;
 }
+
+.seccion-turno {
+  min-height: 400px;
+  padding-bottom: 55px !important;
+}
+
+.seccion-turno .venta-productos {
+  height: calc(100vh - 380px) !important;
+  overflow: auto;
+}
+
+.seccion-turno .producto img {
+  width: 65px;
+  height: 65px;
+}
+
+.seccion-turno .producto {
+  font-size: 14px;
+}
+
+.seccion-turno .producto-derecha-carrito {
+  margin-bottom: 0;
+}
+
+.seccion-turno .boton-modal-responsive {
+  border-radius: 6px;
+  border: 1px solid grey;
+  font-weight: bold;
+  padding: 2px 15px;
+}
+
+.mesa-turno {
+  margin: 0 10px !important;
+}
+
+.mesa-turno .col-md-12 {
+  padding: 0;
+}
+
+.mesa-turno .producto {
+  margin: 10px 0px !important;
+  width: 100%;
+}
+
+.mesa-turno .producto .boton-icono-quitar {
+  height: 22px;
+}
+
+.seccion-turno .botones-turno {
+  position: absolute;
+  bottom: 10px;
+  width: 90%;
+}
+
 /* 
 X-Small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap
@@ -125,7 +181,6 @@ Small devices (landscape phones, 576px and up)
   .mesas-listado .mesas-listado-contenedor {
     grid-template-columns: 50% 50%;
   }
-  
 }
 
 /* 

@@ -368,6 +368,10 @@ export function fetchMesaById(id) {
                 }
             })
             .then(function (data) {
+                if (data.ultimo_turno) {
+                    var turno = data.ultimo_turno
+                    dispatch(updateTurno(turno, data))
+                }
                 dispatch(receiveMesaById(data))
                 dispatch(updateMesa(data))
             })

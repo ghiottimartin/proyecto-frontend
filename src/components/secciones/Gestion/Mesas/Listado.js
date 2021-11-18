@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 
 //Actions
-import { fetchMesas, updateFiltros, updateMesa, resetMesas } from "../../../../actions/MesaActions"
+import { fetchMesas, updateFiltros, resetMesas } from "../../../../actions/MesaActions"
 import { fetchMozos, resetMozos } from "../../../../actions/UsuarioActions"
 
 //Constants
@@ -83,9 +83,6 @@ const mapDispatchToProps = (dispatch) => {
         },
         updateFiltros: (filtros) => {
             dispatch(updateFiltros(filtros))
-        },
-        updateMesa: (mesa) => {
-            dispatch(updateMesa(mesa))
         },
         resetMesas: () => {
             dispatch(resetMesas())

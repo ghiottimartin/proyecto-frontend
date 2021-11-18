@@ -66,10 +66,9 @@ export function saveUpdateTurno() {
                     return response.json();
                 }
             })
-            .then((respuesta) => {
-                const turno = respuesta.datos.turno
+            .then(() => {
+                history.push(rutas.MESAS_LISTAR)
                 dispatch(receiveUpdateTurno());
-                dispatch(updateTurno(turno));
             })
             .catch(function (error) {
                 switch (error.status) {
