@@ -21,6 +21,7 @@ import Swal from 'sweetalert2'
 
 //Utils
 import { formatearMoneda } from "../../../../utils/formateador"
+import { getIconoConId } from "../../../../utils/utils"
 
 function Alta(props) {
     const titulo = "Alta de ingreso"
@@ -70,7 +71,8 @@ function Alta(props) {
      */
     const removeLineaIngreso = (e) => {
         let actualizado = ingreso
-        const idQuitar = e.target.dataset.id
+        const elemento = getIconoConId(e)
+        const idQuitar = elemento.dataset.id
         let producto = null
         const restantes = actualizado.lineas.filter(linea => {
             producto = linea.producto
@@ -141,7 +143,8 @@ function Alta(props) {
      * @returns {void}
      */
     const onChangeLineaIngreso = (e) => {
-        const idProducto = e.target.dataset.id
+        const elemento = getIconoConId(e)
+        const idProducto = elemento.dataset.id
         let actualizada = ingreso.lineas.find(linea => {
             const producto = linea.producto
             const idBuscar = producto.id ? producto.id : 0
