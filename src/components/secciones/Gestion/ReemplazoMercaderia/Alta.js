@@ -19,6 +19,9 @@ import "../../../../assets/css/Gestion/ReemplazoMercaderia.css"
 //Librerias
 import Swal from 'sweetalert2'
 
+//Utils
+import { getIconoConId } from "../../../../utils/utils"
+
 function Alta(props) {
     const titulo = "Alta de reemplazo de mercadería"
     const buscando = props.productos.byId.isFetching
@@ -114,7 +117,8 @@ function Alta(props) {
      */
     const removeLineaReemplazo = (e) => {
         let actualizado = reemplazo
-        const idQuitar = e.target.dataset.id
+        const elemento = getIconoConId(e)
+        const idQuitar = elemento.dataset.id
         let producto = null
         const restantes = actualizado.lineas.filter(linea => {
             producto = linea.producto
@@ -193,7 +197,8 @@ function Alta(props) {
      * @returns {void}
      */
      const onChangeLineaReemplazo = (e) => {
-        const idProducto = e.target.dataset.id
+        const elemento = getIconoConId(e)
+        const idProducto = elemento.dataset.id
         let actualizada = reemplazo.lineas.find(linea => {
             const producto = linea.producto
             const idBuscar = producto.id ? producto.id : 0
