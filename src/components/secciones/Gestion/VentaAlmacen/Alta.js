@@ -379,6 +379,7 @@ function Alta(props) {
             <SeleccionProductos
                 show={show}
                 onHide={() => onHide()}
+                ventaDirecta={true}
                 addProducto={(e) => addLineaVenta(e)}
                 elegidos={elegidos}
             />

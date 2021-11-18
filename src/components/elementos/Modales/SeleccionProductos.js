@@ -8,6 +8,7 @@ import Modal from "../../elementos/Modales/Modal"
 
 function SeleccionProductos(props) {
     const titulo = "Selección de productos";
+    const ventaDirecta = props.ventaDirecta ? props.ventaDirecta : null
 
     const getProductosHtml = () => {
         const elegir = props.productos.allIds.map(id => {
@@ -22,7 +23,8 @@ function SeleccionProductos(props) {
         let Opciones = []
         if (Array.isArray(elegir)) {
             elegir.map(producto => {
-                if (producto && !isNaN(producto.id) && producto.stock > 0) {
+                const buscarVentaDirecta = ventaDirecta && producto && producto.id ? producto.venta_directa === true : true
+                if (producto && !isNaN(producto.id) && producto.stock > 0 && buscarVentaDirecta) {
                     const title = "Agregar " + producto.nombre
                     Opciones.push(<li key={producto.id} data-id={producto.id} title={title} onClick={(e) => props.addProducto(e)}>{producto.nombre}</li>)
                 }
