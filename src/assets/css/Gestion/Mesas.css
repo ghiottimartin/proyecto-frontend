@@ -123,16 +123,24 @@
 
 .seccion-turno .venta-productos {
   height: calc(100vh - 380px) !important;
-  overflow: auto;
+  min-height: 200px;
+  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 100%;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.seccion-turno .producto {
+  font-size: 14px;
+  max-height: 150px;
+  max-width: 80%;
+  position: relative;
 }
 
 .seccion-turno .producto img {
   width: 65px;
   height: 65px;
-}
-
-.seccion-turno .producto {
-  font-size: 14px;
 }
 
 .seccion-turno .producto-derecha-carrito {
@@ -155,8 +163,16 @@
 }
 
 .mesa-turno .producto {
-  margin: 10px 0px !important;
+  margin: 0 auto;
   width: 100%;
+  margin-bottom: 15px;
+}
+
+.mesa-turno .producto .boton-icono-quitar {
+  position: absolute;
+  height: 23px;
+  top: 5px;
+  right: 5px;
 }
 
 .mesa-turno .producto .boton-icono-quitar {
@@ -173,6 +189,14 @@
 X-Small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap
 */
+
+@media (min-width: 570px) {
+  .seccion-turno .contenedor-ordenes .venta-productos {
+    grid-template-columns: 50% 50%;
+    justify-items: center;
+    grid-column-gap: 10px;
+  }
+}
 
 /* 
 Small devices (landscape phones, 576px and up)
@@ -196,6 +220,10 @@ Large devices (desktops, 992px and up)
   .mesas-listado .mesas-listado-contenedor {
     grid-template-columns: 33% 33% 33%;
   }
+
+  .seccion-turno .contenedor-ordenes .venta-productos {
+    grid-template-columns: 33% 33% 33%;
+  }
 }
 
 /*
@@ -204,6 +232,11 @@ X-Large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) {
   .mesas-listado .mesas-listado-contenedor {
     grid-template-columns: 25% 25% 25% 25%;
+  }
+
+  .seccion-turno .contenedor-ordenes .venta-productos {
+    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-rows: 180px;
   }
 }
 
