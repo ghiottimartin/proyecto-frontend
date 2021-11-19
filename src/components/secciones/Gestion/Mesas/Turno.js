@@ -259,6 +259,14 @@ function Turno(props) {
         //Falta implementar.
     }
 
+    const cancelar = () => {
+
+    }
+
+    const entregar = () => {
+
+    }
+
     let Ordenes = []
     if (turno && Array.isArray(turno.ordenes)) {
         Ordenes = turno.ordenes.map(orden => {
@@ -330,18 +338,30 @@ function Turno(props) {
                             <b>Total:</b> {formatearMoneda(turno.total)}
                         </div>
                     </div>
-                    <div className="d-flex justify-content-between botones-turno">
+                    <div className="contenedor-botones">
+                        <button onClick={() => entregar()} className="btn btn-primary float-right boton-guardar mt-2" >
+                            <div style={{ display: isUpdating ? "inline-block" : "none" }} className="spinner spinner-border text-light" role="status">
+                                <span className="sr-only"></span>
+                            </div>
+                            <span className="ml-1">Entregar</span>
+                        </button>
+                        <button onClick={() => cancelar()} className="btn btn-secondary float-right boton-guardar mt-2" >
+                            <div style={{ display: isUpdating ? "inline-block" : "none" }} className="spinner spinner-border text-light" role="status">
+                                <span className="sr-only"></span>
+                            </div>
+                            <span className="ml-1">Cancelar</span>
+                        </button>
                         <button onClick={() => guardarBorrador()} className="btn btn-success float-right boton-guardar mt-2" >
                             <div style={{ display: isUpdating ? "inline-block" : "none" }} className="spinner spinner-border text-light" role="status">
                                 <span className="sr-only"></span>
                             </div>
-                            <span className="ml-1">Guardar borrador</span>
+                            <span className="ml-1">Guardar</span>
                         </button>
-                        <button onClick={() => cerrar()} className="btn btn-primary float-right boton-guardar mt-2" disabled={no_puede_cerrar}>
+                        <button onClick={() => cerrar()} className="btn btn-danger float-right boton-guardar mt-2" disabled={no_puede_cerrar}>
                             <div style={{ display: isUpdating ? "inline-block" : "none" }} className="spinner spinner-border text-light" role="status">
                                 <span className="sr-only"></span>
                             </div>
-                            <span className="ml-1">Cerrar turno</span>
+                            <span className="ml-1">Cerrar</span>
                         </button>
                     </div>
                 </section>

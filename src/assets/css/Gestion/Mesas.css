@@ -122,7 +122,7 @@
 }
 
 .seccion-turno .venta-productos {
-  height: calc(100vh - 380px) !important;
+  height: calc(100vh - 420px) !important;
   min-height: 200px;
   overflow-y: auto;
   display: grid;
@@ -132,10 +132,14 @@
 }
 
 .seccion-turno .producto {
-  font-size: 14px;
+  font-size: 13px;
   max-height: 150px;
-  max-width: 80%;
+  max-width: 95%;
   position: relative;
+}
+
+.seccion-turno .producto .producto-derecha {
+  padding-right: 15px;
 }
 
 .seccion-turno .producto img {
@@ -152,6 +156,19 @@
   border: 1px solid grey;
   font-weight: bold;
   padding: 2px 15px;
+}
+
+.seccion-turno .contenedor-botones {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  justify-content: center;
+}
+
+.seccion-turno .contenedor-botones button {
+  display: block;
+  margin: 0 auto;
+  max-width: 200px;
+  min-width: 120px;
 }
 
 .mesa-turno {
@@ -179,10 +196,11 @@
   height: 22px;
 }
 
-.seccion-turno .botones-turno {
-  position: absolute;
-  bottom: 10px;
-  width: 90%;
+
+@media (min-width: 350px) {
+  .seccion-turno .contenedor-botones {
+    grid-template-columns: 50% 50%;
+  }
 }
 
 /* 
@@ -195,6 +213,15 @@ No media query for `xs` since this is the default in Bootstrap
     grid-template-columns: 50% 50%;
     justify-items: center;
     grid-column-gap: 10px;
+    padding: 0 20px;
+  }
+
+  .seccion-turno .contenedor-botones {
+    grid-template-columns: 25% 25% 25% 25%;
+  }
+
+  .seccion-turno .producto .producto-derecha {
+    padding-right: 0;
   }
 }
 
