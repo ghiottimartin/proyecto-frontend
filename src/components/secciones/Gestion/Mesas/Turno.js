@@ -255,7 +255,8 @@ function Turno(props) {
     }
 
     /**
-     * Cierra el turno actual.
+     * Cierra el turno actual, dejando el turno como cancelado y
+     * la mesa disponible.
      */
     const cerrar = () => {
         Swal.fire({
@@ -275,6 +276,10 @@ function Turno(props) {
         });
     }
 
+    /**
+     * Cierra el turno actual, dejando el turno como cerrado, la mesa disponible 
+     * y creando una venta tipo mesa.
+     */
     const cancelar = () => {
         Swal.fire({
             title: `¿Está seguro de cancelar el turno? `,

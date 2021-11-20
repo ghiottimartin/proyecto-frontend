@@ -146,7 +146,7 @@ function Mesa(props) {
     }
 
     return (
-        <article key={mesa.id} className="mesa-tarjeta">
+        <article key={mesa.id} className="mesa-tarjeta" style={{backgroundColor: mesa.color_fondo}}>
             <header>
                 <span className={mesa.estado_clase}>{mesa.estado_texto}</span>
                 <span>Mesa {mesa.numero_texto}</span>
