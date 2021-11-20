@@ -67,7 +67,6 @@ var turnos = {
                 .map(k => esc(k) + '=' + esc(filtros[k]))
                 .join('&');
         }
-        console.log(query)
         
         let defaultOptions = {
             method: 'GET',

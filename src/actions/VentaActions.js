@@ -431,7 +431,6 @@ export function pdfVenta(id) {
                 dispatch(receivePdfVenta(blob, nombre));
             })
             .catch(function (error) {
-                console.log(error)
                 switch (error.status) {
                     case 401:
                         dispatch(errorPdfVenta(errorMessages.UNAUTHORIZED_TOKEN));

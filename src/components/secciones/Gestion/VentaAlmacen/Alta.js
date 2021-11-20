@@ -218,7 +218,6 @@ function Alta(props) {
         let FilasHTML = []
         if (venta && Array.isArray(venta.lineas)) {
             FilasHTML = venta.lineas.map(linea => {
-                console.log(linea)
                 const precio = linea.precio ? linea.precio : ''
                 const producto = linea.producto
                 const cantidad = linea.cantidad ? linea.cantidad : ''
