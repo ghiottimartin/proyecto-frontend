@@ -244,7 +244,7 @@ function pedidosById(state = {
                 })
             });
         
-            // ANULAR PEDIDO
+        // ANULAR PEDIDO
         case RECEIVE_ANULAR_PEDIDO:
             return Object.assign({}, state, {
                 isCanceling: false,

@@ -5,7 +5,7 @@ import { connect } from "react-redux"
 //Actions
 import { fetchMesaById } from "../../../../actions/MesaActions"
 import { fetchMozos, resetMozos } from "../../../../actions/UsuarioActions"
-import { updateTurno, resetUpdateTurno, saveUpdateTurno } from "../../../../actions/TurnoActions"
+import { updateTurno, resetUpdateTurno, saveUpdateTurno, cancelarTurno } from "../../../../actions/TurnoActions"
 import { fetchProductos } from "../../../../actions/ProductoActions"
 
 //CSS
@@ -13,6 +13,7 @@ import "../../../../assets/css/Gestion/Mesas.css"
 
 //Constants
 import * as rutas from "../../../../constants/rutas"
+import * as colores from "../../../../constants/colores"
 
 //Components
 import Titulo from "../../../elementos/Titulo"
@@ -260,11 +261,25 @@ function Turno(props) {
     }
 
     const cancelar = () => {
-
+        Swal.fire({
+            title: `¿Está seguro de cancelar el turno? `,
+            icon: 'warning',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            confirmButtonText: 'Cancelar',
+            cancelButtonText: 'Continuar',
+            confirmButtonColor: colores.COLOR_ROJO,
+            cancelButtonColor: '#bfbfbf',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                props.cancelarTurno(turno.id)
+            }
+        });
     }
 
     const entregar = () => {
-
+        //Falta implementar.
     }
 
     let Ordenes = []
@@ -400,6 +415,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         fetchProductos: (paginar) => {
             dispatch(fetchProductos(paginar))
+        },
+        cancelarTurno: (id) => {
+            dispatch(cancelarTurno(id))
         }
     }
 }
