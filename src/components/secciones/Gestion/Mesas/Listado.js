@@ -11,6 +11,7 @@ import * as rutas from "../../../../constants/rutas"
 
 //Components
 import Mesa from "./Mesa"
+import Filtros from "./Filtros"
 import Titulo from "../../../elementos/Titulo"
 import Loader from "../../../elementos/Loader"
 import AddBoxIcon from "@material-ui/icons/AddBox"
@@ -24,6 +25,8 @@ import history from "../../../../history"
 function Listado(props) {
     const mesas = props.mesas
     const titulo = "Listado de mesas"
+    const total = mesas.byId.total
+    const filtros = mesas.byId.filtros
     const buscando = mesas.byId.isFetching || mesas.delete.isDeleting || mesas.update.isUpdating
     const cantidadMesas = mesas.allIds.length
 
@@ -36,11 +39,28 @@ function Listado(props) {
         }
     }, [])
 
+    const filtrarMesas = (e) => {
+        e.preventDefault();
+        props.fetchMesas(filtros)
+    }
+
+    /**
+     * Cambia los filtros a aplicar, si cambia un filtro que no sea la paginación
+     * vuelve a la página inicial.
+     * 
+     * @param {SyntheticBaseEvent} e 
+     */
+    const onChangeBusqueda = (e) => {
+        var cambio = {};
+        cambio[e.target.id] = e.target.value;
+        props.updateFiltros(cambio);
+    }
+
     let Mesas = props.mesas.allIds.map(idMesa => {
         const mesa = props.mesas.byId.mesas[idMesa]
         if (mesa && mesa.id) {
             return (
-                <Mesa mesa={mesa}/>
+                <Mesa mesa={mesa} />
             )
         }
     })
@@ -48,7 +68,7 @@ function Listado(props) {
     if (cantidadMesas == 0 && !buscando) {
         Mesas =
             <div className="alert alert-warning" role="alert">
-                No hay mesas cargadas.
+                {total > 0 ? "No hay mesas para los filtros aplicados." : "No hay mesas cargadas."}
             </div>
     }
 
@@ -59,10 +79,17 @@ function Listado(props) {
                 <a href="#"
                     onClick={() => history.push(rutas.MESA_ALTA + "?volverA=" + rutas.MESAS_LISTAR)}
                     data-toggle="tooltip" data-original-title="" title="">
-                    <AddBoxIcon style={{ color:  '#5cb860'}}/>
+                    <AddBoxIcon style={{ color: '#5cb860' }} />
                 </a>
             </div>
             <div className="mesas-listado-contenedor">
+                {buscando ? '' :
+                    <Filtros
+                        {...props}
+                        filtrar={(e) => filtrarMesas(e)}
+                        onChangeBusqueda={(e) => onChangeBusqueda(e)}
+                    />
+                }
                 {buscando ? '' : Mesas}
                 <Loader display={buscando} />
             </div>
@@ -78,8 +105,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchMesas: () => {
-            dispatch(fetchMesas())
+        fetchMesas: (filtros) => {
+            dispatch(fetchMesas(filtros))
         },
         updateFiltros: (filtros) => {
             dispatch(updateFiltros(filtros))

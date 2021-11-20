@@ -30,7 +30,6 @@
 }
 
 .mesas-listado .mesas-listado-contenedor {
-  margin-top: 20px;
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: auto;
@@ -202,6 +201,19 @@
 
 .seccion-turno .half-circle-spinner {
   margin-top: 20px;
+}
+
+.mesas-listado .filtros {
+  width: 100%;
+  grid-column: 1 / -1;
+}
+
+.mesas-listado .filtros h4 {
+  font-size: 16px;
+}
+
+.mesas-listado .filtros .filter-by input, .mesas-listado .filtros .filter-by select {
+  width: 150px;
 }
 
 @media (min-width: 350px) {

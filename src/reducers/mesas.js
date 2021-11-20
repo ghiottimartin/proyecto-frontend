@@ -27,20 +27,13 @@ import {
     RESET_DELETE_MESA,
     REQUEST_DELETE_MESA,
     RECEIVE_DELETE_MESA,
-    ERROR_DELETE_MESA,
-    ERROR_CREATE_TURNO_MESA,
-    RECEIVE_CREATE_TURNO_MESA,
-    REQUEST_CREATE_TURNO_MESA,
-    RESET_CREATE_TURNO_MESA,
-    CREATE_TURNO_MESA
+    ERROR_DELETE_MESA
 
 } from '../actions/MesaActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions"
 
 const filtrosIniciales = {
     numero: "",
-    paginaActual: 1,
-    registrosPorPagina: 10,
     estado: ""
 }
 
