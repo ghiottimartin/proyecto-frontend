@@ -36,6 +36,7 @@ let haceUnaSemana = moment().subtract(2, 'weeks')
 
 const filtrosIniciales = {
     numero: "",
+    tipo: "",
     fechaDesde: haceUnaSemana.format("YYYY-MM-DD"),
     fechaHasta: hoy.format("YYYY-MM-DD"),
     paginaActual: 1,

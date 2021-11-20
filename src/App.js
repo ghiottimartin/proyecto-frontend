@@ -38,9 +38,9 @@ import MovimientosStock from './components/secciones/Gestion/MovimientosStock/Li
 import AltaReemplazoMercaderia from './components/secciones/Gestion/ReemplazoMercaderia/Alta';
 import ListadoReemplazoMercaderia from './components/secciones/Gestion/ReemplazoMercaderia/Listado';
 import ReemplazoVisualizar from './components/secciones/Gestion/ReemplazoMercaderia/Visualizar';
-import AltaVentaAlmacen from './components/secciones/Gestion/VentaAlmacen/Alta';
-import ListadoVentaAlmacen from './components/secciones/Gestion/VentaAlmacen/Listado';
-import VisualizarVenta from './components/secciones/Gestion/VentaAlmacen/Visualizar';
+import AltaVentaAlmacen from './components/secciones/Gestion/Venta/Alta';
+import ListadoVentaAlmacen from './components/secciones/Gestion/Venta/Listado';
+import VisualizarVenta from './components/secciones/Gestion/Venta/Visualizar';
 import AltaEdicionMesa from './components/secciones/Gestion/Mesas/AltaEdicion';
 import ListadoMesa from './components/secciones/Gestion/Mesas/Listado';
 import MesaTurno from './components/secciones/Gestion/Mesas/Turno'

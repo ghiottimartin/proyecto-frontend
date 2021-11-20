@@ -24,7 +24,7 @@ import history from "../../../../history";
 import Swal from 'sweetalert2';
 
 function Listado(props) {
-    const titulo = "Listado de ventas en almacén"
+    const titulo = "Listado de ventas"
     const ventas = props.ventas
     const buscando = ventas.byId.isFetching
 
@@ -195,6 +195,7 @@ function Listado(props) {
                 <tr key={venta.id}>
                     <td>{venta.id_texto}</td>
                     <td>{venta.fecha_texto}</td>
+                    <td>{venta.tipo_venta}</td>
                     <td>
                         <span>{venta.usuario_nombre}</span>
                         <br/>
@@ -220,7 +221,7 @@ function Listado(props) {
         }
         Ventas = 
             <tr className="text-center">
-                <td colSpan={6}>{placeholder}</td>
+                <td colSpan={7}>{placeholder}</td>
             </tr>;
     }
 
@@ -244,6 +245,7 @@ function Listado(props) {
                     <tr>
                         <th>Número</th>
                         <th>Fecha</th>
+                        <th>Tipo</th>
                         <th>Usuario</th>
                         <th>Estado</th>
                         <th className="text-right px-5">Total</th>
@@ -251,7 +253,7 @@ function Listado(props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {buscando ? <tr><td colSpan={6}><Loader display={true} /></td></tr> : Ventas}
+                    {buscando ? <tr><td colSpan={7}><Loader display={true} /></td></tr> : Ventas}
                 </tbody>
             </table>
         </div>

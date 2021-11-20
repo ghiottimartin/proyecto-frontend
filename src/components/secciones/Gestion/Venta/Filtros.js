@@ -92,6 +92,20 @@ function Filtros(props) {
                                     <option key={2} value="anulado">Anuladas</option>
                                 </Form.Control>
                             </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Tipo:</Form.Label>
+                                <Form.Control
+                                    id="tipo"
+                                    as="select"
+                                    onChange={(e) => changeFiltros(e)}
+                                    value={filtros.tipo ? filtros.tipo : ""}
+                                >
+                                    <option key={0} value="">Todos</option>
+                                    <option key={1} value="almacen">Almacén</option>
+                                    <option key={2} value="mesa">Mesa</option>
+                                    <option key={3} value="online">Online</option>
+                                </Form.Control>
+                            </Form.Group>
                         </div>
                     </div>
                 </div>
