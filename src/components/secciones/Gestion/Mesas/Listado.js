@@ -41,7 +41,7 @@ function Listado(props) {
 
     const filtrarMesas = (e) => {
         e.preventDefault();
-        props.fetchMesas(filtros)
+        props.fetchMesas()
     }
 
     /**
@@ -105,8 +105,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchMesas: (filtros) => {
-            dispatch(fetchMesas(filtros))
+        fetchMesas: () => {
+            dispatch(fetchMesas())
         },
         updateFiltros: (filtros) => {
             dispatch(updateFiltros(filtros))
