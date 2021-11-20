@@ -44,9 +44,10 @@
 }
 
 .mesas-listado .mesa-tarjeta {
-  min-height: 250px;
+  min-height: 170px;
+  max-height: 300px;
   position: relative;
-  width: 280px;
+  width: 250px;
   display: flex;
   -moz-flex-direction: row;
   flex-direction: column;
@@ -60,13 +61,16 @@
 }
 
 .mesas-listado .mesa-tarjeta header {
-  height: 50%;
   font-size: 14px;
   font-weight: bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
+}
+
+.mesas-listado .mesa-tarjeta img {
+  margin-top: 10px;
 }
 
 .mesas-listado .mesa-tarjeta .badge {
