@@ -1,0 +1,70 @@
+.turno-tarjeta {
+  min-height: 185px;
+  max-height: 350px;
+  position: relative;
+  width: 250px;
+  display: flex;
+  -moz-flex-direction: row;
+  flex-direction: column;
+  -moz-align-items: stretch;
+  align-items: stretch;
+  place-content: stretch flex-start;
+  background-color: #e1ded9;
+  box-shadow: 0px 0px 10px rgb(0 0 0 / 20%);
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.turno-tarjeta header {
+  font-size: 17px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.turno-tarjeta img {
+  margin-top: 10px;
+}
+
+.turno-tarjeta .badge {
+  position: absolute;
+  left: 10px;
+  top: 13px;
+  font-size: 14px;
+}
+
+.turno-tarjeta h5 {
+  margin-top: 5px;
+  font-size: 15px;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.turno-tarjeta footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: flex;
+}
+
+.turno-tarjeta footer button {
+  font-size: 14px;
+  flex-grow: 1;
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
+  width: 50%;
+  border: none;
+  height: 30px;
+}
+
+.turno-tarjeta footer button:first-child {
+  border-top-left-radius: 3px;
+}
+
+.turno-tarjeta footer button:last-child {
+  border-top-right-radius: 3px;
+}

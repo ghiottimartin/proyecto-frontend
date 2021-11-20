@@ -89,7 +89,7 @@ function Mesa(props) {
      * @param {Object} mesa 
      */
     const historicoTurnos = (mesa) => {
-
+        history.push(rutas.MESA_TURNOS + mesa.id)
     }
 
     /**

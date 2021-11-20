@@ -44,6 +44,7 @@ import VisualizarVenta from './components/secciones/Gestion/VentaAlmacen/Visuali
 import AltaEdicionMesa from './components/secciones/Gestion/Mesas/AltaEdicion';
 import ListadoMesa from './components/secciones/Gestion/Mesas/Listado';
 import MesaTurno from './components/secciones/Gestion/Mesas/Turno'
+import MesaTurnos from './components/secciones/Gestion/Mesas/Turnos/Turnos'
 
 //CSS
 import "./App.css";
@@ -284,6 +285,7 @@ class App extends React.Component {
                         <Route exact path={rutas.MESAS_LISTAR} component={ListadoMesa} />
                         <Route exact path={rutas.MESA_ABM} component={AltaEdicionMesa} />
                         <Route exact path={rutas.MESA_TURNO_ID} component={MesaTurno} />
+                        <Route exact path={rutas.MESA_TURNOS_ID} component={MesaTurnos} />
                         <Route exact path="*" component={NotFound} />
                     </Switch>
                 </div>

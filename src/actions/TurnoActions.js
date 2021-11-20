@@ -12,6 +12,7 @@ import * as errorMessages from '../constants/MessageConstants';
 
 //Normalizer
 import { normalizeDato, normalizeDatos } from "../normalizers/normalizeTurnos";
+import { updateMesa } from './MesaActions';
 
 // CREACION TURNO DE MESAS
 export const CREATE_TURNO = 'CREATE_TURNO'
@@ -335,5 +336,103 @@ export function cerrarTurno(turno) {
                         return;
                 }
             });
+    }
+}
+
+// FILTROS TURNOS
+export const UPDATE_FILTROS = 'UPDATE_FILTROS';
+export const RESET_FILTROS = 'RESET_FILTROS';
+
+export function updateFiltros(filtros) {
+    return {
+        type: UPDATE_FILTROS,
+        filtros
+    }
+}
+
+export function resetFiltros() {
+    return {
+        type: RESET_FILTROS
+    }
+}
+
+// BUSQUEDA DE TURNOS
+export const INVALIDATE_TURNOS = 'INVALIDATE_TURNOS'
+export const REQUEST_TURNOS = "REQUEST_TURNOS"
+export const RECEIVE_TURNOS = "RECEIVE_TURNOS"
+export const ERROR_TURNOS = "ERROR_TURNOS"
+export const RESET_TURNOS = "RESET_TURNOS"
+
+export function resetTurnos() {
+    return {
+        type: RESET_TURNOS
+    }
+}
+
+function requestTurnos() {
+    return {
+        type: REQUEST_TURNOS,
+    }
+}
+
+function receiveTurnos(json) {
+    return {
+        type: RECEIVE_TURNOS,
+        turnos: normalizeDatos(json.turnos),
+        total: json.total,
+        registros: json.registros,
+        receivedAt: Date.now()
+    }
+}
+
+function errorTurnos(error) {
+    return {
+        type: ERROR_TURNOS,
+        error: error,
+    }
+}
+
+export function fetchTurnos(idMesa) {
+    return (dispatch, getState) => {
+        dispatch(requestTurnos())
+        return turnos.getAll(idMesa, getState().turnos.byId.filtros)
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response)
+                } else {
+                    var data = response.json()
+                    return data
+                }
+            })
+            .then(function (data) {
+                const datos = data.datos
+                const mesa = datos.mesa
+                dispatch(updateMesa(mesa))
+                dispatch(receiveTurnos(data.datos))
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorTurnos(errorMessages.UNAUTHORIZED_TOKEN))
+                        dispatch(logout())
+                        return
+                    default:
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorTurnos(error.message))
+                                    else
+                                        dispatch(errorTurnos(errorMessages.GENERAL_ERROR))
+                                })
+                                .catch(error => {
+                                    dispatch(errorTurnos(errorMessages.GENERAL_ERROR))
+                                })
+                        } catch (e) {
+                            dispatch(errorTurnos(errorMessages.GENERAL_ERROR))
+                        }
+                        return
+                }
+            })
     }
 }

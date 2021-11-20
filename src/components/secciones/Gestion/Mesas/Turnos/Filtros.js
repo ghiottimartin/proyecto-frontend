@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 //Actions
-import { resetFiltros } from "../../../../actions/MesaActions"
+import { resetFiltros } from "../../../../../actions/TurnoActions"
 
 //Boostrap
 import Form from "react-bootstrap/Form";
@@ -12,8 +12,8 @@ import Form from "react-bootstrap/Form";
 import moment from 'moment';
 
 function Filtros(props) {
-    const filtros = props.mesas.byId.filtros
-    const resetFiltros = props.mesas.byId.filtros.resetFiltros
+    const filtros = props.turnos.byId.filtros
+    const resetFiltros = props.turnos.byId.filtros.resetFiltros
 
     useEffect(() => {
         if (resetFiltros) {
@@ -36,16 +36,28 @@ function Filtros(props) {
             <h4>Filtrado</h4>
             <Form onSubmit={(e) => props.filtrar(e)}>
                 <div className="form-filtros">
-                    <div className="contenedor-filtros">
-                        <div className="filter-by text-nowrap flex-wrap">
+                    <div className="contenedor-filtros w-100">
+                        <div className="filter-by text-nowrap w-100">
                             <Form.Group>
-                                <Form.Label>Número:</Form.Label>
+                                <Form.Label>Fecha desde:</Form.Label>
                                 <Form.Control
-                                    id="numero"
-                                    type="number"
-                                    min="0"
+                                    id="fechaDesde"
+                                    type="date"
+                                    lang="es-ES"
+                                    max={maximo}
                                     onChange={(e) => changeFiltros(e)}
-                                    value={filtros.numero}
+                                    value={filtros.fechaDesde}
+                                ></Form.Control>
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Fecha hasta:</Form.Label>
+                                <Form.Control
+                                    id="fechaHasta"
+                                    type="date"
+                                    lang="es-ES"
+                                    max={maximo}
+                                    onChange={(e) => changeFiltros(e)}
+                                    value={filtros.fechaHasta}
                                 ></Form.Control>
                             </Form.Group>
                             <Form.Group>
@@ -56,9 +68,10 @@ function Filtros(props) {
                                     onChange={(e) => changeFiltros(e)}
                                     value={filtros.estado ? filtros.estado : ""}
                                 >
-                                    <option key={0} value="">Todas</option>
-                                    <option key={1} value="disponible">Disponibles</option>
-                                    <option key={2} value="ocupada">Ocupadas</option>
+                                    <option key={0} value="">Todos</option>
+                                    <option key={1} value="abierto">Abiertos</option>
+                                    <option key={2} value="cerrado">Cerrados</option>
+                                    <option key={3} value="cancelado">Cancelados</option>
                                 </Form.Control>
                             </Form.Group>
                         </div>
@@ -75,7 +88,7 @@ function Filtros(props) {
 
 function mapStateToProps(state) {
     return {
-        mesas: state.mesas
+        turnos: state.turnos
     };
 }
 

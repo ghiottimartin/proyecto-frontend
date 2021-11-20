@@ -59,6 +59,26 @@ var turnos = {
         return fetch(c.BASE_URL + '/mesas/turno/' + id + "/cerrar/", defaultOptions);
     },
 
+    getAll(idMesa, filtros) {
+        var esc = encodeURIComponent;
+        var query = `?idMesa=${idMesa}&`;
+        if (filtros) {
+            query += Object.keys(filtros)
+                .map(k => esc(k) + '=' + esc(filtros[k]))
+                .join('&');
+        }
+        console.log(query)
+        
+        let defaultOptions = {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "Authorization": "Token " + localStorage.token
+            }
+        };
+        return fetch(c.BASE_URL + '/mesas/turno/turnos/' + query, defaultOptions);
+    }
+
 };
 
 export default turnos;
