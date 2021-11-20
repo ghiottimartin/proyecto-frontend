@@ -17,6 +17,7 @@ import * as colores from "../../../../constants/colores"
 
 //Components
 import Titulo from "../../../elementos/Titulo"
+import Loader from "../../../elementos/Loader"
 import Producto from "../../../elementos/Venta/Producto"
 import SeleccionProductos from "../../../elementos/Modales/SeleccionProductos"
 
@@ -31,6 +32,7 @@ import { getIconoConId } from "../../../../utils/utils"
 
 function Turno(props) {
     const idMesa = props.match.params['id']
+    const buscando = props.mesas.byId.isFetching
     const isUpdating = props.turnos.update.isUpdating
 
     const turno = props.turnos.update.activo
@@ -343,7 +345,8 @@ function Turno(props) {
                         data-toggle="tooltip" data-original-title="" title="">
                         <AddBoxIcon style={{ color: '#5cb860' }} />
                     </a>
-                    <div className="contenedor-ordenes">
+                    <Loader display={isUpdating || buscando} />
+                    <div className="contenedor-ordenes" style={{display: isUpdating ? "none" : "block"}}>
                         <div className="venta-productos">
                             {Ordenes}
                         </div>
@@ -355,27 +358,15 @@ function Turno(props) {
                     </div>
                     <div className="contenedor-botones">
                         <button onClick={() => entregar()} className="btn btn-primary float-right boton-guardar mt-2" >
-                            <div style={{ display: isUpdating ? "inline-block" : "none" }} className="spinner spinner-border text-light" role="status">
-                                <span className="sr-only"></span>
-                            </div>
                             <span className="ml-1">Entregar</span>
                         </button>
                         <button onClick={() => cancelar()} className="btn btn-secondary float-right boton-guardar mt-2" >
-                            <div style={{ display: isUpdating ? "inline-block" : "none" }} className="spinner spinner-border text-light" role="status">
-                                <span className="sr-only"></span>
-                            </div>
                             <span className="ml-1">Cancelar</span>
                         </button>
                         <button onClick={() => guardarBorrador()} className="btn btn-success float-right boton-guardar mt-2" >
-                            <div style={{ display: isUpdating ? "inline-block" : "none" }} className="spinner spinner-border text-light" role="status">
-                                <span className="sr-only"></span>
-                            </div>
                             <span className="ml-1">Guardar</span>
                         </button>
                         <button onClick={() => cerrar()} className="btn btn-danger float-right boton-guardar mt-2" disabled={no_puede_cerrar}>
-                            <div style={{ display: isUpdating ? "inline-block" : "none" }} className="spinner spinner-border text-light" role="status">
-                                <span className="sr-only"></span>
-                            </div>
                             <span className="ml-1">Cerrar</span>
                         </button>
                     </div>
@@ -388,6 +379,7 @@ function Turno(props) {
 function mapStateToProps(state) {
     return {
         turnos: state.turnos,
+        mesas: state.mesas,
         mozos: state.mozos,
         productos: state.productos,
     }

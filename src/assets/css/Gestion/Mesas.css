@@ -196,6 +196,9 @@
   height: 22px;
 }
 
+.seccion-turno .half-circle-spinner {
+  margin-top: 20px;
+}
 
 @media (min-width: 350px) {
   .seccion-turno .contenedor-botones {
