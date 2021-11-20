@@ -73,10 +73,10 @@ export const REEMPLAZO_MERCADERIA_VISUALIZAR    = '/reemplazo-mercaderia/visuali
 export const REEMPLAZO_MERCADERIA_VISUALIZAR_ID = '/reemplazo-mercaderia/visualizar/:id';
 
 //Venta en Almacén
-export const VENTA_ALMACEN_ALTA          = '/venta/alta';
-export const VENTA_ALMACEN_LISTADO       = '/venta/listado';
-export const VENTA_ALMACEN_VISUALIZAR    = '/venta/visualizar/';
-export const VENTA_ALMACEN_VISUALIZAR_ID = '/venta/visualizar/:id';
+export const VENTA_ALTA          = '/venta/alta';
+export const VENTA_LISTADO       = '/venta/listado';
+export const VENTA_VISUALIZAR    = '/venta/visualizar/';
+export const VENTA_VISUALIZAR_ID = '/venta/visualizar/:id';
 
 //Mesa
 export const MESA_ABM       = '/mesas/:accion/:id?';
@@ -148,11 +148,12 @@ const RUTAS = [
     REEMPLAZO_MERCADERIA_ALTA,
     REEMPLAZO_MERCADERIA_LISTAR,
     REEMPLAZO_MERCADERIA_VISUALIZAR,
-    VENTA_ALMACEN_ALTA,
-    VENTA_ALMACEN_LISTADO,
+    VENTA_ALTA,
+    VENTA_LISTADO,
     MESAS_LISTAR,
     MESA_ALTA,
     MESA_EDITAR,
+    MESA_TURNOS
 ];
 
 /**
@@ -162,5 +163,13 @@ const RUTAS = [
  * @returns {boolean}
  */
 export function validarRuta(ruta) {
-    return RUTAS.includes(ruta);
+    for (var i = 0; i < RUTAS.length; i++) {
+        const actual = RUTAS[i]
+        const indice = ruta.indexOf(actual)
+        const existe = indice !== -1
+        if (existe) {
+            return true
+        }
+    }
+    return false
 }

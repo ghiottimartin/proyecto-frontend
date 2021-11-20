@@ -153,7 +153,7 @@ function Listado(props) {
      const visualizarVenta = (venta) => {
         props.updateVenta(venta);
         
-        let ruta = rutas.VENTA_ALMACEN_VISUALIZAR;
+        let ruta = rutas.VENTA_VISUALIZAR;
         ruta += venta.id;
         history.push(ruta);
     }
@@ -230,7 +230,7 @@ function Listado(props) {
             <div className="d-flex justify-content-between">
                 <Titulo ruta={rutas.GESTION} titulo={titulo} />
                 <a href="#"
-                    onClick={() => history.push(rutas.VENTA_ALMACEN_ALTA + "?volverA=" + rutas.VENTA_ALMACEN_LISTADO)}
+                    onClick={() => history.push(rutas.VENTA_ALTA + "?volverA=" + rutas.VENTA_LISTADO)}
                     data-toggle="tooltip" data-original-title="" title="">
                     <AddBoxIcon style={{ color: '#5cb860' }} />
                 </a>

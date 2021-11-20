@@ -58,7 +58,7 @@ class Gestion extends React.Component {
                 return imgProductos;
             
             case rutas.PEDIDOS_VENDEDOR:
-            case rutas.VENTA_ALMACEN_LISTADO:
+            case rutas.VENTA_LISTADO:
                 return imgPedidos;
             
             case rutas.MESAS_LISTAR:

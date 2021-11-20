@@ -79,7 +79,7 @@ export function saveCreateVenta() {
                 dispatch(fetchProductos(false))
                 dispatch(reveiceCreateVenta(mensaje));
                 dispatch(resetCreateVenta());
-                history.push(rutas.VENTA_ALMACEN_LISTADO);
+                history.push(rutas.VENTA_LISTADO);
             })
             .catch(function (error) {
                 switch (error.status) {

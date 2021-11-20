@@ -378,7 +378,7 @@ function Alta(props) {
     const AltaResponsive = getTablaResponsive()
     return (
         <div className="venta-almacen fondo-gris">
-            <Titulo ruta={rutas.VENTA_ALMACEN_LISTADO} titulo={titulo} />
+            <Titulo ruta={rutas.VENTA_LISTADO} titulo={titulo} />
             <SeleccionProductos
                 show={show}
                 onHide={() => onHide()}

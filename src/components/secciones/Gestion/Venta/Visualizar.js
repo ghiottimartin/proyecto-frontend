@@ -115,9 +115,15 @@ function Visualizar(props) {
     }
     let html = getVisualizarHtml()
     const pdf = getOperacionPdf(venta)
+
+    let volverA = rutas.VENTA_LISTADO
+    const query = rutas.getQuery('volverA')
+    if (query !== undefined) {
+        volverA = query
+    }
     return (
         <div className="tarjeta-body ingreso-visualizar position-relative">
-            <Titulo ruta={rutas.VENTA_ALMACEN_LISTADO} titulo={titulo} clase="tabla-listado-titulo" />
+            <Titulo ruta={volverA} titulo={titulo} clase="tabla-listado-titulo" />
             <div className="venta-operacion-pdf">
                 {pdf}
             </div>

@@ -279,13 +279,13 @@ class App extends React.Component {
                         <Route exact path={rutas.REEMPLAZO_MERCADERIA_LISTAR} component={ListadoReemplazoMercaderia} />
                         <Route exact path={rutas.REEMPLAZO_MERCADERIA_ALTA} component={AltaReemplazoMercaderia} />
                         <Route exact path={rutas.REEMPLAZO_MERCADERIA_VISUALIZAR_ID} component={ReemplazoVisualizar} />
-                        <Route exact path={rutas.VENTA_ALMACEN_LISTADO} component={ListadoVentaAlmacen} />
-                        <Route exact path={rutas.VENTA_ALMACEN_ALTA} component={AltaVentaAlmacen} />
-                        <Route exact path={rutas.VENTA_ALMACEN_VISUALIZAR_ID} component={VisualizarVenta} />
                         <Route exact path={rutas.MESAS_LISTAR} component={ListadoMesa} />
                         <Route exact path={rutas.MESA_ABM} component={AltaEdicionMesa} />
                         <Route exact path={rutas.MESA_TURNO_ID} component={MesaTurno} />
                         <Route exact path={rutas.MESA_TURNOS_ID} component={MesaTurnos} />
+                        <Route exact path={rutas.VENTA_LISTADO} component={ListadoVentaAlmacen} />
+                        <Route exact path={rutas.VENTA_ALTA} component={AltaVentaAlmacen} />
+                        <Route exact path={rutas.VENTA_VISUALIZAR_ID} component={VisualizarVenta} />
                         <Route exact path="*" component={NotFound} />
                     </Switch>
                 </div>

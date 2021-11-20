@@ -7,12 +7,18 @@ import "../../../../../assets/css/Gestion/Turnos/Turno.css"
 
 //Constants
 import * as colores from "../../../../../constants/colores"
+import * as rutas from "../../../../../constants/rutas"
 
 //Librerías
 import Swal from 'sweetalert2';
+import history from "../../../../../history"
 
 function Turno(props) {
     const turno = props.turno
+    const idTurno = turno.id
+
+    const venta = turno.venta
+    const idVenta = venta !== null ? venta.id : null
 
     /**
      * Devuelve la tabla html con los productos del turno.
@@ -79,7 +85,11 @@ function Turno(props) {
     }
 
     const verVenta = () => {
-        //Falta implementar
+        if (idVenta === null) {
+            return;
+        }
+        const volverA = rutas.MESA_TURNOS + idTurno
+        history.push(rutas.VENTA_VISUALIZAR + idVenta + `?volverA=${volverA}`)
     }
 
     let Operaciones = []
@@ -89,11 +99,13 @@ function Turno(props) {
         </button>
     )
 
-    Operaciones.push(
-        <button key={turno.id + "-venta"} onClick={() => verVenta(turno)} style={{ backgroundColor: colores.COLOR_SUCCESS }}>
-            Venta
-        </button>
-    )
+    if (idVenta !== null) {
+        Operaciones.push(
+            <button key={turno.id + "-venta"} onClick={() => verVenta(turno)} style={{ backgroundColor: colores.COLOR_SUCCESS }}>
+                Venta
+            </button>
+        )
+    }
 
     return (
         <article key={turno.id} className="turno-tarjeta" style={{ backgroundColor: turno.color_fondo }}>
