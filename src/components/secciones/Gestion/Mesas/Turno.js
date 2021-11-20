@@ -5,7 +5,7 @@ import { connect } from "react-redux"
 //Actions
 import { fetchMesaById } from "../../../../actions/MesaActions"
 import { fetchMozos, resetMozos } from "../../../../actions/UsuarioActions"
-import { updateTurno, resetUpdateTurno, saveUpdateTurno, cancelarTurno } from "../../../../actions/TurnoActions"
+import { updateTurno, resetUpdateTurno, saveUpdateTurno, cancelarTurno, cerrarTurno } from "../../../../actions/TurnoActions"
 import { fetchProductos } from "../../../../actions/ProductoActions"
 
 //CSS
@@ -36,7 +36,6 @@ function Turno(props) {
     const isUpdating = props.turnos.update.isUpdating
 
     const turno = props.turnos.update.activo
-    const no_puede_cerrar = !turno.puede_cerrar
     const mesa = turno.mesa
     const mesaNombre = mesa && mesa.id ? mesa.numero_texto : '...'
     let titulo = `Gestión del Turno de la Mesa ${mesaNombre}`
@@ -259,7 +258,21 @@ function Turno(props) {
      * Cierra el turno actual.
      */
     const cerrar = () => {
-        //Falta implementar.
+        Swal.fire({
+            title: `¿Está seguro de cerrar el turno? `,
+            icon: 'warning',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            confirmButtonText: 'Cerrar',
+            cancelButtonText: 'Continuar',
+            confirmButtonColor: colores.COLOR_ROJO,
+            cancelButtonColor: '#bfbfbf',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                props.cerrarTurno(turno)
+            }
+        });
     }
 
     const cancelar = () => {
@@ -278,10 +291,6 @@ function Turno(props) {
                 props.cancelarTurno(turno.id)
             }
         });
-    }
-
-    const entregar = () => {
-        //Falta implementar.
     }
 
     let Ordenes = []
@@ -357,17 +366,14 @@ function Turno(props) {
                         </div>
                     </div>
                     <div className="contenedor-botones">
-                        <button onClick={() => entregar()} className="btn btn-primary float-right boton-guardar mt-2" >
-                            <span className="ml-1">Entregar</span>
-                        </button>
-                        <button onClick={() => cancelar()} className="btn btn-secondary float-right boton-guardar mt-2" >
-                            <span className="ml-1">Cancelar</span>
-                        </button>
                         <button onClick={() => guardarBorrador()} className="btn btn-success float-right boton-guardar mt-2" >
                             <span className="ml-1">Guardar</span>
                         </button>
-                        <button onClick={() => cerrar()} className="btn btn-danger float-right boton-guardar mt-2" disabled={no_puede_cerrar}>
+                        <button onClick={() => cerrar()} className="btn btn-danger float-right boton-guardar mt-2">
                             <span className="ml-1">Cerrar</span>
+                        </button>
+                        <button onClick={() => cancelar()} className="btn btn-secondary float-right boton-guardar mt-2" >
+                            <span className="ml-1">Cancelar</span>
                         </button>
                     </div>
                 </section>
@@ -410,6 +416,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         cancelarTurno: (id) => {
             dispatch(cancelarTurno(id))
+        },
+        cerrarTurno: (turno) => {
+            dispatch(cerrarTurno(turno))
         }
     }
 }

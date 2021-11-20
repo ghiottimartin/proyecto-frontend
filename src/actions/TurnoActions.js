@@ -187,7 +187,7 @@ export function saveUpdateTurno() {
     }
 }
 
-// ANULAR PEDIDO
+// CANCELAR TURNO
 export const REQUEST_CANCELAR_TURNO = "REQUEST_CANCELAR_TURNO";
 export const RECEIVE_CANCELAR_TURNO = "RECEIVE_CANCELAR_TURNO";
 export const ERROR_CANCELAR_TURNO = "ERROR_CANCELAR_TURNO";
@@ -255,6 +255,81 @@ export function cancelarTurno(id) {
                                 });
                         } catch (e) {
                             dispatch(errorCancelarTurno(errorMessages.GENERAL_ERROR));
+                        }
+
+                        return;
+                }
+            });
+    }
+}
+
+// CERRAR TURNO
+export const REQUEST_CERRAR_TURNO = "REQUEST_CERRAR_TURNO";
+export const RECEIVE_CERRAR_TURNO = "RECEIVE_CERRAR_TURNO";
+export const ERROR_CERRAR_TURNO = "ERROR_CERRAR_TURNO";
+
+
+function requestCerrarTurno() {
+    return {
+        type: REQUEST_CERRAR_TURNO,
+    }
+}
+
+function receiveCerrarTurno(message) {
+    return {
+        type: RECEIVE_CERRAR_TURNO,
+        success: message,
+        receivedAt: Date.now()
+    }
+}
+
+function errorCerrarTurno(error) {
+    return {
+        type: ERROR_CERRAR_TURNO,
+        error: error,
+    }
+}
+
+export function cerrarTurno(turno) {
+    return dispatch => {
+        dispatch(requestCerrarTurno());
+        return turnos.cerrar(turno)
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    var data = response.json();
+                    return data;
+                }
+            })
+            .then(function (data) {
+                dispatch(receiveCerrarTurno(data.message));
+                dispatch(resetUpdateTurno())
+                history.push(rutas.MESAS_LISTAR)
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorCerrarTurno(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(logout());
+                        return;
+                    case 404:
+                        dispatch(errorCerrarTurno(errorMessages.GENERAL_ERROR));
+                        return;
+                    default:
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorCerrarTurno(error.message));
+                                    else
+                                        dispatch(errorCerrarTurno(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
+                                    dispatch(errorCerrarTurno(errorMessages.GENERAL_ERROR));
+                                });
+                        } catch (e) {
+                            dispatch(errorCerrarTurno(errorMessages.GENERAL_ERROR));
                         }
 
                         return;

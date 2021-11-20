@@ -41,7 +41,23 @@ var turnos = {
         };
 
         return fetch(c.BASE_URL + '/mesas/turno/' + id + "/cancelar/", defaultOptions);
-    }
+    },
+
+    cerrar(turno) {        
+        delete turno.mesa
+
+        let defaultOptions = {
+            method: 'PUT',
+            headers: {
+                "Content-Type": "application/json;charset=UTF-8",
+                "Authorization": "Token " + localStorage.token
+            },
+            body: JSON.stringify(turno)
+        };
+
+        const id = turno.id
+        return fetch(c.BASE_URL + '/mesas/turno/' + id + "/cerrar/", defaultOptions);
+    },
 
 };
 
