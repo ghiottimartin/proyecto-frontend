@@ -34,6 +34,7 @@ function Turno(props) {
     const idMesa = props.match.params['id']
     const buscando = props.mesas.byId.isFetching
     const isUpdating = props.turnos.update.isUpdating
+    const loader = buscando || isUpdating
 
     const turno = props.turnos.update.activo
     const mesa = turno.mesa
@@ -310,7 +311,7 @@ function Turno(props) {
                 <Producto
                     key={clave}
                     producto={producto}
-                    guardando={isUpdating}
+                    guardando={loader}
                     cantidad={cantidad}
                     subtotal={subtotal}
                     agregarCantidad={(producto, cantidad) => actualizarOrden(producto, cantidad)}
@@ -359,8 +360,8 @@ function Turno(props) {
                         data-toggle="tooltip" data-original-title="" title="">
                         <AddBoxIcon style={{ color: '#5cb860' }} />
                     </a>
-                    <Loader display={isUpdating || buscando} />
-                    <div className="contenedor-ordenes" style={{display: isUpdating ? "none" : "block"}}>
+                    <Loader display={loader} />
+                    <div className="contenedor-ordenes" style={{display: loader ? "none" : "block"}}>
                         <div className="venta-productos">
                             {Ordenes}
                         </div>
@@ -370,7 +371,7 @@ function Turno(props) {
                             <b>Total:</b> {formatearMoneda(turno.total)}
                         </div>
                     </div>
-                    <div className="contenedor-botones">
+                    <div className="contenedor-botones" style={{display: loader ? "none" : "grid"}}>
                         <button onClick={() => guardarBorrador()} className="btn btn-success float-right boton-guardar mt-2" >
                             <span className="ml-1">Guardar</span>
                         </button>
