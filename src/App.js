@@ -67,7 +67,6 @@ class App extends React.Component {
         this.state = {
             blur: false,
             borrando: false,
-            guardando: false,
             mostrar: false,
             producto: 0,
         };
@@ -80,7 +79,6 @@ class App extends React.Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.pedidos.create.isCreating && !this.props.pedidos.create.isCreating) {
             this.setState({
-                guardando: false,
                 borrando: false,
                 producto: 0,
             });
@@ -164,7 +162,6 @@ class App extends React.Component {
 
     crearPedidoAbierto(producto, pedido) {
         this.setState({
-            guardando: true,
             producto: producto.id,
         });
         this.props.createPedido(pedido);
@@ -231,7 +228,8 @@ class App extends React.Component {
     }
 
     render() {
-        const { mostrar, guardando, producto, borrando, blur } = this.state;
+        const { mostrar, producto, borrando, blur } = this.state;
+        const guardando = this.props.pedidos.create.isCreating;
         let claseBlur = blur ? "forzar-blur" : "";
         return (
             <div className="app">

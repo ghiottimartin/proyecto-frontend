@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 //Actions
-import {createPedido, saveCreatePedido, fetchPedidoById} from "../../actions/PedidoActions"
+import { createPedido, saveCreatePedido, fetchPedidoById } from "../../actions/PedidoActions"
 
 //Constants
 import c from "../../constants/constants";
@@ -50,10 +50,10 @@ class Producto extends React.Component {
 
     render() {
         const props = this.props;
-        let {cantidad} = this.state;
-        let guardando  = props.guardando;
+        let { cantidad } = this.state;
+        let guardando = props.guardando;
         let idProducto = props.productoGuardando;
-        let loader = guardando && idProducto === props.producto.id;
+        let loader = guardando && parseInt(idProducto) === parseInt(props.producto.id);
         const producto = props.producto;
         if (cantidad === null) {
             cantidad = 0;
@@ -70,7 +70,7 @@ class Producto extends React.Component {
         const buscandoPedidoAbierto = this.props.pedidos.byId.isFetchingPedido;
         let gestionCantidad = cantidad === 0 ?
             <Button variant="outlined" color="primary" className="anular no-cerrar-carrito" onClick={() => this.props.agregarProducto(producto, 1)}>
-                <ShoppingCartIcon className="icono-material hvr-grow"/>Agregar
+                <ShoppingCartIcon className="icono-material hvr-grow" />Agregar
             </Button>
             :
             <div className="producto-derecha-carrito-cantidad-gestion no-cerrar-carrito">
@@ -121,7 +121,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = (dispatch) => {
     return {
         createPedido: (pedido) => {
-          dispatch(createPedido(pedido))
+            dispatch(createPedido(pedido))
         },
         saveCreatePedido: (volverA) => {
             dispatch(saveCreatePedido(volverA))
