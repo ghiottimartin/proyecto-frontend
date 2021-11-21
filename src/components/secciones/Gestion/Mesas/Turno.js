@@ -371,7 +371,7 @@ function Turno(props) {
                             <b>Total:</b> {formatearMoneda(turno.total)}
                         </div>
                     </div>
-                    <div className="contenedor-botones" style={{display: loader ? "none" : "grid"}}>
+                    <div className="contenedor-botones" style={{display: loader ? "none" : "flex"}}>
                         <button onClick={() => guardarBorrador()} className="btn btn-success float-right boton-guardar mt-2" >
                             <span className="ml-1">Guardar</span>
                         </button>
