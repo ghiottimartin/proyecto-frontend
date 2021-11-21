@@ -236,7 +236,13 @@ No media query for `xs` since this is the default in Bootstrap
   }
 
   .seccion-turno .contenedor-botones {
-    grid-template-columns: 25% 25% 25% 25%;
+    display: flex !important;
+    justify-content: start;
+    grid-template-columns: unset !important;
+  }
+
+  .seccion-turno .contenedor-botones  button {
+    margin: 0 10px;
   }
 
   .seccion-turno .producto .producto-derecha {
