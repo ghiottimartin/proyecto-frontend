@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 
 //Actions
-import { fetchVentas, updateFiltros, updateVenta, anularVenta, pdfVenta } from "../../../../actions/VentaActions"
+import { fetchVentas, updateFiltros, updateVenta, anularVenta, pdfVenta, comandaVenta } from "../../../../actions/VentaActions"
 
 //CSS
 import "../../../../assets/css/Gestion/VentaAlmacen.css"
@@ -116,7 +116,7 @@ function Listado(props) {
             );
         })
         return (
-            <div className="fila-operaciones">
+            <div className="fila-operaciones text-nowrap flex-wrap">
                 {operaciones}
             </div>
         );
@@ -140,6 +140,10 @@ function Listado(props) {
             
             case 'pdf':
                 pdfVenta(venta);
+                break;
+
+            case 'comanda':
+                comandaVenta(venta);
                 break;
             
         }
@@ -182,8 +186,18 @@ function Listado(props) {
         });
     }
 
+    /**
+     * Descarga el ticket de venta en pdf.
+     */
     const pdfVenta = (venta) => {
         props.pdfVenta(venta.id)
+    }
+
+    /**
+     * Descarga la comanda de la venta en pdf.
+     */
+    const comandaVenta = (venta) => {
+        props.comandaVenta(venta.id)
     }
 
     let Ventas = []
@@ -282,6 +296,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         pdfVenta: (idVenta) => {
             dispatch(pdfVenta(idVenta))
+        },
+        comandaVenta: (idVenta) => {
+            dispatch(comandaVenta(idVenta))
         },
     }
 }

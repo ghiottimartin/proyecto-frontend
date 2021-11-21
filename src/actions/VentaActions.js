@@ -459,3 +459,78 @@ export function pdfVenta(id) {
             });
     }
 }
+
+// PDF COMANDA VENTA
+export const REQUEST_COMANDA_VENTA = "REQUEST_COMANDA_VENTA";
+export const RECEIVE_COMANDA_VENTA = "RECEIVE_COMANDA_VENTA";
+export const ERROR_COMANDA_VENTA = "ERROR_COMANDA_VENTA";
+
+
+function requestComandaVenta() {
+    return {
+        type: REQUEST_COMANDA_VENTA,
+    }
+}
+
+function receiveComandaVenta(blob, nombre) {
+    downloadBlob(blob, nombre);
+    return {
+        type: RECEIVE_COMANDA_VENTA,
+        message: 'La comanda de la venta se ha exportado a pdf con éxito',
+        receivedAt: Date.now()
+    }
+}
+
+function errorComandaVenta(error) {
+    return {
+        type: ERROR_COMANDA_VENTA,
+        error: error,
+    }
+}
+
+export function comandaVenta(id) {
+    return dispatch => {
+        dispatch(requestComandaVenta());
+        return ventas.comanda(id)
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    var data = response.blob();
+                    return data;
+                }
+            })
+            .then(function (blob) {
+                var id_texto = id.toString().padStart(5, 0);
+                var nombre = `Comanda Venta ${id_texto}.pdf`;
+                dispatch(receiveComandaVenta(blob, nombre));
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorComandaVenta(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(logout());
+                        return;
+                    case 404:
+                        dispatch(errorComandaVenta(errorMessages.GENERAL_ERROR));
+                        return;
+                    default:
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorComandaVenta(error.message));
+                                    else
+                                        dispatch(errorComandaVenta(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
+                                    dispatch(errorComandaVenta(errorMessages.GENERAL_ERROR));
+                                });
+                        } catch (e) {
+                            dispatch(errorComandaVenta(errorMessages.GENERAL_ERROR));
+                        }
+                        return;
+                }
+            });
+    }
+}
