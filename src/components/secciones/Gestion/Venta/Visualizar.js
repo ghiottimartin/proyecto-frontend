@@ -76,6 +76,9 @@ function Visualizar(props) {
                     <li>
                         <label>Usuario:</label>{venta.usuario_nombre} <span className="texto-chico">({venta.usuario_email})</span>
                     </li>
+                    <li>
+                        <label>Tipo:</label><span>{venta.tipo_venta}</span>
+                    </li>
                     <li className="d-flex align-items-center">
                         <label className="mb-0">Estado:</label>
                         <span className={venta.estado_clase}>{venta.estado_texto}</span>
