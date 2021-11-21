@@ -15,7 +15,7 @@ import history from "../../../../../history"
 
 function Turno(props) {
     const turno = props.turno
-    const idTurno = turno.id
+    const idMesa = turno.mesa
 
     const venta = turno.venta
     const idVenta = venta !== null ? venta.id : null
@@ -88,7 +88,7 @@ function Turno(props) {
         if (idVenta === null) {
             return;
         }
-        const volverA = rutas.MESA_TURNOS + idTurno
+        const volverA = rutas.MESA_TURNOS + idMesa
         history.push(rutas.VENTA_VISUALIZAR + idVenta + `?volverA=${volverA}`)
     }
 
