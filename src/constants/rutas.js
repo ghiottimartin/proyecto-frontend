@@ -163,6 +163,9 @@ const RUTAS = [
  * @returns {boolean}
  */
 export function validarRuta(ruta) {
+    if (ruta === undefined) {
+        return false
+    }
     for (var i = 0; i < RUTAS.length; i++) {
         const actual = RUTAS[i]
         const indice = ruta.indexOf(actual)
