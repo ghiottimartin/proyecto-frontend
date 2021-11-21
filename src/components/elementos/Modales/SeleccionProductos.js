@@ -11,13 +11,21 @@ function SeleccionProductos(props) {
     const ventaDirecta = props.ventaDirecta ? props.ventaDirecta : null
 
     const getProductosHtml = () => {
-        const elegir = props.productos.allIds.map(id => {
+        let elegir = props.productos.allIds.map(id => {
             const producto = props.productos.byId.productos[id]
             const elegidos = props.elegidos
             const elegido = elegidos.find(e => parseInt(e.id) === parseInt(producto.id))
             if (elegido === undefined) {
                 return producto
             }
+        })
+
+        elegir.sort(function (a, b) {
+            let productoA = a.nombre;
+            let productoB = b.nombre;
+            if(productoA < productoB) { return -1; }
+            if(productoA > productoB) { return 1; }
+            return 0;
         })
 
         let Opciones = []
