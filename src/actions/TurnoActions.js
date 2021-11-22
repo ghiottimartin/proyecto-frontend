@@ -443,21 +443,21 @@ export function fetchTurnos(idMesa) {
 }
 
 // PDF COMANDA VENTA
-export const REQUEST_COMANDA = "REQUEST_COMANDA";
-export const RECEIVE_COMANDA = "RECEIVE_COMANDA";
-export const ERROR_COMANDA = "ERROR_COMANDA";
+export const REQUEST_COMANDA_TURNO = "REQUEST_COMANDA_TURNO";
+export const RECEIVE_COMANDA_TURNO = "RECEIVE_COMANDA_TURNO";
+export const ERROR_COMANDA_TURNO = "ERROR_COMANDA_TURNO";
 
 
 function requestComanda() {
     return {
-        type: REQUEST_COMANDA,
+        type: REQUEST_COMANDA_TURNO,
     }
 }
 
 function receiveComanda(blob, nombre) {
     downloadBlob(blob, nombre);
     return {
-        type: RECEIVE_COMANDA,
+        type: RECEIVE_COMANDA_TURNO,
         message: 'La comanda del turno se ha exportado a pdf con éxito',
         receivedAt: Date.now()
     }
@@ -465,7 +465,7 @@ function receiveComanda(blob, nombre) {
 
 function errorComanda(error) {
     return {
-        type: ERROR_COMANDA,
+        type: ERROR_COMANDA_TURNO,
         error: error,
     }
 }

@@ -3,7 +3,13 @@ import merge from "lodash/merge"
 import moment from 'moment'
 
 //Actions
-import { CREATE_TURNO, ERROR_CANCELAR_TURNO, ERROR_CERRAR_TURNO, ERROR_COMANDA, ERROR_CREATE_TURNO, ERROR_TURNOS, ERROR_UPDATE_TURNO, RECEIVE_CANCELAR_TURNO, RECEIVE_CERRAR_TURNO, RECEIVE_COMANDA, RECEIVE_CREATE_TURNO, RECEIVE_TURNOS, RECEIVE_UPDATE_TURNO, REQUEST_CANCELAR_TURNO, REQUEST_CERRAR_TURNO, REQUEST_COMANDA, REQUEST_CREATE_TURNO, REQUEST_TURNOS, REQUEST_UPDATE_TURNO, RESET_CREATE_TURNO, RESET_FILTROS, RESET_TURNOS, RESET_UPDATE_TURNO, UPDATE_FILTROS, UPDATE_TURNO } from '../actions/TurnoActions'
+import {
+    CREATE_TURNO, ERROR_CANCELAR_TURNO, ERROR_CERRAR_TURNO, ERROR_COMANDA_TURNO, ERROR_CREATE_TURNO, ERROR_TURNOS,
+    ERROR_UPDATE_TURNO, RECEIVE_CANCELAR_TURNO, RECEIVE_CERRAR_TURNO, RECEIVE_COMANDA_TURNO, RECEIVE_CREATE_TURNO,
+    RECEIVE_TURNOS, RECEIVE_UPDATE_TURNO, REQUEST_CANCELAR_TURNO, REQUEST_CERRAR_TURNO, REQUEST_COMANDA_TURNO,
+    REQUEST_CREATE_TURNO, REQUEST_TURNOS, REQUEST_UPDATE_TURNO, RESET_CREATE_TURNO, RESET_FILTROS, RESET_TURNOS,
+    RESET_UPDATE_TURNO, UPDATE_FILTROS, UPDATE_TURNO
+} from '../actions/TurnoActions'
 import { LOGOUT_SUCCESS } from '../actions/AuthenticationActions';
 
 let hoy = moment()
@@ -218,19 +224,19 @@ function update(state = {
                 error: action.error
             });
         // COMANDA TURNO
-        case REQUEST_COMANDA:
+        case REQUEST_COMANDA_TURNO:
             return Object.assign({}, state, {
                 isUpdating: true,
                 success: "",
                 error: null,
             });
-        case RECEIVE_COMANDA:
+        case RECEIVE_COMANDA_TURNO:
             return Object.assign({}, state, {
                 isUpdating: false,
                 success: "",
                 error: null,
             });
-        case ERROR_COMANDA:
+        case ERROR_COMANDA_TURNO:
             return Object.assign({}, state, {
                 isUpdating: false,
                 success: "",

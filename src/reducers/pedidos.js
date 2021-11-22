@@ -48,7 +48,10 @@ import {
     RESET_FILTROS,
     RECEIVE_PEDIDO_DISPONIBLE,
     REQUEST_PEDIDO_DISPONIBLE,
-    ERROR_PEDIDO_DISPONIBLE
+    ERROR_PEDIDO_DISPONIBLE,
+    REQUEST_COMANDA_PEDIDO,
+    RECEIVE_COMANDA_PEDIDO,
+    ERROR_COMANDA_PEDIDO
 
 } from '../actions/PedidoActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions";
@@ -438,6 +441,25 @@ function update(state = {
                 error: null,
             });
         case ERROR_PEDIDO_DISPONIBLE:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                success: "",
+                error: action.error
+            });
+        // COMANDA PEDIDO
+        case REQUEST_COMANDA_PEDIDO:
+            return Object.assign({}, state, {
+                isUpdating: true,
+                success: "",
+                error: null,
+            });
+        case RECEIVE_COMANDA_PEDIDO:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                success: "",
+                error: null,
+            });
+        case ERROR_COMANDA_PEDIDO:
             return Object.assign({}, state, {
                 isUpdating: false,
                 success: "",

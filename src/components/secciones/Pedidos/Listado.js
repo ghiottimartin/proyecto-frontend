@@ -3,7 +3,10 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 //Actions
-import { anularPedido, entregarPedido, fetchPedidos, fetchPedidosVendedor, resetPedidos, resetPedidosVendedor, updateFiltros, updatePedido, pedidoDisponible } from "../../../actions/PedidoActions";
+import {
+    anularPedido, entregarPedido, fetchPedidos, fetchPedidosVendedor, resetPedidos, resetPedidosVendedor,
+    updateFiltros, updatePedido, pedidoDisponible, comanda
+} from "../../../actions/PedidoActions";
 
 //Api
 import auth from "../../../api/authentication";
@@ -170,7 +173,18 @@ class Listado extends React.Component {
             case 'disponible':
                 this.pedidoDisponible(pedido);
                 break;
+
+            case 'comanda':
+                this.comanda(pedido);
+                break;
         }
+    }
+
+    /**
+     * Imprime la comanda con los productos del pedido.
+     */
+    comanda(pedido) {
+        this.props.comanda(pedido.id)
     }
 
     /**
@@ -564,6 +578,9 @@ const mapDispatchToProps = (dispatch) => {
         pedidoDisponible: (id, idUsuario, listadoVendedor) => {
             dispatch(pedidoDisponible(id, idUsuario, listadoVendedor))
         },
+        comanda: (id) => {
+            dispatch(comanda(id))
+        }
     }
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Listado));

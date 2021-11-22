@@ -141,6 +141,18 @@ var pedidos = {
 
         return fetch(c.BASE_URL + '/gastronomia/pedido/' + id + '/disponible/', defaultOptions);
     },
+
+    comanda(id) {
+        let defaultOptions = {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/pdf",
+                "Authorization": "Token " + localStorage.token
+            }
+        };
+
+        return fetch(c.BASE_URL + '/gastronomia/pedido/' + id + '/comanda/', defaultOptions);
+    },
     
 
 };

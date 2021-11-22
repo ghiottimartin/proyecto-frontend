@@ -2,6 +2,7 @@ import history from "../history";
 
 //Actions
 import { logout } from "./AuthenticationActions";
+import { downloadBlob } from "./FileActions";
 
 //Api
 import pedidos from "../api/pedidos";
@@ -902,6 +903,81 @@ export function pedidoDisponible(id, idUsuario, listadoVendedor) {
                                 });
                         } catch (e) {
                             dispatch(errorPedidoDisponible(errorMessages.GENERAL_ERROR));
+                        }
+                        return;
+                }
+            });
+    }
+}
+
+// PDF COMANDA PEDIDO
+export const REQUEST_COMANDA_PEDIDO = "REQUEST_COMANDA_PEDIDO";
+export const RECEIVE_COMANDA_PEDIDO = "RECEIVE_COMANDA_PEDIDO";
+export const ERROR_COMANDA_PEDIDO = "ERROR_COMANDA_PEDIDO";
+
+
+function requestComanda() {
+    return {
+        type: REQUEST_COMANDA_PEDIDO,
+    }
+}
+
+function receiveComanda(blob, nombre) {
+    downloadBlob(blob, nombre);
+    return {
+        type: RECEIVE_COMANDA_PEDIDO,
+        message: 'La comanda del pedido se ha exportado a pdf con éxito',
+        receivedAt: Date.now()
+    }
+}
+
+function errorComanda(error) {
+    return {
+        type: ERROR_COMANDA_PEDIDO,
+        error: error,
+    }
+}
+
+export function comanda(id) {
+    return dispatch => {
+        dispatch(requestComanda());
+        return pedidos.comanda(id)
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    var data = response.blob();
+                    return data;
+                }
+            })
+            .then(function (blob) {
+                var id_texto = id.toString().padStart(5, 0);
+                var nombre = `Comanda Pedido ${id_texto}.pdf`;
+                dispatch(receiveComanda(blob, nombre));
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorComanda(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(logout());
+                        return;
+                    case 404:
+                        dispatch(errorComanda(errorMessages.GENERAL_ERROR));
+                        return;
+                    default:
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorComanda(error.message));
+                                    else
+                                        dispatch(errorComanda(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
+                                    dispatch(errorComanda(errorMessages.GENERAL_ERROR));
+                                });
+                        } catch (e) {
+                            dispatch(errorComanda(errorMessages.GENERAL_ERROR));
                         }
                         return;
                 }

@@ -27,7 +27,8 @@ import {
     REQUEST_PDF_VENTA,
     ERROR_PDF_VENTA,
     REQUEST_COMANDA_VENTA,
-    ERROR_COMANDA_VENTA
+    ERROR_COMANDA_VENTA,
+    RECEIVE_COMANDA_VENTA
 
 } from '../actions/VentaActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions"
@@ -258,6 +259,12 @@ function update(state = {
         case REQUEST_COMANDA_VENTA:
             return Object.assign({}, state, {
                 isUpdating: true,
+                success: "",
+                error: null,
+            });
+        case RECEIVE_COMANDA_VENTA:
+            return Object.assign({}, state, {
+                isUpdating: false,
                 success: "",
                 error: null,
             });
