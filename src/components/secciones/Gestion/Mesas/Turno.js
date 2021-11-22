@@ -25,6 +25,7 @@ import SeleccionProductos from "../../../elementos/Modales/SeleccionProductos"
 import AddBoxIcon from "@material-ui/icons/AddBox"
 import Form from "react-bootstrap/Form";
 import Swal from 'sweetalert2'
+import history from "../../../../history"
 
 //Utils
 import { formatearMoneda } from "../../../../utils/formateador"
@@ -256,6 +257,13 @@ function Turno(props) {
     }
 
     /**
+     * Dedirige a la interfaz de entrega de órdenes del turno.
+     */
+    const entregar = () => {
+        history.push(rutas.TURNOS_ORDENES + idMesa)
+    }
+
+    /**
      * Cierra el turno actual, dejando el turno como cancelado y
      * la mesa disponible.
      */
@@ -314,6 +322,7 @@ function Turno(props) {
                     guardando={loader}
                     cantidad={cantidad}
                     subtotal={subtotal}
+                    entregas={orden.entregado}
                     agregarCantidad={(producto, cantidad) => actualizarOrden(producto, cantidad)}
                     quitarProducto={(e) => removeOrden(e)}
                 />
@@ -353,15 +362,25 @@ function Turno(props) {
                             {OpcionesMozos}
                         </Form.Control>
                     </Form.Group>
-                    <span>Agregue productos al turno</span>
-                    <a href="#"
-                        className="ml-2"
-                        onClick={() => abrirModalProductos()}
-                        data-toggle="tooltip" data-original-title="" title="">
-                        <AddBoxIcon style={{ color: '#5cb860' }} />
-                    </a>
+                    <div className="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span>Productos</span>
+                            <a href="#"
+                                className="ml-2"
+                                onClick={() => abrirModalProductos()}
+                                data-toggle="tooltip" data-original-title="" title="">
+                                <AddBoxIcon style={{ color: '#5cb860' }} />
+                            </a>
+                        </div>
+                        <div>
+                            <button onClick={() => entregar()} className="btn btn-transparent text-primary font-weight-bold float-right boton-guardar mt-2" >
+                                <span className="ml-1">Entregar</span>
+                                <i class="fas fa-concierge-bell ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
                     <Loader display={loader} />
-                    <div className="contenedor-ordenes" style={{display: loader ? "none" : "block"}}>
+                    <div className="contenedor-ordenes" style={{ display: loader ? "none" : "block" }}>
                         <div className="venta-productos">
                             {Ordenes}
                         </div>
@@ -371,7 +390,7 @@ function Turno(props) {
                             <b>Total:</b> {formatearMoneda(turno.total)}
                         </div>
                     </div>
-                    <div className="contenedor-botones" style={{display: loader ? "none" : "flex"}}>
+                    <div className="contenedor-botones" style={{ display: loader ? "none" : "flex" }}>
                         <button onClick={() => guardarBorrador()} className="btn btn-success float-right boton-guardar mt-2" >
                             <span className="ml-1">Guardar</span>
                         </button>

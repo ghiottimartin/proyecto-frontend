@@ -146,7 +146,7 @@ export function updateTurno(turno, mesa) {
     }
 }
 
-export function saveUpdateTurno() {
+export function saveUpdateTurno(volverA) {
     return (dispatch, getState) => {
         dispatch(requestUpdateTurno());
         return turnos.saveUpdate(getState().turnos.update.activo)
@@ -158,7 +158,11 @@ export function saveUpdateTurno() {
                 }
             })
             .then(() => {
-                history.push(rutas.MESAS_LISTAR)
+                if (rutas.validarRuta(volverA)) {
+                    history.push(volverA)
+                } else {
+                    history.push(rutas.MESAS_LISTAR)
+                } 
                 dispatch(receiveUpdateTurno());
             })
             .catch(function (error) {

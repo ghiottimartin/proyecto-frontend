@@ -79,15 +79,17 @@ export const VENTA_VISUALIZAR    = '/venta/visualizar/';
 export const VENTA_VISUALIZAR_ID = '/venta/visualizar/:id';
 
 //Mesa
-export const MESA_ABM       = '/mesas/:accion/:id?';
-export const MESA_ALTA      = '/mesas/alta';
-export const MESAS_LISTAR   = '/mesas/listar';
-export const MESA_EDITAR    = '/mesas/editar/';
-export const MESA_EDITAR_ID = '/mesas/editar/:id';
-export const MESA_TURNO     = '/mesa/turno/';
-export const MESA_TURNO_ID  = '/mesa/turno/:id';
-export const MESA_TURNOS    = '/mesa/turnos/';
-export const MESA_TURNOS_ID = '/mesa/turnos/:id';
+export const MESA_ABM          = '/mesas/:accion/:id?';
+export const MESA_ALTA         = '/mesas/alta';
+export const MESAS_LISTAR      = '/mesas/listar';
+export const MESA_EDITAR       = '/mesas/editar/';
+export const MESA_EDITAR_ID    = '/mesas/editar/:id';
+export const MESA_TURNO        = '/mesa/turno/';
+export const MESA_TURNO_ID     = '/mesa/turno/:id';
+export const MESA_TURNOS       = '/mesa/turnos/';
+export const MESA_TURNOS_ID    = '/mesa/turnos/:id';
+export const TURNOS_ORDENES    = '/mesa/turno/ordenes/';
+export const TURNOS_ORDENES_ID = '/mesa/turno/ordenes/:id';
 
 /**
  * Devuelve la url de usuarios
@@ -153,7 +155,9 @@ const RUTAS = [
     MESAS_LISTAR,
     MESA_ALTA,
     MESA_EDITAR,
-    MESA_TURNOS
+    MESA_TURNOS,
+    MESA_TURNO,
+    TURNOS_ORDENES
 ];
 
 /**

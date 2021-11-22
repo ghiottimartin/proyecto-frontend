@@ -45,6 +45,7 @@ import AltaEdicionMesa from './components/secciones/Gestion/Mesas/AltaEdicion';
 import ListadoMesa from './components/secciones/Gestion/Mesas/Listado';
 import MesaTurno from './components/secciones/Gestion/Mesas/Turno'
 import MesaTurnos from './components/secciones/Gestion/Mesas/Turnos/Turnos'
+import MesaOrdenes from './components/secciones/Gestion/Mesas/Turnos/Ordenes'
 
 //CSS
 import "./App.css";
@@ -281,6 +282,7 @@ class App extends React.Component {
                         <Route exact path={rutas.MESA_ABM} component={AltaEdicionMesa} />
                         <Route exact path={rutas.MESA_TURNO_ID} component={MesaTurno} />
                         <Route exact path={rutas.MESA_TURNOS_ID} component={MesaTurnos} />
+                        <Route exact path={rutas.TURNOS_ORDENES_ID} component={MesaOrdenes} />
                         <Route exact path={rutas.VENTA_LISTADO} component={ListadoVentaAlmacen} />
                         <Route exact path={rutas.VENTA_ALTA} component={AltaVentaAlmacen} />
                         <Route exact path={rutas.VENTA_VISUALIZAR_ID} component={VisualizarVenta} />

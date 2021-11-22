@@ -13,6 +13,7 @@ import { formatearMoneda } from "../../../utils/formateador"
 function Producto(props) {
     const cantidad = parseInt(props.cantidad)
     const producto = props.producto
+    const entregas = props.entregas
     let path = productoVacio;
     if (producto.imagen) {
         try {
@@ -21,7 +22,11 @@ function Producto(props) {
         }
     }
     return (
-        <article key={producto.id} className="producto no-cerrar-carrito">
+        <article key={producto.id} className="producto no-cerrar-carrito  position-relative">
+            <span className="producto-entregas" style={{display: entregas ? "block" : "none"}}>
+                <i class="fas fa-concierge-bell mr-2"></i>
+                {entregas}/ {cantidad}
+            </span>
             <div className="producto-izquierda">
                 <img src={path} onError={(e) => e.target.src = productoVacio} alt="Imagen de producto" />
             </div>

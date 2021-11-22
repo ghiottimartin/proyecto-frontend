@@ -124,6 +124,12 @@
   padding-bottom: 55px !important;
 }
 
+.seccion-turno .producto-entregas {
+  position: absolute;
+  bottom: 10px;
+  left: 15px;
+}
+
 .seccion-turno .venta-productos {
   height: calc(100vh - 420px) !important;
   min-height: 200px;
