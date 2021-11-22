@@ -140,6 +140,10 @@
   margin-top: 20px;
 }
 
+.seccion-turno .form-group {
+  margin-bottom: 0;
+}
+
 .seccion-turno .producto {
   font-size: 13px;
   max-height: 150px;
@@ -168,12 +172,18 @@
 }
 
 .seccion-turno .contenedor-botones {
-  display: flex;
+  display: grid;
+  grid-template-columns: 50% 50%;
 }
 
 .seccion-turno .contenedor-botones button {
   display: block;
   margin: 0 2px;
+  width: 120px;
+}
+
+.seccion-turno .boton-comanda, .seccion-turno .boton-cancelar {
+  justify-self: end;
 }
 
 .mesa-turno {
@@ -218,6 +228,17 @@
   width: 150px;
 }
 
+
+@media (min-width: 488px) {
+  .seccion-turno .contenedor-botones {
+    grid-template-columns: 33% 33% 33%;
+  }
+
+  .seccion-turno .boton-comanda, .seccion-turno .boton-cancelar {
+    justify-self: start;
+  }
+}
+
 /* 
 X-Small devices (portrait phones, less than 576px)
 No media query for `xs` since this is the default in Bootstrap
@@ -229,6 +250,10 @@ No media query for `xs` since this is the default in Bootstrap
     justify-items: center;
     grid-column-gap: 10px;
     padding: 0 20px;
+  }
+
+  .seccion-turno .contenedor-botones {
+    grid-template-columns: 25% 25% 25% 25%;
   }
 
   .seccion-turno .producto .producto-derecha {
@@ -261,6 +286,10 @@ Large devices (desktops, 992px and up)
 
   .seccion-turno .contenedor-ordenes .venta-productos {
     grid-template-columns: 33% 33% 33%;
+  }
+
+  .seccion-turno .contenedor-botones {
+    grid-template-columns: 16% 16% 16% 16% 16%;
   }
 }
 

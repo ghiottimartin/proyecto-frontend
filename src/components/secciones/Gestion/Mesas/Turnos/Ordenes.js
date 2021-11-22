@@ -96,7 +96,7 @@ function Ordenes(props) {
      * Vuelve a la interfaz de gestión del turno.
      */
     const volver = () => {
-        history.push(rutas.MESA_TURNOS + idMesa)
+        history.push(rutas.MESA_TURNO + idMesa)
     }
 
     let Ordenes = []

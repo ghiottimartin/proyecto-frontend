@@ -76,7 +76,19 @@ var turnos = {
             }
         };
         return fetch(c.BASE_URL + '/mesas/turno/turnos/' + query, defaultOptions);
-    }
+    },
+
+    comanda(id) {
+        let defaultOptions = {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/pdf",
+                "Authorization": "Token " + localStorage.token
+            }
+        };
+
+        return fetch(c.BASE_URL + '/mesas/turno/' + id + '/comanda/', defaultOptions);
+    },
 
 };
 

@@ -1,7 +1,8 @@
 import history from '../history';
 
 //Actions
-import { logout, changeLogin } from "./AuthenticationActions";
+import { logout } from "./AuthenticationActions";
+import { downloadBlob } from "./FileActions";
 
 //Api
 import turnos from "../api/turnos";
@@ -438,5 +439,80 @@ export function fetchTurnos(idMesa) {
                         return
                 }
             })
+    }
+}
+
+// PDF COMANDA VENTA
+export const REQUEST_COMANDA = "REQUEST_COMANDA";
+export const RECEIVE_COMANDA = "RECEIVE_COMANDA";
+export const ERROR_COMANDA = "ERROR_COMANDA";
+
+
+function requestComanda() {
+    return {
+        type: REQUEST_COMANDA,
+    }
+}
+
+function receiveComanda(blob, nombre) {
+    downloadBlob(blob, nombre);
+    return {
+        type: RECEIVE_COMANDA,
+        message: 'La comanda del turno se ha exportado a pdf con éxito',
+        receivedAt: Date.now()
+    }
+}
+
+function errorComanda(error) {
+    return {
+        type: ERROR_COMANDA,
+        error: error,
+    }
+}
+
+export function comanda(id) {
+    return dispatch => {
+        dispatch(requestComanda());
+        return turnos.comanda(id)
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    var data = response.blob();
+                    return data;
+                }
+            })
+            .then(function (blob) {
+                var id_texto = id.toString().padStart(5, 0);
+                var nombre = `Comanda Turno ${id_texto}.pdf`;
+                dispatch(receiveComanda(blob, nombre));
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorComanda(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(logout());
+                        return;
+                    case 404:
+                        dispatch(errorComanda(errorMessages.GENERAL_ERROR));
+                        return;
+                    default:
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorComanda(error.message));
+                                    else
+                                        dispatch(errorComanda(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
+                                    dispatch(errorComanda(errorMessages.GENERAL_ERROR));
+                                });
+                        } catch (e) {
+                            dispatch(errorComanda(errorMessages.GENERAL_ERROR));
+                        }
+                        return;
+                }
+            });
     }
 }

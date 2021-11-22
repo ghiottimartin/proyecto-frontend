@@ -23,7 +23,7 @@ function Producto(props) {
     }
     return (
         <article key={producto.id} className="producto no-cerrar-carrito  position-relative">
-            <span className="producto-entregas" style={{display: entregas ? "block" : "none"}}>
+            <span className="producto-entregas" style={{display: !isNaN(entregas) ? "block" : "none"}}>
                 <i class="fas fa-concierge-bell mr-2"></i>
                 {entregas}/ {cantidad}
             </span>

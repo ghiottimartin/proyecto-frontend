@@ -5,7 +5,7 @@ import { connect } from "react-redux"
 //Actions
 import { fetchMesaById } from "../../../../actions/MesaActions"
 import { fetchMozos, resetMozos } from "../../../../actions/UsuarioActions"
-import { updateTurno, resetUpdateTurno, saveUpdateTurno, cancelarTurno, cerrarTurno } from "../../../../actions/TurnoActions"
+import { updateTurno, resetUpdateTurno, saveUpdateTurno, cancelarTurno, cerrarTurno, comanda } from "../../../../actions/TurnoActions"
 import { fetchProductos } from "../../../../actions/ProductoActions"
 
 //CSS
@@ -257,6 +257,32 @@ function Turno(props) {
     }
 
     /**
+     * Imprime los productos a preparar para ser entregados en un pdf.
+     */
+    const comanda = () => {
+        const restante = turno.ordenes.reduce((suma, orden) => {
+            const cantidad = orden.cantidad ? orden.cantidad : 0
+            const entregado = orden.entregado ? orden.entregado : 0
+            const resta = cantidad - entregado
+            return suma + resta
+        }, 0)
+        if (restante === 0) {
+            Swal.fire({
+                title: `No se puede exportar la comanda`,
+                text: 'Los productos ya fueron entregados en su totalidad.',
+                icon: 'warning',
+                showCloseButton: true,
+                focusConfirm: true,
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+                cancelButtonColor: '#bfbfbf',
+            })
+        } else {
+            props.comanda(idMesa)
+        }
+    }
+
+    /**
      * Dedirige a la interfaz de entrega de órdenes del turno.
      */
     const entregar = () => {
@@ -372,12 +398,10 @@ function Turno(props) {
                                 <AddBoxIcon style={{ color: '#5cb860' }} />
                             </a>
                         </div>
-                        <div>
-                            <button onClick={() => entregar()} className="btn btn-transparent text-primary font-weight-bold float-right boton-guardar mt-2" >
-                                <span className="ml-1">Entregar</span>
-                                <i class="fas fa-concierge-bell ml-2"></i>
-                            </button>
-                        </div>
+                        <button onClick={() => entregar()} className="btn btn-transparent text-primary font-weight-bold float-right boton-guardar" >
+                            <span className="ml-1">Entregar</span>
+                            <i class="fas fa-concierge-bell ml-2"></i>
+                        </button>
                     </div>
                     <Loader display={loader} />
                     <div className="contenedor-ordenes" style={{ display: loader ? "none" : "block" }}>
@@ -390,14 +414,17 @@ function Turno(props) {
                             <b>Total:</b> {formatearMoneda(turno.total)}
                         </div>
                     </div>
-                    <div className="contenedor-botones" style={{ display: loader ? "none" : "flex" }}>
-                        <button onClick={() => guardarBorrador()} className="btn btn-success float-right boton-guardar mt-2" >
+                    <div className="contenedor-botones" style={{ display: loader ? "none" : "grid" }}>
+                        <button onClick={() => guardarBorrador()} className="btn btn-success float-right boton-guardar mt-2 boton-guardar" >
                             <span className="ml-1">Guardar</span>
                         </button>
-                        <button onClick={() => cerrar()} className="btn btn-danger float-right boton-guardar mt-2">
+                        <button onClick={() => comanda()} className="btn btn-primary float-right boton-guardar mt-2 boton-comanda" >
+                            <span className="ml-1">Comanda</span>
+                        </button>
+                        <button onClick={() => cerrar()} className="btn btn-danger float-right boton-guardar mt-2 boton-cerrar">
                             <span className="ml-1">Cerrar</span>
                         </button>
-                        <button onClick={() => cancelar()} className="btn btn-secondary float-right boton-guardar mt-2" >
+                        <button onClick={() => cancelar()} className="btn btn-secondary float-right mt-2 boton-cancelar">
                             <span className="ml-1">Cancelar</span>
                         </button>
                     </div>
@@ -444,6 +471,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         cerrarTurno: (turno) => {
             dispatch(cerrarTurno(turno))
+        },
+        comanda: (id) => {
+            dispatch(comanda(id))
         }
     }
 }
