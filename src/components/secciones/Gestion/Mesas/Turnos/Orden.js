@@ -48,8 +48,8 @@ function Orden(props) {
         
         let cambiado = turno
         const indice = cambiado.ordenes.indexOf(actualizado)
-        const nuevaCantidad = parseInt(e.target.value)
-        actualizado['entregado'] = parseFloat(nuevaCantidad)
+        const nuevaCantidad = e.target.value
+        actualizado['entregado'] = nuevaCantidad
         cambiado.ordenes[indice] = actualizado
         props.updateTurno(turno, turno.mesa)
     }
@@ -68,7 +68,7 @@ function Orden(props) {
                     id="cantidad"
                     type="number"
                     className="text-right"
-                    value={entregar ? entregar : ""}
+                    value={!isNaN(entregar) ? entregar : ""}
                     step="1"
                     onChange={(e) => onChangeOrden(e)} />
                 <div className="input-group-append">
