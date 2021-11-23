@@ -291,10 +291,41 @@ function GestionTurno(props) {
     }
 
     /**
+     * Devuelve true si todos los productos fueron entregados, sino
+     * muestra cartel de alerta.
+     */
+    const comprobarPuedeCerrar = () => {
+        const restante = turno.ordenes.reduce((suma, orden) => {
+            const cantidad = orden.cantidad ? orden.cantidad : 0
+            const entregado = orden.entregado ? orden.entregado : 0
+            const resta = cantidad - entregado
+            return suma + resta
+        }, 0)
+        if (restante > 0) {
+            Swal.fire({
+                title: `Productos no entregados`,
+                text: 'Para cerrar el turno todos los productos deben estar entregados',
+                icon: 'warning',
+                showCloseButton: true,
+                focusConfirm: true,
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+                cancelButtonColor: '#bfbfbf',
+            })
+            return false
+        }
+        return true
+    }
+
+    /**
      * Cierra el turno actual, dejando el turno como cancelado y
      * la mesa disponible.
      */
     const cerrar = () => {
+        let puede = comprobarPuedeCerrar()
+        if (!puede) {
+            return;
+        }
         Swal.fire({
             title: `¿Está seguro de cerrar el turno? `,
             icon: 'warning',
