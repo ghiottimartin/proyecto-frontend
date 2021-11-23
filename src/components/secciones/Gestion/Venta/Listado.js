@@ -270,6 +270,18 @@ function Listado(props) {
                     {buscando ? <tr><td colSpan={7}><Loader display={true} /></td></tr> : Ventas}
                 </tbody>
             </table>
+            {
+                buscando || totalCero ?
+                    ''
+                    :
+                    <Paginacion
+                        activePage={filtros.paginaActual}
+                        itemsCountPerPage={filtros.registrosPorPagina}
+                        totalItemsCount={registros}
+                        pageRangeDisplayed={5}
+                        onChange={(e) => cambiarDePagina(e)}
+                    />
+            }
         </div>
     )
 }
