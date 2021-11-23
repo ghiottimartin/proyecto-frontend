@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux';
+import { combineReducers } from 'redux';
 import merge from "lodash/merge";
 
 //Actions
@@ -25,7 +25,7 @@ import {
     RESET_PRODUCTO_ID, RESET_DELETE_PRODUCTO, REQUEST_DELETE_PRODUCTO, RECEIVE_DELETE_PRODUCTO, ERROR_DELETE_PRODUCTO, UPDATE_FILTROS, RESET_FILTROS
 
 } from '../actions/ProductoActions';
-import {LOGOUT_SUCCESS} from "../actions/AuthenticationActions";
+import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions";
 import pickBy from "lodash/pickBy";
 
 const filtrosIniciales = {
@@ -145,24 +145,22 @@ function productosById(state = {
     }
 }
 
-let creadoDefecto = {
-    nombre: '',
-    imagen: '',
-    descripcion: '',
-    imagen_nombre: '',
-    costo_vigente: '',
-    precio_vigente: '',
-    compra_directa: false,
-    venta_directa: true,
-    stock: 0,
-    stock_seguridad: 20,
-    habilitado: 1
-};
-
 
 function create(state = {
     isCreating: false,
-    nuevo: creadoDefecto,
+    nuevo: {
+        nombre: '',
+        imagen: '',
+        descripcion: '',
+        imagen_nombre: '',
+        costo_vigente: '',
+        precio_vigente: '',
+        compra_directa: false,
+        venta_directa: true,
+        stock: 0,
+        stock_seguridad: 20,
+        habilitado: 1
+    },
     success: "",
     error: null,
     errores: [],
@@ -182,7 +180,19 @@ function create(state = {
                 isCreating: false,
                 success: "",
                 error: null,
-                nuevo:{},
+                nuevo: {
+                    nombre: '',
+                    imagen: '',
+                    descripcion: '',
+                    imagen_nombre: '',
+                    costo_vigente: '',
+                    precio_vigente: '',
+                    compra_directa: false,
+                    venta_directa: true,
+                    stock: 0,
+                    stock_seguridad: 20,
+                    habilitado: 1
+                },
             });
         case REQUEST_CREATE_PRODUCTO:
             return Object.assign({}, state, {
@@ -218,7 +228,19 @@ function create(state = {
 
 function update(state = {
     isUpdating: false,
-    activo: creadoDefecto,
+    activo: {
+        nombre: '',
+        imagen: '',
+        descripcion: '',
+        imagen_nombre: '',
+        costo_vigente: '',
+        precio_vigente: '',
+        compra_directa: false,
+        venta_directa: true,
+        stock: 0,
+        stock_seguridad: 20,
+        habilitado: 1
+    },
     success: "",
     error: null
 }, action) {
@@ -234,7 +256,19 @@ function update(state = {
         case RESET_UPDATE_PRODUCTO:
             return Object.assign({}, state, {
                 isUpdating: false,
-                activo: creadoDefecto,
+                activo: {
+                    nombre: '',
+                    imagen: '',
+                    descripcion: '',
+                    imagen_nombre: '',
+                    costo_vigente: '',
+                    precio_vigente: '',
+                    compra_directa: false,
+                    venta_directa: true,
+                    stock: 0,
+                    stock_seguridad: 20,
+                    habilitado: 1
+                },
                 success: "",
                 error: null,
             });
@@ -304,7 +338,7 @@ function productosAllIds(state = [], action) {
         case RECEIVE_DELETE_PRODUCTO:
             return state.filter(id => id != action.idProducto);
         case RESET_PRODUCTOS:
-             return [];
+            return [];
         default:
             return state
     }
@@ -313,7 +347,7 @@ function productosAllIds(state = [], action) {
 
 const productos = combineReducers({
     allIds: productosAllIds,
-    byId:   productosById,
+    byId: productosById,
     create: create,
     update: update,
     delete: borrar

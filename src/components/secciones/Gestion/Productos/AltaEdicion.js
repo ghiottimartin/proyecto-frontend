@@ -86,6 +86,8 @@ class AltaEdicion extends React.Component {
             cambio = imagen;
         }
         let accion = this.props.match.params['accion'];
+
+        const producto = this.getProductoAltaEdicion()
         if (accion === rutas.ACCION_ALTA) {
             this.props.createProducto(cambio);
         }
@@ -120,12 +122,7 @@ class AltaEdicion extends React.Component {
         var cambio = {};
         var valor = true;
 
-        let accion = this.props.match.params['accion'];
-        let producto = this.props.productos.create.nuevo;
-        if (accion === rutas.ACCION_EDITAR) {
-            producto = this.props.productos.update.activo;
-        }
-
+        let producto = this.getProductoAltaEdicion()
         switch (id) {
             case 'compra_directa':
                 if (producto.compra_directa) {
@@ -141,6 +138,7 @@ class AltaEdicion extends React.Component {
 
         }
         cambio[id] = valor;
+        let accion = this.props.match.params['accion'];
         if (accion === rutas.ACCION_ALTA) {
             this.props.createProducto(cambio);
         }
