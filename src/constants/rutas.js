@@ -1,16 +1,16 @@
 //Login routes
-export const LOGIN          = '/login';
-export const LOGOUT         = '/logout';
-export const INICIO         = '/';
-export const VALIDAR_EMAIL  = '/validar-email/:token';
+export const LOGIN = '/login';
+export const LOGOUT = '/logout';
+export const INICIO = '/';
+export const VALIDAR_EMAIL = '/validar-email/:token';
 export const RESET_PASSWORD = '/reset-password/:token';
 
 //Registro
-export const MENU            = '/menu';
-export const ALTA_PEDIDO     = '/pedido/alta';
-export const GESTION         = '/gestion';
+export const MENU = '/menu';
+export const ALTA_PEDIDO = '/pedido/alta';
+export const GESTION = '/gestion';
 
-export const ACCION_ALTA   = 'alta';
+export const ACCION_ALTA = 'alta';
 export const ACCION_LISTAR = 'listar';
 export const ACCION_EDITAR = 'editar';
 
@@ -18,32 +18,32 @@ export const TIPO_COMUN = 'comun';
 export const TIPO_ADMIN = 'admin';
 
 //Gestión de usuarios
-export const USUARIOS              = '/usuarios';
-export const USUARIOS_ALTA         = '/usuarios/alta/:tipo';
-export const USUARIOS_ALTA_ADMIN   = '/usuarios/alta/admin';
-export const USUARIOS_ALTA_COMUN   = '/usuarios/alta/comun';
-export const USUARIOS_LISTAR       = '/usuarios/listar';
-export const USUARIOS_EDITAR       = '/usuarios/editar/:tipo?/:id?';
+export const USUARIOS = '/usuarios';
+export const USUARIOS_ALTA = '/usuarios/alta/:tipo';
+export const USUARIOS_ALTA_ADMIN = '/usuarios/alta/admin';
+export const USUARIOS_ALTA_COMUN = '/usuarios/alta/comun';
+export const USUARIOS_LISTAR = '/usuarios/listar';
+export const USUARIOS_EDITAR = '/usuarios/editar/:tipo?/:id?';
 export const USUARIOS_EDITAR_ADMIN = '/usuarios/editar/admin';
 export const USUARIOS_EDITAR_COMUN = '/usuarios/editar/comun';
 
 //Gestión de productos
-export const PRODUCTOS                 = '/productos';
-export const PRODUCTOS_ACCIONES        = '/productos/:accion/:tipo?/:id?';
-export const PRODUCTO_ALTA             = '/productos/alta';
-export const PRODUCTOS_LISTAR          = '/productos/listar';
-export const PRODUCTOS_LISTAR_ADMIN    = '/productos/listar/admin';
-export const PRODUCTOS_EDITAR_ADMIN    = '/productos/editar/admin/';
+export const PRODUCTOS = '/productos';
+export const PRODUCTOS_ACCIONES = '/productos/:accion/:tipo?/:id?';
+export const PRODUCTO_ALTA = '/productos/alta';
+export const PRODUCTOS_LISTAR = '/productos/listar';
+export const PRODUCTOS_LISTAR_ADMIN = '/productos/listar/admin';
+export const PRODUCTOS_EDITAR_ADMIN = '/productos/editar/admin/';
 export const PRODUCTOS_EDITAR_ADMIN_ID = '/productos/editar/admin/:id';
 
 //Gestión de categorias
-export const CATEGORIAS              = '/categorias';
-export const CATEGORIAS_ACCIONES     = '/categorias/:accion/:id?';
-export const CATEGORIA_ALTA          = '/categorias/alta';
-export const CATEGORIAS_LISTAR       = '/categorias/listar';
+export const CATEGORIAS = '/categorias';
+export const CATEGORIAS_ACCIONES = '/categorias/:accion/:id?';
+export const CATEGORIA_ALTA = '/categorias/alta';
+export const CATEGORIAS_LISTAR = '/categorias/listar';
 export const CATEGORIAS_LISTAR_ADMIN = '/categorias/listar/admin';
-export const CATEGORIA_EDITAR        = '/categorias/editar';
-export const CATEGORIAS_EDITAR_ID    = '/categorias/editar/:id';
+export const CATEGORIA_EDITAR = '/categorias/editar';
+export const CATEGORIAS_EDITAR_ID = '/categorias/editar/:id';
 
 //Gestión de pedidos
 export const PEDIDOS = '/pedidos/:rol';
@@ -54,9 +54,9 @@ export const PEDIDO_VISUALIZAR_COMENSAL = '/pedidos/visualizar/comensal/';
 export const PEDIDO_VISUALIZAR_VENDEDOR = '/pedidos/visualizar/vendedor/';
 
 //Ingreso de mercadería
-export const INGRESO_MERCADERIA               = '/ingreso-mercaderia/';
-export const INGRESO_MERCADERIA_ALTA          = '/ingreso-mercaderia/alta';
-export const INGRESO_MERCADERIA_VISUALIZAR    = '/ingreso-mercaderia/visualizar/';
+export const INGRESO_MERCADERIA = '/ingreso-mercaderia/';
+export const INGRESO_MERCADERIA_ALTA = '/ingreso-mercaderia/alta';
+export const INGRESO_MERCADERIA_VISUALIZAR = '/ingreso-mercaderia/visualizar/';
 export const INGRESO_MERCADERIA_VISUALIZAR_ID = '/ingreso-mercaderia/visualizar/:id';
 
 //Movimientos de stock
@@ -67,28 +67,28 @@ export const MOVIMIENTOS_STOCK_INGRESO = '/producto/movimientos/ingreso/';
 export const MOVIMIENTOS_STOCK_INGRESO_ID = '/producto/movimientos/ingreso/:id_ingreso';
 
 //Reemplazo de mercadería
-export const REEMPLAZO_MERCADERIA_ALTA          = '/reemplazo-mercaderia/alta/';
-export const REEMPLAZO_MERCADERIA_LISTAR        = '/reemplazo-mercaderia/';
-export const REEMPLAZO_MERCADERIA_VISUALIZAR    = '/reemplazo-mercaderia/visualizar/';
+export const REEMPLAZO_MERCADERIA_ALTA = '/reemplazo-mercaderia/alta/';
+export const REEMPLAZO_MERCADERIA_LISTAR = '/reemplazo-mercaderia/';
+export const REEMPLAZO_MERCADERIA_VISUALIZAR = '/reemplazo-mercaderia/visualizar/';
 export const REEMPLAZO_MERCADERIA_VISUALIZAR_ID = '/reemplazo-mercaderia/visualizar/:id';
 
 //Venta en Almacén
-export const VENTA_ALTA          = '/venta/alta';
-export const VENTA_LISTADO       = '/venta/listado';
-export const VENTA_VISUALIZAR    = '/venta/visualizar/';
+export const VENTA_ALTA = '/venta/alta';
+export const VENTA_LISTADO = '/venta/listado';
+export const VENTA_VISUALIZAR = '/venta/visualizar/';
 export const VENTA_VISUALIZAR_ID = '/venta/visualizar/:id';
 
 //Mesa
-export const MESA_ABM          = '/mesas/:accion/:id?';
-export const MESA_ALTA         = '/mesas/alta';
-export const MESAS_LISTAR      = '/mesas/listar';
-export const MESA_EDITAR       = '/mesas/editar/';
-export const MESA_EDITAR_ID    = '/mesas/editar/:id';
-export const MESA_TURNO        = '/mesa/turno/';
-export const MESA_TURNO_ID     = '/mesa/turno/:id';
-export const MESA_TURNOS       = '/mesa/turnos/';
-export const MESA_TURNOS_ID    = '/mesa/turnos/:id';
-export const TURNOS_ORDENES    = '/mesa/turno/ordenes/';
+export const MESA_ABM = '/mesas/:accion/:id?';
+export const MESA_ALTA = '/mesas/alta';
+export const MESAS_LISTAR = '/mesas/listar';
+export const MESA_EDITAR = '/mesas/editar/';
+export const MESA_EDITAR_ID = '/mesas/editar/:id';
+export const MESA_TURNO = '/mesa/turno/';
+export const MESA_TURNO_ID = '/mesa/turno/:id';
+export const MESA_TURNOS = '/mesa/turnos/';
+export const MESA_TURNOS_ID = '/mesa/turnos/:id';
+export const TURNOS_ORDENES = '/mesa/turno/ordenes/';
 export const TURNOS_ORDENES_ID = '/mesa/turno/ordenes/:id';
 
 /**
@@ -103,9 +103,9 @@ export const TURNOS_ORDENES_ID = '/mesa/turno/ordenes/:id';
  */
 export function getUrl(tipoObjeto, id, accion, tipo, volverA) {
     let ruta = '';
-    if(tipo !== ''){    
+    if (tipo !== '') {
         ruta = `${tipoObjeto}/${accion}/${tipo}/${id}`;
-    }else{
+    } else {
         ruta = `${tipoObjeto}/${accion}/${id}`;
     }
 
@@ -167,7 +167,7 @@ const RUTAS = [
  * @returns {boolean}
  */
 export function validarRuta(ruta) {
-    if (ruta === undefined) {
+    if (typeof ruta !== 'string') {
         return false
     }
     for (var i = 0; i < RUTAS.length; i++) {
