@@ -156,9 +156,25 @@ function GestionTurno(props) {
             return
         }
 
+        
         let cambiado = turno
+        const stock = producto.stock
         const indice = cambiado.ordenes.indexOf(actualizado)
         const nuevaCantidad = parseInt(actualizado.cantidad + cantidad)
+        if (nuevaCantidad > stock) {
+            const verbo = stock > 1 ? "Quedan" : "Queda"
+            Swal.fire({
+                title: `No hay suficiente stock`,
+                text: `${verbo} ${stock} '${producto.nombre}'`,
+                icon: 'warning',
+                showCloseButton: true,
+                focusConfirm: true,
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+                cancelButtonColor: '#bfbfbf',
+            })
+            return
+        } 
         actualizado['cantidad'] = parseFloat(nuevaCantidad)
         cambiado.ordenes[indice] = actualizado
         cambiado.total = cambiado.ordenes.reduce((total, orden) => {
