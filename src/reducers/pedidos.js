@@ -72,6 +72,7 @@ const filtrosIniciales = {
 
 function pedidosById(state = {
     isFetching: false,
+    isDownloading: false,
     isFetchingPedido: false,
     didInvalidate: true,
     didInvalidatePedido: true,
@@ -246,7 +247,7 @@ function pedidosById(state = {
                     return parseInt(key) !== parseInt(action.idPedido);
                 })
             });
-        
+
         // ANULAR PEDIDO
         case RECEIVE_ANULAR_PEDIDO:
             return Object.assign({}, state, {
@@ -307,6 +308,25 @@ function pedidosById(state = {
         case RESET_FILTROS:
             return Object.assign({}, state, {
                 filtros: filtrosIniciales
+            });
+        // COMANDA PEDIDO
+        case REQUEST_COMANDA_PEDIDO:
+            return Object.assign({}, state, {
+                isDownloading: true,
+                success: "",
+                error: null,
+            });
+        case RECEIVE_COMANDA_PEDIDO:
+            return Object.assign({}, state, {
+                isDownloading: false,
+                success: "",
+                error: null,
+            });
+        case ERROR_COMANDA_PEDIDO:
+            return Object.assign({}, state, {
+                isDownloading: false,
+                success: "",
+                error: action.error
             });
         default:
             return state
@@ -372,6 +392,7 @@ function create(state = {
 
 function update(state = {
     isUpdating: false,
+    isDownloading: false,
     cerrando: false,
     activo: {},
     success: "",
@@ -427,8 +448,8 @@ function update(state = {
                 success: "",
                 error: action.error
             });
-         // PEDIDO DISPONIBLE
-         case RECEIVE_PEDIDO_DISPONIBLE:
+        // PEDIDO DISPONIBLE
+        case RECEIVE_PEDIDO_DISPONIBLE:
             return Object.assign({}, state, {
                 isUpdating: false,
                 success: action.success,
@@ -441,25 +462,6 @@ function update(state = {
                 error: null,
             });
         case ERROR_PEDIDO_DISPONIBLE:
-            return Object.assign({}, state, {
-                isUpdating: false,
-                success: "",
-                error: action.error
-            });
-        // COMANDA PEDIDO
-        case REQUEST_COMANDA_PEDIDO:
-            return Object.assign({}, state, {
-                isUpdating: true,
-                success: "",
-                error: null,
-            });
-        case RECEIVE_COMANDA_PEDIDO:
-            return Object.assign({}, state, {
-                isUpdating: false,
-                success: "",
-                error: null,
-            });
-        case ERROR_COMANDA_PEDIDO:
             return Object.assign({}, state, {
                 isUpdating: false,
                 success: "",

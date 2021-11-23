@@ -50,6 +50,7 @@ const filtrosIniciales = {
 
 function ventasById(state = {
     isFetching: false,
+    isDownloading: false,
     isCanceling: false,
     didInvalidate: true,
     ventas: [],
@@ -132,6 +133,25 @@ function ventasById(state = {
             return Object.assign({}, state, {
                 filtros: filtrosIniciales
             });
+        // COMANDA VENTA
+        case REQUEST_COMANDA_VENTA:
+            return Object.assign({}, state, {
+                isDownloading: true,
+                success: "",
+                error: null,
+            });
+        case RECEIVE_COMANDA_VENTA:
+            return Object.assign({}, state, {
+                isDownloading: false,
+                success: "",
+                error: null,
+            });
+        case ERROR_COMANDA_VENTA:
+            return Object.assign({}, state, {
+                isDownloading: false,
+                success: "",
+                error: action.error
+            });
         default:
             return state
     }
@@ -142,9 +162,9 @@ function ventasAllIds(state = [], action) {
         case RECEIVE_VENTAS:
             return action.ventas.result ? action.ventas.result : [];
         case RECEIVE_VENTA_ID:
-                return action.venta.result ? [action.venta.result] : [];
+            return action.venta.result ? [action.venta.result] : [];
         case RESET_VENTAS:
-             return [];
+            return [];
         default:
             return state
     }
@@ -173,7 +193,7 @@ function create(state = {
                 isCreating: false,
                 success: "",
                 error: null,
-                nueva:  {
+                nueva: {
                     lineas: [],
                 },
             });
@@ -255,25 +275,6 @@ function update(state = {
                 success: "",
                 error: action.error
             });
-        // COMANDA VENTA
-        case REQUEST_COMANDA_VENTA:
-            return Object.assign({}, state, {
-                isUpdating: true,
-                success: "",
-                error: null,
-            });
-        case RECEIVE_COMANDA_VENTA:
-            return Object.assign({}, state, {
-                isUpdating: false,
-                success: "",
-                error: null,
-            });
-        case ERROR_COMANDA_VENTA:
-            return Object.assign({}, state, {
-                isUpdating: false,
-                success: "",
-                error: action.error
-            });
         default:
             return state
     }
@@ -281,7 +282,7 @@ function update(state = {
 
 const ventas = combineReducers({
     allIds: ventasAllIds,
-    byId:   ventasById,
+    byId: ventasById,
     create: create,
     update: update
 });

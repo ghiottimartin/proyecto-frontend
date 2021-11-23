@@ -26,7 +26,8 @@ import Swal from 'sweetalert2';
 function Listado(props) {
     const titulo = "Listado de ventas"
     const ventas = props.ventas
-    const buscando = ventas.byId.isFetching
+    const isDownloading = ventas.byId.isDownloading
+    const buscando = ventas.byId.isFetching || isDownloading
 
     //Filtros 
     const filtros = ventas.byId.filtros

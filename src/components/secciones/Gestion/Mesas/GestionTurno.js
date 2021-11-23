@@ -35,7 +35,8 @@ function GestionTurno(props) {
     const idMesa = props.match.params['id']
     const buscando = props.mesas.byId.isFetching
     const isUpdating = props.turnos.update.isUpdating
-    const loader = buscando || isUpdating
+    const isDownloading = props.turnos.update.isDownloading
+    const loader = buscando || isUpdating || isDownloading
 
     const turno = props.turnos.update.activo
     const mesa = turno.mesa

@@ -148,6 +148,7 @@ function create(state = {
 
 function update(state = {
     isUpdating: false,
+    isDownloading: false,
     activo: defecto,
     success: "",
     error: null
@@ -226,19 +227,19 @@ function update(state = {
         // COMANDA TURNO
         case REQUEST_COMANDA_TURNO:
             return Object.assign({}, state, {
-                isUpdating: true,
+                isDownloading: true,
                 success: "",
                 error: null,
             });
         case RECEIVE_COMANDA_TURNO:
             return Object.assign({}, state, {
-                isUpdating: false,
+                isDownloading: false,
                 success: "",
                 error: null,
             });
         case ERROR_COMANDA_TURNO:
             return Object.assign({}, state, {
-                isUpdating: false,
+                isDownloading: false,
                 success: "",
                 error: action.error
             });

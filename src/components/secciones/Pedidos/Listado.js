@@ -64,12 +64,13 @@ class Listado extends React.Component {
         let prePedidos = prevProps.pedidos.byId;
         let busco = prePedidos.isFetching && !pedidos.isFetching;
         let cancelo = prePedidos.isCanceling && !pedidos.isCanceling;
+        let descargo = prePedidos.isDownloading && !pedidos.isDownloading;
         if (busco) {
             this.setState({
                 noHayPedidos: allIds.length === 0,
             })
         }
-        if (busco || cancelo) {
+        if (busco || cancelo || descargo) {
             this.setState({
                 buscando: false,
             })
@@ -184,6 +185,7 @@ class Listado extends React.Component {
      * Imprime la comanda con los productos del pedido.
      */
     comanda(pedido) {
+        this.setState({ buscando: true });
         this.props.comanda(pedido.id)
     }
 
