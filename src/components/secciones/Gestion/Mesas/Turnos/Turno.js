@@ -35,32 +35,32 @@ function Turno(props) {
             const producto = orden.producto
             const cantidad = orden.cantidad
             const nombre = producto.nombre
+            const precio = producto.precio_vigente
             const total = orden.total_texto
-            let html = "<tr>"
-            html += "<td>" + nombre + "</td>"
-            html += "<td>" + cantidad + "</td>"
-            html += "<td>" + total + "</td>"
-            html += "</tr>"
+            let html = `
+            <div class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1" style="font-size: 14px;">${nombre}</h5>
+                    <small class="badge badge-primary badge-pill" style="height: fit-content;">${cantidad}</small>
+                </div>
+                <p class="mb-1 mt-2" style="font-size: 12px;">${cantidad} x ${precio}</p>
+                <small style="font-size: 13px;">${total}</small>
+            </div>
+            `
             return html
         })
 
-        let html = "<table class=\"table\">"
-        html += "<thead>"
-        html += "<th scope=\"col\">Producto</th>"
-        html += "<th scope=\"col\">Cantidad</th>"
-        html += "<th scope=\"col\">Subtotal</th>"
-        html += "</tr>"
-        html += "</thead>"
-        html += "<tbody>"
-        html += Productos.join('')
-        html += "</tbody>"
-        html += "<tfoot>"
-        html += "<tr class=\"font-weight-bold\">"
-        html += "<td colspan=\"2\" class=\"text-left\">Total</td>"
-        html += "<td>" + turno.total_texto + "</td>"
-        html += "</tr>"
-        html += "</tfoot>"
-        html += "</table>"
+        let html = `
+            <div class="list-group" style="height: 230px;overflow-y: auto;">
+                ${Productos.join('')}
+                <div class="list-group-item list-group-item-action">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1" style="font-size: 14px;">Total</h5>
+                        <small style="font-size: 13px;">${turno.total_texto}</small>
+                    </div>
+                </div>
+            </div>
+        `
         return html
     }
 
@@ -71,9 +71,8 @@ function Turno(props) {
      */
     const verProductos = (turno) => {
         const html = getHtmlProductos(turno)
-        console.log(html)
         Swal.fire({
-            title: "Productos solicitados",
+            title: "<h4 style='font-size: 15px;'>Turno " + turno.fecha + " </br> Mesa " + turno.mesa_numero + '</h4>',
             html: html,
             icon: 'info',
             showCloseButton: true,
