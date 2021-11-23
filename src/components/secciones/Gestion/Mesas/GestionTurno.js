@@ -31,7 +31,7 @@ import history from "../../../../history"
 import { formatearMoneda } from "../../../../utils/formateador"
 import { getIconoConId } from "../../../../utils/utils"
 
-function Turno(props) {
+function GestionTurno(props) {
     const idMesa = props.match.params['id']
     const buscando = props.mesas.byId.isFetching
     const isUpdating = props.turnos.update.isUpdating
@@ -477,4 +477,4 @@ const mapDispatchToProps = (dispatch) => {
         }
     }
 }
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Turno))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(GestionTurno))

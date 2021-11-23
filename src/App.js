@@ -43,7 +43,7 @@ import ListadoVentaAlmacen from './components/secciones/Gestion/Venta/Listado';
 import VisualizarVenta from './components/secciones/Gestion/Venta/Visualizar';
 import AltaEdicionMesa from './components/secciones/Gestion/Mesas/AltaEdicion';
 import ListadoMesa from './components/secciones/Gestion/Mesas/Listado';
-import MesaTurno from './components/secciones/Gestion/Mesas/Turno'
+import GestionTurno from './components/secciones/Gestion/Mesas/GestionTurno'
 import MesaTurnos from './components/secciones/Gestion/Mesas/Turnos/Turnos'
 import MesaOrdenes from './components/secciones/Gestion/Mesas/Turnos/Ordenes'
 
@@ -280,7 +280,7 @@ class App extends React.Component {
                         <Route exact path={rutas.REEMPLAZO_MERCADERIA_VISUALIZAR_ID} component={ReemplazoVisualizar} />
                         <Route exact path={rutas.MESAS_LISTAR} component={ListadoMesa} />
                         <Route exact path={rutas.MESA_ABM} component={AltaEdicionMesa} />
-                        <Route exact path={rutas.MESA_TURNO_ID} component={MesaTurno} />
+                        <Route exact path={rutas.MESA_TURNO_ID} component={GestionTurno} />
                         <Route exact path={rutas.MESA_TURNOS_ID} component={MesaTurnos} />
                         <Route exact path={rutas.TURNOS_ORDENES_ID} component={MesaOrdenes} />
                         <Route exact path={rutas.VENTA_LISTADO} component={ListadoVentaAlmacen} />
