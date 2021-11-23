@@ -31,7 +31,7 @@ var turnos = {
         return fetch(c.BASE_URL + '/mesas/turno/' + turno.id + "/", defaultOptions);
     },
 
-    cancelar(id) {
+    anular(id) {
         let defaultOptions = {
             method: 'DELETE',
             headers: {
@@ -40,7 +40,7 @@ var turnos = {
             }
         };
 
-        return fetch(c.BASE_URL + '/mesas/turno/' + id + "/cancelar/", defaultOptions);
+        return fetch(c.BASE_URL + '/mesas/turno/' + id + "/anular/", defaultOptions);
     },
 
     cerrar(turno) {        

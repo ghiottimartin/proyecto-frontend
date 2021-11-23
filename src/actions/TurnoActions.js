@@ -193,38 +193,38 @@ export function saveUpdateTurno(volverA) {
     }
 }
 
-// CANCELAR TURNO
-export const REQUEST_CANCELAR_TURNO = "REQUEST_CANCELAR_TURNO";
-export const RECEIVE_CANCELAR_TURNO = "RECEIVE_CANCELAR_TURNO";
-export const ERROR_CANCELAR_TURNO = "ERROR_CANCELAR_TURNO";
+// ANULAR TURNO
+export const REQUEST_ANULAR_TURNO = "REQUEST_ANULAR_TURNO";
+export const RECEIVE_ANULAR_TURNO = "RECEIVE_ANULAR_TURNO";
+export const ERROR_ANULAR_TURNO = "ERROR_ANULAR_TURNO";
 
 
-function requestCancelarTurno() {
+function requestAnularTurno() {
     return {
-        type: REQUEST_CANCELAR_TURNO,
+        type: REQUEST_ANULAR_TURNO,
     }
 }
 
-function receiveCancelarTurno(id, message) {
+function receiveAnularTurno(id, message) {
     return {
-        type: RECEIVE_CANCELAR_TURNO,
+        type: RECEIVE_ANULAR_TURNO,
         idAnulado: id,
         success: message,
         receivedAt: Date.now()
     }
 }
 
-function errorCancelarTurno(error) {
+function errorAnularTurno(error) {
     return {
-        type: ERROR_CANCELAR_TURNO,
+        type: ERROR_ANULAR_TURNO,
         error: error,
     }
 }
 
-export function cancelarTurno(id) {
+export function anularTurno(id) {
     return dispatch => {
-        dispatch(requestCancelarTurno());
-        return turnos.cancelar(id)
+        dispatch(requestAnularTurno());
+        return turnos.anular(id)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
@@ -234,33 +234,33 @@ export function cancelarTurno(id) {
                 }
             })
             .then(function (data) {
-                dispatch(receiveCancelarTurno(id, data.message));
+                dispatch(receiveAnularTurno(id, data.message));
                 dispatch(resetUpdateTurno())
                 history.push(rutas.MESAS_LISTAR)
             })
             .catch(function (error) {
                 switch (error.status) {
                     case 401:
-                        dispatch(errorCancelarTurno(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(errorAnularTurno(errorMessages.UNAUTHORIZED_TOKEN));
                         dispatch(logout());
                         return;
                     case 404:
-                        dispatch(errorCancelarTurno(errorMessages.GENERAL_ERROR));
+                        dispatch(errorAnularTurno(errorMessages.GENERAL_ERROR));
                         return;
                     default:
                         try {
                             error.json()
                                 .then(error => {
                                     if (error.message !== "")
-                                        dispatch(errorCancelarTurno(error.message));
+                                        dispatch(errorAnularTurno(error.message));
                                     else
-                                        dispatch(errorCancelarTurno(errorMessages.GENERAL_ERROR));
+                                        dispatch(errorAnularTurno(errorMessages.GENERAL_ERROR));
                                 })
                                 .catch(error => {
-                                    dispatch(errorCancelarTurno(errorMessages.GENERAL_ERROR));
+                                    dispatch(errorAnularTurno(errorMessages.GENERAL_ERROR));
                                 });
                         } catch (e) {
-                            dispatch(errorCancelarTurno(errorMessages.GENERAL_ERROR));
+                            dispatch(errorAnularTurno(errorMessages.GENERAL_ERROR));
                         }
 
                         return;

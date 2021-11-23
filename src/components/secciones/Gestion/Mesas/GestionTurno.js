@@ -5,7 +5,7 @@ import { connect } from "react-redux"
 //Actions
 import { fetchMesaById } from "../../../../actions/MesaActions"
 import { fetchMozos, resetMozos } from "../../../../actions/UsuarioActions"
-import { updateTurno, resetUpdateTurno, saveUpdateTurno, cancelarTurno, cerrarTurno, comanda } from "../../../../actions/TurnoActions"
+import { updateTurno, resetUpdateTurno, saveUpdateTurno, anularTurno, cerrarTurno, comanda } from "../../../../actions/TurnoActions"
 import { fetchProductos } from "../../../../actions/ProductoActions"
 
 //CSS
@@ -315,20 +315,20 @@ function GestionTurno(props) {
      * Cierra el turno actual, dejando el turno como cerrado, la mesa disponible 
      * y creando una venta tipo mesa.
      */
-    const cancelar = () => {
+    const anular = () => {
         Swal.fire({
-            title: `¿Está seguro de cancelar el turno? `,
+            title: `¿Está seguro de anular el turno? `,
             icon: 'warning',
             showCloseButton: true,
             showCancelButton: true,
             focusConfirm: true,
-            confirmButtonText: 'Cancelar',
+            confirmButtonText: 'Anular',
             cancelButtonText: 'Continuar',
             confirmButtonColor: colores.COLOR_ROJO,
             cancelButtonColor: '#bfbfbf',
         }).then((result) => {
             if (result.isConfirmed) {
-                props.cancelarTurno(turno.id)
+                props.anularTurno(turno.id)
             }
         });
     }
@@ -421,11 +421,11 @@ function GestionTurno(props) {
                         <button onClick={() => comanda()} className="btn btn-primary float-right boton-guardar mt-2 boton-comanda" >
                             <span className="ml-1">Comanda</span>
                         </button>
-                        <button onClick={() => cerrar()} className="btn btn-danger float-right boton-guardar mt-2 boton-cerrar">
+                        <button onClick={() => cerrar()} className="btn btn-info float-right boton-guardar mt-2 boton-cerrar">
                             <span className="ml-1">Cerrar</span>
                         </button>
-                        <button onClick={() => cancelar()} className="btn btn-secondary float-right mt-2 boton-cancelar">
-                            <span className="ml-1">Cancelar</span>
+                        <button onClick={() => anular()} className="btn btn-danger float-right mt-2 boton-anular">
+                            <span className="ml-1">Anular</span>
                         </button>
                     </div>
                 </section>
@@ -466,8 +466,8 @@ const mapDispatchToProps = (dispatch) => {
         fetchProductos: (paginar) => {
             dispatch(fetchProductos(paginar))
         },
-        cancelarTurno: (id) => {
-            dispatch(cancelarTurno(id))
+        anularTurno: (id) => {
+            dispatch(anularTurno(id))
         },
         cerrarTurno: (turno) => {
             dispatch(cerrarTurno(turno))

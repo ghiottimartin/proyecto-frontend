@@ -182,7 +182,7 @@
   width: 120px;
 }
 
-.seccion-turno .boton-comanda, .seccion-turno .boton-cancelar {
+.seccion-turno .boton-comanda, .seccion-turno .boton-anular {
   justify-self: end;
 }
 
@@ -234,7 +234,7 @@
     grid-template-columns: 33% 33% 33%;
   }
 
-  .seccion-turno .boton-comanda, .seccion-turno .boton-cancelar {
+  .seccion-turno .boton-comanda, .seccion-turno .boton-anular {
     justify-self: start;
   }
 }

@@ -71,7 +71,7 @@ function Filtros(props) {
                                     <option key={0} value="">Todos</option>
                                     <option key={1} value="abierto">Abiertos</option>
                                     <option key={2} value="cerrado">Cerrados</option>
-                                    <option key={3} value="cancelado">Cancelados</option>
+                                    <option key={3} value="anulado">Anulados</option>
                                 </Form.Control>
                             </Form.Group>
                         </div>
