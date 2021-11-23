@@ -15,6 +15,7 @@ import auth from "../../api/authentication";
 
 //Constants
 import * as rutas from '../../constants/rutas.js';
+import * as roles from '../../constants/roles.js';
 
 //CSS
 import '../../assets/css/Navegador.css';
@@ -57,7 +58,7 @@ class Navegador extends React.Component {
             && (this.state.first_name === "" || this.state.first_name !== logueado.first_name)) {
             this.setNombreUsuarioLogueado();
         }
-        if (this.state.gestionHabilitada === null && logueado.id) {
+        if (this.state.gestionHabilitada === null && logueado.id && logueado.rolesArray.includes(roles.ROL_ADMIN)) {
             this.setState({
                 gestionHabilitada: logueado.operaciones.length > 0
             });
