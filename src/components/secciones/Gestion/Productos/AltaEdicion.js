@@ -224,6 +224,7 @@ class AltaEdicion extends React.Component {
                 cancelButtonColor: '#bfbfbf',
             }).then((result) => {
                 if (result.isConfirmed) {
+                    this.normalizarDatos()
                     this.props.saveCreateProducto(linkVolver);
                 } else {
                     return false;
@@ -232,6 +233,37 @@ class AltaEdicion extends React.Component {
         }
 
         return existentes.length === 0;
+    }
+
+    normalizarDatos() {
+        let cambio = {
+            target: {
+                id: '',
+                value: ''
+            }
+        }
+        let producto = this.getProductoAltaEdicion()
+        
+        let compra_directa = producto.compra_directa
+        if (typeof compra_directa != "boolean") {
+            cambio.target.id = "compra_directa"
+            cambio.target.value = false
+            this.onChangeProducto(cambio)
+        }
+
+        let venta_directa = producto.venta_directa
+        if (typeof venta_directa != "boolean") {
+            cambio.target.id = "venta_directa"
+            cambio.target.value = false
+            this.onChangeProducto(cambio)
+        }
+
+        let precio_vigente = producto.precio_vigente
+        if (isNaN(precio_vigente) || precio_vigente == "") {
+            cambio.target.id = "precio_vigente"
+            cambio.target.value = 0
+            this.onChangeProducto(cambio)
+        }
     }
 
     /**
@@ -248,11 +280,12 @@ class AltaEdicion extends React.Component {
         }
 
         const precio = producto.precio_vigente;
-        if (isNaN(precio) || parseFloat(precio) <= 0.00) {
+        const venta_directa = producto.venta_directa
+        if (venta_directa && (isNaN(precio) || parseFloat(precio) <= 0.00)) {
             errores.push("El precio del producto debe ser mayor o igual a cero.");
         }
 
-        if (!isNaN(costo) && !isNaN(precio) && parseFloat(costo) >= parseFloat(precio)) {
+        if (venta_directa && !isNaN(costo) && !isNaN(precio) && parseFloat(costo) >= parseFloat(precio)) {
             errores.push("El precio del producto debe ser mayor al costo del mismo.");
         }
 
@@ -292,6 +325,7 @@ class AltaEdicion extends React.Component {
             return;
         }
 
+        this.normalizarDatos()
         if (accion === rutas.ACCION_ALTA) {
             this.props.saveCreateProducto(linkVolver);
         }
@@ -460,7 +494,7 @@ class AltaEdicion extends React.Component {
                             onChange={(e) => this.onChangeProducto(e)}
                             value={producto.precio_vigente}
                             placeholder="Ingresar precio"
-                            required={true}
+                            required={producto.venta_directa}
                         />
                     </Form.Group>
                     <Form.Group>

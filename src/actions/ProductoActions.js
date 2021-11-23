@@ -62,11 +62,15 @@ export function saveCreateProducto(volverA) {
         dispatch(requestCreateProducto());
         return productos.saveCreate(getState().productos.create.nuevo)
             .then(function (response) {
-                if (response.status >= 400) {
-                    return Promise.reject(response);
-                } else {
-                    return true;
+                let mensaje = "El producto ha sido creado con éxito"
+                if (response.message) {
+                    mensaje = response.message;
                 }
+                dispatch(reveiceCreateProducto(mensaje));
+                dispatch(resetCreateProducto());
+                dispatch(resetProductos());
+                dispatch(fetchProductos(true));
+                history.push(rutas.PRODUCTOS_LISTAR_ADMIN);
             })
             .then(function (data) {
                 let mensaje = "El producto ha sido creado con éxito"
@@ -86,10 +90,15 @@ export function saveCreateProducto(volverA) {
                         dispatch(logout());
                         return;
                     default:
-                        if (error.responseJSON !== "")
-                            dispatch(errorCreateProducto(error.responseJSON.message));
-                        else
+                        try {
+                            if (error && error.responseJSON && error.responseJSON.message) {
+                                dispatch(errorCreateProducto(error.responseJSON.message));
+                            } else {
+                                dispatch(errorCreateProducto(errorMessages.GENERAL_ERROR));
+                            }
+                        } catch (e) {
                             dispatch(errorCreateProducto(errorMessages.GENERAL_ERROR));
+                        }
                         return;
                 }
             });
