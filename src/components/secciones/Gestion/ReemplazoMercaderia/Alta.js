@@ -59,6 +59,13 @@ function Alta(props) {
                 actuales.push(producto)
             }
         })
+        actuales.sort(function (a, b) {
+            let productoA = a.nombre;
+            let productoB = b.nombre;
+            if(productoA < productoB) { return -1; }
+            if(productoA > productoB) { return 1; }
+            return 0;
+        })
         return actuales
     }
 
