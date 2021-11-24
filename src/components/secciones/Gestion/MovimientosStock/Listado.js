@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom"
 //Actions
 import { resetMovimientos, fetchMovimientos, updateFiltros } from "../../../../actions/MovimientosStockActions"
 import { fetchIngresoById } from "../../../../actions/IngresoActions"
+import { fetchProductos } from '../../../../actions/ProductoActions'
 
 //Constants
 import * as rutas from "../../../../constants/rutas"
@@ -33,6 +34,7 @@ function Listado(props) {
         if (id_ingreso) {
             props.fetchIngresoById(id_ingreso)
         }
+        props.fetchProductos(false)
     }, [])
 
     let titulo = "Stock de productos"
@@ -172,6 +174,10 @@ function Listado(props) {
         <section className="movimiento-listado tarjeta-body">
             <div className="d-flex justify-content-between">
                 <Titulo ruta={volverA} titulo={titulo} />
+                <div className="producto-stock">
+                    Stock:
+                    <span class="badge badge-success">{producto.stock}</span>
+                </div>
             </div>
             <Filtros
                 {...props}
@@ -232,6 +238,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         fetchIngresoById: (id) => {
             dispatch(fetchIngresoById(id))
+        },
+        fetchProductos: () => {
+            dispatch(fetchProductos)
         }
     }
 };

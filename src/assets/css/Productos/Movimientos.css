@@ -1,5 +1,15 @@
-.movimiento-stock, .movimiento-listado {
-    height: calc(100vh - 100px) !important;
-    margin: 0 20px !important;
-    overflow: auto;
-  }
+.movimiento-stock,
+.movimiento-listado {
+  height: calc(100vh - 100px) !important;
+  margin: 0 20px !important;
+  overflow: auto;
+}
+
+
+.movimiento-listado .producto-stock {
+  font-size: 25px;
+}
+
+.movimiento-listado .producto-stock span {
+  margin-left: 10px;
+}
