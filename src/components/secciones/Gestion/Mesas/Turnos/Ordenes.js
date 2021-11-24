@@ -57,11 +57,20 @@ function Ordenes(props) {
                 errores.push(`Debe indicar la cantidad a entregar del producto '${producto.nombre}'`)
             }
 
+            if (!isNaN(entregado) && entregado < 0)  {
+                errores.push(`La cantidad a entregar del producto '${producto.nombre}' no puede ser menor a cero.`)
+            }
+            
             let cantidad = orden.cantidad
+            if (!isNaN(cantidad) && cantidad < 0)  {
+                errores.push(`La cantidad solicitada del producto '${producto.nombre}' no puede ser menor a cero.`)
+            }
+
             if (!isNaN(cantidad) && !isNaN(entregado) && entregado > cantidad ) {
                 errores.push(`La cantidad a entregar del producto '${producto.nombre}' no puede ser mayor a la cantidad solicitada.`)
             }
         })
+        
         const valido = errores.length === 0
         if (!valido) {
             const items = errores.reduce((text, error) => text + '<li style="font-size: 14px;">' + error + '</li>', '')
@@ -102,7 +111,6 @@ function Ordenes(props) {
     let Ordenes = []
     if (turno && Array.isArray(turno.ordenes)) {
         Ordenes = turno.ordenes.map(orden => {
-            console.log(orden)
             const producto = orden.producto
             const cantidad = orden.cantidad ? orden.cantidad : ''
             const entregado = orden.entregado ? orden.entregado : 0

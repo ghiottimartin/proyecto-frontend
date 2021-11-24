@@ -13,7 +13,7 @@ import * as errorMessages from '../constants/MessageConstants';
 
 //Normalizer
 import { normalizeDato, normalizeDatos } from "../normalizers/normalizeTurnos";
-import { updateMesa } from './MesaActions';
+import { fetchMesaById, updateMesa } from './MesaActions';
 
 // CREACION TURNO DE MESAS
 export const CREATE_TURNO = 'CREATE_TURNO'

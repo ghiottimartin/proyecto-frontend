@@ -122,6 +122,7 @@ function GestionTurno(props) {
         if (orden === undefined) {
             orden = {
                 'cantidad': 1,
+                'cantidad_anterior': 0,
                 'producto': producto
             }
             nuevas.push(orden)
@@ -160,12 +161,18 @@ function GestionTurno(props) {
         let cambiado = turno
         const stock = producto.stock
         const indice = cambiado.ordenes.indexOf(actualizado)
-        const nuevaCantidad = parseInt(actualizado.cantidad + cantidad)
-        if (nuevaCantidad > stock) {
-            const verbo = stock > 1 ? "Quedan" : "Queda"
+        const nueva_cantidad = parseInt(actualizado.cantidad + cantidad)
+
+        const cantidad_anterior = actualizado.cantidad_anterior
+        const stock_restante = stock + cantidad_anterior - nueva_cantidad
+        if (stock_restante < 0) {
+            const verbo = stock > 1 ? "quedan" : "queda"
+            const items = stock > 1 ? "items" : "item"
+            let texto_explicativo = `Había solicitado ${cantidad_anterior}, puede pedir hasta ${nueva_cantidad - 1} ya que `
+            texto_explicativo += `${verbo} ${stock} ${items} de '${producto.nombre}'`
             Swal.fire({
                 title: `No hay suficiente stock`,
-                text: `${verbo} ${stock} '${producto.nombre}'`,
+                text: texto_explicativo,
                 icon: 'warning',
                 showCloseButton: true,
                 focusConfirm: true,
@@ -175,7 +182,7 @@ function GestionTurno(props) {
             })
             return
         } 
-        actualizado['cantidad'] = parseFloat(nuevaCantidad)
+        actualizado['cantidad'] = parseFloat(nueva_cantidad)
         cambiado.ordenes[indice] = actualizado
         cambiado.total = cambiado.ordenes.reduce((total, orden) => {
             const producto = orden.producto && orden.producto.id ? orden.producto : {}

@@ -34,7 +34,14 @@ function SeleccionProductos(props) {
                 const buscarVentaDirecta = ventaDirecta && producto && producto.id ? producto.venta_directa === true : true
                 if (producto && !isNaN(producto.id) && producto.stock > 0 && buscarVentaDirecta) {
                     const title = "Agregar " + producto.nombre
-                    Opciones.push(<li key={producto.id} data-id={producto.id} title={title} onClick={(e) => props.addProducto(e)}>{producto.nombre}</li>)
+                    Opciones.push(
+                        <li key={producto.id} data-id={producto.id} title={title} onClick={(e) => props.addProducto(e)}>
+                            {producto.nombre}
+                            <span className="badge badge-primary badge-pill float-right" title={`Stock del producto ${producto.nombre}`}>
+                                {producto.stock}
+                            </span>
+                        </li>
+                    )
                 }
             })
         }
