@@ -12,6 +12,7 @@ import "../../../../../assets/css/Gestion/Turnos/Ordenes.css"
 
 //Constants
 import * as rutas from "../../../../../constants/rutas"
+import * as colores from "../../../../../constants/colores"
 
 //Components
 import Titulo from "../../../../elementos/Titulo"
@@ -89,6 +90,39 @@ function Ordenes(props) {
         return valido
     }
 
+    const modalEntregarTodas = () => {
+        Swal.fire({
+            title: `¿Está seguro de entregar todos los productos? `,
+            icon: 'warning',
+            showCloseButton: true,
+            showCancelButton: true,
+            focusConfirm: true,
+            confirmButtonText: 'Entregar',
+            cancelButtonText: 'Continuar',
+            confirmButtonColor: colores.COLOR_PRIMAY,
+            cancelButtonColor: '#bfbfbf',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                entregarTodos()
+            }
+        });
+    }
+
+    /**
+     * Entrega todas las órdenes del turno.
+     */
+    const entregarTodos = () => {
+        turno.ordenes.forEach(orden => {
+            let cambiado = turno
+            const indice = cambiado.ordenes.indexOf(orden)
+            const nuevaCantidad = orden.cantidad
+            orden.entregado = nuevaCantidad
+            turno.ordenes[indice] = orden
+            props.updateTurno(turno, turno.mesa)
+        })
+        guardar()
+    }
+
     /**
      * Guarda las órdenes del turno, permitiendo editarlo al reingresar a la gestión
      * del mismo.
@@ -138,6 +172,9 @@ function Ordenes(props) {
                     <div className="contenedor-botones justify-content-around" style={{ display: loader ? "none" : "flex" }}>
                         <button onClick={() => guardar()} className="btn btn-success float-right boton-guardar mt-2" >
                             <span className="ml-1">Guardar</span>
+                        </button>
+                        <button onClick={() => modalEntregarTodas()} className="btn btn-primary float-right boton-guardar mt-2" >
+                            <span className="ml-1">Entregar todos</span>
                         </button>
                         <button onClick={() => volver()} className="btn btn-secondary float-right boton-guardar mt-2" >
                             <span className="ml-1">Volver</span>
