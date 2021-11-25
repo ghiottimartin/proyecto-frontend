@@ -339,7 +339,7 @@ class Listado extends React.Component {
                 const alertar = producto.alertar;
                 const alertaHTML = <img src={alerta} className="img-alerta-stock" title="El stock actual es menor al stock de alerta" alt="Alerta de stock" />
                 Productos.push(
-                    <tr key={producto.id}>
+                    <tr key={producto.id} className={ alertar ? "table-danger" : "" }>
                         <td>{producto.id_texto}</td>
                         <td className="td-imagen">
                             <img src={path} onError={(e) => e.target.src = productoVacio} alt="Imagen de producto" />
@@ -351,14 +351,8 @@ class Listado extends React.Component {
                         <td className="text-right px-5">
                             <div className="d-flex justify-content-center align-items-center">
                                 <span>{producto.stock}</span>
-                                <span>{alertar ? alertaHTML : ""}</span>
                             </div>
-                        </td>
-                        <td className="text-right px-5">
-                            <div className="d-flex justify-content-center align-items-center">
-                                <span>{producto.stock_seguridad}</span>
-                                <span>{alertar ? alertaHTML : ""}</span>
-                            </div>
+                            <span className="text-muted text-nowrap">Min: {producto.stock_seguridad}</span>
                         </td>
                         <td className="font-weight-bold text-right px-5 text-nowrap">
                             {producto.costo_texto}
@@ -457,14 +451,6 @@ class Listado extends React.Component {
                                     id="stock"
                                     clase="justify-content-end"
                                     texto="Stock"
-                                    orden={orden}
-                                    direccion={direccion}
-                                    changeDireccion={(e) => this.changeDirection(e)}
-                                />
-                                <Ordenador
-                                    id="stock_seguridad"
-                                    clase="justify-content-end"
-                                    texto="Stock de alerta"
                                     orden={orden}
                                     direccion={direccion}
                                     changeDireccion={(e) => this.changeDirection(e)}
