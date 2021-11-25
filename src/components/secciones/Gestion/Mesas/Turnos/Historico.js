@@ -15,9 +15,9 @@ import Titulo from "../../../../elementos/Titulo"
 import Loader from "../../../../elementos/Loader"
 
 //CSS
-import "../../../../../assets/css/Gestion/Turnos.css"
+import "../../../../../assets/css/Gestion/Historico.css"
 
-function Turnos(props) {
+function Historico(props) {
     const turnos = props.turnos
     const total = turnos.byId.total
     const cantidadTurnos = turnos.allIds.length
@@ -109,4 +109,4 @@ const mapDispatchToProps = (dispatch) => {
         },
     }
 }
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Turnos))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Historico))

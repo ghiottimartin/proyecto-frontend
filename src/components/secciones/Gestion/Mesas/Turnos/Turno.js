@@ -35,7 +35,7 @@ function Turno(props) {
             const producto = orden.producto
             const cantidad = orden.cantidad
             const nombre = producto.nombre
-            const precio = producto.precio_vigente
+            const precio = producto.precio_texto
             const total = orden.total_texto
             let html = `
             <div class="list-group-item list-group-item-action">
