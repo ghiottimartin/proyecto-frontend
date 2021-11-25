@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom"
 import { connect } from "react-redux"
 
 //Actions
-import { fetchProductos } from "../../../../actions/ProductoActions"
+import { fetchProductos, resetProductos } from "../../../../actions/ProductoActions"
 import { createIngreso, saveCreateIngreso, resetCreateIngreso } from "../../../../actions/IngresoActions"
 
 //CSS
@@ -18,6 +18,8 @@ import Titulo from "../../../elementos/Titulo"
 
 //Librerías
 import Swal from 'sweetalert2'
+import AddBoxIcon from "@material-ui/icons/AddBox"
+import history from "../../../../history"
 
 //Utils
 import { formatearMoneda } from "../../../../utils/formateador"
@@ -32,6 +34,7 @@ function Alta(props) {
         props.fetchProductos(false)
         return function limpiarAlta() {
             props.resetCreateIngreso()
+            props.resetProductos()
         }
     }, [])
 
@@ -110,8 +113,8 @@ function Alta(props) {
         actuales.sort(function (a, b) {
             let productoA = a.nombre;
             let productoB = b.nombre;
-            if(productoA < productoB) { return -1; }
-            if(productoA > productoB) { return 1; }
+            if (productoA < productoB) { return -1; }
+            if (productoA > productoB) { return 1; }
             return 0;
         })
         return actuales
@@ -291,7 +294,15 @@ function Alta(props) {
             <div className="row ingreso-mercaderia-contenedor">
                 <div className="col-lg-4">
                     <div className="lista-seleccionable">
-                        <h5>Productos</h5>
+                        <h5>
+                            Productos
+                            <a href="#"
+                                onClick={() => history.push(rutas.PRODUCTO_ALTA + "?volverA=" + rutas.INGRESO_MERCADERIA_ALTA)}
+                                className="ml-2"
+                                data-toggle="tooltip" data-original-title="" title="">
+                                <AddBoxIcon style={{ color: '#5cb860' }} />
+                            </a>
+                        </h5>
                         <ul>{buscando ? <Loader display={true} /> : Opciones}</ul>
                         {Opciones.length === 0 && !buscando ? <p>{placeholder}</p> : <></>}
                     </div>
@@ -347,6 +358,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         resetCreateIngreso: () => {
             dispatch(resetCreateIngreso())
+        },
+        resetProductos: () => {
+            dispatch(resetProductos())
         }
     }
 }

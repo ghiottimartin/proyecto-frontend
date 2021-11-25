@@ -70,18 +70,12 @@ export function saveCreateProducto(volverA) {
                 dispatch(resetCreateProducto());
                 dispatch(resetProductos());
                 dispatch(fetchProductos(true));
-                history.push(rutas.PRODUCTOS_LISTAR_ADMIN);
-            })
-            .then(function (data) {
-                let mensaje = "El producto ha sido creado con éxito"
-                if (data.message) {
-                    mensaje = data.message;
+
+                if (volverA) {
+                    history.push(volverA);    
+                } else {
+                    history.push(rutas.PRODUCTOS_LISTAR_ADMIN);
                 }
-                dispatch(reveiceCreateProducto(mensaje));
-                dispatch(resetCreateProducto());
-                dispatch(resetProductos());
-                dispatch(fetchProductos(true));
-                history.push(rutas.PRODUCTOS_LISTAR_ADMIN);
             })
             .catch(function (error) {
                 switch (error.status) {

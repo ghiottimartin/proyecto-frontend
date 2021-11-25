@@ -370,10 +370,15 @@ class AltaEdicion extends React.Component {
         const buscando = this.props.categorias.byId.isFetching;
         const rutaCategoria = rutas.CATEGORIA_ALTA + '?volverA=' + rutas.PRODUCTO_ALTA;
         const stockDeshabilitado = producto.compra_directa && esEdicion;
+
+        let linkVolver = rutas.PRODUCTOS_LISTAR_ADMIN
+        if (volverAValido) {
+            linkVolver = rutas.getQuery('volverA')
+        }
         return (
             <div className="producto-alta">
                 <Form className="tarjeta-body" onSubmit={(e) => { this.guardarAltaEdicion(e) }}>
-                    <Titulo ruta={rutas.PRODUCTOS_LISTAR_ADMIN} titulo={titulo} />
+                    <Titulo ruta={linkVolver} titulo={titulo} />
                     <Form.Group>
                         <Form.Label>Categoría</Form.Label>
                         <div className="d-flex">
