@@ -474,16 +474,16 @@ function GestionTurno(props) {
                         </div>
                     </div>
                     <div className="contenedor-botones" style={{ display: loader ? "none" : "grid" }}>
-                        <button onClick={() => guardarBorrador()} className="btn btn-success float-right boton-guardar mt-2 boton-guardar" >
+                        <button onClick={() => guardarBorrador()} className="btn btn-success float-right boton-guardar mt-2 boton-guardar" title="Guarda el turno y permite continuar despúes">
                             <span className="ml-1">Guardar</span>
                         </button>
-                        <button onClick={() => comanda()} className="btn btn-primary float-right boton-guardar mt-2 boton-comanda" >
+                        <button onClick={() => comanda()} className="btn btn-primary float-right boton-guardar mt-2 boton-comanda" title="Descarga de pdf de productos no entregados">
                             <span className="ml-1">Comanda</span>
                         </button>
-                        <button onClick={() => cerrar()} className="btn btn-info float-right boton-guardar mt-2 boton-cerrar">
+                        <button onClick={() => cerrar()} className="btn btn-info float-right boton-guardar mt-2 boton-cerrar" title="Cierra el turno generando la venta del mismo">
                             <span className="ml-1">Cerrar</span>
                         </button>
-                        <button onClick={() => anular()} className="btn btn-danger float-right mt-2 boton-anular">
+                        <button onClick={() => anular()} className="btn btn-danger float-right mt-2 boton-anular" title="Anula el turno, volviendo atrás el stock solicitado">
                             <span className="ml-1">Anular</span>
                         </button>
                     </div>
