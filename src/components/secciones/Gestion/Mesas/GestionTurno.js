@@ -51,7 +51,6 @@ function GestionTurno(props) {
         props.fetchProductos(false)
         return function limpiar() {
             props.resetMozos()
-            props.resetUpdateTurno()
         }
     }, [])
 
