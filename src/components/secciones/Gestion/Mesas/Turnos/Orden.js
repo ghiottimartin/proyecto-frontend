@@ -45,7 +45,7 @@ function Orden(props) {
         if (actualizado === undefined) {
             return
         }
-        
+
         let cambiado = turno
         const indice = cambiado.ordenes.indexOf(actualizado)
         const nuevaCantidad = e.target.value
@@ -59,9 +59,14 @@ function Orden(props) {
             <header className="mb-3">
                 <span>{producto.nombre}</span>
             </header>
-            <div>
-                <i class="fas fa-concierge-bell"></i>
-                <span className="ml-2">{entregado}/{cantidad}</span>
+            <div className="contenedor-entregado-imagen">
+                <div>
+                    <img src={path} onError={(e) => e.target.src = productoVacio} alt="Imagen de producto" />
+                </div>
+                <div className="align-self-end">
+                    <i class="fas fa-concierge-bell"></i>
+                    <span className="ml-2">{entregado}/{cantidad}</span>
+                </div>
             </div>
             <div className="input-group">
                 <input
