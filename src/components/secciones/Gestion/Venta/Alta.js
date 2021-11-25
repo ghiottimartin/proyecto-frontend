@@ -222,14 +222,18 @@ function Alta(props) {
                 const producto = linea.producto
                 const cantidad = linea.cantidad ? linea.cantidad : ''
                 const subtotal = cantidad !== precio !== '' ? precio * cantidad : 0.00
+                
+                const stock = producto.stock
+                const restante = stock - cantidad
                 return (
-                    <tr key={producto.id}>
+                    <tr key={producto.id} className={ restante < 0 ? "table-danger" : "" }>
                         <td>
                             <button className="boton-icono-quitar" data-id={producto.id} onClick={(e) => removeLineaVenta(e)}>
                                 <i data-id={producto.id} className="fa fa-times"></i>
                             </button>
                         </td>
                         <td>{producto.nombre}</td>
+                        <td>{producto.stock}</td>
                         <td>
                             <div className="input-group">
                                 <input id="cantidad" type="number" className="text-right" data-id={producto.id} value={cantidad ? cantidad : ""} step="1" onChange={(e) => onChangeLineaVenta(e)} />
@@ -250,6 +254,7 @@ function Alta(props) {
                     <tr>
                         <th></th>
                         <th>Producto</th>
+                        <th>Stock</th>
                         <th>Cantidad</th>
                         <th>Precio</th>
                         <th>Subtotal</th>
@@ -258,7 +263,7 @@ function Alta(props) {
                 <tbody>
                     {FilasHTML.length === 0 ? <tr className="text-center"><td colSpan={5}>Agregue productos a vender</td></tr> : FilasHTML}
                     <tr>
-                        <td colSpan={5} className="text-right text-success font-weight-bold">
+                        <td colSpan={6} className="text-right text-success font-weight-bold">
                             <div onClick={() => abrirModalProductos()} className="d-flex justify-content-end align-items-center">
                                 <AddBoxIcon style={{ color: '#5cb860' }} />
                                 <button type="button" className="boton-modal bg-transparent text-success" data-target=".bs-example-modal-lg">Agregar producto</button>
@@ -268,7 +273,7 @@ function Alta(props) {
                 </tbody>
                 <tfoot>
                     <tr className="font-weight-bold">
-                        <td colSpan={3}>Total</td>
+                        <td colSpan={4}>Total</td>
                         <td colSpan={2} className="text-right">{formatearMoneda(venta.total)}</td>
                     </tr>
                 </tfoot>
