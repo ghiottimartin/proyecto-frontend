@@ -395,6 +395,9 @@ function GestionTurno(props) {
             const cantidad = orden.cantidad ? orden.cantidad : ''
             const subtotal = cantidad !== precio !== '' ? precio * cantidad : 0.00
             const clave = orden.id ? orden.id : producto.id
+
+            const stock = producto.stock
+            const stock_restante = stock + orden.cantidad_anterior - cantidad
             return (
                 <Producto
                     key={clave}
@@ -402,6 +405,8 @@ function GestionTurno(props) {
                     guardando={loader}
                     cantidad={cantidad}
                     subtotal={subtotal}
+                    stock={stock_restante}
+                    mostrarStock={true}
                     entregas={orden.entregado}
                     agregarCantidad={(producto, cantidad) => actualizarOrden(producto, cantidad)}
                     quitarProducto={(e) => removeOrden(e)}

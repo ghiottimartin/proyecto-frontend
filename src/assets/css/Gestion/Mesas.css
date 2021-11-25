@@ -130,6 +130,12 @@
   left: 15px;
 }
 
+.seccion-turno .producto-stock {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+}
+
 .seccion-turno .venta-productos {
   height: calc(100vh - 420px) !important;
   min-height: 200px;
@@ -146,7 +152,7 @@
 
 .seccion-turno .producto {
   font-size: 13px;
-  max-height: 150px;
+  height: 160px;
   max-width: 95%;
   position: relative;
 }

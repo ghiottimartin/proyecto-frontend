@@ -21,11 +21,17 @@ function Producto(props) {
         } catch (e) {
         }
     }
+
+    const mostrarStock = props.mostrarStock ? props.mostrarStock : false
+    const stock = props.stock !== undefined ? props.stock : null
     return (
         <article key={producto.id} className="producto no-cerrar-carrito  position-relative">
-            <span className="producto-entregas" style={{display: !isNaN(entregas) ? "block" : "none"}}>
+            <span className="producto-entregas mt-2" style={{display: !isNaN(entregas) ? "block" : "none"}}>
                 <i class="fas fa-concierge-bell mr-2"></i>
                 {entregas}/ {cantidad}
+            </span>
+            <span style={{display: mostrarStock ? "block" : "none"}} className="producto-stock badge badge-primary badge-pill float-right" title={`Stock del producto ${producto.nombre}`}>
+                {stock}
             </span>
             <div className="producto-izquierda">
                 <img src={path} onError={(e) => e.target.src = productoVacio} alt="Imagen de producto" />
