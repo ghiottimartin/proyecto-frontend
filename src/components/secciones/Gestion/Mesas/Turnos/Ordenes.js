@@ -19,7 +19,6 @@ import Loader from "../../../../elementos/Loader"
 import Orden from "./Orden"
 
 //Librerías
-import Form from "react-bootstrap/Form";
 import Swal from 'sweetalert2'
 import history from "../../../../../history"
 

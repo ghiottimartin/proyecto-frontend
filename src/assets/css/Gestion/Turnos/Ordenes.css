@@ -52,6 +52,7 @@
   }
 
   .ordenes-orden {
+    min-height: 140px;
     max-height: 100px;
   }
 }
