@@ -143,7 +143,13 @@ function Alta(props) {
     const opciones = getOpcionesProductos()
     opciones.forEach(producto => {
         const title = "Agregar " + producto.nombre
-        Opciones.push(<li key={producto.id} title={title} onClick={() => addLineaIngreso(producto)}>{producto.nombre}</li>)
+        Opciones.push(
+            <li key={producto.id} title={title} onClick={() => addLineaIngreso(producto)}>
+                {producto.nombre}
+                <span className="badge badge-primary badge-pill float-right" title={`Stock del producto ${producto.nombre}`}>
+                    {producto.stock}
+                </span>
+            </li>)
     })
 
     /**
