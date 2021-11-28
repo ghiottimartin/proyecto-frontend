@@ -322,7 +322,7 @@ function Alta(props) {
                                 <th className="tabla-columna-descripcion">Descripción</th>
                                 <th className="tabla-columna-cantidad">Cantidad</th>
                                 <th className="tabla-columna-costo">Costo</th>
-                                <th className="tabla-columna-subtotal">Subtotal</th>
+                                <th className="tabla-columna-subtotal text-right">Subtotal</th>
                             </tr>
                         </thead>
                         <tbody>

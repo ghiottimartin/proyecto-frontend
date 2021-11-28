@@ -48,6 +48,17 @@ class AltaEdicion extends React.Component {
         if (id) {
             this.props.fetchProductoById(id);
         }
+
+        let categoria = this.props.categorias.update.activo;
+        if (!id && categoria && categoria.id) {
+            var cambio = {
+                target: {
+                    id: 'categoria',
+                    value: categoria.id,
+                }
+            }
+            this.onChangeProducto(cambio)
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {

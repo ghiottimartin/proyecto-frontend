@@ -60,7 +60,9 @@ export function createCategoria(categoria) {
 export function saveCreateCategoria(volverA) {
     return (dispatch, getState) => {
         dispatch(requestCreateCategoria());
-        return categorias.saveCreate(getState().categorias.create.nuevo)
+
+        const categoria = getState().categorias.create.nuevo
+        return categorias.saveCreate(categoria)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
@@ -73,6 +75,7 @@ export function saveCreateCategoria(volverA) {
                 if (data.message) {
                     mensaje = data.message;
                 }
+                dispatch(updateCategoria(data.datos.categoria))
                 dispatch(reveiceCreateCategoria(mensaje));
                 dispatch(resetCreateCategoria());
                 if (rutas.validarRuta(volverA)) {
