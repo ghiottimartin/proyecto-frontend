@@ -2,9 +2,6 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
-//Actions
-import { resetProductos, fetchProductos } from "../../actions/ProductoActions";
-
 //Components
 import Producto from "../elementos/Producto";
 import Loader from "../elementos/Loader";
@@ -15,11 +12,6 @@ import "../../assets/css/AltaPedido.css";
 class AltaPedido extends React.Component {
     constructor(props) {
         super(props);
-    }
-
-    componentDidMount() {
-        this.props.resetProductos();
-        this.props.fetchProductos(false);
     }
 
     render() {
@@ -73,12 +65,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchProductos: (paginar) => {
-            dispatch(fetchProductos(paginar))
-        },
-        resetProductos: () => {
-            dispatch(resetProductos())
-        },
+        
     }
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AltaPedido));

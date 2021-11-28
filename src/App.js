@@ -7,6 +7,7 @@ import auth from "./api/authentication";
 //Actions
 import { createPedido, saveCreatePedido, saveDeletePedido, resetPedidoAbierto, fetchPedidoAbierto } from "./actions/PedidoActions";
 import { fetchUsuarioLogueadoIfNeeded } from "./actions/UsuarioActions";
+import { resetProductos, fetchProductos } from "./actions/ProductoActions";
 
 //Constants
 import * as rutas from './constants/rutas.js';
@@ -80,6 +81,8 @@ class App extends React.Component {
     componentDidMount() {
         this.props.resetPedidoAbierto();
         this.props.fetchPedidoAbierto();
+        this.props.resetProductos();
+        this.props.fetchProductos(false);
     }
 
     componentWillUnmount() {
@@ -330,7 +333,13 @@ const mapDispatchToProps = (dispatch) => {
         },
         fetchPedidoAbierto: () => {
             dispatch(fetchPedidoAbierto())
-        }
+        },
+        fetchProductos: (paginar) => {
+            dispatch(fetchProductos(paginar))
+        },
+        resetProductos: () => {
+            dispatch(resetProductos())
+        },
     }
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
