@@ -5,7 +5,7 @@ import history from "./history";
 import auth from "./api/authentication";
 
 //Actions
-import { createPedido, saveCreatePedido, saveDeletePedido, resetPedidoAbierto } from "./actions/PedidoActions";
+import { createPedido, saveCreatePedido, saveDeletePedido, resetPedidoAbierto, fetchPedidoAbierto } from "./actions/PedidoActions";
 import { fetchUsuarioLogueadoIfNeeded } from "./actions/UsuarioActions";
 
 //Constants
@@ -75,6 +75,15 @@ class App extends React.Component {
 
     setBlur(blur) {
         this.setState({ blur: blur });
+    }
+
+    componentDidMount() {
+        this.props.resetPedidoAbierto();
+        this.props.fetchPedidoAbierto();
+    }
+
+    componentWillUnmount() {
+        this.props.resetPedidoAbierto();
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -161,9 +170,9 @@ class App extends React.Component {
         }
     }
 
-    crearPedidoAbierto(producto, pedido) {
+    crearPedidoAbierto(productoSolicitado, pedido) {
         this.setState({
-            producto: producto.id,
+            producto: productoSolicitado.id,
         });
         this.props.createPedido(pedido);
         this.props.saveCreatePedido();
@@ -318,6 +327,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         resetPedidoAbierto: () => {
             dispatch(resetPedidoAbierto())
+        },
+        fetchPedidoAbierto: () => {
+            dispatch(fetchPedidoAbierto())
         }
     }
 };

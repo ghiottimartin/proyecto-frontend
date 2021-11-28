@@ -4,7 +4,6 @@ import { connect } from "react-redux";
 
 //Actions
 import { resetProductos, fetchProductos } from "../../actions/ProductoActions";
-import { fetchPedidoAbierto, resetPedidoAbierto } from "../../actions/PedidoActions";
 
 //Components
 import Producto from "../elementos/Producto";
@@ -19,14 +18,8 @@ class AltaPedido extends React.Component {
     }
 
     componentDidMount() {
-        this.props.resetPedidoAbierto();
-        this.props.fetchPedidoAbierto();
         this.props.resetProductos();
         this.props.fetchProductos(false);
-    }
-
-    componentWillUnmount() {
-        this.props.resetPedidoAbierto();
     }
 
     render() {
@@ -36,7 +29,7 @@ class AltaPedido extends React.Component {
             if (producto !== undefined && producto.venta_directa && producto.stock > producto.stock_seguridad) {
                 return (
                     <Producto
-                        key={Math.random()}
+                        key={"p-" + producto.id}
                         producto={producto}
                         guardando={this.props.guardando}
                         productoGuardando={this.props.producto}
@@ -86,12 +79,6 @@ const mapDispatchToProps = (dispatch) => {
         resetProductos: () => {
             dispatch(resetProductos())
         },
-        resetPedidoAbierto: () => {
-            dispatch(resetPedidoAbierto())
-        },
-        fetchPedidoAbierto: () => {
-            dispatch(fetchPedidoAbierto())
-        }
     }
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AltaPedido));

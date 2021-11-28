@@ -70,10 +70,9 @@ class Carrito extends React.Component {
         let lineas  = this.getLineasPedidoActivo();
         let compras = [];
         lineas.forEach(linea => {
-            let clave = Math.random();
             compras.push(
                 <ItemCarrito
-                    key={clave}
+                    key={linea.producto.id}
                     linea={linea}
                     guardando={this.props.guardando}
                     borrando={this.props.borrando}

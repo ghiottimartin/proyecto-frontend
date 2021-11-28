@@ -188,8 +188,8 @@ function pedidosById(state = {
             });
         case RECEIVE_PEDIDO_ABIERTO:
             let abierto = {};
-            if (action.pedido && action.pedido.entities && action.pedido.entities.pedido) {
-                abierto = Object.values(action.pedido.entities.pedido)[0];
+            if (action.pedido && action.pedido.id) {
+                abierto = action.pedido;
             }
             if (action.en_curso) {
                 abierto.en_curso = true;
@@ -197,18 +197,14 @@ function pedidosById(state = {
             if (action.disponible) {
                 abierto.disponible = true;
             }
-            if (action.pedido && action.pedido.entities && action.pedido.entities.lineas) {
-                abierto.lineas = Object.values(action.pedido.entities.lineas);
-            } else {
-                abierto.lineas = [];
-            }
+
             var ids = [];
-            abierto.lineas.map(linea => ids.push(linea.id));
+            abierto.lineas.forEach(linea => ids.push(linea.id));
             abierto.lineasIds = ids;
-            return Object.assign({}, state, {
+            return Object.assign(state, {
                 isFetchingPedido: false,
                 didInvalidatePedido: false,
-                abierto: merge(state.abierto, abierto),
+                abierto: abierto,
                 lastUpdated: action.receivedAt,
                 error: null
             });

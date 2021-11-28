@@ -39,9 +39,9 @@ class Producto extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        let cambioActivo = prevProps.pedidos.byId.abierto.id !== this.props.pedidos.byId.abierto.id;
-        if (cambioActivo && this.state.cantidad === null) {
-            let cantidad = this.props.getCantidad(this.props.producto);
+        let cambioActivo = prevProps.pedidos.create.isCreating !== this.props.pedidos.create.isCreating;
+        let cantidad = this.props.getCantidad(this.props.producto);
+        if (cambioActivo && this.state.cantidad !== cantidad) {
             this.setState({
                 cantidad: cantidad
             })
