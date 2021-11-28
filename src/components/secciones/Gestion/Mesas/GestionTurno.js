@@ -356,7 +356,7 @@ function GestionTurno(props) {
             focusConfirm: true,
             confirmButtonText: 'Cerrar',
             cancelButtonText: 'Continuar',
-            confirmButtonColor: colores.COLOR_ROJO,
+            confirmButtonColor: colores.COLOR_INFO,
             cancelButtonColor: '#bfbfbf',
         }).then((result) => {
             if (result.isConfirmed) {
