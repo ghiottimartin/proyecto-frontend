@@ -18,6 +18,8 @@ import "../../../../assets/css/Gestion/ReemplazoMercaderia.css"
 
 //Librerias
 import Swal from 'sweetalert2'
+import AddBoxIcon from "@material-ui/icons/AddBox"
+import history from "../../../../history"
 
 //Utils
 import { getIconoConId } from "../../../../utils/utils"
@@ -62,8 +64,8 @@ function Alta(props) {
         actuales.sort(function (a, b) {
             let productoA = a.nombre;
             let productoB = b.nombre;
-            if(productoA < productoB) { return -1; }
-            if(productoA > productoB) { return 1; }
+            if (productoA < productoB) { return -1; }
+            if (productoA > productoB) { return 1; }
             return 0;
         })
         return actuales
@@ -203,7 +205,7 @@ function Alta(props) {
      * @param {SyntheticBaseEvent} e 
      * @returns {void}
      */
-     const onChangeLineaReemplazo = (e) => {
+    const onChangeLineaReemplazo = (e) => {
         const elemento = getIconoConId(e)
         const idProducto = elemento.dataset.id
         let actualizada = reemplazo.lineas.find(linea => {
@@ -263,7 +265,7 @@ function Alta(props) {
     if (cantidadProductosStock > 0) {
         placeholder = "No quedan más productos de compra directa con stock mayor a cero para agregar."
     }
-    
+
 
     return (
         <div className="reemplazo-mercaderia-alta tarjeta-body">
@@ -273,9 +275,17 @@ function Alta(props) {
             <div className="row reemplazo-mercaderia-contenedor">
                 <div className="col-lg-4">
                     <div className="reemplazo-mercaderia-articulos">
-                        <h5>Productos</h5>
+                        <h5>
+                            Productos
+                            <a href="#"
+                                onClick={() => history.push(rutas.PRODUCTO_ALTA + "?volverA=" + rutas.REEMPLAZO_MERCADERIA_ALTA)}
+                                className="ml-2"
+                                data-toggle="tooltip" data-original-title="" title="">
+                                <AddBoxIcon style={{ color: '#5cb860' }} />
+                            </a>
+                        </h5>
                         <ul>{buscando ? <Loader display={true} /> : Opciones}</ul>
-                        {Opciones.length === 0 && !buscando ? <p>{ placeholder }</p> : <></>}
+                        {Opciones.length === 0 && !buscando ? <p>{placeholder}</p> : <></>}
                     </div>
                 </div>
                 <div className="col-lg-8 position-relative">
