@@ -1,6 +1,6 @@
-import React from 'react';
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
+import React from "react"
+import { withRouter } from "react-router-dom"
+import { connect } from "react-redux"
 import $ from 'jquery';
 
 //Api
@@ -16,9 +16,7 @@ import ItemCarrito from "./CarritoItem";
 import '../../assets/css/Carrito.css';
 
 //Libraries
-import isEmpty from "lodash/isEmpty";
 import Swal from "sweetalert2";
-import Button from '@material-ui/core/Button';
 
 //Images
 import imgVolver from "../../assets/img/arrow.png";
@@ -28,6 +26,8 @@ class Carrito extends React.Component {
         super(props);
         this.state = {
             mostrar: props.mostrar,
+            lineas: [],
+            buscando: false
         }
 
         this.carrito = React.createRef();
@@ -38,36 +38,38 @@ class Carrito extends React.Component {
         document.addEventListener('mousedown', this.handleClickOutside);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        const buscando = this.props.pedidos.byId.isFetchingPedido;
+        const estabaBuscando = prevProps.pedidos.byId.isFetchingPedido;
+        console.log(buscando, estabaBuscando)
+        if (!buscando && estabaBuscando) {
+            console.log('Dejó de buscar')
+        }
+    }
+
     componentWillUnmount() {
         document.removeEventListener('mousedown', this.handleClickOutside);
     }
 
-    getLineasPedidoActivo() {
-        const activo = this.props.pedidos.byId.abierto;
-        if (isEmpty(activo)) {
-            return [];
-        }
+    getLineasCarrito() {
         let lineas = [];
-        activo.lineasIds.map(id => {
+        const activo = this.props.pedidos.byId.abierto;
+        for (const [key, actual] of Object.entries(activo.lineas)) {
+            let id = actual.id
             let linea = activo.lineas.find(linea => linea.id === id);
             if (linea) {
                 let producto = this.props.productos.byId.productos[linea.producto.id];
                 linea.producto = producto ? producto : {};
             }
             lineas.push(linea);
-        });
+        }
         lineas = lineas.sort(function (a, b) {
             let productoA = a.producto.nombre;
             let productoB = b.producto.nombre;
-            if(productoA < productoB) { return -1; }
-            if(productoA > productoB) { return 1; }
+            if (productoA < productoB) { return -1; }
+            if (productoA > productoB) { return 1; }
             return 0;
         })
-        return lineas;
-    }
-
-    getLineasCarrito() {
-        let lineas  = this.getLineasPedidoActivo();
         let compras = [];
         lineas.forEach(linea => {
             compras.push(
@@ -81,6 +83,9 @@ class Carrito extends React.Component {
                 />
             );
         });
+        if (compras.length === 0) {
+            var parar = true;
+        }
         return compras;
     }
 
@@ -89,7 +94,7 @@ class Carrito extends React.Component {
             return;
         }
         const abierto = this.props.pedidos.byId.abierto;
-        const valido  = abierto.id > 0 && auth.idUsuario();
+        const valido = abierto.id > 0 && auth.idUsuario();
         if (!valido) {
             return;
         }
@@ -124,11 +129,11 @@ class Carrito extends React.Component {
     render() {
         const { mostrar, blur } = this.props;
 
-        let claseBlur    = blur ? "forzar-blur" : "";
-        let compras      = this.getLineasCarrito();
+        let claseBlur = blur ? "forzar-blur" : "";
+        let compras = this.getLineasCarrito();
         let deshabilitar = compras.length === 0;
-        let total        = 0;
-        let pedido       = this.props.pedidos.byId.abierto;
+        let total = 0;
+        let pedido = this.props.pedidos.byId.abierto;
         if (pedido.id) {
             total = pedido.total;
         }
@@ -145,7 +150,7 @@ class Carrito extends React.Component {
                 </div>
                 <div className="carrito-compras">
                     {compras}
-                    <span style={{display: total > 0 ? "block" : "none"}} className="text-right font-weight-bold">Subtotal: $ {total}</span>
+                    <span style={{ display: total > 0 ? "block" : "none" }} className="text-right font-weight-bold">Subtotal: $ {total}</span>
                 </div>
             </nav>
         );

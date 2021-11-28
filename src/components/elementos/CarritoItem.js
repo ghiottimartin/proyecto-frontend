@@ -75,7 +75,7 @@ class ItemCarrito extends React.Component {
                 </button>
             </div> : "";
         return (
-            <div key={c.RANDOM} className="carrito-item">
+            <div key={productoLinea.id} className="carrito-item">
                 <div className="carrito-item-top">
                     <img
                         src={path}

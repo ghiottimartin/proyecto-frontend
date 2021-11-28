@@ -2,6 +2,10 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
+//Actions
+import { resetPedidoAbierto, fetchPedidoAbierto } from "../../actions/PedidoActions";
+import { resetProductos, fetchProductos } from "../../actions/ProductoActions";
+
 //Components
 import Producto from "../elementos/Producto";
 import Loader from "../elementos/Loader";
@@ -12,6 +16,18 @@ import "../../assets/css/AltaPedido.css";
 class AltaPedido extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    componentDidMount() {
+        this.props.resetPedidoAbierto();
+        this.props.fetchPedidoAbierto();
+        this.props.resetProductos();
+        this.props.fetchProductos(false);
+    }
+
+    componentWillUnmount() {
+        this.props.resetPedidoAbierto();
+        this.props.resetProductos();
     }
 
     render() {
@@ -65,7 +81,18 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        
+        resetPedidoAbierto: () => {
+            dispatch(resetPedidoAbierto())
+        },
+        fetchPedidoAbierto: () => {
+            dispatch(fetchPedidoAbierto())
+        },
+        fetchProductos: (paginar) => {
+            dispatch(fetchProductos(paginar))
+        },
+        resetProductos: () => {
+            dispatch(resetProductos())
+        },
     }
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AltaPedido));

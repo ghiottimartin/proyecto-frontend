@@ -30,7 +30,7 @@ class Producto extends React.Component {
     }
 
     componentDidMount() {
-        if (this.props.pedidos.byId.abierto.id && this.state.cantidad === null) {
+        if (this.state.cantidad === null) {
             let cantidad = this.props.getCantidad(this.props.producto);
             this.setState({
                 cantidad: cantidad
@@ -39,9 +39,13 @@ class Producto extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        let cambioActivo = prevProps.pedidos.create.isCreating !== this.props.pedidos.create.isCreating;
+        let pedido = this.props.pedidos.byId.abierto;
+        let lineas = pedido && Array.isArray(pedido.lineas) ? pedido.lineas : [];
+        let hayLineas = lineas.length > 0;
+
         let cantidad = this.props.getCantidad(this.props.producto);
-        if (cambioActivo && this.state.cantidad !== cantidad) {
+        var cantidadActual = this.state.cantidad;
+        if (hayLineas && (cantidadActual === null || cantidadActual !== cantidad)) {
             this.setState({
                 cantidad: cantidad
             })
@@ -53,7 +57,8 @@ class Producto extends React.Component {
         let { cantidad } = this.state;
         let guardando = props.guardando;
         let idProducto = props.productoGuardando;
-        let loader = guardando && parseInt(idProducto) === parseInt(props.producto.id);
+        let buscando = props.pedidos.byId.isFetchingPedido
+        let loader = buscando || guardando && parseInt(idProducto) === parseInt(props.producto.id) && idProducto !== 0;
         const producto = props.producto;
         if (cantidad === null) {
             cantidad = 0;
@@ -67,7 +72,6 @@ class Producto extends React.Component {
             }
         }
 
-        const buscandoPedidoAbierto = this.props.pedidos.byId.isFetchingPedido;
         let gestionCantidad = cantidad === 0 ?
             <Button variant="outlined" color="primary" className="anular no-cerrar-carrito" onClick={() => this.props.agregarProducto(producto, 1)}>
                 <ShoppingCartIcon className="icono-material hvr-grow" />Agregar
@@ -99,7 +103,7 @@ class Producto extends React.Component {
                     <div className="producto-derecha-carrito">
                         <div className="producto-derecha-carrito-cantidad">
                             {
-                                loader || buscandoPedidoAbierto ? <Loader display={true} /> : gestionCantidad
+                                loader ? <Loader display={true} /> : gestionCantidad
                             }
                         </div>
                         <p className="producto-derecha-precio font-weight-bold text-right pr-2 m-0 text-nowrap">

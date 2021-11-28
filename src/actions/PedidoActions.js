@@ -84,6 +84,10 @@ export function saveCreatePedido(volverA) {
                     history.push(volverA);
                 }
             })
+            .then(() => {
+                //Necesario para que actualice las líneas del carrito.
+                dispatch(resetCerrarPedido())
+            })
             .catch(function (error) {
                 dispatch(resetPedidoAbierto())
                 dispatch(fetchPedidoAbierto())
