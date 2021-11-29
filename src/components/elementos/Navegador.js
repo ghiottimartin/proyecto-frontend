@@ -58,7 +58,10 @@ class Navegador extends React.Component {
             && (this.state.first_name === "" || this.state.first_name !== logueado.first_name)) {
             this.setNombreUsuarioLogueado();
         }
-        if (this.state.gestionHabilitada === null && logueado.id && logueado.rolesArray.includes(roles.ROL_ADMIN)) {
+        var esAdmin = logueado.id && logueado.rolesArray.includes(roles.ROL_ADMIN)
+        var esVendedor = logueado.id && logueado.rolesArray.includes(roles.ROL_VENDEDOR)
+        var esMozo = logueado.id && logueado.rolesArray.includes(roles.ROL_MOZO)
+        if (this.state.gestionHabilitada === null && (esAdmin || esVendedor || esMozo)) {
             this.setState({
                 gestionHabilitada: logueado.operaciones.length > 0
             });
@@ -94,7 +97,7 @@ class Navegador extends React.Component {
         if (ruta === rutas.ALTA_PEDIDO && rutaActual === "/") {
             return true;
         }
-        
+
         let esActual = rutaActual === ruta;
         let esRutaGestion = this.comprobarEsRutaGestion(ruta, rutaActual);
         return esActual || esRutaGestion;
@@ -143,6 +146,17 @@ class Navegador extends React.Component {
             let ruta = props.ruta;
             let activa = this.getRutaActiva(props.ruta);
             let claseActiva = activa ? "activo" : "";
+            if (props.logout) {
+                return (
+                    <button
+                        onClick={() => this.redirectTo(ruta)}
+                        className={`itemMenu no-cerrar-carrito ${display} ${grow} ${claseActiva}`}
+                        style={{ cursor: props.grow ? "pointer" : "unset" }}
+                    >
+                        {props.texto}
+                    </button>
+                )
+            }
             return (
                 <a
                     href={ruta}
@@ -221,6 +235,7 @@ class Navegador extends React.Component {
                     mostrar={props.mostrar}
                     grow={true}
                     texto={"Salir"}
+                    logout={true}
                     ruta={rutas.LOGOUT}
                 />
             </>
@@ -254,8 +269,8 @@ class Navegador extends React.Component {
                             <NoLogueado mostrar={!logueado} />
                             <Logueado mostrar={logueado} responsive={responsive} nombre={false} />
                         </div>
-                    </div>                
-                : ""}
+                    </div>
+                    : ""}
             </nav>
         );
     }
