@@ -147,7 +147,6 @@ class Navegador extends React.Component {
                 <a
                     href={ruta}
                     className={`itemMenu no-cerrar-carrito ${display} ${grow} ${claseActiva}`}
-                    onClick={() => this.redirectTo(ruta)}
                     style={{ cursor: props.grow ? "pointer" : "unset" }}
                 >
                     {props.texto}

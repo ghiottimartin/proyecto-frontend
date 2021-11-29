@@ -56,7 +56,7 @@ class TarjetaMenu extends React.Component {
         const rolesTexto = this.getTextoRoles();
         const margenLeftImg = this.props.margenLeftImg;
         return (
-            <button onClick={() => history.push(props.ruta)} key={props.key} className="tarjeta-menu">
+            <a href={props.ruta} key={props.key} className="tarjeta-menu">
                 <div className={"tarjeta hvr-grow"} onClick={props.click}>
                     <div className="roles text-capítalize">
                         {rolesTexto}
@@ -65,7 +65,7 @@ class TarjetaMenu extends React.Component {
                     <img src={props.img} alt={props.alt} title={props.title} style={{marginLeft: margenLeftImg}}/>
                     <p>{props.descripcion}</p>
                 </div>
-            </button>
+            </a>
         )
     }
 }

@@ -8,6 +8,11 @@
     border: none;
 }
 
+.tarjeta-menu:hover {
+    text-decoration: none;
+    color: black;
+}
+
 .tarjeta-menu:focus {
     outline: none;
 }
