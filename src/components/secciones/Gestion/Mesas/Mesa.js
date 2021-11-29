@@ -16,6 +16,7 @@ import imgMesa from "../../../../assets/img/menu/table.png"
 //Librerías
 import history from "../../../../history"
 import Swal from "sweetalert2"
+import AddBoxIcon from "@material-ui/icons/AddBox"
 
 function Mesa(props) {
     const mesa = props.mesa
@@ -125,28 +126,44 @@ function Mesa(props) {
     }
 
     let Operaciones = []
+    const titleTurno = mesa.disponible ? 'Crear turno' : 'Gestionar productos del turno'
     Operaciones.push(
-        <button key={mesa.id + "-turnos"} onClick={() => gestionarTurno(mesa)} style={{ backgroundColor: colores.COLOR_PRIMAY }}>
-            Turno
+        <button
+            key={mesa.id + "-turnos"}
+            title={titleTurno}
+            onClick={() => gestionarTurno(mesa)}
+            style={{ backgroundColor: mesa.disponible ? colores.COLOR_PRIMAY : colores.COLOR_ROJO }}
+        >
+            {mesa.disponible ? 'Turno' : 'Gestionar'}
         </button>
     )
 
     Operaciones.push(
-        <button key={mesa.id + "-historico"} onClick={() => historicoTurnos(mesa)} style={{ backgroundColor: colores.COLOR_SECONDARY }}>
+        <button
+            key={mesa.id + "-historico"}
+            title="Ver listado histórico de turnos"
+            onClick={() => historicoTurnos(mesa)}
+            style={{ backgroundColor: colores.COLOR_SECONDARY }}
+        >
             Histórico
         </button>
     )
 
     if (mesa.puede_editarse) {
         Operaciones.push(
-            <button key={mesa.id + "-editar"} onClick={() => editarMesa(mesa)} style={{ backgroundColor: colores.COLOR_SUCCESS }}>
+            <button
+                key={mesa.id + "-editar"}
+                title={"Editar Mesa " + mesa.numero_texto}
+                onClick={() => editarMesa(mesa)}
+                style={{ backgroundColor: colores.COLOR_SUCCESS }}
+            >
                 Editar
             </button>
         )
     }
 
     return (
-        <article key={mesa.id} className="mesa-tarjeta" style={{backgroundColor: mesa.color_fondo}}>
+        <article key={mesa.id} className="mesa-tarjeta" style={{ backgroundColor: mesa.color_fondo }}>
             <header>
                 <span className={mesa.estado_clase}>{mesa.estado_texto}</span>
                 <span>Mesa {mesa.numero_texto}</span>
