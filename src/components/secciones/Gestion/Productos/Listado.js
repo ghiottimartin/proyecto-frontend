@@ -67,7 +67,7 @@ class Listado extends React.Component {
      */
     buscarProductos() {
         this.props.resetProductos();
-        this.props.fetchProductos(true);
+        this.props.fetchProductos(true, true);
     }
 
     /**
@@ -513,8 +513,8 @@ const mapDispatchToProps = (dispatch) => {
         resetProductos: () => {
             dispatch(resetProductos())
         },
-        fetchProductos: (paginar) => {
-            dispatch(fetchProductos(paginar))
+        fetchProductos: (paginar, admin) => {
+            dispatch(fetchProductos(paginar, admin))
         },
         saveDeleteProducto: (id) => {
             dispatch(saveDeleteProducto(id))

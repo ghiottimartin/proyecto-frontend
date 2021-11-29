@@ -4,7 +4,7 @@ require('isomorphic-fetch');
 
 var productos = {
 
-    getAll(filtros) {
+    getAll(filtros, admin) {
         var esc = encodeURIComponent;
         var query = "";
         if (filtros) {
@@ -17,11 +17,16 @@ var productos = {
         let defaultOptions = {
             method: 'GET',
             headers: {
-                "Content-Type": "application/json;charset=UTF-8"
+                "Content-Type": "application/json;charset=UTF-8",
+                "Authorization": admin ? "Token " + localStorage.token : ''
             }
         };
 
-        return fetch(c.BASE_URL + '/producto/' + query, defaultOptions);
+        let ruta = ''
+        if (admin) {
+            ruta = 'abm//listado_admin'
+        }
+        return fetch(c.BASE_URL + '/producto/' + ruta + query, defaultOptions);
     },
 
     saveCreate(producto) {

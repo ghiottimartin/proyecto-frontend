@@ -217,11 +217,11 @@ function errorProductos(error) {
     }
 }
 
-export function fetchProductos(paginar) {
+export function fetchProductos(paginar, admin) {
     return (dispatch, getState) => {
         dispatch(requestProductos());
         const filtros = paginar ? getState().productos.byId.filtros : {}
-        return productos.getAll(filtros)
+        return productos.getAll(filtros, admin)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
@@ -237,7 +237,9 @@ export function fetchProductos(paginar) {
                 //dispatch(logout());
                 switch (error.status) {
                     case 401:
-                        dispatch(errorProductos(errorMessages.UNAUTHORIZED_TOKEN));
+                    case 403:
+                        dispatch(errorProductos("No está autorizado para ver los productos."));
+                        history.push(rutas.INICIO)
                         return;
                     default:
                         dispatch(errorProductos(errorMessages.GENERAL_ERROR));
