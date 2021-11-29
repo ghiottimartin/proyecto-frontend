@@ -144,13 +144,14 @@ class Navegador extends React.Component {
             let activa = this.getRutaActiva(props.ruta);
             let claseActiva = activa ? "activo" : "";
             return (
-                <button
+                <a
+                    href={ruta}
                     className={`itemMenu no-cerrar-carrito ${display} ${grow} ${claseActiva}`}
                     onClick={() => this.redirectTo(ruta)}
                     style={{ cursor: props.grow ? "pointer" : "unset" }}
                 >
                     {props.texto}
-                </button>
+                </a>
             )
         };
 
