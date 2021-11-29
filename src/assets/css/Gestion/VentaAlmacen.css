@@ -12,6 +12,10 @@
   display: none;
 }
 
+.venta-alta-escritorio .input-group input {
+  width: 80px;
+}
+
 .venta-almacen table {
   table-layout: fixed;
 }
