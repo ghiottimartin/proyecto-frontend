@@ -66,7 +66,7 @@ var pedidos = {
         return fetch(c.BASE_URL + '/gastronomia/pedido/' + id, defaultOptions);
     },
 
-    cerrarPedido(idPedido) {
+    cerrarPedido(idPedido, cambio) {
         let defaultOptions = {
             method: 'PUT',
             headers: {
@@ -75,7 +75,7 @@ var pedidos = {
             },
         };
 
-        return fetch(c.BASE_URL + '/gastronomia/pedido/' + idPedido + "/", defaultOptions);
+        return fetch(c.BASE_URL + '/gastronomia/pedido/' + idPedido + "/?cambio=" + cambio, defaultOptions);
     },
 
     getPedido(id) {

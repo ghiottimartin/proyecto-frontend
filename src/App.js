@@ -49,7 +49,6 @@ import HistoricoTurnos from './components/secciones/Gestion/Mesas/Turnos/Histori
 import MesaOrdenes from './components/secciones/Gestion/Mesas/Turnos/Ordenes'
 
 //CSS
-import "./App.css";
 import "./assets/css/Inicio.css";
 
 //Redux

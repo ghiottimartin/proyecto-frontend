@@ -4,6 +4,7 @@ import { Modal } from "react-bootstrap";
 function ModalBoostrap(props) {
     return (
         <Modal
+            className="no-cerrar-carrito"
             show={props.show}
             onHide={() => props.onHide()}
             dialogClassName="modal-80w"

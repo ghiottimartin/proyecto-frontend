@@ -151,10 +151,10 @@ export function resetCerrarPedido() {
     }
 }
 
-export function saveCerrarPedido(id) {
+export function saveCerrarPedido(id, cambio) {
     return (dispatch, getState) => {
         dispatch(requestCerrarPedido());
-        return pedidos.cerrarPedido(id)
+        return pedidos.cerrarPedido(id, cambio)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);

@@ -7,7 +7,7 @@ import $ from 'jquery';
 import auth from "../../api/authentication";
 
 //Actions
-import { saveCerrarPedido } from "../../actions/PedidoActions";
+import { saveCerrarPedido, updatePedido } from "../../actions/PedidoActions";
 
 //Components
 import ItemCarrito from "./CarritoItem";
@@ -21,13 +21,17 @@ import Swal from "sweetalert2";
 //Images
 import imgVolver from "../../assets/img/arrow.png";
 
+//Utils
+import { formatearMoneda } from "../../utils/formateador"
+
 class Carrito extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             mostrar: props.mostrar,
             lineas: [],
-            buscando: false
+            buscando: false,
+            cambio: '',
         }
 
         this.carrito = React.createRef();
@@ -36,15 +40,6 @@ class Carrito extends React.Component {
 
     componentDidMount() {
         document.addEventListener('mousedown', this.handleClickOutside);
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        const buscando = this.props.pedidos.byId.isFetchingPedido;
-        const estabaBuscando = prevProps.pedidos.byId.isFetchingPedido;
-        console.log(buscando, estabaBuscando)
-        if (!buscando && estabaBuscando) {
-            console.log('Dejó de buscar')
-        }
     }
 
     componentWillUnmount() {
@@ -98,20 +93,36 @@ class Carrito extends React.Component {
         if (!valido) {
             return;
         }
+
+        const total = formatearMoneda(abierto.total)
         Swal.fire({
-            title: `¿Está seguro de cerrar el pedido? `,
+            title: `Confirmar pedido`,
+            text: 'Indique el cambio del mismo',
             icon: 'question',
             showCloseButton: true,
             showCancelButton: true,
             focusConfirm: true,
-            confirmButtonText: 'Aceptar',
+            confirmButtonText: 'Confirmar',
+            cancelButtonText: 'Cancelar',
             confirmButtonColor: 'rgb(88, 219, 131)',
             cancelButtonColor: '#bfbfbf',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                this.props.saveCerrarPedido(abierto.id);
+            input: 'number',
+            inputLabel: `Recuerda que el valor del pedido es de ${total}`,
+            inputPlaceholder: 'Cambio',
+            inputAttributes: {
+                min: 0,
+            },
+            onOpen: () => {
+                const input = Swal.getInput()
+                input.oninput = (elemento) => {
+                    this.setState({ cambio: elemento.target.value })
+                }
             }
-        });
+        }).then((result) => {
+                if (result.isConfirmed) {
+                    this.props.saveCerrarPedido(abierto.id, this.state.cambio);
+                }
+            });
     }
 
     handleClickOutside(event) {
@@ -166,8 +177,11 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        saveCerrarPedido: (id) => {
-            dispatch(saveCerrarPedido(id))
+        saveCerrarPedido: (id, cambio) => {
+            dispatch(saveCerrarPedido(id, cambio))
+        },
+        updatePedido: (pedido) => {
+            dispatch(updatePedido(pedido))
         }
     }
 };
