@@ -111,11 +111,9 @@ function Alta(props) {
             }
         })
         actuales.sort(function (a, b) {
-            let productoA = a.nombre;
-            let productoB = b.nombre;
-            if (productoA < productoB) { return -1; }
-            if (productoA > productoB) { return 1; }
-            return 0;
+            let stockA = a.stock;
+            let stockB = b.stock;
+            return stockA - stockB;
         })
         return actuales
     }
@@ -143,9 +141,10 @@ function Alta(props) {
     const opciones = getOpcionesProductos()
     opciones.forEach(producto => {
         const title = "Agregar " + producto.nombre
+        const stock_alerta = producto.stock_seguridad
         Opciones.push(
-            <li key={producto.id} title={title} onClick={() => addLineaIngreso(producto)}>
-                {producto.nombre}
+            <li key={producto.id} title={title} onClick={() => addLineaIngreso(producto)} className={producto.alertar ? 'table-danger' : ''}>
+                {producto.nombre} <span className="text-muted" style={{fontSize: "13px"}}>{ producto.alertar ? `(Min ${stock_alerta})` : ''}</span>
                 <span className="badge badge-primary badge-pill float-right" title={`Stock del producto ${producto.nombre}`}>
                     {producto.stock}
                 </span>
@@ -245,6 +244,8 @@ function Alta(props) {
             const producto = linea.producto
             const cantidad = linea.cantidad ? linea.cantidad : ''
             const subtotal = cantidad !== costo !== '' ? costo * cantidad : 0.00
+            const stock = producto.stock
+            const stock_seguridad = producto.stock_seguridad
             return (
                 <tr key={producto.id}>
                     <td>
@@ -253,6 +254,7 @@ function Alta(props) {
                         </button>
                     </td>
                     <td>{producto.nombre}</td>
+                    <td>{producto.stock} <br/><span className="text-muted" style={{fontSize: "13px"}}>{`(Min ${producto.stock_seguridad})`}</span></td>
                     <td>
                         <div className="input-group">
                             <input id="cantidad" type="number" className="text-right" data-id={producto.id} value={cantidad ? cantidad : ""} step="1" onChange={(e) => onChangeLineaIngreso(e)} />
@@ -276,7 +278,7 @@ function Alta(props) {
     }
 
     const Total = <tr>
-        <td colSpan={4}>Total</td>
+        <td colSpan={5}>Total</td>
         <td className="text-right">{formatearMoneda(ingreso.total)}</td>
     </tr>
 
@@ -320,13 +322,14 @@ function Alta(props) {
                             <tr>
                                 <th className="tabla-columna-quitar"></th>
                                 <th className="tabla-columna-descripcion">Descripción</th>
+                                <th className="tabla-columna-cantidad">Stock</th>
                                 <th className="tabla-columna-cantidad">Cantidad</th>
                                 <th className="tabla-columna-costo">Costo</th>
                                 <th className="tabla-columna-subtotal text-right">Subtotal</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {Filas.length === 0 ? <tr className="text-center"><td colSpan={5}>Agregue productos a ingresar</td></tr> : Filas}
+                            {Filas.length === 0 ? <tr className="text-center"><td colSpan={6}>Agregue productos a ingresar</td></tr> : Filas}
                         </tbody>
                         <tfoot>
                             {Filas.length === 0 ? '' : Total}
