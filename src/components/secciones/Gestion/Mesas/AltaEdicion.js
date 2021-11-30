@@ -124,7 +124,7 @@ function AltaEdicion(props) {
                     <Titulo ruta={rutas.MESAS_LISTAR} titulo={titulo} />
                     <Form id="formulario" onSubmit={(e) => guardar(e)}>
                         <Form.Group>
-                            <Form.Label>Número</Form.Label>
+                            <Form.Label>Número *</Form.Label>
                             <Form.Control
                                 id="numero"
                                 type="number"
@@ -141,6 +141,7 @@ function AltaEdicion(props) {
                                 id="descripcion"
                                 as="textarea" rows={3}
                                 value={mesa.descripcion ? mesa.descripcion : ""}
+                                placeholder="Observaciones"
                                 onChange={(e) => onChangeMesa(e)}
                             />
                         </Form.Group>
