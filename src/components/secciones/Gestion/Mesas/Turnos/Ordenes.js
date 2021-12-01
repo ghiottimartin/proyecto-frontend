@@ -174,7 +174,7 @@ function Ordenes(props) {
                             <span className="ml-1">Guardar</span>
                         </button>
                         <button onClick={() => modalEntregarTodas()} className="btn btn-primary float-right boton-guardar mt-2" >
-                            <span className="ml-1">Entregar todos</span>
+                            <span className="ml-1">Todos</span>
                         </button>
                         <button onClick={() => volver()} className="btn btn-secondary float-right boton-guardar mt-2" >
                             <span className="ml-1">Volver</span>
