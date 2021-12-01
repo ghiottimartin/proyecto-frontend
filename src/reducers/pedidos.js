@@ -213,12 +213,17 @@ function pedidosById(state = {
                 abierto.disponible = true;
             }
 
+            const usuario = abierto.usuario
+            abierto.direccion = ''
+            if (usuario && usuario.direccion) {
+                abierto.direccion = usuario.direccion
+            }
+
             var ids = [];
             abierto.lineas.forEach(linea => ids.push(linea.id));
             abierto.lineasIds = ids;
             abierto.cambio = ''
             abierto.tipo = 'retiro'
-            abierto.direccion = ''
             return Object.assign(state, {
                 isFetchingPedido: false,
                 didInvalidatePedido: false,
