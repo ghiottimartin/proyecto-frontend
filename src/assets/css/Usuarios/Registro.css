@@ -5,10 +5,20 @@
     min-height: calc(100vh - 80px);
 }
 
-.registro-contenedor .tarjeta-body {
-    width: 400px;
-}
-
 .registro .btn-light {
     border: 1px solid #e6d3d3;
+}
+
+.registro-contenedor .tarjeta-body {
+    width: 310px;
+}
+
+.registro-contenedor .tarjeta-body .login-captcha, .registro-contenedor .tarjeta-body iframe {
+    width: 270px;
+}
+
+@media (min-width: 500px) {
+    .registro-contenedor .tarjeta-body {
+        width: 400px;
+    }
 }

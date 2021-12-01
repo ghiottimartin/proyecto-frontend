@@ -1,6 +1,7 @@
 import React from 'react';
 import {withRouter} from "react-router-dom";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
+import $ from 'jquery';
 
 //Actions
 import { changeLogin, login, olvideMiPassword } from "../../../../actions/AuthenticationActions";
@@ -45,6 +46,11 @@ class Login extends React.Component {
             history.push(rutas.INICIO);
         }
         this.resetUsuario();
+
+        let responsive = $(window).width() <= 849;
+        if (responsive) {
+            this.setState({captcha: true})
+        }
     }
 
     resetUsuario() {
@@ -138,6 +144,7 @@ class Login extends React.Component {
     render() {
         const { imgPassword, tipo } = this.state;
         const nuevoUsuario = this.props.usuarios.create.nuevo;
+        let responsive = $(window).width() <= 849;
         return (
             <div className="login">
                 <div className="login-contenedor">
@@ -180,10 +187,11 @@ class Login extends React.Component {
                                 <Loader display={true} />
                                 :
                                 <div className="d-flex flex-column align-items-center">
-                                    <ReCAPTCHA
-                                        sitekey={c.CAPTCHA_KEY}
+                                    {!responsive ? <ReCAPTCHA
                                         onChange={(valor) => this.onChangeCaptcha(valor)}
-                                    />
+                                        className="login-captcha"
+                                        sitekey={c.CAPTCHA_KEY}
+                                    /> : ''}
                                     <Button className="boton-submit" variant="primary" type="submit">
                                         Iniciar sesión
                                     </Button>

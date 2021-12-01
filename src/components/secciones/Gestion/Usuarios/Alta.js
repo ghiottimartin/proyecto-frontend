@@ -1,10 +1,10 @@
 import React from 'react';
-import {withRouter, useLocation} from 'react-router-dom'
-import {connect} from 'react-redux';
+import { withRouter, useLocation } from 'react-router-dom'
+import { connect } from 'react-redux';
 
 //Actions
-import {resetPassword} from "../../../../actions/AuthenticationActions";
-import {createUsuario, saveCreateUsuario, resetCreateUsuario} from "../../../../actions/UsuarioActions";
+import { resetPassword } from "../../../../actions/AuthenticationActions";
+import { createUsuario, saveCreateUsuario, resetCreateUsuario } from "../../../../actions/UsuarioActions";
 
 //Constants
 import * as rutas from '../../../../constants/rutas.js';
@@ -26,6 +26,7 @@ import blackEye from "../../../../assets/img/eye.png";
 import whiteEye from "../../../../assets/img/view.png";
 
 //Librerias
+import $ from 'jquery';
 import history from "../../../../history";
 import Swal from 'sweetalert2';
 import ReCAPTCHA from "react-google-recaptcha";
@@ -46,8 +47,8 @@ class Alta extends React.Component {
 
     componentDidMount() {
         this.props.resetCreateUsuario();
-        const volverA    = rutas.getQuery('volverA');
-        const valido     = rutas.validarRuta(volverA);
+        const volverA = rutas.getQuery('volverA');
+        const valido = rutas.validarRuta(volverA);
         let botonVolverA = "";
         if (valido) {
             botonVolverA =
@@ -56,19 +57,24 @@ class Alta extends React.Component {
                 </button>;
         }
         this.setState({ botonVolverA: botonVolverA, volverAValido: valido });
-        
-        let tipoRuta  = this.props.match.params['tipo'];
+
+        let tipoRuta = this.props.match.params['tipo'];
         let tipoAdmin = tipoRuta === rutas.TIPO_ADMIN;
         if (tipoAdmin && this.state.captcha === false) {
             this.onChangeCaptcha(true);
         }
+
+        let responsive = $(window).width() <= 849;
+        if (responsive) {
+            this.setState({ captcha: true })
+        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        let tipoRuta  = this.props.match.params['tipo'];
-        let logueado  = this.props.usuarios.update.logueado;
+        let tipoRuta = this.props.match.params['tipo'];
+        let logueado = this.props.usuarios.update.logueado;
         let tipoAdmin = tipoRuta === rutas.TIPO_ADMIN;
-        if ((!tipoAdmin && this.props.authentication.token) || (tipoAdmin && logueado && logueado.id && (!logueado.esAdmin && !logueado.esVendedor)) ) {
+        if ((!tipoAdmin && this.props.authentication.token) || (tipoAdmin && logueado && logueado.id && (!logueado.esAdmin && !logueado.esVendedor))) {
             history.push(rutas.INICIO);
         }
         if (prevState.imgPassword !== this.state.imgPassword && this.state.imgPassword === blackEye) {
@@ -100,10 +106,10 @@ class Alta extends React.Component {
     }
 
     onChangeUsuario(e) {
-        var cambio          = {};
-        var mensaje         = "";
+        var cambio = {};
+        var mensaje = "";
         cambio[e.target.id] = e.target.value;
-        let tipoRuta  = this.props.match.params['tipo'];
+        let tipoRuta = this.props.match.params['tipo'];
         let tipoAdmin = tipoRuta === rutas.TIPO_ADMIN;
         let logueado = this.props.usuarios.create.nuevo;
         if (logueado.tipoRegistro === undefined || logueado.tipoRegistro === "") {
@@ -121,8 +127,8 @@ class Alta extends React.Component {
     }
 
     onChangeRolUsuario(nombre) {
-        var valor   = true;
-        var cambio  = {};
+        var valor = true;
+        var cambio = {};
         var usuario = this.props.usuarios.create.nuevo;
         switch (nombre) {
             case 'esComensal':
@@ -146,14 +152,14 @@ class Alta extends React.Component {
     }
 
     validarUsuario() {
-        let valido   = true;
+        let valido = true;
         let mensajes = [];
 
-        let tipo       = this.props.match.params['tipo'];
-        let tipoAdmin  = tipo === rutas.TIPO_ADMIN;
-        let usuario    = this.props.usuarios.create.nuevo;
-        let esMozo     = usuario.esMozo;
-        let esAdmin    = usuario.esAdmin;
+        let tipo = this.props.match.params['tipo'];
+        let tipoAdmin = tipo === rutas.TIPO_ADMIN;
+        let usuario = this.props.usuarios.create.nuevo;
+        let esMozo = usuario.esMozo;
+        let esAdmin = usuario.esAdmin;
         let esVendedor = usuario.esVendedor;
         let esComensal = usuario.esComensal;
         if (!esMozo && !esAdmin && !esVendedor && !esComensal && tipoAdmin) {
@@ -204,9 +210,9 @@ class Alta extends React.Component {
             return;
         }
 
-        let tipoRuta   = this.props.match.params['tipo'];
-        let tipoAdmin  = tipoRuta === rutas.TIPO_ADMIN;
-        let valido     = this.validarUsuario();
+        let tipoRuta = this.props.match.params['tipo'];
+        let tipoAdmin = tipoRuta === rutas.TIPO_ADMIN;
+        let valido = this.validarUsuario();
         let linkVolver = rutas.getQuery('volverA');
         if (!valido) {
             return;
@@ -226,13 +232,13 @@ class Alta extends React.Component {
     }
 
     render() {
-        const {imgPassword, tipo, botonVolverA, volverAValido} = this.state;
-        const tipoRuta  = this.props.match.params['tipo'];
-        const usuario   = this.props.usuarios.create.nuevo;
+        const { imgPassword, tipo, botonVolverA, volverAValido } = this.state;
+        const tipoRuta = this.props.match.params['tipo'];
+        const usuario = this.props.usuarios.create.nuevo;
         const tipoAdmin = tipoRuta === rutas.TIPO_ADMIN;
         const Ojo = () => {
-            return(
-                <img onClick={(e) => this.onClickEye()} src={imgPassword} className="ver-password" alt="Mostrar/ocultar contraseña"/>
+            return (
+                <img onClick={(e) => this.onClickEye()} src={imgPassword} className="ver-password" alt="Mostrar/ocultar contraseña" />
             );
         };
         var titulo = tipoAdmin ? "Alta de usuario" : "Registro";
@@ -241,15 +247,18 @@ class Alta extends React.Component {
         if (!tipoAdmin) {
             captchaHTML =
                 <ReCAPTCHA
+                    className="login-captcha"
                     sitekey={c.CAPTCHA_KEY}
                     onChange={(valor) => this.onChangeCaptcha(valor)}
                 />;
         }
+
+        let responsive = $(window).width() <= 849;
         return (
             <div className="registro">
                 <div className="registro-contenedor">
-                    <Form className="tarjeta-body" onSubmit={(e) => {this.submitForm(e)}}>
-                        <h4>{}</h4>
+                    <Form className="tarjeta-body" onSubmit={(e) => { this.submitForm(e) }}>
+                        <h4>{ }</h4>
                         <Titulo ruta={ruta} titulo={titulo} />
                         <Form.Group>
                             <Form.Label>Nombre</Form.Label>
@@ -271,7 +280,7 @@ class Alta extends React.Component {
                                 required={true}
                             />
                         </Form.Group>
-                        { !tipoAdmin ?
+                        {!tipoAdmin ?
                             <div className="claves">
                                 <Form.Group>
                                     <Form.Label>Contraseña</Form.Label>
@@ -328,7 +337,7 @@ class Alta extends React.Component {
                                         <input
                                             className="form-check-input" type="checkbox" id="esMozo"
                                             checked={usuario && usuario.esMozo ? usuario.esMozo : false}
-                                            onChange={() => {}}
+                                            onChange={() => { }}
                                         />
                                         <label className="form-check-label" htmlFor="inlineCheckbox2">Mozo</label>
                                     </div>
@@ -336,7 +345,7 @@ class Alta extends React.Component {
                                         <input
                                             className="form-check-input" type="checkbox" id="esVendedor"
                                             checked={usuario && usuario.esVendedor ? usuario.esVendedor : false}
-                                            onChange={() => {}}
+                                            onChange={() => { }}
                                         />
                                         <label className="form-check-label" htmlFor="inlineCheckbox3">Vendedor</label>
                                     </div>
@@ -344,7 +353,7 @@ class Alta extends React.Component {
                                         <input
                                             className="form-check-input" type="checkbox" id="esComensal"
                                             checked={usuario && usuario.esComensal ? usuario.esComensal : false}
-                                            onChange={() => {}}
+                                            onChange={() => { }}
 
                                         />
                                         <label className="form-check-label" htmlFor="inlineCheckbox3">Comensal</label>
@@ -354,12 +363,15 @@ class Alta extends React.Component {
                         }
                         {
                             this.props.usuarios.create.isCreating ?
-                                <Loader display={true}/>
+                                <Loader display={true} />
                                 :
                                 <div className="d-flex flex-column align-items-center">
-                                    <div>
-                                        {captchaHTML}
-                                    </div>
+                                    {!responsive ?
+                                        <div>
+                                            {captchaHTML}
+                                        </div>
+                                        : ''
+                                    }
                                     <div className="d-flex justify-content-between w-100">
                                         <Button className="boton-submit" variant="primary" type="submit" >
                                             {!tipoAdmin ? "Registrarse" : "Guardar"}
