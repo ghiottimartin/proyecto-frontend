@@ -168,78 +168,78 @@ class Navegador extends React.Component {
             )
         };
 
-        const OpcionesMenu = (props) => (
-            <>
-                <ItemMenu
-                    mostrar={props.mostrar}
-                    grow={true}
-                    texto={"Pedido"}
-                    ruta={rutas.ALTA_PEDIDO}
-                />
-                <ItemMenu
-                    mostrar={false}
-                    grow={true}
-                    texto={"Menu"}
-                    ruta={rutas.MENU}
-                />
-                <ItemMenu
-                    mostrar={props.mostrar && props.logueado}
-                    grow={true}
-                    texto={"Mis pedidos"}
-                    admin={true}
-                    ruta={rutas.PEDIDOS_COMENSAL}
-                />
-                <ItemMenu
-                    mostrar={props.mostrar && props.logueado && props.gestionHabilitada}
-                    grow={true}
-                    texto={"Gestión"}
-                    admin={true}
-                    ruta={rutas.GESTION}
-                />
-            </>
-        );
+        const OpcionesMenu = (props) => {
+            return(
+                <>
+                    <ItemMenu
+                        mostrar={props.mostrar}
+                        grow={true}
+                        texto={"Pedido"}
+                        ruta={rutas.ALTA_PEDIDO}
+                    />
+                    <ItemMenu
+                        mostrar={props.mostrar && props.logueado}
+                        grow={true}
+                        texto={"Mis pedidos"}
+                        admin={true}
+                        ruta={rutas.PEDIDOS_COMENSAL}
+                    />
+                    <ItemMenu
+                        mostrar={props.mostrar && props.logueado && props.gestionHabilitada}
+                        grow={true}
+                        texto={"Gestión"}
+                        admin={true}
+                        ruta={rutas.GESTION}
+                    />
+                </>
+            )
+        };
 
-        const NoLogueado = props => (
-            <>
-                <ItemMenu
-                    mostrar={props.mostrar}
-                    grow={true}
-                    texto={"Login"}
-                    ruta={rutas.LOGIN}
-                />
-                <ItemMenu
-                    mostrar={props.mostrar}
-                    grow={false}
-                    texto={"Registro"}
-                    ruta={rutas.USUARIOS_ALTA_COMUN}
-                />
-            </>
-        );
-        const Logueado = props => (
-            <>
-                <ItemMenu
-                    mostrar={props.mostrar && props.nombre}
-                    grow={false}
-                    texto={nombre !== "" ? "Hola " + nombre + "!" : ""}
-                    ruta={""}
-                    tipo={"boton"}
-                />
-                <OpcionesMenu mostrar={props.mostrar && props.responsive} gestionHabilitada={gestionHabilitada} />
-                <ItemMenu
-                    mostrar={props.mostrar}
-                    grow={true}
-                    texto={"Mi perfil"}
-                    ruta={rutas.USUARIOS_EDITAR_COMUN}
-                />
-                <ItemMenu
-                    mostrar={props.mostrar}
-                    grow={true}
-                    texto={"Salir"}
-                    logout={true}
-                    ruta={rutas.LOGOUT}
-                />
-            </>
-        );
+        const NoLogueado = props => {
+            return(
+                <>
+                    <ItemMenu
+                        mostrar={props.mostrar}
+                        grow={true}
+                        texto={"Login"}
+                        ruta={rutas.LOGIN}
+                    />
+                    <ItemMenu
+                        mostrar={props.mostrar}
+                        grow={false}
+                        texto={"Registro"}
+                        ruta={rutas.USUARIOS_ALTA_COMUN}
+                    />
+                </>
+            )
+        }
+        const Logueado = props => {
+            return(
+                <>
+                    <ItemMenu
+                        mostrar={props.mostrar && props.nombre}
+                        grow={false}
+                        texto={nombre !== "" ? "Hola " + nombre + "!" : ""}
+                        ruta={""}
+                        tipo={"boton"}
+                    />
+                    <OpcionesMenu logueado={props.logueado} mostrar={props.mostrar} responsive={props.responsive} gestionHabilitada={gestionHabilitada} />
+                    <ItemMenu
+                        mostrar={props.mostrar}
+                        grow={true}
+                        texto={"Mi perfil"}
+                        ruta={rutas.USUARIOS_EDITAR_COMUN}
+                    />
+                    <ItemMenu
+                        mostrar={props.mostrar}
+                        grow={true}
+                        texto={"Salir"}
+                        logout={true}
+                        ruta={rutas.LOGOUT}
+                    />
+                </>
+            )
+        };
 
         let responsive = $(window).width() <= 849;
 
@@ -267,7 +267,7 @@ class Navegador extends React.Component {
                         </div>
                         <div className={collapse ? "menu-responsive-collapse colapse" : "menu-responsive-collapse"} style={{ right: collapse ? "-1px" : "-300px" }}>
                             <NoLogueado mostrar={!logueado} />
-                            <Logueado mostrar={logueado} responsive={responsive} nombre={false} />
+                            <Logueado mostrar={logueado} logueado={logueado} responsive={responsive} nombre={false} />
                         </div>
                     </div>
                     : ""}
