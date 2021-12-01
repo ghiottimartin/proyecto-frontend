@@ -68,7 +68,7 @@ class Alta extends React.Component {
         let tipoRuta  = this.props.match.params['tipo'];
         let logueado  = this.props.usuarios.update.logueado;
         let tipoAdmin = tipoRuta === rutas.TIPO_ADMIN;
-        if ((!tipoAdmin && this.props.authentication.token) || (tipoAdmin && logueado && logueado.id && !logueado.esAdmin) ) {
+        if ((!tipoAdmin && this.props.authentication.token) || (tipoAdmin && logueado && logueado.id && (!logueado.esAdmin && !logueado.esVendedor)) ) {
             history.push(rutas.INICIO);
         }
         if (prevState.imgPassword !== this.state.imgPassword && this.state.imgPassword === blackEye) {
