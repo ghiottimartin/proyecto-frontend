@@ -98,7 +98,7 @@ function Turno(props) {
         </button>
     )
 
-    if (idVenta !== null) {
+    if (false) {
         Operaciones.push(
             <button key={turno.id + "-venta"} onClick={() => verVenta(turno)} style={{ backgroundColor: colores.COLOR_SUCCESS }}>
                 Venta
