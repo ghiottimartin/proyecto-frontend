@@ -16,8 +16,8 @@ import productoVacio from "../../../../../assets/img/emptyImg.jpg";
 
 function Orden(props) {
     const cantidad = parseInt(props.cantidad)
-    const entregado = parseInt(props.entregado)
-    const entregar = entregado
+    const entregadoString = props.entregado
+    const entregado = !isNaN(entregadoString) ? parseInt(entregadoString) : 0
     const producto = props.producto
     let path = productoVacio;
     if (producto.imagen) {
@@ -65,7 +65,7 @@ function Orden(props) {
                 </div>
                 <div className="align-self-end">
                     <i class="fas fa-concierge-bell"></i>
-                    <span className="ml-2">{entregado}/{cantidad}</span>
+                    <span className="ml-2">{entregadoString != '' ? entregadoString : 0}/{cantidad}</span>
                 </div>
             </div>
             <div className="input-group">
@@ -73,7 +73,7 @@ function Orden(props) {
                     id="cantidad"
                     type="number"
                     className="text-right"
-                    value={!isNaN(entregar) ? entregar : ""}
+                    value={entregadoString}
                     step="1"
                     onChange={(e) => onChangeOrden(e)} />
                 <div className="input-group-append">

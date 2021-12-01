@@ -146,7 +146,7 @@ function Ordenes(props) {
         Ordenes = turno.ordenes.map(orden => {
             const producto = orden.producto
             const cantidad = orden.cantidad ? orden.cantidad : ''
-            const entregado = orden.entregado ? orden.entregado : 0
+            const entregado = orden.entregado
             const clave = orden.id ? orden.id : producto.id
             return (
                 <Orden

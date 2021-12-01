@@ -1,4 +1,4 @@
-import {combineReducers} from 'redux'
+import { combineReducers } from 'redux'
 import merge from "lodash/merge"
 import moment from 'moment'
 
@@ -94,11 +94,6 @@ function turnosAllIds(state = [], action) {
     }
 }
 
-const defecto = {
-    mozo: '',
-    ordenes: [],
-}
-
 function create(state = {
     isCreating: false,
     nuevo: {},
@@ -119,7 +114,7 @@ function create(state = {
                 isCreating: false,
                 success: "",
                 error: null,
-                nuevo:  {},
+                nuevo: {},
             });
         case REQUEST_CREATE_TURNO:
             return Object.assign({}, state, {
@@ -149,7 +144,10 @@ function create(state = {
 function update(state = {
     isUpdating: false,
     isDownloading: false,
-    activo: defecto,
+    activo: {
+        mozo: '',
+        ordenes: [],
+    },
     success: "",
     error: null
 }, action) {
@@ -164,7 +162,10 @@ function update(state = {
         case RESET_UPDATE_TURNO:
             return Object.assign({}, state, {
                 isUpdating: false,
-                activo: defecto,
+                activo: {
+                    mozo: '',
+                    ordenes: [],
+                },
                 success: "",
                 error: null,
             })
@@ -250,7 +251,7 @@ function update(state = {
 
 const turnos = combineReducers({
     allIds: turnosAllIds,
-    byId:   turnosById,
+    byId: turnosById,
     update: update,
     create: create,
 })

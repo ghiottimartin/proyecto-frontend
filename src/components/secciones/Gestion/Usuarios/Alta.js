@@ -34,10 +34,10 @@ class Alta extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            tipo: 'password',
             captcha: false,
-            tipo:          'password',
-            imgPassword:   blackEye,
-            botonVolverA:  '',
+            imgPassword: blackEye,
+            botonVolverA: '',
             volverAValido: false
         };
 
