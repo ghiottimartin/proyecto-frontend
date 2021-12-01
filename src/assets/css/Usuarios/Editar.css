@@ -1,7 +1,13 @@
-.datos-usuario form {
-    width: 400px;
-}
-
 .datos-usuario .botones {
     display: flex;
+}
+
+.datos-usuario .tarjeta-body {
+    width: 310px;
+}
+
+@media (min-width: 500px) {
+    .datos-usuario .tarjeta-body {
+        width: 400px;
+    }
 }
