@@ -151,10 +151,10 @@ export function resetCerrarPedido() {
     }
 }
 
-export function saveCerrarPedido(id, cambio) {
+export function saveCerrarPedido(id, campos) {
     return (dispatch, getState) => {
         dispatch(requestCerrarPedido());
-        return pedidos.cerrarPedido(id, cambio)
+        return pedidos.cerrarPedido(id, campos)
             .then(function (response) {
                 if (response.status >= 400) {
                     return Promise.reject(response);
@@ -554,6 +554,7 @@ export function saveDeletePedido(id) {
 
 //PEDIDO UPDATE
 export const UPDATE_PEDIDO = 'UPDATE_PEDIDO';
+export const UPDATE_PEDIDO_ABIERTO = 'UPDATE_PEDIDO_ABIERTO';
 export const RESET_UPDATE_PEDIDO = 'RESET_UPDATE_PEDIDO';
 
 export function updatePedido(pedido) {
@@ -563,9 +564,16 @@ export function updatePedido(pedido) {
     }
 }
 
-export function resetUpdatePedido(pedido) {
+export function resetUpdatePedido() {
     return {
         type: RESET_UPDATE_PEDIDO,
+    }
+}
+
+export function updatePedidoAbierto(pedido) {
+    return {
+        type: UPDATE_PEDIDO_ABIERTO,
+        pedido: pedido
     }
 }
 

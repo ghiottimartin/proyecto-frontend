@@ -28,7 +28,7 @@ function Turno(props) {
     const getHtmlProductos = () => {
         const ordenes = turno.ordenes
         if (ordenes.length === 0) {
-            return `<div class="alert alert-warning" role="alert">No hay productos cargados.</div>`
+            return `<div className="alert alert-warning" role="alert">No hay productos cargados.</div>`
         }
 
         const Productos = ordenes.map(orden => {
@@ -38,12 +38,12 @@ function Turno(props) {
             const precio = producto.precio_texto
             const total = orden.total_texto
             let html = `
-            <div class="list-group-item list-group-item-action">
-                <div class="d-flex w-100 justify-content-between">
-                    <h5 class="mb-1" style="font-size: 14px;">${nombre}</h5>
-                    <small class="badge badge-primary badge-pill" style="height: fit-content;">${cantidad}</small>
+            <div className="list-group-item list-group-item-action">
+                <div className="d-flex w-100 justify-content-between">
+                    <h5 className="mb-1" style="font-size: 14px;">${nombre}</h5>
+                    <small className="badge badge-primary badge-pill" style="height: fit-content;">${cantidad}</small>
                 </div>
-                <p class="mb-1 mt-2" style="font-size: 12px;">${cantidad} x ${precio}</p>
+                <p className="mb-1 mt-2" style="font-size: 12px;">${cantidad} x ${precio}</p>
                 <small style="font-size: 13px;">${total}</small>
             </div>
             `
@@ -51,11 +51,11 @@ function Turno(props) {
         })
 
         let html = `
-            <div class="list-group" style="height: 230px;overflow-y: auto;">
+            <div className="list-group" style="height: 230px;overflow-y: auto;">
                 ${Productos.join('')}
-                <div class="list-group-item list-group-item-action">
-                    <div class="d-flex w-100 justify-content-between">
-                        <h5 class="mb-1" style="font-size: 14px;">Total</h5>
+                <div className="list-group-item list-group-item-action">
+                    <div className="d-flex w-100 justify-content-between">
+                        <h5 className="mb-1" style="font-size: 14px;">Total</h5>
                         <small style="font-size: 13px;">${turno.total_texto}</small>
                     </div>
                 </div>

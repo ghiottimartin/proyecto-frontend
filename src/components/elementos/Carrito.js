@@ -6,23 +6,15 @@ import $ from 'jquery';
 //Api
 import auth from "../../api/authentication";
 
-//Actions
-import { saveCerrarPedido, updatePedido } from "../../actions/PedidoActions";
-
 //Components
 import ItemCarrito from "./CarritoItem";
+import CerrarPedido from "./Modales/CerrarPedido";
 
 //CSS
 import '../../assets/css/Carrito.css';
 
-//Libraries
-import Swal from "sweetalert2";
-
 //Images
 import imgVolver from "../../assets/img/arrow.png";
-
-//Utils
-import { formatearMoneda } from "../../utils/formateador"
 
 class Carrito extends React.Component {
     constructor(props) {
@@ -32,6 +24,7 @@ class Carrito extends React.Component {
             lineas: [],
             buscando: false,
             cambio: '',
+            showCerradoPedido: false,
         }
 
         this.carrito = React.createRef();
@@ -94,35 +87,12 @@ class Carrito extends React.Component {
             return;
         }
 
-        const total = formatearMoneda(abierto.total)
-        Swal.fire({
-            title: `Confirmar pedido`,
-            text: 'Indique el cambio del mismo',
-            icon: 'question',
-            showCloseButton: true,
-            showCancelButton: true,
-            focusConfirm: true,
-            confirmButtonText: 'Confirmar',
-            cancelButtonText: 'Cancelar',
-            confirmButtonColor: 'rgb(88, 219, 131)',
-            cancelButtonColor: '#bfbfbf',
-            input: 'number',
-            inputLabel: `Recuerda que el valor del pedido es de ${total}`,
-            inputPlaceholder: 'Cambio',
-            inputAttributes: {
-                min: 0,
-            },
-            onOpen: () => {
-                const input = Swal.getInput()
-                input.oninput = (elemento) => {
-                    this.setState({ cambio: elemento.target.value })
-                }
-            }
-        }).then((result) => {
-                if (result.isConfirmed) {
-                    this.props.saveCerrarPedido(abierto.id, this.state.cambio);
-                }
-            });
+        this.setState({ showCerradoPedido: true })
+
+    }
+
+    onHide() {
+        this.setState({ showCerradoPedido: false })
     }
 
     handleClickOutside(event) {
@@ -139,6 +109,7 @@ class Carrito extends React.Component {
 
     render() {
         const { mostrar, blur } = this.props;
+        const { showCerradoPedido } = this.state;
 
         let claseBlur = blur ? "forzar-blur" : "";
         let compras = this.getLineasCarrito();
@@ -150,6 +121,10 @@ class Carrito extends React.Component {
         }
         return (
             <nav ref={this.carrito} className={`carrito ${claseBlur}`} style={{ right: !mostrar ? "-300px" : "0" }}>
+                <CerrarPedido
+                    show={showCerradoPedido}
+                    onHide={() => this.onHide()}
+                />
                 <img className="volverA" src={imgVolver} alt="Icono volver" onClick={() => this.props.changeMostrar()} />
                 <div className="carrito-botones">
                     <button className="entregar bg-success" disabled={deshabilitar} onClick={() => this.entregarPedido(deshabilitar)}>
@@ -177,12 +152,7 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        saveCerrarPedido: (id, cambio) => {
-            dispatch(saveCerrarPedido(id, cambio))
-        },
-        updatePedido: (pedido) => {
-            dispatch(updatePedido(pedido))
-        }
+        
     }
 };
 

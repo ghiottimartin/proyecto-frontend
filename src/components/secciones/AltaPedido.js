@@ -3,7 +3,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
 //Actions
-import { resetPedidoAbierto, fetchPedidoAbierto } from "../../actions/PedidoActions";
+import { resetPedidoAbierto, fetchPedidoAbierto, updatePedidoAbierto } from "../../actions/PedidoActions";
 import { resetProductos, fetchProductos } from "../../actions/ProductoActions";
 
 //Components
@@ -23,6 +23,10 @@ class AltaPedido extends React.Component {
         this.props.fetchPedidoAbierto();
         this.props.resetProductos();
         this.props.fetchProductos(false);
+
+        this.props.updatePedidoAbierto({
+            tipo: 'retiro'
+        })
     }
 
     componentWillUnmount() {
@@ -93,6 +97,9 @@ const mapDispatchToProps = (dispatch) => {
         resetProductos: () => {
             dispatch(resetProductos())
         },
+        updatePedidoAbierto: (pedido) => {
+            dispatch(updatePedidoAbierto(pedido))
+        }
     }
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(AltaPedido));

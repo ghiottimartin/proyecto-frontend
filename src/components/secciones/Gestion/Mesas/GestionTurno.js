@@ -459,7 +459,7 @@ function GestionTurno(props) {
                         </div>
                         <button onClick={() => entregar()} className="btn btn-transparent text-primary font-weight-bold float-right boton-guardar" >
                             <span className="ml-1">Entregar</span>
-                            <i class="fas fa-concierge-bell ml-2"></i>
+                            <i className="fas fa-concierge-bell ml-2"></i>
                         </button>
                     </div>
                     <Loader display={loader} />

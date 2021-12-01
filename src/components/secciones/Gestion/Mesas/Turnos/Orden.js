@@ -64,7 +64,7 @@ function Orden(props) {
                     <img src={path} onError={(e) => e.target.src = productoVacio} alt="Imagen de producto" />
                 </div>
                 <div className="align-self-end">
-                    <i class="fas fa-concierge-bell"></i>
+                    <i className="fas fa-concierge-bell"></i>
                     <span className="ml-2">{entregadoString != '' ? entregadoString : 0}/{cantidad}</span>
                 </div>
             </div>

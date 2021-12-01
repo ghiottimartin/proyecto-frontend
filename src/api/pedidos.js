@@ -66,7 +66,14 @@ var pedidos = {
         return fetch(c.BASE_URL + '/gastronomia/pedido/' + id, defaultOptions);
     },
 
-    cerrarPedido(idPedido, cambio) {
+    cerrarPedido(idPedido, campos) {
+        var esc = encodeURIComponent;
+        var query = "?";
+        if (campos)
+            query += Object.keys(campos)
+                .map(k => esc(k) + '=' + esc(campos[k]))
+                .join('&');
+
         let defaultOptions = {
             method: 'PUT',
             headers: {
@@ -75,7 +82,7 @@ var pedidos = {
             },
         };
 
-        return fetch(c.BASE_URL + '/gastronomia/pedido/' + idPedido + "/?cambio=" + cambio, defaultOptions);
+        return fetch(c.BASE_URL + '/gastronomia/pedido/' + idPedido + "/" + query, defaultOptions);
     },
 
     getPedido(id) {

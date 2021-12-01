@@ -52,7 +52,8 @@ import {
     REQUEST_COMANDA_PEDIDO,
     RECEIVE_COMANDA_PEDIDO,
     ERROR_COMANDA_PEDIDO,
-    RESET_UPDATE_PEDIDO
+    RESET_UPDATE_PEDIDO,
+    UPDATE_PEDIDO_ABIERTO
 
 } from '../actions/PedidoActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions";
@@ -83,6 +84,9 @@ function pedidosById(state = {
         forzar: false,
         lineas: [],
         lineasIds: [],
+        tipo: 'retiro',
+        cambio: '',
+        direccion: ''
     },
     filtros: filtrosIniciales,
     error: null,
@@ -92,6 +96,13 @@ function pedidosById(state = {
     registros: 0,
 }, action) {
     switch (action.type) {
+        case UPDATE_PEDIDO_ABIERTO:
+            return Object.assign({}, state, {
+                isFetchingPedido: false,
+                abierto: merge({}, state.abierto, action.pedido),
+                success: "",
+                error: null,
+            });
         case RECEIVE_ANULAR_PEDIDO:
             let pedidoAbierto = state.abierto;
             if (action.idAnulado === state.abierto.id) {
@@ -100,6 +111,9 @@ function pedidosById(state = {
                     forzar: false,
                     lineas: [],
                     lineasIds: [],
+                    tipo: 'retiro',
+                    cambio: '',
+                    direccio: ''
                 };
             }
             return Object.assign({}, state, {
@@ -202,6 +216,9 @@ function pedidosById(state = {
             var ids = [];
             abierto.lineas.forEach(linea => ids.push(linea.id));
             abierto.lineasIds = ids;
+            abierto.cambio = ''
+            abierto.tipo = 'retiro'
+            abierto.direccion = ''
             return Object.assign(state, {
                 isFetchingPedido: false,
                 didInvalidatePedido: false,
@@ -216,6 +233,10 @@ function pedidosById(state = {
                     forzar: false,
                     lineas: [],
                     lineasIds: [],
+                    tipo: 'retiro',
+                    cambio: '',
+                    direccio: ''
+
                 },
                 error: null
             });
@@ -236,6 +257,9 @@ function pedidosById(state = {
                     forzar: false,
                     lineas: [],
                     lineasIds: [],
+                    tipo: 'retiro',
+                    cambio: '',
+                    direccio: ''
                 },
             });
         case RECEIVE_DELETE_PEDIDO:

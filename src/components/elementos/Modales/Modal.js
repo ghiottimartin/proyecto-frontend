@@ -2,9 +2,10 @@ import { useState } from "react"
 import { Modal } from "react-bootstrap";
 
 function ModalBoostrap(props) {
+    const clase = props.className ? props.className : ""
     return (
         <Modal
-            className="no-cerrar-carrito"
+            className={"no-cerrar-carrito " + clase}
             show={props.show}
             onHide={() => props.onHide()}
             dialogClassName="modal-80w"

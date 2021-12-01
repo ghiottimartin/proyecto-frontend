@@ -176,7 +176,7 @@ function Listado(props) {
                 <Titulo ruta={volverA} titulo={titulo} />
                 <div className="producto-stock">
                     Stock:
-                    <span class="badge badge-success">{producto.stock}</span>
+                    <span className="badge badge-success">{producto.stock}</span>
                 </div>
             </div>
             <Filtros

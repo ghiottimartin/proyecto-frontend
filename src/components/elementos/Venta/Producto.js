@@ -27,7 +27,7 @@ function Producto(props) {
     return (
         <article key={producto.id} className="producto no-cerrar-carrito  position-relative">
             <span className="producto-entregas mt-2" style={{display: !isNaN(entregas) ? "block" : "none"}}>
-                <i class="fas fa-concierge-bell mr-2"></i>
+                <i className="fas fa-concierge-bell mr-2"></i>
                 {entregas}/ {cantidad}
             </span>
             <span style={{display: mostrarStock ? "block" : "none"}} className="producto-stock badge badge-primary badge-pill float-right" title={`Stock del producto ${producto.nombre}`}>
