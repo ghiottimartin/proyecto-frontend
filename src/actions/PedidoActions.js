@@ -554,11 +554,18 @@ export function saveDeletePedido(id) {
 
 //PEDIDO UPDATE
 export const UPDATE_PEDIDO = 'UPDATE_PEDIDO';
+export const RESET_UPDATE_PEDIDO = 'RESET_UPDATE_PEDIDO';
 
 export function updatePedido(pedido) {
     return {
         type: UPDATE_PEDIDO,
         pedido
+    }
+}
+
+export function resetUpdatePedido(pedido) {
+    return {
+        type: RESET_UPDATE_PEDIDO,
     }
 }
 

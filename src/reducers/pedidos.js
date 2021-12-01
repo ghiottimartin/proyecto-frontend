@@ -51,7 +51,8 @@ import {
     ERROR_PEDIDO_DISPONIBLE,
     REQUEST_COMANDA_PEDIDO,
     RECEIVE_COMANDA_PEDIDO,
-    ERROR_COMANDA_PEDIDO
+    ERROR_COMANDA_PEDIDO,
+    RESET_UPDATE_PEDIDO
 
 } from '../actions/PedidoActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions";
@@ -423,6 +424,13 @@ function update(state = {
             return Object.assign({}, state, {
                 isUpdating: false,
                 activo: merge({}, state.activo, action.pedido),
+                success: "",
+                error: null,
+            });
+        case RESET_UPDATE_PEDIDO:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                activo: {},
                 success: "",
                 error: null,
             });

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
 //Actions
-import {fetchPedidoById} from "../../../actions/PedidoActions";
+import {fetchPedidoById, resetUpdatePedido } from "../../../actions/PedidoActions";
 
 //Components
 import Titulo from "../../elementos/Titulo";
@@ -26,6 +26,10 @@ class Visualizar extends React.Component {
         if (this.props.pedidos.update.activo && !this.props.pedidos.update.activo.id) {
             this.props.fetchPedidoById(this.props.match.params.id);
         }
+    }
+
+    componentWillUnmount() {
+        this.props.resetUpdatePedido();
     }
 
     getVisualizarHtml(pedido, mostrarUsuarios) {
@@ -125,6 +129,9 @@ const mapDispatchToProps = (dispatch) => {
     return {
         fetchPedidoById: (id) => {
             dispatch(fetchPedidoById(id))
+        },
+        resetUpdatePedido: () => {
+            dispatch(resetUpdatePedido())
         }
     }
 };
