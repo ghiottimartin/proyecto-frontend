@@ -32,6 +32,8 @@ function Visualizar(props) {
                 <tr key={linea.id}>
                     <td>{linea.producto.nombre}</td>
                     <td className="text-right">{linea.stock_anterior}</td>
+                    <td className="text-right">{linea.cantidad_ingreso}</td>
+                    <td className="text-right">{linea.cantidad_egreso}</td>
                     <td className="text-right">{linea.stock_nuevo}</td>
                 </tr>
             );
@@ -57,6 +59,8 @@ function Visualizar(props) {
                         <tr>
                             <th>Producto</th>
                             <th className="text-right">Stock anterior</th>
+                            <th className="text-right">Cantidad ingreso</th>
+                            <th className="text-right">Cantidad egreso</th>
                             <th className="text-right">Stock nuevo</th>
                         </tr>
                     </thead>

@@ -272,7 +272,7 @@ function Alta(props) {
                     <td>{stock_anterior}</td>
                     <td>
                         <div className="input-group">
-                            <input id="cantidad_egreso" type="number" className="text-right" data-id={producto.id} value={cantidad_egreso} step="1" onChange={(e) => onChangeLineaReemplazo(e)} />
+                            <input id="cantidad_ingreso" type="number" className="text-right" data-id={producto.id} value={cantidad_ingreso} step="1" onChange={(e) => onChangeLineaReemplazo(e)} />
                             <div className="input-group-append">
                                 <span className="input-group-text">u</span>
                             </div>
@@ -280,7 +280,7 @@ function Alta(props) {
                     </td>
                     <td>
                         <div className="input-group">
-                            <input id="cantidad_ingreso" type="number" className="text-right" data-id={producto.id} value={cantidad_ingreso} step="1" onChange={(e) => onChangeLineaReemplazo(e)} />
+                            <input id="cantidad_egreso" type="number" className="text-right" data-id={producto.id} value={cantidad_egreso} step="1" onChange={(e) => onChangeLineaReemplazo(e)} />
                             <div className="input-group-append">
                                 <span className="input-group-text">u</span>
                             </div>
@@ -335,8 +335,8 @@ function Alta(props) {
                                 <th className="tabla-columna-quitar"></th>
                                 <th className="tabla-columna-descripcion">Descripción</th>
                                 <th className="tabla-columna-stock-anterior">Stock actual</th>
-                                <th className="tabla-columna-stock-anterior">Cantidad egreso</th>
                                 <th className="tabla-columna-stock-anterior">Cantidad ingreso</th>
+                                <th className="tabla-columna-stock-anterior">Cantidad egreso</th>
                                 <th className="tabla-columna-stock-nuevo">Stock nuevo</th>
                             </tr>
                         </thead>
