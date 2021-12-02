@@ -143,7 +143,13 @@ function Alta(props) {
     const opciones = getOpcionesProductos()
     opciones.forEach(producto => {
         const title = "Agregar " + producto.nombre
-        Opciones.push(<li key={producto.id} title={title} onClick={() => addLineaReemplazo(producto)}>{producto.nombre}</li>)
+        Opciones.push(
+            <li key={producto.id} title={title} onClick={() => addLineaReemplazo(producto)}>
+                {producto.nombre}
+                <span className="badge badge-primary badge-pill float-right" title={`Stock del producto ${producto.nombre}`}>
+                    {producto.stock}
+                </span>
+            </li>)
     })
 
     /**
@@ -250,7 +256,7 @@ function Alta(props) {
         const stock_nuevo = stock + cantidad_ingreso - cantidad_egreso
         actualizada['stock_nuevo'] = !isNaN(stock_nuevo) ? parseFloat(stock_nuevo) : 0
         cambiado.lineas[indice] = actualizada
-        props.createReemplazo(cambiado)        
+        props.createReemplazo(cambiado)
     }
 
     let Filas = []
