@@ -462,7 +462,7 @@ class Listado extends React.Component {
             }
             Pedidos =
                 <tr className="text-center">
-                    <td colSpan={rolVendedor ? 8 : 6}>{placeholder}</td>
+                    <td colSpan={rolVendedor ? 9 : 7}>{placeholder}</td>
                 </tr>;
         }
 
@@ -479,12 +479,13 @@ class Listado extends React.Component {
                             <br />
                             <span className="texto-chico">{pedido.usuario_email}</span>
                         </td>
-                        <td style={{ display: rolVendedor ? "table-cell" : "none" }}>
-                            {pedido.observaciones}
-                        </td>
+                        <td>{pedido.tipo_texto}</td>
                         <td className={pedido.estado_clase}>{pedido.estado_texto}</td>
                         <td>{pedido.cambio_texto}</td>
                         <td>{pedido.total_texto}</td>
+                        <td style={{ display: rolVendedor ? "table-cell" : "none" }}>
+                            {pedido.observaciones}
+                        </td>
                         <td>{operaciones}</td>
                     </tr>
                 );
@@ -492,7 +493,7 @@ class Listado extends React.Component {
         });
         const Cargando =
             <tr>
-                <td colSpan={rolVendedor ? 8 : 6}><Loader display={true} /></td>
+                <td colSpan={rolVendedor ? 9 : 7}><Loader display={true} /></td>
             </tr>;
         const pedidosResponsive = this.getHtmlPedidosResponsive(rolVendedor);
         const filtros = this.props.pedidos.byId.filtros;
@@ -513,10 +514,11 @@ class Listado extends React.Component {
                                 <th>Número</th>
                                 <th>Fecha</th>
                                 <th style={{ display: rolVendedor ? "table-cell" : "none" }}>Usuario</th>
-                                <th style={{ display: rolVendedor ? "table-cell" : "none" }}>Observaciones</th>
+                                <th>Tipo</th>
                                 <th>Estado</th>
                                 <th>Cambio</th>
                                 <th>Total</th>
+                                <th style={{ display: rolVendedor ? "table-cell" : "none" }}>Observaciones</th>
                                 <th>Operaciones</th>
                             </tr>
                         </thead>
