@@ -21,19 +21,160 @@
   display: none;
 }
 
+.pedidos-responsive .pedido-tarjeta {
+  min-height: 170px;
+  max-height: 300px;
+  position: relative;
+  width: 250px;
+  display: flex;
+  -moz-flex-direction: row;
+  flex-direction: column;
+  -moz-align-items: stretch;
+  align-items: stretch;
+  place-content: stretch flex-start;
+  background-color: #e1ded9;
+  box-shadow: 0px 0px 10px rgb(0 0 0 / 20%);
+  padding: 10px;
+  border-radius: 6px;
+}
+
+.pedidos-responsive .pedido-tarjeta header {
+  font-size: 14px;
+  font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+}
+
+.pedidos-responsive .pedido-tarjeta img {
+  margin-top: 10px;
+}
+
+.pedidos-responsive .pedido-tarjeta .badge {
+  position: absolute;
+  left: 10px;
+  top: 13px;
+}
+
+.pedidos-responsive .pedido-tarjeta h5 {
+  margin-top: 5px;
+  font-size: 15px;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.pedidos-responsive .pedido-tarjeta footer .fila-operaciones {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.pedidos-responsive .pedido-tarjeta footer .operacion-responsive {
+  font-size: 14px;
+  flex-grow: 1;
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
+  border: none;
+  height: 30px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pedidos-responsive .pedido-tarjeta footer .operacion-responsive svg {
+  display: none;
+}
+
+.pedidos-responsive .pedido-tarjeta footer button {
+  font-size: 14px;
+  flex-grow: 1;
+  text-transform: uppercase;
+  color: white;
+  font-weight: bold;
+  width: 50%;
+  border: none;
+  height: 30px;
+}
+
+.pedidos-responsive .pedido-tarjeta footer button:first-child {
+  border-top-left-radius: 3px;
+}
+
+.pedidos-responsive .pedido-tarjeta footer button:last-child {
+  border-top-right-radius: 3px;
+}
+
 @media (max-width: 875px) {
   .producto-listado .table {
     display: none;
   }
-  .producto-listado .pedidos-responsive {
+
+  .producto-listado .titulo-generico {
+    padding-bottom: 5px;
+  }
+
+  .producto-listado .form-filtros {
+    padding: 0;
+  }
+
+  .producto-listado .contenedor-filtros, .contenedor-filtros {
+    font-size: 13px;
+  }
+
+  .producto-listado .contenedor-filtros input, .producto-listado .contenedor-filtros select {
+    height: 35px;
+  }
+
+  .producto-listado .listado {
+    overflow: auto;
+    margin: 0 5% !important;
+    height: calc(100vh - 100px) !important;
+    width: 90%;
+    position: relative;
+  }
+
+  .producto-listado .contenedor-filtros {
+    width: 100%;
     display: flex;
-    flex-direction: column;
-    justify-content: center;
     align-items: center;
   }
 
+  .producto-listado .filter-by {
+    flex-direction: column;
+  }
+
+  .paginacion-contenedor {
+    position: absolute;
+    bottom: 25px;
+    left: 0;
+    right: 0;
+    margin: auto;
+  }
+
+  .producto-listado {
+    margin: 0;
+  }
+
+  .producto-listado .pedidos-responsive {
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: auto;
+    justify-items: center;
+    grid-row-gap: 20px;
+    row-gap: 20px;
+    position: relative;
+    overflow-y: auto;
+    max-height: 270px;
+  }
+
   .producto-listado .pedidos-responsive-item {
-    max-width: 350px;
+    width: 250px;
     border: 1px solid black;
     border-radius: 6px;
     padding: 15px;
@@ -43,5 +184,47 @@
   .producto-listado .pedidos-responsive ul {
     list-style: none;
     padding: 0;
+  }
+}
+
+
+@media (max-height: 570px) {
+  .producto-listado .filter-by .filtro-numero, .producto-listado .filter-by .filtro-estado {
+    display: none;
+  }
+
+  .pedidos-responsive .pedido-tarjeta {
+    width: 220px !important;
+    min-height: 140px;
+  }
+
+  .pedidos-responsive .pedido-tarjeta header {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+  }
+
+  .pedidos-responsive .pedido-tarjeta .badge {
+    position: static;
+  }
+
+  .producto-listado .tabla-listado-titulo, .producto-listado h4 {
+    font-size: 15px;
+  }
+
+  .pedidos-responsive {
+    height: 150px;
+  }
+
+  .producto-listado .form-filtros {
+    margin-bottom: 6px;
+  }
+
+  .pedidos-responsive .pedido-tarjeta header {
+    margin-bottom: 5px;
+  }
+
+  .pedidos-responsive .pedido-tarjeta span {
+    font-size: 14px;
   }
 }

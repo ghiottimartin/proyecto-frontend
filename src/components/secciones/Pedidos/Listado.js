@@ -28,6 +28,7 @@ import Loader from "../../elementos/Loader";
 import Paginacion from "../../elementos/Paginacion";
 import Filtros from "./Filtros";
 import Titulo from "../../elementos/Titulo";
+import Pedido from "./Pedido";
 
 class Listado extends React.Component {
     constructor(props) {
@@ -365,7 +366,7 @@ class Listado extends React.Component {
             }
 
             operaciones.push(
-                <div key={operacion.key} title={operacion.title} onClick={() => this.ejecutarOperacion(pedido, accion)} className={operacion.clase + " operacion"} >
+                <div key={operacion.key} title={operacion.title} data-clase-operacion={operacion.clase_responsive} onClick={() => this.ejecutarOperacion(pedido, accion)} className={operacion.clase + " operacion"} >
                     <i className={operacion.icono} aria-hidden="true"></i> {operacion.texto}
                 </div>
             );
@@ -389,20 +390,7 @@ class Listado extends React.Component {
             let pedido = this.props.pedidos.byId.pedidos[idPedido];
             if (pedido && pedido.id) {
                 let operaciones = this.getOperacionesPedido(pedido);
-                Pedidos.push(
-                    <div key={pedido.id + "-responsive"} className="pedidos-responsive-item">
-                        <ul>
-                            <li><b>Número:</b> {pedido.id_texto}</li>
-                            <li><b>Fecha:</b> {pedido.fecha_texto}</li>
-                            <li style={{ display: rolVendedor ? "block" : "none" }}>
-                                <b>Usuario:</b>{pedido.usuario_nombre}, <span className="texto-chico">{pedido.usuario_email}</span>
-                            </li>
-                            <li><b>Estado:</b>  {pedido.estado_texto}</li>
-                            <li><b>Total:</b>  {pedido.total_texto}</li>
-                            <li>{operaciones}</li>
-                        </ul>
-                    </div>
-                );
+                Pedidos.push(<Pedido {...this.props} pedido={pedido} operaciones={operaciones} ejecutarOperacion={(pedido, accion) => this.ejecutarOperacion(pedido, accion)}/>)
             }
         });
         return Pedidos;
@@ -528,10 +516,16 @@ class Listado extends React.Component {
                             {buscando ? Cargando : Pedidos}
                         </tbody>
                     </table>
-                    {
-                        buscando || totalCero ?
-                            ''
-                            :
+
+                    <div className="pedidos-responsive">
+                        {pedidosResponsive}
+                    </div>
+                </div>
+                {
+                    buscando || totalCero ?
+                        ''
+                        :
+                        <div className="paginacion-contenedor">
                             <Paginacion
                                 activePage={filtros.paginaActual}
                                 itemsCountPerPage={filtros.registrosPorPagina}
@@ -539,12 +533,8 @@ class Listado extends React.Component {
                                 pageRangeDisplayed={5}
                                 onChange={(e) => this.cambiarDePagina(e)}
                             />
-                    }
-
-                    <div className="pedidos-responsive">
-                        {pedidosResponsive}
-                    </div>
-                </div>
+                        </div>
+                }
             </div>
         )
     }

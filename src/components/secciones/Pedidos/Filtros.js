@@ -75,7 +75,7 @@ class Filtros extends React.Component {
                                         value={filtros.fechaHasta}
                                     ></Form.Control>
                                 </Form.Group>
-                                <Form.Group>
+                                <Form.Group className="filtro-numero">
                                     <Form.Label>Número:</Form.Label>
                                     <Form.Control
                                         id="numero"
@@ -94,7 +94,7 @@ class Filtros extends React.Component {
                                         value={filtros.usuario}
                                     ></Form.Control>
                                 </Form.Group>
-                                <Form.Group>
+                                <Form.Group className="filtro-estado">
                                     <Form.Label>Estado:</Form.Label>
                                     <Form.Control
                                         id="estado"
