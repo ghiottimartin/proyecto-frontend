@@ -271,7 +271,8 @@ class Editar extends React.Component {
                         <Form.Label>Nombre</Form.Label>
                         <Form.Control
                             id="first_name"
-                            type="nombre"
+                            type="text"
+                            name="first_name"
                             value={usuario && usuario.first_name ? usuario.first_name : ""}
                             onChange={(e) => this.onChangeUsuario(e)}
                             placeholder="Nombre"
@@ -284,6 +285,7 @@ class Editar extends React.Component {
                         <Form.Control
                             id="email"
                             type="email"
+                            name="email"
                             value={usuario && usuario.email ? usuario.email : ""}
                             onChange={(e) => this.onChangeUsuario(e)}
                             placeholder="Email"
@@ -296,17 +298,34 @@ class Editar extends React.Component {
                         <Form.Control
                             id="dni"
                             type="dni"
+                            name="dni"
                             value={usuario && usuario.dni ? usuario.dni : ""}
                             onChange={(e) => this.onChangeUsuario(e)}
                             placeholder="Documento Nacional de Identidad"
                             disabled={buscando}
                         />
                     </Form.Group>
+                    <Form.Group style={{display: tipoComun ? "block" : "none"}}>
+                        <Form.Label>Dirección</Form.Label>
+                        <Form.Control
+                            id="direccion"
+                            type="text"
+                            name="direccion"
+                            value={usuario && usuario.direccion ? usuario.direccion : ""}
+                            onChange={(e) => this.onChangeUsuario(e)}
+                            placeholder="Dirección"
+                            disabled={buscando}
+                        />
+                        <Form.Text className="text-muted">
+                            La dirección es necesaria si desea realizar pedidos con delivery.
+                        </Form.Text>
+                    </Form.Group>
                     <Form.Group className="flex-column" style={{display: tipoComun ? "none" : "flex"}}>
                         <Form.Label>Roles</Form.Label>
                         <div className="form-check form-check-inline" onClick={() => this.onChangeRolUsuario('esMozo')}>
                             <input
                                 className="form-check-input" type="checkbox" id="esMozo"
+                                name="esMozo"
                                 checked={usuario && usuario.esMozo ? usuario.esMozo : false}
                                 onChange={() => {}}
                                 disabled={buscando}
@@ -316,6 +335,7 @@ class Editar extends React.Component {
                         <div className="form-check form-check-inline" onClick={() => this.onChangeRolUsuario('esVendedor')}>
                             <input
                                 className="form-check-input" type="checkbox" id="esVendedor"
+                                name="esVendedor"
                                 checked={usuario && usuario.esVendedor ? usuario.esVendedor : false}
                                 onChange={() => {}}
                                 disabled={buscando}
@@ -325,6 +345,7 @@ class Editar extends React.Component {
                         <div className="form-check form-check-inline" onClick={() => this.onChangeRolUsuario('esComensal')}>
                             <input
                                 className="form-check-input" type="checkbox" id="esComensal"
+                                name="esComensal"
                                 checked={usuario && usuario.esComensal ? usuario.esComensal : false}
                                 onChange={() => {}}
                                 disabled={buscando}
@@ -337,6 +358,7 @@ class Editar extends React.Component {
                         <div className="contenedor-contrasenia">
                             <input
                                 id="password"
+                                name="password"
                                 className="form-control input-clave"
                                 type={tipoInput}
                                 onChange={(e) => this.onChangeUsuario(e)}
@@ -358,6 +380,7 @@ class Editar extends React.Component {
                         <div className="contenedor-contrasenia">
                             <input
                                 id="confirmaPass"
+                                name="confirmaPass"
                                 ref={this.confirmaPass}
                                 className="form-control input-clave"
                                 type={tipoInput}
