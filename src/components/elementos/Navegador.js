@@ -169,10 +169,10 @@ class Navegador extends React.Component {
         };
 
         const OpcionesMenu = (props) => {
-            return(
+            return (
                 <>
                     <ItemMenu
-                        mostrar={props.mostrar}
+                        mostrar={props.mostrar && (!props.derecha || (props.derecha && props.responsive))}
                         grow={true}
                         texto={"Pedido"}
                         ruta={rutas.ALTA_PEDIDO}
@@ -196,7 +196,7 @@ class Navegador extends React.Component {
         };
 
         const NoLogueado = props => {
-            return(
+            return (
                 <>
                     <ItemMenu
                         mostrar={props.mostrar}
@@ -214,7 +214,7 @@ class Navegador extends React.Component {
             )
         }
         const Logueado = props => {
-            return(
+            return (
                 <>
                     <ItemMenu
                         mostrar={props.mostrar && props.nombre}
@@ -223,7 +223,7 @@ class Navegador extends React.Component {
                         ruta={""}
                         tipo={"boton"}
                     />
-                    <OpcionesMenu logueado={props.logueado} mostrar={props.mostrar} responsive={props.responsive} gestionHabilitada={gestionHabilitada} />
+                    <OpcionesMenu derecha={props.derecha} logueado={props.logueado} mostrar={props.mostrar} responsive={props.responsive} gestionHabilitada={gestionHabilitada} />
                     <ItemMenu
                         mostrar={props.mostrar}
                         grow={true}
@@ -251,13 +251,13 @@ class Navegador extends React.Component {
                         alt="Logo sistema gestión"
                         title="Logo sistema de gestión gastronómico"
                     />
-                    {!responsive ? <OpcionesMenu mostrar={true} logueado={logueado} gestionHabilitada={gestionHabilitada} /> : ""}
+                    {!responsive ? <OpcionesMenu mostrar={true} derecha={false} logueado={logueado} responsive={responsive} gestionHabilitada={gestionHabilitada} /> : ""}
 
                 </div>
                 <div className="derecha">
                     <ShoppingCartIcon className="icono-material hvr-grow" onClick={() => this.props.changeMostrar()} />
                     <NoLogueado mostrar={!logueado} />
-                    <Logueado mostrar={logueado} responsive={responsive} nombre={true} />
+                    <Logueado derecha={true} mostrar={logueado} responsive={responsive} nombre={true} />
                 </div>
                 {responsive ?
                     <div className="derecha-responsive" ref={this.menu}>
@@ -267,7 +267,7 @@ class Navegador extends React.Component {
                         </div>
                         <div className={collapse ? "menu-responsive-collapse colapse" : "menu-responsive-collapse"} style={{ right: collapse ? "-1px" : "-300px" }}>
                             <NoLogueado mostrar={!logueado} />
-                            <Logueado mostrar={logueado} logueado={logueado} responsive={responsive} nombre={false} />
+                            <Logueado derecha={true} mostrar={logueado} logueado={logueado} responsive={responsive} nombre={false} />
                         </div>
                     </div>
                     : ""}
