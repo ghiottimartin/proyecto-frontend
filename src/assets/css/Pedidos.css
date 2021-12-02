@@ -12,6 +12,14 @@
   font-weight: bold;
 }
 
+.producto-listado .listado {
+  border: none !important;
+}
+
+.producto-listado {
+  margin: 0 10px !important;
+}
+
 .pedido-listar .operacion {
   background: transparent;
   text-decoration: none;
