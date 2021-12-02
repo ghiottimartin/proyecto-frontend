@@ -49,7 +49,7 @@
 @media (max-width: 560px) {
     
     .alta-pedido-productos .producto {
-        width: auto;
+        width: 235px;
         display: flex;
         flex-direction: column;
         align-items: center;
