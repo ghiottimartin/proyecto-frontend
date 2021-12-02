@@ -210,7 +210,11 @@ function Listado(props) {
                 <tr key={venta.id}>
                     <td>{venta.id_texto}</td>
                     <td>{venta.fecha_texto}</td>
-                    <td>{venta.tipo_venta}</td>
+                    <td>
+                        {venta.tipo_venta}
+                        <br/>
+                        <span className="text-muted">{venta.tipo_venta_online}</span>
+                    </td>
                     <td>
                         <span>{venta.usuario_nombre}</span>
                         <br/>
