@@ -68,6 +68,10 @@
   vertical-align: middle;
 }
 
+.reemplazo-mercaderia-alta table tr input {
+  width: 100px;
+}
+
 .reemplazo-mercaderia-alta table tfoot {
   font-weight: bold;
 }

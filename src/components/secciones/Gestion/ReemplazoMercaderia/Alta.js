@@ -160,14 +160,35 @@ function Alta(props) {
         }
 
         reemplazo.lineas.map(linea => {
-            const stock_nuevo = linea.stock_nuevo
             const producto = linea.producto
             const nombre = producto.nombre
-            if (isNaN(stock_nuevo) || parseFloat(stock_nuevo) < 0.00) {
+            const stock = producto.stock
+
+            const cantidad_egreso = !isNaN(linea.cantidad_egreso) ? linea.cantidad_egreso : 0
+            const cantidad_ingreso = !isNaN(linea.cantidad_ingreso) ? linea.cantidad_ingreso : 0
+
+            const vacias = cantidad_egreso === 0 && cantidad_ingreso === 0
+
+            const diferencia = cantidad_ingreso - cantidad_egreso
+            const stock_nuevo = stock + diferencia
+            if (stock_nuevo < 0) {
                 errores.push("El nuevo stock del producto " + nombre + " debe ser mayor o igual a cero.\n")
             }
-            if (stock_nuevo === '') {
-                errores.push("El nuevo stock del producto " + nombre + " no puede estar vacío. El cero es válido.\n")
+
+            if (!vacias && cantidad_egreso < 0) {
+                errores.push("La cantidad de egreso del producto " + nombre + " no puede ser negativa.\n")
+            }
+
+            if (!vacias && cantidad_ingreso < 0) {
+                errores.push("La cantidad de ingreso del producto " + nombre + " no puede ser negativa.\n")
+            }
+
+            if (!vacias && diferencia === 0) {
+                errores.push("La diferencia entre la cantidad de ingreso y la cantidad de egreso del producto " + nombre + " no puede ser cero.\n")
+            }
+
+            if (vacias) {
+                errores.push("Debe ingresar una cantidad de ingreso y egreso para el producto " + nombre + ".\n")
             }
         })
 
@@ -176,7 +197,7 @@ function Alta(props) {
             const items = errores.reduce((text, error) => text + '<li style="font-size: 14px;">' + error + '</li>', '')
             const html = '<ul style="text-align: left;">' + items + '</ul>'
             Swal.fire({
-                title: `Ha ocurrido un inconveniente`,
+                title: `No se puede guardar el reemplazo`,
                 html: html,
                 icon: 'warning',
                 showCloseButton: true,
@@ -221,8 +242,15 @@ function Alta(props) {
         let cambiado = reemplazo
         const indice = cambiado.lineas.indexOf(actualizada)
         actualizada[e.target.id] = parseFloat(e.target.value)
+
+        const producto = actualizada.producto
+        const stock = producto.stock
+        const cantidad_egreso = !isNaN(actualizada.cantidad_egreso) ? actualizada.cantidad_egreso : 0
+        const cantidad_ingreso = !isNaN(actualizada.cantidad_ingreso) ? actualizada.cantidad_ingreso : 0
+        const stock_nuevo = stock + cantidad_ingreso - cantidad_egreso
+        actualizada['stock_nuevo'] = !isNaN(stock_nuevo) ? parseFloat(stock_nuevo) : 0
         cambiado.lineas[indice] = actualizada
-        props.createReemplazo(cambiado)
+        props.createReemplazo(cambiado)        
     }
 
     let Filas = []
@@ -230,6 +258,8 @@ function Alta(props) {
         Filas = reemplazo.lineas.map(linea => {
             const stock_anterior = linea.stock_anterior ? linea.stock_anterior : ''
             const stock_nuevo = linea.stock_nuevo
+            const cantidad_egreso = linea.cantidad_egreso
+            const cantidad_ingreso = linea.cantidad_ingreso
             const producto = linea.producto
             return (
                 <tr key={producto.id}>
@@ -242,12 +272,21 @@ function Alta(props) {
                     <td>{stock_anterior}</td>
                     <td>
                         <div className="input-group">
-                            <input id="stock_nuevo" type="number" className="text-right" data-id={producto.id} value={stock_nuevo} step="1" onChange={(e) => onChangeLineaReemplazo(e)} />
+                            <input id="cantidad_egreso" type="number" className="text-right" data-id={producto.id} value={cantidad_egreso} step="1" onChange={(e) => onChangeLineaReemplazo(e)} />
                             <div className="input-group-append">
                                 <span className="input-group-text">u</span>
                             </div>
                         </div>
                     </td>
+                    <td>
+                        <div className="input-group">
+                            <input id="cantidad_ingreso" type="number" className="text-right" data-id={producto.id} value={cantidad_ingreso} step="1" onChange={(e) => onChangeLineaReemplazo(e)} />
+                            <div className="input-group-append">
+                                <span className="input-group-text">u</span>
+                            </div>
+                        </div>
+                    </td>
+                    <td>{stock_nuevo}</td>
                 </tr>
             )
         })
@@ -295,12 +334,14 @@ function Alta(props) {
                             <tr>
                                 <th className="tabla-columna-quitar"></th>
                                 <th className="tabla-columna-descripcion">Descripción</th>
-                                <th className="tabla-columna-stock-anterior">Stock anterior</th>
+                                <th className="tabla-columna-stock-anterior">Stock actual</th>
+                                <th className="tabla-columna-stock-anterior">Cantidad egreso</th>
+                                <th className="tabla-columna-stock-anterior">Cantidad ingreso</th>
                                 <th className="tabla-columna-stock-nuevo">Stock nuevo</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {Filas.length === 0 ? <tr className="text-center"><td colSpan={4}>Agregue productos a reemplazar</td></tr> : Filas}
+                            {Filas.length === 0 ? <tr className="text-center"><td colSpan={6}>Agregue productos a reemplazar</td></tr> : Filas}
                         </tbody>
                     </table>
                     <button className="btn btn-success float-right boton-guardar" onClick={() => guardarReemplazo()}>
