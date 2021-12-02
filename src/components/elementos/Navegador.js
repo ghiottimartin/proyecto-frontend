@@ -146,7 +146,7 @@ class Navegador extends React.Component {
             let ruta = props.ruta;
             let activa = this.getRutaActiva(props.ruta);
             let claseActiva = activa ? "activo" : "";
-            if (props.logout) {
+            if (props.logout || !props.ruta || props.ruta === undefined || props.ruta === "") {
                 return (
                     <button
                         onClick={() => this.redirectTo(ruta)}
