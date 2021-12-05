@@ -7,6 +7,7 @@ import {fetchIngresoById} from "../../../../actions/IngresoActions"
 
 //Components
 import Titulo from "../../../elementos/Titulo"
+import Loader from "../../../elementos/Loader"
 
 //Constantes
 import * as rutas from "../../../../constants/rutas"
@@ -82,6 +83,7 @@ function Visualizar(props) {
         );
     }
 
+    const buscando = props.ingresos.byId.isFetching;
     let titulo = "Visualizar Ingreso";
     if (ingreso && ingreso.id) {
         titulo += " I" + ingreso.id.toString().padStart(5, 0);
@@ -90,7 +92,7 @@ function Visualizar(props) {
     return (
         <div className="tarjeta-body ingreso-visualizar">
             <Titulo ruta={rutas.INGRESO_MERCADERIA} titulo={titulo} clase="tabla-listado-titulo" />
-            {html}
+            {buscando ? <Loader display={true} /> : html}
         </div>
     )
 }
