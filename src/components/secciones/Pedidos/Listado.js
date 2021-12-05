@@ -390,7 +390,7 @@ class Listado extends React.Component {
             let pedido = this.props.pedidos.byId.pedidos[idPedido];
             if (pedido && pedido.id) {
                 let operaciones = this.getOperacionesPedido(pedido);
-                Pedidos.push(<Pedido {...this.props} pedido={pedido} operaciones={operaciones} ejecutarOperacion={(pedido, accion) => this.ejecutarOperacion(pedido, accion)}/>)
+                Pedidos.push(<Pedido key={pedido.id + "-pedido"} {...this.props} pedido={pedido} operaciones={operaciones} ejecutarOperacion={(pedido, accion) => this.ejecutarOperacion(pedido, accion)}/>)
             }
         });
         return Pedidos;
