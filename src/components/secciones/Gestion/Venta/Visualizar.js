@@ -121,7 +121,7 @@ function Visualizar(props) {
 
     let volverA = rutas.VENTA_LISTADO
     const query = rutas.getQuery('volverA')
-    if (query !== undefined) {
+    if (query !== null) {
         volverA = query
     }
     return (
