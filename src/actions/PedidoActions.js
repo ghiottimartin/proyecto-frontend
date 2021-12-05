@@ -391,9 +391,11 @@ function requestPedidoAbierto() {
 }
 
 function receivePedidoAbierto(json) {
-    const datos = json.datos ? json.datos : {};
+    let datos = json.datos ? json.datos : {};
     const en_curso = datos && datos.en_curso !== undefined && datos.en_curso === true;
     const disponible = datos && datos.disponible !== undefined && datos.disponible === true;
+
+    datos.delivery = datos && datos.delivery !== undefined && datos.delivery === true;
     return {
         type: RECEIVE_PEDIDO_ABIERTO,
         pedido: datos,
