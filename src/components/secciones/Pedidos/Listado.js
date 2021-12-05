@@ -450,7 +450,7 @@ class Listado extends React.Component {
             }
             Pedidos =
                 <tr className="text-center">
-                    <td colSpan={rolVendedor ? 9 : 6}>{placeholder}</td>
+                    <td colSpan={rolVendedor ? 9 : 7}>{placeholder}</td>
                 </tr>;
         }
 
@@ -469,10 +469,10 @@ class Listado extends React.Component {
                         </td>
                         <td>{pedido.tipo_texto}</td>
                         <td className={pedido.estado_clase}>{pedido.estado_texto}</td>
-                        <td style={{ display: rolVendedor ? "table-cell" : "none" }}>
+                        <td>{pedido.total_texto}</td>
+                        <td>
                             <span className={pedido.tiene_vuelto ? '' : 'text-muted'}>{pedido.vuelto_texto}</span>
                         </td>
-                        <td>{pedido.total_texto}</td>
                         <td style={{ display: rolVendedor ? "table-cell" : "none" }}>
                             {pedido.observaciones}
                         </td>
@@ -483,7 +483,7 @@ class Listado extends React.Component {
         });
         const Cargando =
             <tr>
-                <td colSpan={rolVendedor ? 9 : 6}><Loader display={true} /></td>
+                <td colSpan={rolVendedor ? 9 : 7}><Loader display={true} /></td>
             </tr>;
         const pedidosResponsive = this.getHtmlPedidosResponsive(rolVendedor);
         const filtros = this.props.pedidos.byId.filtros;
@@ -506,8 +506,8 @@ class Listado extends React.Component {
                                 <th style={{ display: rolVendedor ? "table-cell" : "none" }}>Usuario</th>
                                 <th>Tipo</th>
                                 <th>Estado</th>
-                                <th style={{ display: rolVendedor ? "table-cell" : "none" }}>Vuelto</th>
                                 <th>Total</th>
+                                <th>Vuelto</th>
                                 <th style={{ display: rolVendedor ? "table-cell" : "none" }}>Observaciones</th>
                                 <th>Operaciones</th>
                             </tr>
