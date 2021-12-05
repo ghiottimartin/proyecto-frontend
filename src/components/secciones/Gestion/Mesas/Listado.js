@@ -60,7 +60,7 @@ function Listado(props) {
         const mesa = props.mesas.byId.mesas[idMesa]
         if (mesa && mesa.id) {
             return (
-                <Mesa mesa={mesa} />
+                <Mesa key={mesa.id + "-mesa"} mesa={mesa} />
             )
         }
     })

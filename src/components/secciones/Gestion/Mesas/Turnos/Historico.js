@@ -57,7 +57,7 @@ function Historico(props) {
         const turno = props.turnos.byId.turnos[idTurno]
         if (turno && turno.id) {
             return (
-                <Turno turno={turno} />
+                <Turno key={turno.id + "-turno"} turno={turno} />
             )
         }
     })
