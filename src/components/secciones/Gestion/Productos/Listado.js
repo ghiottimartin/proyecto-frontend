@@ -122,20 +122,20 @@ class Listado extends React.Component {
      * @param {Object} producto 
      * @param {String} accion 
      */
-     ejecutarOperacion(producto, accion) {
+    ejecutarOperacion(producto, accion) {
         switch (accion) {
             case 'editar':
                 this.editarProducto(producto);
                 break;
-            
+
             case 'borrar':
                 this.borrarProducto(producto);
                 break;
-            
+
             case 'stock':
                 this.redirigirMovimientos(producto)
                 break;
-            
+
         }
     }
 
@@ -218,6 +218,18 @@ class Listado extends React.Component {
     getVentaDirecta(producto) {
         const directa = producto.venta_directa;
         return this.getIconoBooleano(directa)
+    }
+
+    getTipoProductoHtml(producto) {
+        const venta_directa = producto.venta_directa;
+        const compra_directa = producto.compra_directa;
+        console.log(compra_directa, venta_directa)
+        return (
+            <div className="d-flex flex-column">
+                <span title="Venta directa" style={{ display: venta_directa ? "block" : "none" }} class="badge badge-success align-self-center mb-1">VD</span>
+                <span title="Compra directa" style={{ display: compra_directa ? "block" : "none" }} class="badge badge-info align-self-center">CD</span>
+            </div>
+        )
     }
 
     /**
@@ -337,17 +349,15 @@ class Listado extends React.Component {
                     }
                 }
                 const alertar = producto.alertar;
-                const alertaHTML = <img src={alerta} className="img-alerta-stock" title="El stock actual es menor al stock de alerta" alt="Alerta de stock" />
                 Productos.push(
-                    <tr key={producto.id} className={ alertar ? "table-danger" : "" }>
+                    <tr key={producto.id} className={alertar ? "table-danger" : ""}>
                         <td>{producto.id_texto}</td>
                         <td className="td-imagen">
                             <img src={path} onError={(e) => e.target.src = productoVacio} alt="Imagen de producto" />
                         </td>
                         <td>{producto.nombre}</td>
                         <td>{producto.categoria_texto}</td>
-                        <td className="text-center">{this.getCompraDirecta(producto)}</td>
-                        <td className="text-center">{this.getVentaDirecta(producto)}</td>
+                        <td className="text-center">{this.getTipoProductoHtml(producto)}</td>
                         <td className="text-right px-5">
                             <div className="d-flex justify-content-center align-items-center">
                                 <span>{producto.stock}</span>
@@ -431,22 +441,9 @@ class Listado extends React.Component {
                                     direccion={direccion}
                                     changeDireccion={(e) => this.changeDirection(e)}
                                 />
-                                <Ordenador
-                                    id="compra_directa"
-                                    clase="justify-content-end"
-                                    texto="Compra directa"
-                                    orden={orden}
-                                    direccion={direccion}
-                                    changeDireccion={(e) => this.changeDirection(e)}
-                                />
-                                <Ordenador
-                                    id="venta_directa"
-                                    clase="justify-content-end"
-                                    texto="Venta directa"
-                                    orden={orden}
-                                    direccion={direccion}
-                                    changeDireccion={(e) => this.changeDirection(e)}
-                                />
+                                <th>
+                                    Tipo
+                                </th>
                                 <Ordenador
                                     id="stock"
                                     clase="justify-content-end"
