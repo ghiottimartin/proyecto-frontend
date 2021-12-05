@@ -220,6 +220,9 @@ function pedidosById(state = {
             }
 
             var ids = [];
+            if (!Array.isArray(abierto.lineas)) {
+                abierto.lineas = []
+            }
             abierto.lineas.forEach(linea => ids.push(linea.id));
             abierto.lineasIds = ids;
             abierto.cambio = ''
