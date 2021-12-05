@@ -77,17 +77,6 @@ class App extends React.Component {
         this.setState({ blur: blur });
     }
 
-    componentDidMount() {
-        this.props.resetPedidoAbierto();
-        this.props.fetchPedidoAbierto();
-        this.props.resetProductos();
-        this.props.fetchProductos(false);
-    }
-
-    componentWillUnmount() {
-        this.props.resetPedidoAbierto();
-    }
-
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.pedidos.create.isCreating && !this.props.pedidos.create.isCreating) {
             this.setState({
@@ -122,7 +111,8 @@ class App extends React.Component {
     }
 
     agregarProducto(producto, cantidad) {
-        if (!auth.idUsuario()) {
+        const logueado = auth.idUsuario();
+        if (!logueado) {
             Swal.fire({
                 title: `Para comenzar a realizar su pedido debe estar ingresar con su usuario. ¿Desea dirigirse al ingreso? `,
                 icon: 'warning',
@@ -139,37 +129,48 @@ class App extends React.Component {
                     history.push(ruta);
                 }
             });
+
+            return;
+        }
+
+        let pedido = this.props.pedidos.byId.abierto;
+        if (pedido.en_curso) {
+            Swal.fire({
+                title: "Ya tiene un pedido en curso. ¿Está seguro de comenzar otro pedido?",
+                icon: 'question',
+                showCloseButton: true,
+                showCancelButton: true,
+                focusConfirm: true,
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+                cancelButtonColor: '#bfbfbf',
+            }).then((result) => {
+                if (result.isConfirmed) {
+
+                    let pedido = this.actualizarPedido(producto, cantidad);
+                    this.crearPedidoAbierto(producto, pedido);
+                }
+            });
+        } else if (pedido.disponible) {
+            let delivery = pedido.delivery
+            let mensaje = 'Ya tiene un pedido por retirar, debe retirarlo por el local o anularlo';
+            if (delivery) {
+                mensaje = 'Tiene un pedido en proceso de envío';
+            }
+            Swal.fire({
+                title: "No puede realizar otro pedido en este momento",
+                text: mensaje,
+                icon: 'question',
+                showCloseButton: true,
+                focusConfirm: true,
+                confirmButtonText: 'Continuar',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+            });
         } else {
             let pedido = this.actualizarPedido(producto, cantidad);
-            if (pedido.en_curso) {
-                Swal.fire({
-                    title: "Ya tiene un pedido en curso. ¿Está seguro de comenzar otro pedido?",
-                    icon: 'question',
-                    showCloseButton: true,
-                    showCancelButton: true,
-                    focusConfirm: true,
-                    confirmButtonText: 'Aceptar',
-                    confirmButtonColor: 'rgb(88, 219, 131)',
-                    cancelButtonColor: '#bfbfbf',
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        this.crearPedidoAbierto(producto, pedido);
-                    }
-                });
-            } else if (pedido.disponible) {
-                Swal.fire({
-                    title: "No puede realizar otro pedido en este momento",
-                    text: 'Ya tiene un pedido por retirar, debe retirarlo por el local o anularlo',
-                    icon: 'question',
-                    showCloseButton: true,
-                    focusConfirm: true,
-                    confirmButtonText: 'Continuar',
-                    confirmButtonColor: 'rgb(88, 219, 131)',
-                });
-            } else {
-                this.crearPedidoAbierto(producto, pedido);
-            }
+            this.crearPedidoAbierto(producto, pedido);
         }
+
     }
 
     crearPedidoAbierto(productoSolicitado, pedido) {

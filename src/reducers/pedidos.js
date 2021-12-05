@@ -113,7 +113,7 @@ function pedidosById(state = {
                     lineasIds: [],
                     tipo: 'retiro',
                     cambio: '',
-                    direccio: ''
+                    direccion: ''
                 };
             }
             return Object.assign({}, state, {
@@ -203,14 +203,8 @@ function pedidosById(state = {
             });
         case RECEIVE_PEDIDO_ABIERTO:
             let abierto = {};
-            if (action.pedido && action.pedido.id) {
+            if (action.pedido) {
                 abierto = action.pedido;
-            }
-            if (action.en_curso) {
-                abierto.en_curso = true;
-            }
-            if (action.disponible) {
-                abierto.disponible = true;
             }
 
             const usuario = abierto.usuario
@@ -243,7 +237,7 @@ function pedidosById(state = {
                     lineasIds: [],
                     tipo: 'retiro',
                     cambio: '',
-                    direccio: ''
+                    direccion: ''
 
                 },
                 error: null
@@ -267,7 +261,7 @@ function pedidosById(state = {
                     lineasIds: [],
                     tipo: 'retiro',
                     cambio: '',
-                    direccio: ''
+                    direccion: ''
                 },
             });
         case RECEIVE_DELETE_PEDIDO:

@@ -392,15 +392,16 @@ function requestPedidoAbierto() {
 
 function receivePedidoAbierto(json) {
     let datos = json.datos ? json.datos : {};
+    const delivery = datos && datos.delivery !== undefined && datos.delivery === true;
     const en_curso = datos && datos.en_curso !== undefined && datos.en_curso === true;
     const disponible = datos && datos.disponible !== undefined && datos.disponible === true;
 
-    datos.delivery = datos && datos.delivery !== undefined && datos.delivery === true;
+    datos.delivery = delivery;
+    datos.en_curso = en_curso;
+    datos.disponible = disponible;
     return {
         type: RECEIVE_PEDIDO_ABIERTO,
         pedido: datos,
-        en_curso: en_curso,
-        disponible: disponible,
         receivedAt: Date.now()
     }
 }
