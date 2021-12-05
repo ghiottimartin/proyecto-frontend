@@ -50,7 +50,7 @@ class Filtros extends React.Component {
             <div className="filtros">
                 <h4>Filtrado</h4>
                 <Form onSubmit={(e) => this.props.filtrar(e)}>
-                    <div className="form-filtros">
+                    <div className="form-filtros pb-2">
                         <div className="contenedor-filtros">
                             <div className="filter-by text-nowrap">                       
                                 <Form.Group>

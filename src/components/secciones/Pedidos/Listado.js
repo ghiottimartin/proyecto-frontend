@@ -488,7 +488,7 @@ class Listado extends React.Component {
         const pedidosResponsive = this.getHtmlPedidosResponsive(rolVendedor);
         const filtros = this.props.pedidos.byId.filtros;
         return (
-            <div className="tabla-listado producto-listado tarjeta-body">
+            <div className="tabla-listado producto-listado tarjeta-body pedido-listado-contenedor">
                 <div className="table-responsive listado">
                     <div className="d-flex justify-content-between">
                         <Titulo titulo={titulo} clase="tabla-listado-titulo" ruta={ruta} border={true} />
