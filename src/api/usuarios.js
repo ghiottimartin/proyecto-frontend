@@ -111,7 +111,19 @@ var usuarios = {
         };
 
         return fetch(c.BASE_URL + '/usuarios/mozos/', defaultOptions);
-    }
+    },
+
+    pdfManual() {
+        let defaultOptions = {
+            method: 'GET',
+            headers: {
+                "Content-Type": "application/pdf",
+                "Authorization": "Token " + localStorage.token
+            }
+        };
+
+        return fetch(c.BASE_URL + '/usuarios/0/manual/', defaultOptions);
+    },
 };
 
 export default usuarios;

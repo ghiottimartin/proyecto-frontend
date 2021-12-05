@@ -2,6 +2,7 @@ import history from '../history';
 
 //Actions
 import { logout, changeLogin } from "./AuthenticationActions";
+import { downloadBlob } from "./FileActions";
 
 //Api
 import usuarios from "../api/usuarios";
@@ -684,6 +685,80 @@ export function fetchMozos() {
                                 });
                         } catch (e) {
                             dispatch(errorMozos(errorMessages.GENERAL_ERROR));
+                        }
+                        return;
+                }
+            });
+    }
+}
+
+// PDF MANUAL
+export const REQUEST_MANUAL_PDF = "REQUEST_MANUAL_PDF";
+export const RECEIVE_MANUAL_PDF = "RECEIVE_MANUAL_PDF";
+export const ERROR_MANUAL_PDF = "ERROR_MANUAL_PDF";
+
+
+function requestPdfManual() {
+    return {
+        type: REQUEST_MANUAL_PDF,
+    }
+}
+
+function receivePdfManual(blob, nombre) {
+    downloadBlob(blob, nombre);
+    return {
+        type: RECEIVE_MANUAL_PDF,
+        message: 'El manual se ha descargado con éxito',
+        receivedAt: Date.now()
+    }
+}
+
+function errorPdfManual(error) {
+    return {
+        type: ERROR_MANUAL_PDF,
+        error: error,
+    }
+}
+
+export function pdfManual() {
+    return dispatch => {
+        dispatch(requestPdfManual());
+        return usuarios.pdfManual()
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    var data = response.blob();
+                    return data;
+                }
+            })
+            .then(function (blob) {
+                var nombre = `Manual de usuario.pdf`;
+                dispatch(receivePdfManual(blob, nombre));
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorPdfManual(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(logout());
+                        return;
+                    case 404:
+                        dispatch(errorPdfManual(errorMessages.GENERAL_ERROR));
+                        return;
+                    default:
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorPdfManual(error.message));
+                                    else
+                                        dispatch(errorPdfManual(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
+                                    dispatch(errorPdfManual(errorMessages.GENERAL_ERROR));
+                                });
+                        } catch (e) {
+                            dispatch(errorPdfManual(errorMessages.GENERAL_ERROR));
                         }
                         return;
                 }

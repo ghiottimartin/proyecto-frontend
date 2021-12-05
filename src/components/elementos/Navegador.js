@@ -8,7 +8,7 @@ import { withRouter } from "react-router-dom";
 
 //Actions
 import { logout } from "../../actions/AuthenticationActions";
-import { fetchUsuarioLogueadoIfNeeded } from "../../actions/UsuarioActions";
+import { fetchUsuarioLogueadoIfNeeded, pdfManual } from "../../actions/UsuarioActions";
 
 //Api
 import auth from "../../api/authentication";
@@ -22,6 +22,7 @@ import '../../assets/css/Navegador.css';
 
 //Icons
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 //Images
 import logo from "../../assets/img/logo.png";
@@ -139,6 +140,10 @@ class Navegador extends React.Component {
 
     redirigirAltaPedido() {
         history.push('/')
+    }
+
+    decargarManualUsuario() {
+        this.props.pdfManual();
     }
 
     render() {
@@ -259,6 +264,7 @@ class Navegador extends React.Component {
 
                 </div>
                 <div className="derecha">
+                    {gestionHabilitada ? <HelpOutlineIcon className="icono-material hvr-grow" onClick={() => this.decargarManualUsuario()} /> : ''}
                     <ShoppingCartIcon className="icono-material hvr-grow" onClick={() => this.redirigirAltaPedido()} />
                     <NoLogueado mostrar={!logueado} />
                     <Logueado derecha={true} mostrar={logueado} responsive={responsive} nombre={true} />
@@ -294,6 +300,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         fetchUsuarioLogueadoIfNeeded: () => {
             dispatch(fetchUsuarioLogueadoIfNeeded())
+        },
+        pdfManual: () => {
+            dispatch(pdfManual())
         }
     }
 };

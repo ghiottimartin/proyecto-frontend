@@ -35,7 +35,10 @@ import {
     ERROR_DELETE_USUARIO,
     RECEIVE_INHABILITAR_USUARIO,
     UPDATE_FILTROS,
-    RESET_FILTROS
+    RESET_FILTROS,
+    ERROR_MANUAL_PDF,
+    RECEIVE_MANUAL_PDF,
+    REQUEST_MANUAL_PDF
 
 } from '../actions/UsuarioActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions";
@@ -303,6 +306,24 @@ function update(state = {
                 isFetchingUsuarioLogueado: false,
                 didInvalidate: true,
                 logueado: {}
+            });
+        case REQUEST_MANUAL_PDF:
+            return Object.assign({}, state, {
+                isUpdating: true,
+                success: "",
+                error: null,
+            });
+        case RECEIVE_MANUAL_PDF:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                success: "",
+                error: null,
+            });
+        case ERROR_MANUAL_PDF:
+            return Object.assign({}, state, {
+                isUpdating: false,
+                success: "",
+                error: action.error
             });
         default:
             return state
