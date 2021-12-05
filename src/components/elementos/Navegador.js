@@ -251,7 +251,7 @@ class Navegador extends React.Component {
         };
 
         let responsive = $(window).width() <= 849;
-
+        let isUpdatingUsuario = this.props.usuarios.update.isUpdating;
         return (
             <nav className="navegador no-cerrar-carrito">
                 <div className="izquierda">
@@ -264,7 +264,8 @@ class Navegador extends React.Component {
 
                 </div>
                 <div className="derecha">
-                    {gestionHabilitada ? <HelpOutlineIcon className="icono-material hvr-grow" onClick={() => this.decargarManualUsuario()} /> : ''}
+                    <HelpOutlineIcon style={{display: gestionHabilitada && !isUpdatingUsuario ? "block" : "none"}} className="icono-material hvr-grow" onClick={() => this.decargarManualUsuario()} />
+                    <span style={{display: gestionHabilitada && isUpdatingUsuario ? "block" : "none"}} class="cargando-manual">...</span>
                     <ShoppingCartIcon className="icono-material hvr-grow" onClick={() => this.redirigirAltaPedido()} />
                     <NoLogueado mostrar={!logueado} />
                     <Logueado derecha={true} mostrar={logueado} responsive={responsive} nombre={true} />

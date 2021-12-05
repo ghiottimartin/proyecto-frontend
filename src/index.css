@@ -60,6 +60,11 @@ code {
   margin-top: 0px;
 }
 
+.cargando-manual {
+  margin-right: 18px;
+  color: white;
+}
+
 input, textarea, select, select option {
   background-color: #dbd5d5 !important;
   color: black;
