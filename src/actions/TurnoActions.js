@@ -147,9 +147,13 @@ export function updateTurno(turno, mesa) {
     }
 }
 
-export function saveUpdateTurno(volverA) {
+export function saveUpdateTurno(volverA, mensaje) {
     return (dispatch, getState) => {
-        dispatch(requestUpdateTurno());
+        if (mensaje !== false) {
+            dispatch(requestUpdateTurno());
+        }
+
+        const turno = getState().turnos.update.activo
         return turnos.saveUpdate(getState().turnos.update.activo)
             .then(function (response) {
                 if (response.status >= 400) {
@@ -163,8 +167,13 @@ export function saveUpdateTurno(volverA) {
                     history.push(volverA)
                 } else {
                     history.push(rutas.MESAS_LISTAR)
-                } 
-                dispatch(receiveUpdateTurno());
+                }
+                if (mensaje !== false) {
+                    dispatch(resetUpdateTurno());
+                    dispatch(fetchMesaById(turno.mesa.id));
+                } else {
+                    dispatch(receiveUpdateTurno());
+                }
             })
             .catch(function (error) {
                 switch (error.status) {

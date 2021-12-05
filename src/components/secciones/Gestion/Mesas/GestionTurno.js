@@ -51,10 +51,12 @@ function GestionTurno(props) {
         props.fetchProductos(false)
         return function limpiar() {
             props.resetMozos()
+            props.resetUpdateTurno()
         }
     }, [])
 
     const [showProductos, setShowProductos] = useState(false)
+    const [modificado, setModificado] = useState(false)
 
     /**
      * Abre el modal de selección de productos.
@@ -106,6 +108,7 @@ function GestionTurno(props) {
      */
     const addProductoOrden = (e) => {
         e.preventDefault()
+        setModificado(true)
         const elemento = getIconoConId(e)
         let idProducto = elemento.dataset.id
         const producto = buscarProducto(idProducto)
@@ -145,6 +148,8 @@ function GestionTurno(props) {
      * @returns 
      */
     const actualizarOrden = (producto, cantidad) => {
+        setModificado(true)
+
         const idProducto = producto.id
         let actualizado = turno.ordenes.find(orden => {
             const producto = orden.producto
@@ -198,6 +203,8 @@ function GestionTurno(props) {
      *  @param {SyntheticBaseEvent} e 
      */
     const removeOrden = (e) => {
+        setModificado(true)
+
         e.preventDefault()
         const elemento = getIconoConId(e)
         let idProducto = elemento.dataset.id
@@ -230,6 +237,8 @@ function GestionTurno(props) {
      * @param {SyntheticBaseEvent} e 
      */
     const onChangeMozo = (e) => {
+        setModificado(true)
+
         var cambio = {}
         const idMozo = e.target.value
         const mozo = props.mozos.byId.mozos[idMozo]
@@ -272,10 +281,10 @@ function GestionTurno(props) {
      * Guarda las órdenes del turno, permitiendo editarlo al reingresar a la gestión
      * del mismo.
      */
-    const guardarBorrador = () => {
+    const guardarBorrador = (volverA, mensaje) => {
         let valido = comprobarTurnoValido()
         if (valido) {
-            props.saveUpdateTurno()
+            props.saveUpdateTurno(volverA, mensaje)
         }
     }
 
@@ -309,7 +318,8 @@ function GestionTurno(props) {
      * Dedirige a la interfaz de entrega de órdenes del turno.
      */
     const entregar = () => {
-        history.push(rutas.TURNOS_ORDENES + idMesa)
+        let volverA = rutas.TURNOS_ORDENES + idMesa
+        guardarBorrador(volverA, false)
     }
 
     /**
@@ -513,8 +523,8 @@ const mapDispatchToProps = (dispatch) => {
         updateTurno: (turno, mesa) => {
             dispatch(updateTurno(turno, mesa))
         },
-        saveUpdateTurno: () => {
-            dispatch(saveUpdateTurno())
+        saveUpdateTurno: (volverA, mensaje) => {
+            dispatch(saveUpdateTurno(volverA, mensaje))
         },
         fetchMesaById: (id) => {
             dispatch(fetchMesaById(id))
