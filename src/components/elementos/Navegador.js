@@ -137,6 +137,10 @@ class Navegador extends React.Component {
         }
     }
 
+    redirigirAltaPedido() {
+        history.push('/')
+    }
+
     render() {
         const { nombre, gestionHabilitada, collapse } = this.state;
         const logueado = this.props.authentication.token;
@@ -255,13 +259,13 @@ class Navegador extends React.Component {
 
                 </div>
                 <div className="derecha">
-                    <ShoppingCartIcon className="icono-material hvr-grow" onClick={() => this.props.changeMostrar()} />
+                    <ShoppingCartIcon className="icono-material hvr-grow" onClick={() => this.redirigirAltaPedido()} />
                     <NoLogueado mostrar={!logueado} />
                     <Logueado derecha={true} mostrar={logueado} responsive={responsive} nombre={true} />
                 </div>
                 {responsive ?
                     <div className="derecha-responsive" ref={this.menu}>
-                        <ShoppingCartIcon className="icono-material hvr-grow" onClick={() => this.props.changeMostrar()} />
+                        <ShoppingCartIcon className="icono-material hvr-grow" onClick={() => this.redirigirAltaPedido()} />
                         <div className="menu-responsive">
                             <img src={menu} alt="Menu" onClick={(e) => this.toogleResponsive(e)} />
                         </div>
