@@ -7,6 +7,7 @@ import { fetchReemplazoById } from "../../../../actions/ReemplazoMercaderiaActio
 
 //Components
 import Titulo from "../../../elementos/Titulo"
+import Loader from "../../../elementos/Loader"
 
 //Constantes
 import * as rutas from "../../../../constants/rutas"
@@ -77,10 +78,11 @@ function Visualizar(props) {
         titulo += " I" + reemplazo.id.toString().padStart(5, 0);;
     }
     let html = getVisualizarHtml();
+    const buscando = props.reemplazos.byId.isFetching;
     return (
         <div className="tarjeta-body reemplazo-visualizar">
             <Titulo ruta={rutas.REEMPLAZO_MERCADERIA_LISTAR} titulo={titulo} clase="tabla-listado-titulo" />
-            {html}
+            {buscando ? <Loader display={true} /> : html}
         </div>
     )
 }
