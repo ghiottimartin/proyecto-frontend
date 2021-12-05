@@ -7,6 +7,7 @@ import {fetchPedidoById, resetUpdatePedido } from "../../../actions/PedidoAction
 
 //Components
 import Titulo from "../../elementos/Titulo";
+import Loader from "../../elementos/Loader";
 
 //Constantes
 import * as roles from '../../../constants/roles.js';
@@ -102,6 +103,7 @@ class Visualizar extends React.Component {
     }
 
     render() {
+        const buscando = this.props.pedidos.byId.isFetchingPedido;
         let pedido = this.props.pedidos.update.activo;
         let titulo = "Visualizar Pedido";
         if (pedido && pedido.id) {
@@ -113,7 +115,7 @@ class Visualizar extends React.Component {
         return (
             <div className="tarjeta-body pedido-visualizar">
                 <Titulo ruta={rutaVolver} titulo={titulo} clase="tabla-listado-titulo" />
-                {html}
+                {buscando ? <Loader display={true} /> : html}
             </div>
         )
     }
