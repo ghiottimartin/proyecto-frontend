@@ -7,6 +7,7 @@ import { fetchVentaById, pdfVenta } from "../../../../actions/VentaActions"
 
 //Components
 import Titulo from "../../../elementos/Titulo"
+import Loader from "../../../elementos/Loader"
 
 //Constantes
 import * as rutas from "../../../../constants/rutas"
@@ -124,13 +125,15 @@ function Visualizar(props) {
     if (query !== null) {
         volverA = query
     }
+
+    const buscando = props.ventas.byId.isFetching;
     return (
         <div className="tarjeta-body ingreso-visualizar position-relative">
             <Titulo ruta={volverA} titulo={titulo} clase="tabla-listado-titulo" />
             <div className="venta-operacion-pdf">
                 {pdf}
             </div>
-            {html}
+            {buscando ? <Loader display={true} /> : html}
         </div>
     )
 }
