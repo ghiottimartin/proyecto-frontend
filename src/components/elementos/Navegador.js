@@ -265,7 +265,7 @@ class Navegador extends React.Component {
                 </div>
                 <div className="derecha">
                     <HelpOutlineIcon style={{display: gestionHabilitada && !isUpdatingUsuario ? "block" : "none"}} className="icono-material hvr-grow" onClick={() => this.decargarManualUsuario()} />
-                    <span style={{display: gestionHabilitada && isUpdatingUsuario ? "block" : "none"}} class="cargando-manual">...</span>
+                    <span style={{display: gestionHabilitada && isUpdatingUsuario ? "block" : "none"}} className="cargando-manual">...</span>
                     <ShoppingCartIcon className="icono-material hvr-grow" onClick={() => this.redirigirAltaPedido()} />
                     <NoLogueado mostrar={!logueado} />
                     <Logueado derecha={true} mostrar={logueado} responsive={responsive} nombre={true} />

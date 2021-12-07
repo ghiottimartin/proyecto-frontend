@@ -226,8 +226,8 @@ class Listado extends React.Component {
         console.log(compra_directa, venta_directa)
         return (
             <div className="d-flex flex-column">
-                <span title="Venta directa" style={{ display: venta_directa ? "block" : "none" }} class="badge badge-success align-self-center mb-1">VD</span>
-                <span title="Compra directa" style={{ display: compra_directa ? "block" : "none" }} class="badge badge-info align-self-center">CD</span>
+                <span title="Venta directa" style={{ display: venta_directa ? "block" : "none" }} className="badge badge-success align-self-center mb-1">VD</span>
+                <span title="Compra directa" style={{ display: compra_directa ? "block" : "none" }} className="badge badge-info align-self-center">CD</span>
             </div>
         )
     }
