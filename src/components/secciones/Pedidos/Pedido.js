@@ -71,7 +71,7 @@ function Pedido(props) {
     const operaciones = getOperacionesPedido(pedido)
 
     return (
-        <article key={pedido.id + "-responsive"} className="pedido-tarjeta">
+        <article key={pedido.id + "-responsive"} className="pedido-tarjeta" style={{ backgroundColor: pedido.color_fondo }}>
             <header>
                 <span className={pedido.tarjeta_estado_clase}>{pedido.estado_texto}</span>
                 <span>Pedido {pedido.id_texto}</span>

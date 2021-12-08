@@ -280,3 +280,9 @@
     font-size: 14px;
   }
 }
+
+@media (min-height: 500px) {
+  .producto-listado .pedidos-responsive {
+    max-height: 50%;
+  }
+}
