@@ -143,9 +143,10 @@ function Alta(props) {
     const opciones = getOpcionesProductos()
     opciones.forEach(producto => {
         const title = "Agregar " + producto.nombre
+        const stock_alerta = producto.stock_seguridad
         Opciones.push(
-            <li key={producto.id} title={title} onClick={() => addLineaReemplazo(producto)}>
-                {producto.nombre}
+            <li key={producto.id} title={title} onClick={() => addLineaReemplazo(producto)} className={producto.alertar ? 'table-danger' : ''}>
+                {producto.nombre} <span className="text-muted" style={{fontSize: "13px"}}>{ producto.alertar ? `(Min ${stock_alerta})` : ''}</span>
                 <span className="badge badge-primary badge-pill float-right" title={`Stock del producto ${producto.nombre}`}>
                     {producto.stock}
                 </span>
