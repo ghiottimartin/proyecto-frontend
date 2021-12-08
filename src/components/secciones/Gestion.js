@@ -89,8 +89,8 @@ class Gestion extends React.Component {
             return null;
         }
 
+        let id          = operacion && operacion.id ? operacion.id : 0;
         let alt         = operacion && operacion.alt ? operacion.alt : "";
-        let key         = Math.floor(Math.random() * 100);
         let ruta        = operacion && operacion.ruta ? operacion.ruta : "";
         let titulo      = operacion && operacion.titulo ? operacion.titulo : "";
         let descripcion = operacion && operacion.descripcion ? operacion.descripcion : "";
@@ -101,7 +101,7 @@ class Gestion extends React.Component {
         let margenLeftImg = operacion.ruta === rutas.PEDIDOS_VENDEDOR ? "13px" : "";
         return(
             <TarjetaMenu
-                key={key}
+                key={id}
                 titulo={titulo}
                 descripcion={descripcion}
                 alt={alt}

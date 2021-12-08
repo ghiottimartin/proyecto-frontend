@@ -56,7 +56,7 @@ class TarjetaMenu extends React.Component {
         const rolesTexto = this.getTextoRoles();
         const margenLeftImg = this.props.margenLeftImg;
         return (
-            <a href={props.ruta} key={props.key} className="tarjeta-menu">
+            <a href={props.ruta} key={props.id + "-tarjeta"} className="tarjeta-menu">
                 <div className={"tarjeta hvr-grow"} onClick={props.click}>
                     <div className="roles text-capítalize">
                         {rolesTexto}
