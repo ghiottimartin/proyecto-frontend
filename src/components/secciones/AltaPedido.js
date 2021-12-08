@@ -34,24 +34,46 @@ class AltaPedido extends React.Component {
         this.props.resetProductos();
     }
 
+    getProductosOrdenados() {
+        let productos = this.props.productos.allIds.map(id => {
+            const producto = this.props.productos.byId.productos[id]
+            if (producto !== undefined && producto.venta_directa && producto.stock > producto.stock_seguridad) {
+                return producto
+            }
+        })
+
+        productos.sort(function (a, b) {
+            let productoA = a.nombre;
+            let productoB = b.nombre;
+            if (productoA < productoB) { return -1; }
+            if (productoA > productoB) { return 1; }
+            return 0;
+        })
+        return productos
+    }
+
+    getProductosHtml(ordenados) {
+        let productosHtml = ordenados.map(producto => {
+            return (
+                <Producto
+                    key={"p-" + producto.id}
+                    producto={producto}
+                    guardando={this.props.guardando}
+                    productoGuardando={this.props.producto}
+                    getCantidad={(producto) => this.props.getCantidad(producto)}
+                    agregarProducto={(producto, cantidad) => this.props.agregarProducto(producto, cantidad)}
+                />
+            );
+        });
+        return productosHtml;
+    }
+
     render() {
         const isClosing = this.props.pedidos.update.isClosing
         const buscando = this.props.productos.byId.isFetching || isClosing;
-        let productos = this.props.productos.allIds.map(id => {
-            let producto = this.props.productos.byId.productos[id];
-            if (producto !== undefined && producto.venta_directa && producto.stock > producto.stock_seguridad) {
-                return (
-                    <Producto
-                        key={"p-" + producto.id}
-                        producto={producto}
-                        productoGuardando={this.props.producto}
-                        getCantidad={(producto) => this.props.getCantidad(producto)}
-                        agregarProducto={(producto, cantidad) => this.props.agregarProducto(producto, cantidad)}
-                    />
-                );
-            }
-        });
-        let hayProductos = productos.length > 0;
+        let ordenados = this.getProductosOrdenados();
+        let productos = this.getProductosHtml(ordenados);
+        let hayProductos = ordenados.length > 0;
         let clase = hayProductos && !buscando ? "alta-pedido-productos" : "d-flex justify-content-center align-items-center h-100";
         if (!hayProductos) {
             productos = <h2 className="placeholder-producto">No hay productos cargados</h2>;
