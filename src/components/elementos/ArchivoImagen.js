@@ -7,7 +7,6 @@ import "../../assets/css/ArchivoImagen.css";
 
 //Images
 import addPhoto from "../../assets/img/add_photo_alternate.svg";
-import productoVacio from "../../assets/img/emptyImg.jpg";
 
 class ArchivoImagen extends React.Component {
 

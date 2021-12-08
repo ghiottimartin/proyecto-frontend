@@ -71,9 +71,6 @@ class Carrito extends React.Component {
                 />
             );
         });
-        if (compras.length === 0) {
-            var parar = true;
-        }
         return compras;
     }
 

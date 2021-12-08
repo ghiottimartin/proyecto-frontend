@@ -19,7 +19,6 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 //Utils
 import { formatearMoneda } from "../../utils/formateador"
-import { isEmpty } from 'lodash';
 
 class ItemCarrito extends React.Component {
     constructor(props) {

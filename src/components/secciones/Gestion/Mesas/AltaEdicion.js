@@ -16,7 +16,6 @@ import * as rutas from "../../../../constants/rutas"
 
 //Components
 import Titulo from "../../../elementos/Titulo"
-import SeleccionMozos from "../../../elementos/Modales/SeleccionMozos"
 
 //Librerías
 import AddBoxIcon from "@material-ui/icons/AddBox"
