@@ -316,7 +316,7 @@ function update(state = {
         case RECEIVE_MANUAL_PDF:
             return Object.assign({}, state, {
                 isUpdating: false,
-                success: "",
+                success: action.message,
                 error: null,
             });
         case ERROR_MANUAL_PDF:
