@@ -1,10 +1,13 @@
 .pedido-visualizar {
-  max-width: 1200px;
+  overflow: auto;
+  margin: 0 20px !important;
+  height: calc(100vh - 100px) !important;
 }
 
 .pedido-visualizar ul {
   list-style: none;
   padding-left: 0;
+  font-size: 14px;
 }
 
 .pedido-visualizar li label {
@@ -124,8 +127,17 @@
   border-top-right-radius: 3px;
 }
 
+.pedido-visualizar .pedido-responsive {
+  display: none;
+}
+
 @media (max-width: 875px) {
   .producto-listado .table {
+    display: none;
+  }
+
+  .producto-listado .filter-by .filtro-numero,
+  .producto-listado .filter-by .filtro-estado {
     display: none;
   }
 
@@ -207,14 +219,33 @@
   .producto-listado .pedidos-responsive {
     max-height: 270px;
   }
-}
 
-@media (max-width: 570px) {
-  .producto-listado .filter-by .filtro-numero,
-  .producto-listado .filter-by .filtro-estado {
+  .pedido-visualizar table {
+    display: none;
+  }
+
+  .pedido-visualizar .pedido-responsive {
     display: block;
   }
 
+  .pedido-visualizar li {
+    background-color: #dbd5d5 !important;
+  }
+
+  .pedido-visualizar .item-total {
+    display: none;
+  }
+
+  .pedido-visualizar {
+    margin: 0 5px !important;
+  }
+
+  .pedido-visualizar .border-black {
+    border-bottom: 1px solid black;
+  }
+}
+
+@media (max-width: 570px) {
   .pedidos-responsive .pedido-tarjeta {
     width: 220px !important;
     min-height: 140px;
@@ -232,6 +263,10 @@
 
   .producto-listado .tabla-listado-titulo,
   .producto-listado h4 {
+    font-size: 15px;
+  }
+
+  .pedido-visualizar .tabla-listado-titulo {
     font-size: 15px;
   }
 
