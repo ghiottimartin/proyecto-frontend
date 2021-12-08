@@ -60,7 +60,7 @@ function Visualizar(props) {
             )
         })
         listaResponsive.push(
-            <li className="list-group-item">
+            <li key="total-responsive" className="list-group-item">
                 <label>Total:</label>
                 <span>{pedido.total_texto}</span>
             </li>
@@ -68,22 +68,22 @@ function Visualizar(props) {
         return (
             <div className="pedido-visualizar mt-4">
                 <ul>
-                    <li>
+                    <li key="fecha">
                         <label>Fecha:</label>
                         <span>{pedido.fecha_texto}</span>
                     </li>
-                    <li>
+                    <li key="tipo">
                         <label>Tipo:</label>
                         <span>{pedido.tipo_texto}</span>
                     </li>
-                    <li style={{ display: mostrarUsuarios ? "block" : "none" }}>
+                    <li key="usuario" style={{ display: mostrarUsuarios ? "block" : "none" }}>
                         <label>Usuario:</label>{pedido.usuario_nombre} <span className="texto-chico">({pedido.usuario_email})</span>
                     </li>
-                    <li>
+                    <li key="estado">
                         <label>Estado:</label>
                         <span className={pedido.estado_clase}>{pedido.estado_texto}</span>
                     </li>
-                    <li className="item-total">
+                    <li key="total" className="item-total">
                         <label>Total:</label>
                         <span>{pedido.total_texto}</span>
                     </li>
