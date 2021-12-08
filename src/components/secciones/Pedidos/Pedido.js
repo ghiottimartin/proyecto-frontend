@@ -82,6 +82,10 @@ function Pedido(props) {
                     {pedido.fecha_texto}
                 </span>
                 <span>
+                    <i className="fas fa-globe-asia mr-2"></i>
+                    {pedido.tipo_texto}
+                </span>
+                <span>
                     <i className="fas fa-money-bill-wave mr-2"></i>
                     {pedido.total_texto}
                 </span>

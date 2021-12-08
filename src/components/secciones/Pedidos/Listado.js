@@ -390,7 +390,7 @@ class Listado extends React.Component {
             let pedido = this.props.pedidos.byId.pedidos[idPedido];
             if (pedido && pedido.id) {
                 let operaciones = this.getOperacionesPedido(pedido);
-                Pedidos.push(<Pedido key={pedido.id + "-pedido"} {...this.props} pedido={pedido} operaciones={operaciones} ejecutarOperacion={(pedido, accion) => this.ejecutarOperacion(pedido, accion)}/>)
+                Pedidos.push(<Pedido key={pedido.id + "-pedido"} {...this.props} pedido={pedido} operaciones={operaciones} ejecutarOperacion={(pedido, accion) => this.ejecutarOperacion(pedido, accion)} />)
             }
         });
         return Pedidos;
@@ -518,23 +518,23 @@ class Listado extends React.Component {
                     </table>
 
                     <div className="pedidos-responsive">
-                        {pedidosResponsive}
+                        {buscando ? <Loader display={true} /> : pedidosResponsive}
                     </div>
+                    {
+                        buscando || totalCero ?
+                            ''
+                            :
+                            <div className="paginacion-contenedor">
+                                <Paginacion
+                                    activePage={filtros.paginaActual}
+                                    itemsCountPerPage={filtros.registrosPorPagina}
+                                    totalItemsCount={registros}
+                                    pageRangeDisplayed={5}
+                                    onChange={(e) => this.cambiarDePagina(e)}
+                                />
+                            </div>
+                    }
                 </div>
-                {
-                    buscando || totalCero ?
-                        ''
-                        :
-                        <div className="paginacion-contenedor">
-                            <Paginacion
-                                activePage={filtros.paginaActual}
-                                itemsCountPerPage={filtros.registrosPorPagina}
-                                totalItemsCount={registros}
-                                pageRangeDisplayed={5}
-                                onChange={(e) => this.cambiarDePagina(e)}
-                            />
-                        </div>
-                }
             </div>
         )
     }

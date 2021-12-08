@@ -36,11 +36,10 @@
 
 .producto-listado .pedidos-responsive {
   display: none;
+  max-height: 40%;
 }
 
 .pedidos-responsive .pedido-tarjeta {
-  min-height: 170px;
-  max-height: 300px;
   position: relative;
   width: 250px;
   display: flex;
@@ -178,15 +177,15 @@
   }
 
   .paginacion-contenedor {
-    position: absolute;
-    bottom: 25px;
-    left: 0;
-    right: 0;
-    margin: auto;
+    margin-top: 10px;
   }
 
   .producto-listado {
     margin: 0;
+  }
+
+  .pedido-listado-contenedor {
+    min-height: 500px;
   }
 
   .producto-listado .pedidos-responsive {
@@ -198,7 +197,6 @@
     row-gap: 20px;
     position: relative;
     overflow-y: auto;
-    max-height: 350px;
   }
 
   .producto-listado .pedidos-responsive-item {
@@ -268,10 +266,6 @@
 
   .pedido-visualizar .tabla-listado-titulo {
     font-size: 15px;
-  }
-
-  .pedidos-responsive {
-    height: 150px;
   }
 
   .producto-listado .form-filtros {
