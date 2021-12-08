@@ -12,6 +12,7 @@ import "../../../../assets/css/Listado.css";
 //Constants
 import c from "../../../../constants/constants";
 import * as rutas from "../../../../constants/rutas";
+import * as colores from "../../../../constants/colores";
 
 //Componentes
 import AddBoxIcon from "@material-ui/icons/AddBox";
@@ -403,11 +404,20 @@ class Listado extends React.Component {
                 <div className="table-responsive tarjeta-body productos-listado">
                     <div className="d-flex justify-content-between">
                         <Titulo ruta={rutas.GESTION} titulo={"Productos"} clase="tabla-listado-titulo" operaciones={[operacion]} />
-                        <a href="#"
-                            onClick={() => history.push(rutas.PRODUCTO_ALTA + "?volverA=" + rutas.PRODUCTOS_LISTAR_ADMIN)}
-                            data-toggle="tooltip" data-original-title="" title="">
-                            <AddBoxIcon style={{ color: '#5cb860' }} />
-                        </a>
+                        <div className="d-flex">
+                            <a href="#"
+                                style={{width: "100px"}}
+                                onClick={() => history.push(rutas.INGRESO_MERCADERIA_ALTA + "?volverA=" + rutas.PRODUCTOS_LISTAR_ADMIN)}
+                                data-toggle="tooltip" data-original-title="" title="">
+                                Ingreso
+                                <AddBoxIcon style={{ color: colores.COLOR_PRIMAY }} />
+                            </a>
+                            <a href="#"
+                                onClick={() => history.push(rutas.PRODUCTO_ALTA + "?volverA=" + rutas.PRODUCTOS_LISTAR_ADMIN)}
+                                data-toggle="tooltip" data-original-title="" title="">
+                                <AddBoxIcon style={{ color: '#5cb860' }} />
+                            </a>
+                        </div>
                     </div>
                     <Filtros
                         {...this.props}

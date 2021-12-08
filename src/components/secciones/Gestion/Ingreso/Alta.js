@@ -296,9 +296,13 @@ function Alta(props) {
         placeholder = "No quedan más productos de compra directa para agregar."
     }
 
+    let linkVolver = rutas.getQuery('volverA')
+    if (linkVolver === null || linkVolver === "" || linkVolver === undefined) {
+        linkVolver = rutas.INGRESO_MERCADERIA
+    }
     return (
         <div className="ingreso-mercaderia tarjeta-body">
-            <Titulo ruta={rutas.INGRESO_MERCADERIA} titulo={titulo} />
+            <Titulo ruta={linkVolver} titulo={titulo} />
             <div className="row ingreso-mercaderia-contenedor">
                 <div className="col-lg-4">
                     <div className="lista-seleccionable">
