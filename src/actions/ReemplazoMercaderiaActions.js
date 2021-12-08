@@ -12,6 +12,7 @@ import * as errorMessages from '../constants/MessageConstants';
 
 //Normalizer
 import { normalizeDato, normalizeDatos } from "../normalizers/normalizeReemplazosMercaderia";
+import { fetchProductos, resetProductos } from "./ProductoActions";
 
 //REEMPLAZO CREATE
 export const CREATE_REEMPLAZO = 'CREATE_REEMPLAZO';
@@ -76,6 +77,8 @@ export function saveCreateReemplazo() {
                 }
                 dispatch(reveiceCreateReemplazo(mensaje));
                 dispatch(resetCreateReemplazo());
+                dispatch(resetProductos())
+                dispatch(fetchProductos(false))
                 history.push(rutas.REEMPLAZO_MERCADERIA_LISTAR);
             })
             .catch(function (error) {
