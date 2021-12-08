@@ -37,7 +37,8 @@ class ItemCarrito extends React.Component {
     }
 
     render() {
-        const {linea, guardando, productoGuardando, borrando} = this.props;
+        const { linea, productoGuardando, borrando } = this.props;
+        const guardando = this.props.pedidos.create.isCreating;
         if (!linea) {
             return "";
         }

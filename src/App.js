@@ -222,12 +222,12 @@ class App extends React.Component {
         const abierto = this.props.pedidos.byId.abierto;
         if (abierto.id > 0 && !sinLineas) {
             Swal.fire({
-                title: `¿Está seguro de anular el pedido? `,
+                title: `¿Está seguro de borrar el pedido? `,
                 icon: 'warning',
                 showCloseButton: true,
                 showCancelButton: true,
                 focusConfirm: true,
-                confirmButtonText: 'Anular',
+                confirmButtonText: 'Borrar',
                 cancelButtonText: 'Cancelar',
                 confirmButtonColor: colores.COLOR_ROJO,
                 cancelButtonColor: '#bfbfbf',
@@ -242,7 +242,6 @@ class App extends React.Component {
 
     render() {
         const { mostrar, producto, borrando, blur } = this.state;
-        const guardando = this.props.pedidos.create.isCreating;
         let claseBlur = blur ? "forzar-blur" : "";
         return (
             <div className="app">
@@ -252,7 +251,6 @@ class App extends React.Component {
                     blur={blur}
                     mostrar={mostrar}
                     producto={producto}
-                    guardando={guardando}
                     borrando={borrando}
                     changeMostrar={() => this.changeMostrar()}
                     anularPedido={(sinLineas) => this.anularPedido(sinLineas)}
@@ -267,7 +265,6 @@ class App extends React.Component {
                                 changeMostrar={() => this.changeMostrar()}
                                 agregarProducto={(producto, cantidad) => this.agregarProducto(producto, cantidad)}
                                 producto={producto}
-                                guardando={guardando}
                             />}
                         />
                         <Route exact path={rutas.LOGIN} component={Login} />

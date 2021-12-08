@@ -24,43 +24,17 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart";
 class Producto extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {
-            cantidad: null,
-        }
-    }
-
-    componentDidMount() {
-        if (this.state.cantidad === null) {
-            let cantidad = this.props.getCantidad(this.props.producto);
-            this.setState({
-                cantidad: cantidad
-            })
-        }
-    }
-
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        let pedido = this.props.pedidos.byId.abierto;
-        let lineas = pedido && Array.isArray(pedido.lineas) ? pedido.lineas : [];
-        let hayLineas = lineas.length > 0;
-
-        let cantidad = this.props.getCantidad(this.props.producto);
-        var cantidadActual = this.state.cantidad;
-        if (hayLineas && (cantidadActual === null || cantidadActual !== cantidad)) {
-            this.setState({
-                cantidad: cantidad
-            })
-        }
+        this.state = {}
     }
 
     render() {
         const props = this.props;
-        let { cantidad } = this.state;
-        let guardando = props.guardando;
+        let cantidad = this.props.getCantidad(this.props.producto);
         let idProducto = props.productoGuardando;
-        let buscando = props.pedidos.byId.isFetchingPedido
-        let loader = buscando || guardando && parseInt(idProducto) === parseInt(props.producto.id) && idProducto !== 0;
+        let creando = props.pedidos.create.isCreating;
+        let loader = creando && parseInt(idProducto) === parseInt(props.producto.id) && idProducto !== 0;
         const producto = props.producto;
-        if (cantidad === null) {
+        if (isNaN(cantidad)) {
             cantidad = 0;
         }
 

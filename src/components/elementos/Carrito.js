@@ -64,7 +64,6 @@ class Carrito extends React.Component {
                 <ItemCarrito
                     key={linea.producto.id}
                     linea={linea}
-                    guardando={this.props.guardando}
                     borrando={this.props.borrando}
                     productoGuardando={this.props.producto}
                     agregarProducto={(producto, cantidad) => this.props.agregarProducto(producto, cantidad)}
@@ -128,7 +127,7 @@ class Carrito extends React.Component {
                         Enviar pedido
                     </button>
                     <button className="anular" disabled={deshabilitar} onClick={() => this.props.anularPedido(deshabilitar)}>
-                        Anular
+                        Borrar
                     </button>
                 </div>
                 <div className="carrito-compras">

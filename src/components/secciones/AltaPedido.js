@@ -44,7 +44,6 @@ class AltaPedido extends React.Component {
                     <Producto
                         key={"p-" + producto.id}
                         producto={producto}
-                        guardando={this.props.guardando}
                         productoGuardando={this.props.producto}
                         getCantidad={(producto) => this.props.getCantidad(producto)}
                         agregarProducto={(producto, cantidad) => this.props.agregarProducto(producto, cantidad)}
