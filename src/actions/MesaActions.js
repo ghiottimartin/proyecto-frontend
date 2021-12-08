@@ -379,25 +379,13 @@ export function fetchMesaById(id) {
                 switch (error.status) {
                     case 401:
                         dispatch(logout())
-                        dispatch(errorMesas(errorMessages.UNAUTHORIZED_TOKEN))
+                        dispatch(errorMesaById(errorMessages.UNAUTHORIZED_TOKEN))
                         return
                     default:
-                        dispatch(errorMesas(errorMessages.GENERAL_ERROR))
+                        dispatch(errorMesaById(errorMessages.GENERAL_ERROR))
                         return
                 }
             })
-    }
-}
-
-function shouldFetchMesaById(id, state) {
-    const mesasById   = state.mesas.byId
-    const mesasAllIds = state.mesas.allIds
-    if (mesasById.isFetchingMesa) {
-        return false
-    } else if (mesasAllIds.length === 0) {
-        return true
-    } else {
-        return mesasById.didInvalidateMesa
     }
 }
 

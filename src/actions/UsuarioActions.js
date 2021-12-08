@@ -1,7 +1,7 @@
 import history from '../history';
 
 //Actions
-import { logout, changeLogin } from "./AuthenticationActions";
+import { logout } from "./AuthenticationActions";
 import { downloadBlob } from "./FileActions";
 
 //Api
@@ -469,26 +469,14 @@ export function fetchUsuarioById(id) {
             .catch(function (error) {
                 switch (error.status) {
                     case 401:
-                        dispatch(errorUsuarios(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(errorUsuarioById(errorMessages.UNAUTHORIZED_TOKEN));
                         dispatch(logout());
                         return;
                     default:
-                        dispatch(errorUsuarios(errorMessages.GENERAL_ERROR));
+                        dispatch(errorUsuarioById(errorMessages.GENERAL_ERROR));
                         return;
                 }
             });
-    }
-}
-
-function shouldFetchUsuarioById(id, state) {
-    const usuariosById = state.usuarios.byId;
-    const usuariosAllIds = state.usuarios.allIds;
-    if (usuariosById.isFetchingUsuario) {
-        return false;
-    } else if (usuariosAllIds.length === 0) {
-        return true;
-    } else {
-        return usuariosById.didInvalidateUsuario;
     }
 }
 

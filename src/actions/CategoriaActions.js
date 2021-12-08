@@ -340,25 +340,13 @@ export function fetchCategoriaById(id) {
                 switch (error.status) {
                     case 401:
                         dispatch(logout());
-                        dispatch(errorCategorias(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(errorCategoriaById(errorMessages.UNAUTHORIZED_TOKEN));
                         return;
                     default:
-                        dispatch(errorCategorias(errorMessages.GENERAL_ERROR));
+                        dispatch(errorCategoriaById(errorMessages.GENERAL_ERROR));
                         return;
                 }
             });
-    }
-}
-
-function shouldFetchCategoriaById(id, state) {
-    const categoriasById   = state.categorias.byId;
-    const categoriasAllIds = state.categorias.allIds;
-    if (categoriasById.isFetchingCategoria) {
-        return false;
-    } else if (categoriasAllIds.length === 0) {
-        return true;
-    } else {
-        return categoriasById.didInvalidateCategoria;
     }
 }
 

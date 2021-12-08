@@ -12,7 +12,7 @@ import * as rutas from '../constants/rutas.js';
 import * as errorMessages from '../constants/MessageConstants';
 
 //Normalizer
-import { normalizeDato, normalizeDatos } from "../normalizers/normalizeTurnos";
+import { normalizeDatos } from "../normalizers/normalizeTurnos";
 import { fetchMesaById, updateMesa } from './MesaActions';
 
 // CREACION TURNO DE MESAS

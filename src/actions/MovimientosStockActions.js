@@ -1,6 +1,3 @@
-//Actions
-import { logout } from "./AuthenticationActions";
-
 //Api
 import movimientos from "../api/movimientos";
 
@@ -98,18 +95,6 @@ export function fetchMovimientos(idProducto, idIngreso) {
                         return;
                 }
             });
-    }
-}
-
-function shouldFetchMovimientos(state) {
-    const movimientosById = state.movimientos.byId;
-    const movimientosAllIds = state.movimientos.allIds;
-    if (movimientosById.isFetching) {
-        return false;
-    } else if (movimientosAllIds.length === 0) {
-        return true;
-    } else {
-        return movimientosById.didInvalidate;
     }
 }
 

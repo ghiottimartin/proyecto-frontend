@@ -1,7 +1,4 @@
 import c from "../constants/constants";
-import history from "../history";
-// import {changeUser, sendingRequest} from "../actions/AuthenticationActions";
-// require('es6-promise').polyfill();
 require('isomorphic-fetch');
 
 

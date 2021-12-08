@@ -329,25 +329,13 @@ export function fetchProductoById(id) {
                 //dispatch(logout());
                 switch (error.status) {
                     case 401:
-                        dispatch(errorProductos(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(errorProductoById(errorMessages.UNAUTHORIZED_TOKEN));
                         return;
                     default:
-                        dispatch(errorProductos(errorMessages.GENERAL_ERROR));
+                        dispatch(errorProductoById(errorMessages.GENERAL_ERROR));
                         return;
                 }
             });
-    }
-}
-
-function shouldFetchProductoById(id, state) {
-    const productosById = state.productos.byId;
-    const productosAllIds = state.productos.allIds;
-    if (productosById.isFetchingProducto) {
-        return false;
-    } else if (productosAllIds.length === 0) {
-        return true;
-    } else {
-        return productosById.didInvalidateProducto;
     }
 }
 

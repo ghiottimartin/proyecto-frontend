@@ -271,18 +271,6 @@ export function fetchPedidos(idUsuario) {
     }
 }
 
-function shouldFetchPedidos(state) {
-    const pedidosById = state.pedidos.byId;
-    const pedidosAllIds = state.pedidos.allIds;
-    if (pedidosById.isFetching) {
-        return false;
-    } else if (pedidosAllIds.length === 0) {
-        return true;
-    } else {
-        return pedidosById.didInvalidate;
-    }
-}
-
 //PEDIDO
 export const INVALIDATE_PEDIDO_ID = 'INVALIDATE_PEDIDO_ID';
 export const REQUEST_PEDIDO_ID = "REQUEST_PEDIDO_ID";
@@ -343,25 +331,13 @@ export function fetchPedidoById(id) {
                 //dispatch(logout());
                 switch (error.status) {
                     case 401:
-                        dispatch(errorPedidos(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(errorPedidoById(errorMessages.UNAUTHORIZED_TOKEN));
                         return;
                     default:
-                        dispatch(errorPedidos(errorMessages.GENERAL_ERROR));
+                        dispatch(errorPedidoById(errorMessages.GENERAL_ERROR));
                         return;
                 }
             });
-    }
-}
-
-function shouldFetchPedidoById(id, state) {
-    const pedidosById = state.pedidos.byId;
-    const pedidosAllIds = state.pedidos.allIds;
-    if (pedidosById.isFetchingPedido) {
-        return false;
-    } else if (pedidosAllIds.length === 0) {
-        return true;
-    } else {
-        return pedidosById.didInvalidatePedido;
     }
 }
 
@@ -819,11 +795,11 @@ export function fetchPedidosVendedor() {
             .catch(function (error) {
                 switch (error.status) {
                     case 401:
-                        dispatch(errorPedidos("No está autorizado para ver los pedidos vendidos."));
+                        dispatch(errorPedidosVendedor("No está autorizado para ver los pedidos vendidos."));
                         history.push(rutas.PEDIDOS_COMENSAL)
                         return;
                     default:
-                        dispatch(errorPedidos(errorMessages.GENERAL_ERROR));
+                        dispatch(errorPedidosVendedor(errorMessages.GENERAL_ERROR));
                         return;
                 }
             });
