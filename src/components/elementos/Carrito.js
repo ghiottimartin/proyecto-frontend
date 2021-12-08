@@ -83,7 +83,7 @@ class Carrito extends React.Component {
         if (!valido) {
             return;
         }
-
+        this.props.changeMostrar()
         this.setState({ showCerradoPedido: true })
 
     }

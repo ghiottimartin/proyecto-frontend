@@ -415,6 +415,7 @@ function create(state = {
 
 function update(state = {
     isUpdating: false,
+    isClosing: false,
     isDownloading: false,
     cerrando: false,
     activo: {},
@@ -425,24 +426,28 @@ function update(state = {
         case RESET_CERRAR_PEDIDO:
             return Object.assign({}, state, {
                 isUpdating: false,
+                isClosing: false,
                 success: "",
                 error: null,
             });
         case REQUEST_CERRAR_PEDIDO:
             return Object.assign({}, state, {
                 isUpdating: true,
+                isClosing: true,
                 success: "",
                 error: null,
             });
         case RECEIVE_CERRAR_PEDIDO:
             return Object.assign({}, state, {
                 isUpdating: false,
+                isClosing: false,
                 success: action.message,
                 error: null,
             });
         case ERROR_CERRAR_PEDIDO:
             return Object.assign({}, state, {
                 isUpdating: false,
+                isClosing: false,
                 success: "",
                 error: action.error
             });

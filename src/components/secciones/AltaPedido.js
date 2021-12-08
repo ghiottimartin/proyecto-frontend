@@ -35,7 +35,8 @@ class AltaPedido extends React.Component {
     }
 
     render() {
-        const buscando = this.props.productos.byId.isFetching;
+        const isClosing = this.props.pedidos.update.isClosing
+        const buscando = this.props.productos.byId.isFetching || isClosing;
         let productos = this.props.productos.allIds.map(id => {
             let producto = this.props.productos.byId.productos[id];
             if (producto !== undefined && producto.venta_directa && producto.stock > producto.stock_seguridad) {
@@ -80,6 +81,7 @@ class AltaPedido extends React.Component {
 function mapStateToProps(state) {
     return {
         productos: state.productos,
+        pedidos: state.pedidos,
     };
 }
 
