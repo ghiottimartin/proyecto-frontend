@@ -211,7 +211,7 @@ function Listado(props) {
                 tipo_venta = `(${tipo_venta})`
             }
             Ventas.push(
-                <tr key={venta.id}>
+                <tr key={venta.id} className={venta.clase_venta_impresa} style={{color: 'black'}}>
                     <td>{venta.id_texto}</td>
                     <td>{venta.fecha_texto}</td>
                     <td>

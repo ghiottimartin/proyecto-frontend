@@ -429,6 +429,8 @@ export function pdfVenta(id) {
                 var id_texto = id.toString().padStart(5, 0);
                 var nombre = `Venta ${id_texto}.pdf`;
                 dispatch(receivePdfVenta(blob, nombre));
+                dispatch(resetVentas())
+                dispatch(fetchVentas())
             })
             .catch(function (error) {
                 switch (error.status) {
