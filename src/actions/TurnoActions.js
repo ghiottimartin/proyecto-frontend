@@ -14,6 +14,7 @@ import * as errorMessages from '../constants/MessageConstants';
 //Normalizer
 import { normalizeDatos } from "../normalizers/normalizeTurnos";
 import { fetchMesaById, updateMesa } from './MesaActions';
+import { fetchProductos, resetProductos } from './ProductoActions';
 
 // CREACION TURNO DE MESAS
 export const CREATE_TURNO = 'CREATE_TURNO'
@@ -163,6 +164,8 @@ export function saveUpdateTurno(volverA, mensaje) {
                 }
             })
             .then(() => {
+                dispatch(resetProductos())
+                dispatch(fetchProductos(false))
                 if (rutas.validarRuta(volverA)) {
                     history.push(volverA)
                 } else {
