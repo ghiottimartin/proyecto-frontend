@@ -67,6 +67,11 @@ function Visualizar(props) {
                 </tr>
             )
         })
+
+        let tipo_venta = venta.tipo_venta_online
+        if (tipo_venta !== "") {
+            tipo_venta = `(${tipo_venta})`
+        }
         return (
             <div className="venta-visualizar mt-4">
                 <ul>
@@ -78,7 +83,7 @@ function Visualizar(props) {
                         <label>Usuario:</label>{venta.usuario_nombre} <span className="texto-chico">({venta.usuario_email})</span>
                     </li>
                     <li>
-                        <label>Tipo:</label><span>{venta.tipo_venta}</span>
+                        <label>Tipo:</label><span>{venta.tipo_venta}</span> <span className="text-muted">{tipo_venta}</span>
                     </li>
                     <li className="d-flex align-items-center">
                         <label className="mb-0">Estado:</label>

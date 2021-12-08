@@ -206,6 +206,10 @@ function Listado(props) {
         let venta = ventas.byId.ventas[idVenta];
         if (venta && venta.id) {
             let operaciones = getOperacionesVenta(venta);
+            let tipo_venta = venta.tipo_venta_online
+            if (tipo_venta !== "") {
+                tipo_venta = `(${tipo_venta})`
+            }
             Ventas.push(
                 <tr key={venta.id}>
                     <td>{venta.id_texto}</td>
@@ -213,7 +217,7 @@ function Listado(props) {
                     <td>
                         {venta.tipo_venta}
                         <br/>
-                        <span className="text-muted">{venta.tipo_venta_online}</span>
+                        <span className="text-muted">{tipo_venta}</span>
                     </td>
                     <td>
                         <span>{venta.usuario_nombre}</span>
