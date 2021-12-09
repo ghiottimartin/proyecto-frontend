@@ -359,7 +359,7 @@ class Listado extends React.Component {
                         <td>{producto.nombre}</td>
                         <td>{producto.categoria_texto}</td>
                         <td className="text-center">{this.getTipoProductoHtml(producto)}</td>
-                        <td className="text-right px-5">
+                        <td className="text-center px-5">
                             <div className="d-flex justify-content-center align-items-center">
                                 <span>{producto.stock}</span>
                             </div>
