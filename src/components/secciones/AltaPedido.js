@@ -56,7 +56,7 @@ class AltaPedido extends React.Component {
         let productosHtml = ordenados.map(producto => {
             return (
                 <Producto
-                    key={"p-" + producto.id}
+                    key={"pedido-" + producto.id}
                     producto={producto}
                     guardando={this.props.guardando}
                     productoGuardando={this.props.producto}
