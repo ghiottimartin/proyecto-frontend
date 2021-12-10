@@ -807,19 +807,19 @@ export function fetchPedidosVendedor() {
 }
 
 // FILTROS PEDIDO
-export const UPDATE_FILTROS = 'UPDATE_FILTROS';
-export const RESET_FILTROS = 'RESET_FILTROS';
+export const UPDATE_FILTROS_PEDIDOS = 'UPDATE_FILTROS_PEDIDOS';
+export const RESET_FILTROS_PEDIDOS = 'RESET_FILTROS_PEDIDOS';
 
 export function updateFiltros(filtros) {
     return {
-        type: UPDATE_FILTROS,
+        type: UPDATE_FILTROS_PEDIDOS,
         filtros
     }
 }
 
 export function resetFiltros() {
     return {
-        type: RESET_FILTROS
+        type: RESET_FILTROS_PEDIDOS
     }
 }
 

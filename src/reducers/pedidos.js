@@ -44,8 +44,8 @@ import {
     RECEIVE_PEDIDOS_VENDEDOR,
     ERROR_PEDIDOS_VENDEDOR,
     RESET_PEDIDOS_VENDEDOR,
-    UPDATE_FILTROS,
-    RESET_FILTROS,
+    UPDATE_FILTROS_PEDIDOS,
+    RESET_FILTROS_PEDIDOS,
     RECEIVE_PEDIDO_DISPONIBLE,
     REQUEST_PEDIDO_DISPONIBLE,
     ERROR_PEDIDO_DISPONIBLE,
@@ -324,11 +324,11 @@ function pedidosById(state = {
                 lastUpdated: null,
                 pedidos: [],
             });
-        case UPDATE_FILTROS:
+        case UPDATE_FILTROS_PEDIDOS:
             return Object.assign({}, state, {
                 filtros: merge({}, state.filtros, action.filtros)
             });
-        case RESET_FILTROS:
+        case RESET_FILTROS_PEDIDOS:
             return Object.assign({}, state, {
                 filtros: filtrosIniciales
             });
