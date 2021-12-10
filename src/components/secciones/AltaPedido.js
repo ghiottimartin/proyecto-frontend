@@ -54,16 +54,18 @@ class AltaPedido extends React.Component {
 
     getProductosHtml(ordenados) {
         let productosHtml = ordenados.map(producto => {
-            return (
-                <Producto
-                    key={"pedido-" + producto.id}
-                    producto={producto}
-                    guardando={this.props.guardando}
-                    productoGuardando={this.props.producto}
-                    getCantidad={(producto) => this.props.getCantidad(producto)}
-                    agregarProducto={(producto, cantidad) => this.props.agregarProducto(producto, cantidad)}
-                />
-            );
+            if (producto !== undefined) {
+                return (
+                    <Producto
+                        key={"pedido-" + producto.id}
+                        producto={producto}
+                        guardando={this.props.guardando}
+                        productoGuardando={this.props.producto}
+                        getCantidad={(producto) => this.props.getCantidad(producto)}
+                        agregarProducto={(producto, cantidad) => this.props.agregarProducto(producto, cantidad)}
+                    />
+                );
+            }
         });
         return productosHtml;
     }
