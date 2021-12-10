@@ -139,6 +139,7 @@ function AltaEdicion(props) {
                             <Form.Control
                                 id="descripcion"
                                 as="textarea" rows={3}
+                                maxLength={99}
                                 value={mesa.descripcion ? mesa.descripcion : ""}
                                 placeholder="Observaciones"
                                 onChange={(e) => onChangeMesa(e)}
