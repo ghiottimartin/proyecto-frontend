@@ -236,7 +236,13 @@ class AltaEdicion extends React.Component {
             }).then((result) => {
                 if (result.isConfirmed) {
                     this.normalizarDatos()
-                    this.props.saveCreateProducto(linkVolver);
+                    let accion = this.props.match.params['accion'];
+                    if (accion === rutas.ACCION_ALTA) {
+                        this.props.saveCreateProducto(linkVolver);
+                    }
+                    if (accion === rutas.ACCION_EDITAR) {
+                        this.props.saveUpdateProducto(linkVolver);
+                    }
                 } else {
                     return false;
                 }
@@ -396,7 +402,6 @@ class AltaEdicion extends React.Component {
                             <Form.Control
                                 id="categoria"
                                 as="select"
-                                defaultValue=""
                                 onChange={(e) => this.onChangeProducto(e)}
                                 value={producto.categoria}
                                 required={true}
