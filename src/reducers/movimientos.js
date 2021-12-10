@@ -9,8 +9,8 @@ import {
     RECEIVE_MOVIMIENTOS,
     ERROR_MOVIMIENTOS,
     RESET_MOVIMIENTOS,
-    UPDATE_FILTROS,
-    RESET_FILTROS
+    UPDATE_FILTROS_MOVIMIENTOS,
+    RESET_FILTROS_MOVIMIENTOS
 
 } from '../actions/MovimientosStockActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions"
@@ -81,11 +81,11 @@ function movimientosById(state = {
                 movimientos: [],
             });
         // FILTROS
-        case UPDATE_FILTROS:
+        case UPDATE_FILTROS_MOVIMIENTOS:
             return Object.assign({}, state, {
                 filtros: merge({}, state.filtros, action.filtros)
             });
-        case RESET_FILTROS:
+        case RESET_FILTROS_MOVIMIENTOS:
             return Object.assign({}, state, {
                 filtros: filtrosIniciales
             });

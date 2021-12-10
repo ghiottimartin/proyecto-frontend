@@ -99,18 +99,18 @@ export function fetchMovimientos(idProducto, idIngreso) {
 }
 
 // FILTROS INGRESO
-export const UPDATE_FILTROS = 'UPDATE_FILTROS';
-export const RESET_FILTROS = 'RESET_FILTROS';
+export const UPDATE_FILTROS_MOVIMIENTOS = 'UPDATE_FILTROS_MOVIMIENTOS';
+export const RESET_FILTROS_MOVIMIENTOS = 'RESET_FILTROS';
 
 export function updateFiltros(filtros) {
     return {
-        type: UPDATE_FILTROS,
+        type: UPDATE_FILTROS_MOVIMIENTOS,
         filtros
     }
 }
 
 export function resetFiltros() {
     return {
-        type: RESET_FILTROS
+        type: RESET_FILTROS_MOVIMIENTOS
     }
 }
