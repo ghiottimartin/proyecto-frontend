@@ -36,7 +36,6 @@ class Listado extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            buscando: true,
             paginaUno: true
         }
     }
@@ -46,15 +45,6 @@ class Listado extends React.Component {
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        let allIds = this.props.productos.allIds;
-        let productos = this.props.productos.byId;
-        let preProductos = prevProps.productos.byId;
-        if (preProductos.isFetching && !productos.isFetching) {
-            this.setState({
-                buscando: false,
-            })
-        }
-
         const cambioOrden = prevProps.productos.byId.filtros.orden !== this.props.productos.byId.filtros.orden
         const cambioDePagina = prevProps.productos.byId.filtros.paginaActual !== this.props.productos.byId.filtros.paginaActual
         const cambioDireccion = prevProps.productos.byId.filtros.direccion !== this.props.productos.byId.filtros.direccion
@@ -326,7 +316,7 @@ class Listado extends React.Component {
     }
 
     render() {
-        const { buscando } = this.state;
+        const buscando = this.props.productos.byId.isFetching;
         const productosById = this.props.productos.byId;
         let Productos = [];
         const total = productosById.total;
