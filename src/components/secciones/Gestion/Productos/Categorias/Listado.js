@@ -140,7 +140,7 @@ class Listado extends React.Component {
                     <tr key={categoria.id}>
                         <td>{categoria.id_texto}</td>
                         <td>{categoria.nombre}</td>
-                        <td>{categoria.descripcion}</td>
+                        <td className="texto-una-linea">{categoria.descripcion}</td>
                         <td>{operaciones}</td>
                     </tr>
                 );
