@@ -357,19 +357,19 @@ export function cerrarTurno(turno) {
 }
 
 // FILTROS TURNOS
-export const UPDATE_FILTROS = 'UPDATE_FILTROS';
-export const RESET_FILTROS = 'RESET_FILTROS';
+export const UPDATE_FILTROS_TURNOS = 'UPDATE_FILTROS_TURNOS';
+export const RESET_FILTROS_TURNOS = 'RESET_FILTROS_TURNOS';
 
 export function updateFiltros(filtros) {
     return {
-        type: UPDATE_FILTROS,
+        type: UPDATE_FILTROS_TURNOS,
         filtros
     }
 }
 
 export function resetFiltros() {
     return {
-        type: RESET_FILTROS
+        type: RESET_FILTROS_TURNOS
     }
 }
 

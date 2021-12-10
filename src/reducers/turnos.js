@@ -7,8 +7,8 @@ import {
     CREATE_TURNO, ERROR_ANULAR_TURNO, ERROR_CERRAR_TURNO, ERROR_COMANDA_TURNO, ERROR_CREATE_TURNO, ERROR_TURNOS,
     ERROR_UPDATE_TURNO, RECEIVE_ANULAR_TURNO, RECEIVE_CERRAR_TURNO, RECEIVE_COMANDA_TURNO, RECEIVE_CREATE_TURNO,
     RECEIVE_TURNOS, RECEIVE_UPDATE_TURNO, REQUEST_ANULAR_TURNO, REQUEST_CERRAR_TURNO, REQUEST_COMANDA_TURNO,
-    REQUEST_CREATE_TURNO, REQUEST_TURNOS, REQUEST_UPDATE_TURNO, RESET_CREATE_TURNO, RESET_FILTROS, RESET_TURNOS,
-    RESET_UPDATE_TURNO, UPDATE_FILTROS, UPDATE_TURNO
+    REQUEST_CREATE_TURNO, REQUEST_TURNOS, REQUEST_UPDATE_TURNO, RESET_CREATE_TURNO, RESET_FILTROS_TURNOS, RESET_TURNOS,
+    RESET_UPDATE_TURNO, UPDATE_FILTROS_TURNOS, UPDATE_TURNO
 } from '../actions/TurnoActions'
 import { LOGOUT_SUCCESS } from '../actions/AuthenticationActions';
 
@@ -70,11 +70,11 @@ function turnosById(state = {
                 turnos: [],
             });
         // FILTROS
-        case UPDATE_FILTROS:
+        case UPDATE_FILTROS_TURNOS:
             return Object.assign({}, state, {
                 filtros: merge({}, state.filtros, action.filtros)
             });
-        case RESET_FILTROS:
+        case RESET_FILTROS_TURNOS:
             return Object.assign({}, state, {
                 filtros: filtrosIniciales
             });
