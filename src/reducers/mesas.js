@@ -14,8 +14,8 @@ import {
     RECEIVE_MESAS,
     ERROR_MESAS,
     RESET_MESAS,
-    UPDATE_FILTROS,
-    RESET_FILTROS,
+    UPDATE_FILTROS_MESAS,
+    RESET_FILTROS_MESAS,
     UPDATE_MESA,
     RECEIVE_MESA_ID,
     REQUEST_MESA_ID,
@@ -113,11 +113,11 @@ function mesasById(state = {
                 error: action.error
             });
         // FILTROS
-        case UPDATE_FILTROS:
+        case UPDATE_FILTROS_MESAS:
             return Object.assign({}, state, {
                 filtros: merge({}, state.filtros, action.filtros)
             });
-        case RESET_FILTROS:
+        case RESET_FILTROS_MESAS:
             return Object.assign({}, state, {
                 filtros: filtrosIniciales
             });
