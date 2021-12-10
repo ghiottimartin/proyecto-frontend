@@ -213,19 +213,19 @@ export function fetchIngresosIfNeeded() {
 
 
 // FILTROS INGRESO
-export const UPDATE_FILTROS = 'UPDATE_FILTROS';
-export const RESET_FILTROS = 'RESET_FILTROS';
+export const UPDATE_FILTROS_INGRESOS = 'UPDATE_FILTROS_INGRESOS';
+export const RESET_FILTROS_INGRESOS = 'RESET_FILTROS_INGRESOS';
 
 export function updateFiltros(filtros) {
     return {
-        type: UPDATE_FILTROS,
+        type: UPDATE_FILTROS_INGRESOS,
         filtros
     }
 }
 
 export function resetFiltros() {
     return {
-        type: RESET_FILTROS
+        type: RESET_FILTROS_INGRESOS
     }
 }
 

@@ -14,8 +14,8 @@ import {
     RECEIVE_INGRESOS,
     ERROR_INGRESOS,
     RESET_INGRESOS,
-    UPDATE_FILTROS,
-    RESET_FILTROS,
+    UPDATE_FILTROS_INGRESOS,
+    RESET_FILTROS_INGRESOS,
     UPDATE_INGRESO,
     RECEIVE_ANULAR_INGRESO,
     REQUEST_ANULAR_INGRESO,
@@ -117,11 +117,11 @@ function ingresosById(state = {
                 error: action.error
             });
         // FILTROS
-        case UPDATE_FILTROS:
+        case UPDATE_FILTROS_INGRESOS:
             return Object.assign({}, state, {
                 filtros: merge({}, state.filtros, action.filtros)
             });
-        case RESET_FILTROS:
+        case RESET_FILTROS_INGRESOS:
             return Object.assign({}, state, {
                 filtros: filtrosIniciales
             });
