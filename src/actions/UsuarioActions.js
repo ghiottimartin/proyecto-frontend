@@ -580,19 +580,19 @@ export function saveDeleteUsuario(id, motivo) {
 }
 
 // FILTROS INGRESO
-export const UPDATE_FILTROS = 'UPDATE_FILTROS';
-export const RESET_FILTROS = 'RESET_FILTROS';
+export const UPDATE_FILTROS_USUARIOS = 'UPDATE_FILTROS_USUARIOS';
+export const RESET_FILTROS_USUARIOS = 'RESET_FILTROS_USUARIOS';
 
 export function updateFiltros(filtros) {
     return {
-        type: UPDATE_FILTROS,
+        type: UPDATE_FILTROS_USUARIOS,
         filtros
     }
 }
 
 export function resetFiltros() {
     return {
-        type: RESET_FILTROS
+        type: RESET_FILTROS_USUARIOS
     }
 }
 

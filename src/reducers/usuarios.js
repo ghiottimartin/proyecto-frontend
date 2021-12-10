@@ -34,8 +34,8 @@ import {
     RECEIVE_DELETE_USUARIO,
     ERROR_DELETE_USUARIO,
     RECEIVE_INHABILITAR_USUARIO,
-    UPDATE_FILTROS,
-    RESET_FILTROS,
+    UPDATE_FILTROS_USUARIOS,
+    RESET_FILTROS_USUARIOS,
     ERROR_MANUAL_PDF,
     RECEIVE_MANUAL_PDF,
     REQUEST_MANUAL_PDF
@@ -147,11 +147,11 @@ function usuariosById(state = {
                 })
             });
         // FILTROS
-        case UPDATE_FILTROS:
+        case UPDATE_FILTROS_USUARIOS:
             return Object.assign({}, state, {
                 filtros: merge({}, state.filtros, action.filtros)
             });
-        case RESET_FILTROS:
+        case RESET_FILTROS_USUARIOS:
             return Object.assign({}, state, {
                 filtros: filtrosIniciales
             });
