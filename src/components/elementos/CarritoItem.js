@@ -14,9 +14,6 @@ import '../../assets/css/Carrito.css';
 //Images
 import productoVacio from "../../assets/img/emptyImg.jpg";
 
-//Material
-import DeleteIcon from '@material-ui/icons/Delete';
-
 //Utils
 import { formatearMoneda } from "../../utils/formateador"
 
@@ -37,7 +34,7 @@ class ItemCarrito extends React.Component {
     }
 
     render() {
-        const { linea, productoGuardando, borrando } = this.props;
+        const { linea } = this.props;
         const guardando = this.props.pedidos.create.isCreating;
         if (!linea) {
             return "";
@@ -51,29 +48,12 @@ class ItemCarrito extends React.Component {
         let productoLinea = linea.producto;
         let precio = productoLinea && productoLinea.precio_vigente ? productoLinea.precio_vigente : "";
         let precio_formateado = precio !== "" ? formatearMoneda(precio) : "";
-
-        let loader         = guardando && productoGuardando === productoLinea.id;
-        let loaderBorrando = borrando && productoGuardando === productoLinea.id;
         if (productoLinea.imagen) {
             try {
                 path = c.BASE_PUBLIC + productoLinea.imagen;
             } catch (e) {
             }
         }
-        let gestionBotones = cantidad > 0 ?
-            <div className="producto-derecha-carrito-cantidad-gestion">
-                <button
-                    className="mr-2"
-                    onClick={() => this.props.agregarProducto(productoLinea, -1)}>
-                    -
-                </button>
-                <span>{cantidad}</span>
-                <button
-                    className="ml-2"
-                    onClick={() => this.props.agregarProducto(productoLinea, 1)}>
-                    +
-                </button>
-            </div> : "";
         return (
             <div key={productoLinea.id} className="carrito-item">
                 <div className="carrito-item-top">
@@ -83,17 +63,14 @@ class ItemCarrito extends React.Component {
                         alt="Imagen de producto" />
                         <h2>{productoLinea.nombre}</h2>
                 </div>
-                <div style={{display: loaderBorrando ? "none" : "flex"}} className="carrito-item-bottom">
-                    {loader ? <Loader display={true}/> : gestionBotones}
-                    <div className="carrito-item-bottom-subtotal font-weight-bold">
-                        <span style={{display: loader ? "none" : "block"}}>P: {precio_formateado}</span>
-                        <span style={{ display: loader ? "none" : "block" }}>ST: {subtotal_formateado}</span>
-                    </div>
-                    <div className="carrito-item-bottom-tacho">
-                        <DeleteIcon className="cursor-pointer" onClick={() => this.props.agregarProducto(productoLinea, 0)}/>
+                <div style={{display: guardando ? "none" : "flex"}} className="carrito-item-bottom">
+                    <div className="d-flex flex-column font-weight-bold">
+                        <span>Cantidad:<span className="ml-2">{cantidad}</span></span>
+                        <span>Precio:<span className="ml-2">{precio_formateado}</span></span>
+                        <span>ST:<span className="ml-2">{subtotal_formateado}</span></span>
                     </div>
                 </div>
-                <div className="loader-borrando" style={{display: loaderBorrando ? "flex" : "none"}}>
+                <div className="loader-borrando" style={{display: guardando ? "flex" : "none"}}>
                     <Loader display={true}/>
                 </div>
             </div>

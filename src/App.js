@@ -1,17 +1,10 @@
 import React from 'react';
-import history from "./history";
-
-//Api
-import auth from "./api/authentication";
 
 //Actions
-import { createPedido, saveCreatePedido, saveDeletePedido, resetPedidoAbierto, fetchPedidoAbierto } from "./actions/PedidoActions";
-import { fetchUsuarioLogueadoIfNeeded } from "./actions/UsuarioActions";
-import { resetProductos, fetchProductos } from "./actions/ProductoActions";
+import { saveDeletePedido } from "./actions/PedidoActions";
 
 //Constants
 import * as rutas from './constants/rutas.js';
-import * as colores from "./constants/colores";
 
 //Components
 import AltaPedido from "./components/secciones/AltaPedido";
@@ -58,18 +51,18 @@ import { connect } from 'react-redux';
 import { withRouter } from "react-router-dom";
 import { Route, Switch } from "react-router";
 
-//Librerías
+//Librerias
 import Swal from 'sweetalert2';
-import isEmpty from "lodash/isEmpty";
+
+//Constants
+import * as colores from "./constants/colores";
 
 class App extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             blur: false,
-            borrando: false,
-            mostrar: false,
-            producto: 0,
+            mostrar: false
         };
     }
 
@@ -77,145 +70,10 @@ class App extends React.Component {
         this.setState({ blur: blur });
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.pedidos.create.isCreating && !this.props.pedidos.create.isCreating) {
-            this.setState({
-                borrando: false,
-                producto: 0,
-            });
-        }
-    }
-
     changeMostrar() {
         this.setState(prevState => ({
             mostrar: !prevState.mostrar,
         }));
-    }
-
-    getCantidad(producto) {
-        if (isEmpty(producto)) {
-            return 0;
-        }
-        const abierto = this.props.pedidos.byId.abierto;
-        let cantidad = 0;
-        if (Array.isArray(abierto.lineas) && abierto.lineas.length === 0) {
-            return cantidad;
-        }
-        let linea = abierto.lineas.find(function (linea) {
-            return linea.producto.id === producto.id;
-        });
-        if (linea) {
-            cantidad = linea.cantidad;
-        }
-        return cantidad;
-    }
-
-    agregarProducto(producto, cantidad) {
-        const logueado = auth.idUsuario();
-        if (!logueado) {
-            Swal.fire({
-                title: `Para comenzar a realizar su pedido debe estar ingresar con su usuario. ¿Desea dirigirse al ingreso? `,
-                icon: 'warning',
-                showCloseButton: true,
-                showCancelButton: true,
-                focusConfirm: true,
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: 'rgb(88, 219, 131)',
-                cancelButtonColor: '#bfbfbf',
-                cancelButtonText: 'Cancelar',
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    let ruta = `${rutas.LOGIN}?volverA=${rutas.ALTA_PEDIDO}`
-                    history.push(ruta);
-                }
-            });
-
-            return;
-        }
-
-        let pedido = this.props.pedidos.byId.abierto;
-        if (pedido.en_curso) {
-            Swal.fire({
-                title: "Ya tiene un pedido en curso. ¿Está seguro de comenzar otro pedido?",
-                icon: 'question',
-                showCloseButton: true,
-                showCancelButton: true,
-                focusConfirm: true,
-                confirmButtonText: 'Aceptar',
-                confirmButtonColor: 'rgb(88, 219, 131)',
-                cancelButtonColor: '#bfbfbf',
-            }).then((result) => {
-                if (result.isConfirmed) {
-
-                    let pedido = this.actualizarPedido(producto, cantidad);
-                    this.crearPedidoAbierto(producto, pedido);
-                }
-            });
-        } else if (pedido.disponible) {
-            let delivery = pedido.delivery
-            let mensaje = 'Ya tiene un pedido por retirar, debe retirarlo por el local o anularlo';
-            if (delivery) {
-                mensaje = 'Tiene un pedido en proceso de envío';
-            }
-            Swal.fire({
-                title: "No puede realizar otro pedido en este momento",
-                text: mensaje,
-                icon: 'question',
-                showCloseButton: true,
-                focusConfirm: true,
-                confirmButtonText: 'Continuar',
-                confirmButtonColor: 'rgb(88, 219, 131)',
-            });
-        } else {
-            let pedido = this.actualizarPedido(producto, cantidad);
-            this.crearPedidoAbierto(producto, pedido);
-        }
-
-    }
-
-    crearPedidoAbierto(productoSolicitado, pedido) {
-        this.setState({
-            producto: productoSolicitado.id,
-        });
-        this.props.createPedido(pedido);
-        this.props.saveCreatePedido();
-    }
-
-    actualizarPedido(producto, cantidad) {
-        let pedido = this.props.pedidos.byId.abierto;
-        let linea = this.getLineaProducto(producto, pedido);
-        let nuevas = pedido.lineas;
-        let idLinea = linea.id > 0 ? linea.id : 0;
-        if (idLinea > 0) {
-            nuevas = pedido.lineas.filter(linea => linea.id !== idLinea);
-        }
-        let nuevaCantidad = cantidad + linea.cantidad;
-        if (cantidad === 0) {
-            nuevaCantidad = 0;
-        }
-        linea.cantidad = nuevaCantidad;
-        nuevas.push(linea);
-        pedido.lineas = nuevas;
-        pedido.lineasIds = nuevas.map(function (linea) {
-            return linea.id;
-        });
-        this.setState({
-            cantidad: nuevaCantidad
-        })
-        return pedido;
-    }
-
-    getLineaProducto(producto, pedido) {
-        let lineas = pedido.lineas;
-        let linea = lineas.find(linea => linea.producto.id === producto.id);
-        if (linea === undefined) {
-            return {
-                id: 0,
-                cantidad: 0,
-                producto: producto
-            };
-        }
-        return linea;
     }
 
     anularPedido(sinLineas) {
@@ -241,7 +99,7 @@ class App extends React.Component {
     }
 
     render() {
-        const { mostrar, producto, borrando, blur } = this.state;
+        const { mostrar, blur } = this.state;
         let claseBlur = blur ? "forzar-blur" : "";
         return (
             <div className="app">
@@ -250,21 +108,15 @@ class App extends React.Component {
                 <Carrito
                     blur={blur}
                     mostrar={mostrar}
-                    producto={producto}
-                    borrando={borrando}
                     changeMostrar={() => this.changeMostrar()}
                     anularPedido={(sinLineas) => this.anularPedido(sinLineas)}
-                    agregarProducto={(producto, cantidad) => this.agregarProducto(producto, cantidad)}
                 />
                 <div className={`contenedor ${claseBlur}`} style={{ width: mostrar ? "calc(100% - 300px)" : "100%" }}>
                     <Switch>
                         <Route exact path={[rutas.ALTA_PEDIDO, "/"]} render={(props) =>
                             <AltaPedido
                                 {...props}
-                                getCantidad={(producto) => this.getCantidad(producto)}
                                 changeMostrar={() => this.changeMostrar()}
-                                agregarProducto={(producto, cantidad) => this.agregarProducto(producto, cantidad)}
-                                producto={producto}
                             />}
                         />
                         <Route exact path={rutas.LOGIN} component={Login} />
@@ -305,37 +157,14 @@ class App extends React.Component {
 
 function mapStateToProps(state) {
     return {
-        authentication: state.authentication,
         pedidos: state.pedidos,
-        productos: state.productos,
     };
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        fetchUsuarioLogueadoIfNeeded: () => {
-            dispatch(fetchUsuarioLogueadoIfNeeded())
-        },
-        createPedido: (pedido) => {
-            dispatch(createPedido(pedido))
-        },
-        saveCreatePedido: (volverA) => {
-            dispatch(saveCreatePedido(volverA))
-        },
         saveDeletePedido: (id) => {
             dispatch(saveDeletePedido(id))
-        },
-        resetPedidoAbierto: () => {
-            dispatch(resetPedidoAbierto())
-        },
-        fetchPedidoAbierto: () => {
-            dispatch(fetchPedidoAbierto())
-        },
-        fetchProductos: (paginar) => {
-            dispatch(fetchProductos(paginar))
-        },
-        resetProductos: () => {
-            dispatch(resetProductos())
         },
     }
 };
