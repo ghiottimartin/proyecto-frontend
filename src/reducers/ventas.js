@@ -14,8 +14,8 @@ import {
     RECEIVE_VENTAS,
     ERROR_VENTAS,
     RESET_VENTAS,
-    UPDATE_FILTROS,
-    RESET_FILTROS,
+    UPDATE_FILTROS_VENTAS,
+    RESET_FILTROS_VENTAS,
     UPDATE_VENTA,
     RECEIVE_ANULAR_VENTA,
     REQUEST_ANULAR_VENTA,
@@ -125,11 +125,11 @@ function ventasById(state = {
                 error: action.error
             });
         // FILTROS
-        case UPDATE_FILTROS:
+        case UPDATE_FILTROS_VENTAS:
             return Object.assign({}, state, {
                 filtros: merge({}, state.filtros, action.filtros)
             });
-        case RESET_FILTROS:
+        case RESET_FILTROS_VENTAS:
             return Object.assign({}, state, {
                 filtros: filtrosIniciales
             });
