@@ -22,7 +22,13 @@ import {
     REQUEST_PRODUCTO_ID,
     RECEIVE_PRODUCTO_ID,
     ERROR_PRODUCTO_ID,
-    RESET_PRODUCTO_ID, RESET_DELETE_PRODUCTO, REQUEST_DELETE_PRODUCTO, RECEIVE_DELETE_PRODUCTO, ERROR_DELETE_PRODUCTO, UPDATE_FILTROS, RESET_FILTROS
+    RESET_PRODUCTO_ID,
+    RESET_DELETE_PRODUCTO,
+    REQUEST_DELETE_PRODUCTO,
+    RECEIVE_DELETE_PRODUCTO,
+    ERROR_DELETE_PRODUCTO,
+    UPDATE_FILTROS_PRODUCTOS,
+    RESET_FILTROS_PRODUCTOS
 
 } from '../actions/ProductoActions';
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions";
@@ -132,11 +138,11 @@ function productosById(state = {
                 })
             });
         // FILTROS
-        case UPDATE_FILTROS:
+        case UPDATE_FILTROS_PRODUCTOS:
             return Object.assign({}, state, {
                 filtros: merge({}, state.filtros, action.filtros)
             });
-        case RESET_FILTROS:
+        case RESET_FILTROS_PRODUCTOS:
             return Object.assign({}, state, {
                 filtros: filtrosIniciales
             });

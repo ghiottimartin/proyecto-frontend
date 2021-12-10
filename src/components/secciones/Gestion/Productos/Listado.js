@@ -224,7 +224,6 @@ class Listado extends React.Component {
     getTipoProductoHtml(producto) {
         const venta_directa = producto.venta_directa;
         const compra_directa = producto.compra_directa;
-        console.log(compra_directa, venta_directa)
         return (
             <div className="d-flex flex-column">
                 <span title="Venta directa" style={{ display: venta_directa ? "block" : "none" }} className="badge badge-success align-self-center mb-1">VD</span>

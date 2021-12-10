@@ -425,18 +425,18 @@ export function saveDeleteProducto(id) {
 }
 
 // FILTROS PRODUCTOS
-export const UPDATE_FILTROS = 'UPDATE_FILTROS';
-export const RESET_FILTROS = 'RESET_FILTROS';
+export const UPDATE_FILTROS_PRODUCTOS = 'UPDATE_FILTROS_PRODUCTOS';
+export const RESET_FILTROS_PRODUCTOS = 'RESET_FILTROS_PRODUCTOS';
 
 export function updateFiltros(filtros) {
     return {
-        type: UPDATE_FILTROS,
+        type: UPDATE_FILTROS_PRODUCTOS,
         filtros
     }
 }
 
 export function resetFiltros() {
     return {
-        type: RESET_FILTROS
+        type: RESET_FILTROS_PRODUCTOS
     }
 }
