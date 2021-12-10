@@ -203,6 +203,7 @@ class AltaEdicion extends React.Component {
                         <Form.Control
                             id="descripcion"
                             as="textarea"
+                            maxLength={250}
                             rows={3}
                             disabled={buscando}
                             onChange={(e) => this.onChangeCategoria(e)}
