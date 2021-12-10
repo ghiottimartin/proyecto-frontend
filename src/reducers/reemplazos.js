@@ -6,8 +6,8 @@ import moment from 'moment'
 import { LOGOUT_SUCCESS } from "../actions/AuthenticationActions"
 import {
     CREATE_REEMPLAZO, ERROR_CREATE_REEMPLAZO, ERROR_REEMPLAZOS, ERROR_REEMPLAZO_ID, INVALIDATE_REEMPLAZOS, RECEIVE_CREATE_REEMPLAZO,
-    RECEIVE_REEMPLAZOS, RECEIVE_REEMPLAZO_ID, REQUEST_CREATE_REEMPLAZO, REQUEST_REEMPLAZOS, REQUEST_REEMPLAZO_ID, RESET_CREATE_REEMPLAZO, RESET_FILTROS,
-    RESET_REEMPLAZOS, UPDATE_FILTROS, UPDATE_REEMPLAZO, RECEIVE_ANULAR_REEMPLAZO, REQUEST_ANULAR_REEMPLAZO, ERROR_ANULAR_REEMPLAZO
+    RECEIVE_REEMPLAZOS, RECEIVE_REEMPLAZO_ID, REQUEST_CREATE_REEMPLAZO, REQUEST_REEMPLAZOS, REQUEST_REEMPLAZO_ID, RESET_CREATE_REEMPLAZO, RESET_FILTROS_REEMPLAZOS,
+    RESET_REEMPLAZOS, UPDATE_FILTROS_REEMPLAZOS, UPDATE_REEMPLAZO, RECEIVE_ANULAR_REEMPLAZO, REQUEST_ANULAR_REEMPLAZO, ERROR_ANULAR_REEMPLAZO
 } from '../actions/ReemplazoMercaderiaActions'
 
 function create(state = {
@@ -158,11 +158,11 @@ function reemplazosById(state = {
                 error: action.error
             });
         // FILTROS
-        case UPDATE_FILTROS:
+        case UPDATE_FILTROS_REEMPLAZOS:
             return Object.assign({}, state, {
                 filtros: merge({}, state.filtros, action.filtros)
             });
-        case RESET_FILTROS:
+        case RESET_FILTROS_REEMPLAZOS:
             return Object.assign({}, state, {
                 filtros: filtrosIniciales
             });

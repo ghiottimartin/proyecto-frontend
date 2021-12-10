@@ -109,19 +109,19 @@ export function saveCreateReemplazo() {
 }
 
 // FILTROS REEMPLAZOS
-export const UPDATE_FILTROS = 'UPDATE_FILTROS';
-export const RESET_FILTROS = 'RESET_FILTROS';
+export const UPDATE_FILTROS_REEMPLAZOS = 'UPDATE_FILTROS_REEMPLAZOS';
+export const RESET_FILTROS_REEMPLAZOS = 'RESET_FILTROS_REEMPLAZOS';
 
 export function updateFiltros(filtros) {
     return {
-        type: UPDATE_FILTROS,
+        type: UPDATE_FILTROS_REEMPLAZOS,
         filtros
     }
 }
 
 export function resetFiltros() {
     return {
-        type: RESET_FILTROS
+        type: RESET_FILTROS_REEMPLAZOS
     }
 }
 
