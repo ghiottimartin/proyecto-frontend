@@ -22,6 +22,11 @@ var mesas = {
     },
     
     saveCreate(mesa) {
+        let ultimo_turno = mesa.ultimo_turno ? mesa.ultimo_turno : null;
+        let mesa_turno = ultimo_turno !== null && !isNaN(ultimo_turno.id) ? ultimo_turno.mesa : null;
+        if (mesa_turno !== null && !isNaN(mesa_turno.id)) {
+            mesa.ultimo_turno.mesa = mesa_turno.id;
+        }
         let defaultOptions = {
             method: 'POST',
             headers: {
@@ -35,6 +40,11 @@ var mesas = {
     },
 
     saveUpdate(mesa) {
+        let ultimo_turno = mesa.ultimo_turno ? mesa.ultimo_turno : null;
+        let mesa_turno = ultimo_turno !== null && !isNaN(ultimo_turno.id) ? ultimo_turno.mesa : null;
+        if (mesa_turno !== null && !isNaN(mesa_turno.id)) {
+            mesa.ultimo_turno.mesa = mesa_turno.id;
+        }
         let defaultOptions = {
             method: 'PUT',
             headers: {
