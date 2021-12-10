@@ -304,7 +304,8 @@ class Listado extends React.Component {
                 inputAttributes: {
                     'aria-label': 'Indique un motivo de anulación',
                     required: true,
-                    minlength: 10
+                    minlength: 10,
+                    maxlength: 240
                 },
                 inputValidator: (value) => {
                     return new Promise((resolve) => {
