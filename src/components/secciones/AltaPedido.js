@@ -37,7 +37,7 @@ class AltaPedido extends React.Component {
     getProductosOrdenados() {
         let productos = this.props.productos.allIds.map(id => {
             const producto = this.props.productos.byId.productos[id]
-            if (producto !== undefined && producto.venta_directa && producto.stock > producto.stock_seguridad) {
+            if (producto !== undefined && producto.venta_directa) {
                 return producto
             }
         })
