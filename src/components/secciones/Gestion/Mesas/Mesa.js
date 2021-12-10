@@ -178,7 +178,7 @@ function Mesa(props) {
                     <i className="fa fa-times"></i>
                 </button>
             </header>
-            <span className="text-center">{mesa.descripcion_texto}</span>
+            <span className="text-center texto-una-linea">{mesa.descripcion_texto}</span>
             <footer>
                 {Operaciones}
             </footer>

@@ -26,7 +26,6 @@ function Listado(props) {
     const mesas = props.mesas
     const titulo = "Listado de mesas"
     const total = mesas.byId.total
-    const filtros = mesas.byId.filtros
     const buscando = mesas.byId.isFetching || mesas.delete.isDeleting || mesas.update.isUpdating
     const cantidadMesas = mesas.allIds.length
 

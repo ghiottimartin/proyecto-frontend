@@ -65,6 +65,12 @@ code {
   color: white;
 }
 
+.texto-una-linea {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
 input, textarea, select, select option {
   background-color: #dbd5d5 !important;
   color: black;
