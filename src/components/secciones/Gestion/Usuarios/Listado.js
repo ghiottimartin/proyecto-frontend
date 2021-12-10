@@ -131,7 +131,8 @@ class Listado extends React.Component {
             inputAttributes: {
                 'aria-label': 'Indique un motivo',
                 required: true,
-                minlength: 10
+                minlength: 10,
+                maxlength: 240
             },
             inputValidator: (value) => {
                 return new Promise((resolve) => {
@@ -327,7 +328,7 @@ class Listado extends React.Component {
                         <td>{usuario.dni}</td>
                         <td>{roles}</td>
                         <td><span className={usuario.habilitado_clase}>{usuario.habilitado_texto}</span></td>
-                        <td>{usuario.observaciones}</td>
+                        <td className="texto-una-linea text-center">{usuario.observaciones}</td>
                         <td>{operaciones}</td>
                     </tr>
                 );
