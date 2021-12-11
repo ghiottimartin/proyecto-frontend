@@ -50,6 +50,11 @@ function Pedido(props) {
             if (rutaComensal && accion === 'entregar') {
                 return;
             }
+
+            if (rutaComensal && accion !== 'visualizar' && accion !== 'anular') {
+                return;
+            }
+
             operaciones.push(
                 <div
                     key={operacion.key + "-responsive"}

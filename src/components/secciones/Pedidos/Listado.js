@@ -357,12 +357,16 @@ class Listado extends React.Component {
      * @param {Object} pedido 
      * @returns {void}
      */
-    getOperacionesPedido(pedido) {
+    getOperacionesPedido(pedido, rolVendedor) {
         let operaciones = [];
         let rutaComensal = this.comprobarRutaTipoComensal();
         pedido.operaciones.forEach(operacion => {
             let accion = operacion.accion;
             if (rutaComensal && accion === 'entregar') {
+                return;
+            }
+
+            if (!rolVendedor && accion !== 'visualizar' && accion !== 'anular') {
                 return;
             }
 
@@ -390,7 +394,7 @@ class Listado extends React.Component {
         this.props.pedidos.allIds.map(idPedido => {
             let pedido = this.props.pedidos.byId.pedidos[idPedido];
             if (pedido && pedido.id) {
-                let operaciones = this.getOperacionesPedido(pedido);
+                let operaciones = this.getOperacionesPedido(pedido, rolVendedor);
                 Pedidos.push(<Pedido key={pedido.id + "-pedido"} {...this.props} pedido={pedido} operaciones={operaciones} ejecutarOperacion={(pedido, accion) => this.ejecutarOperacion(pedido, accion)} />)
             }
         });
@@ -458,7 +462,7 @@ class Listado extends React.Component {
         this.props.pedidos.allIds.map(idPedido => {
             let pedido = this.props.pedidos.byId.pedidos[idPedido];
             if (!noHayPedidos && pedido && pedido.id) {
-                let operaciones = this.getOperacionesPedido(pedido);
+                let operaciones = this.getOperacionesPedido(pedido, rolVendedor);
                 Pedidos.push(
                     <tr key={pedido.id}>
                         <td>{pedido.id_texto}</td>
