@@ -30,6 +30,7 @@ import ShoppingCartIcon from "@material-ui/icons/ShoppingCart"
 
 function Producto(props) {
     const producto = props.producto
+    const cantidad_solicitada = producto.cantidad_pedida ? producto.cantidad_pedida : 0
     const abierto = props.pedidos.byId.abierto
     const creando = props.pedidos.create.isCreating
 
@@ -39,23 +40,6 @@ function Producto(props) {
             path = c.BASE_PUBLIC + producto.imagen
         } catch (e) {
         }
-    }
-    
-    const getCantidad = () => {
-        if (isEmpty(producto)) {
-            return 0
-        }
-        let cantidad = 0
-        if (Array.isArray(abierto.lineas) && abierto.lineas.length === 0) {
-            return cantidad
-        }
-        let linea = abierto.lineas.find(function (linea) {
-            return linea.producto.id === producto.id
-        })
-        if (linea) {
-            cantidad = linea.cantidad
-        }
-        return cantidad
     }
 
     const agregarProducto = (cantidad) => {
@@ -132,7 +116,7 @@ function Producto(props) {
         if (idLinea > 0) {
             nuevas = pedido.lineas.filter(linea => linea.id !== idLinea)
         }
-        let nuevaCantidad = cantidad + linea.cantidad
+        let nuevaCantidad = cantidad + cantidad_solicitada
         if (cantidad === 0) {
             nuevaCantidad = 0
         }
@@ -158,8 +142,7 @@ function Producto(props) {
         return linea
     }
 
-    const cantidad = getCantidad()
-    let gestionCantidad = cantidad === 0 ?
+    let gestionCantidad = cantidad_solicitada === 0 ?
         <Button variant="outlined" color="primary" className="anular no-cerrar-carrito" onClick={() => agregarProducto(1)}>
             <ShoppingCartIcon className="icono-material hvr-grow" />Agregar
         </Button>
@@ -170,7 +153,7 @@ function Producto(props) {
                 onClick={() => agregarProducto(-1)}>
                 -
             </button>
-            <span>{cantidad}</span>
+            <span>{cantidad_solicitada}</span>
             <button
                 className="ml-2"
                 onClick={() => agregarProducto(1)}>

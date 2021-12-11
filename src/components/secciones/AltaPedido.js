@@ -12,6 +12,7 @@ import Loader from "../elementos/Loader";
 
 //CSS
 import "../../assets/css/AltaPedido.css";
+import auth from "../../api/authentication";
 
 class AltaPedido extends React.Component {
     constructor(props) {
@@ -22,7 +23,8 @@ class AltaPedido extends React.Component {
         this.props.resetPedidoAbierto();
         this.props.fetchPedidoAbierto();
         this.props.resetProductos();
-        this.props.fetchProductos(false);
+
+        this.props.fetchProductos(false, true, true);
 
         this.props.updatePedidoAbierto({
             tipo: 'retiro'
@@ -72,15 +74,17 @@ class AltaPedido extends React.Component {
 
     render() {
         const isClosing = this.props.pedidos.update.isClosing
-        const buscando = this.props.productos.byId.isFetching || isClosing;
+        const isCreating = this.props.pedidos.create.isCreating
+        const buscando = this.props.productos.byId.isFetching;
+        const loader = buscando || isClosing || isCreating;
         let ordenados = this.getProductosOrdenados();
         let productos = this.getProductosHtml(ordenados);
         let hayProductos = ordenados.length > 0;
-        let clase = hayProductos && !buscando ? "alta-pedido-productos" : "d-flex justify-content-center align-items-center h-100";
+        let clase = hayProductos && !loader ? "alta-pedido-productos" : "d-flex justify-content-center align-items-center h-100";
         if (!hayProductos) {
             productos = <h2 className="placeholder-producto">No hay productos cargados</h2>;
         }
-        if (buscando) {
+        if (loader) {
             productos = <Loader display={true} />;
         }
         return (
@@ -116,8 +120,8 @@ const mapDispatchToProps = (dispatch) => {
         fetchPedidoAbierto: () => {
             dispatch(fetchPedidoAbierto())
         },
-        fetchProductos: (paginar) => {
-            dispatch(fetchProductos(paginar))
+        fetchProductos: (paginar, admin, abierto) => {
+            dispatch(fetchProductos(paginar, admin, abierto))
         },
         resetProductos: () => {
             dispatch(resetProductos())

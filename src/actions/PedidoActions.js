@@ -75,9 +75,7 @@ export function saveCreatePedido(volverA) {
                 dispatch(reveiceCreatePedido());
                 if (data.exito) {
                     dispatch(resetCreatePedido());
-                    dispatch(receivePedidoAbierto(data));
-                }
-                if (data.datos && data.datos.pedido === 'borrado') {
+                    dispatch(resetPedidoAbierto());
                     dispatch(fetchPedidoAbierto())
                 }
                 if (rutas.validarRuta(volverA)) {
@@ -87,6 +85,10 @@ export function saveCreatePedido(volverA) {
             .then(() => {
                 //Necesario para que actualice las líneas del carrito.
                 dispatch(resetCerrarPedido())
+            })
+            .then(() => { 
+                dispatch(resetProductos())
+                dispatch(fetchProductos(false, true, true))
             })
             .catch(function (error) {
                 dispatch(resetPedidoAbierto())
@@ -503,6 +505,10 @@ export function saveDeletePedido(id) {
                 dispatch(receiveDeletePedido(id, mensaje));
                 dispatch(resetCreatePedido());
                 dispatch(fetchPedidoAbierto())
+            })
+            .then(() => { 
+                dispatch(resetProductos())
+                dispatch(fetchProductos(false, true, true))
             })
             .catch(function (error) {
                 switch (error.status) {

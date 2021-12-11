@@ -217,10 +217,11 @@ function errorProductos(error) {
     }
 }
 
-export function fetchProductos(paginar, admin) {
+export function fetchProductos(paginar, admin, abierto) {
     return (dispatch, getState) => {
         dispatch(requestProductos());
-        const filtros = paginar ? getState().productos.byId.filtros : {}
+        let filtros = paginar ? getState().productos.byId.filtros : {}
+        filtros.abierto = abierto;
         return productos.getAll(filtros, admin)
             .then(function (response) {
                 if (response.status >= 400) {
