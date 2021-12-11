@@ -18,6 +18,9 @@ import "../../../assets/css/Pedidos.css"
 
 function Visualizar(props) {
 
+    let rol = props.match.params.rol
+    const rolVendedor = rol === roles.ROL_VENDEDOR
+
     useEffect(() => {
         const pedido = props.pedidos.update.activo
         if (pedido && !pedido.id) {
@@ -28,7 +31,7 @@ function Visualizar(props) {
         }
     }, [props.match.params.id])
 
-    const getVisualizarHtml = (pedido, mostrarUsuarios) => {
+    const getVisualizarHtml = (pedido) => {
         if (!pedido || !pedido.lineas) {
             return ""
         }
@@ -76,7 +79,7 @@ function Visualizar(props) {
                         <label>Tipo:</label>
                         <span>{pedido.tipo_texto}</span>
                     </li>
-                    <li key="usuario" style={{ display: mostrarUsuarios ? "block" : "none" }}>
+                    <li key="usuario" style={{ display: rolVendedor ? "block" : "none" }}>
                         <label>Usuario:</label>{pedido.usuario_nombre} <span className="texto-chico">({pedido.usuario_email})</span>
                     </li>
                     <li key="estado">
@@ -112,20 +115,11 @@ function Visualizar(props) {
                         {listaResponsive}
                     </ul>
                 </div>
+                <p style={{ display: rolVendedor ? "block" : "none" }}>
+                    <b>Observaciones:</b> {pedido.observaciones}
+                </p>
             </div>
         )
-    }
-
-    /**
-     * Devuelve true si la operación de visualización proviene de un listado
-     * de pedidos para vendedores.
-     * 
-     * @returns {Boolean}
-     */
-    const comprobarMostrarUsuario = () => {
-        let rol = props.match.params.rol
-        let rolVendedor = rol === roles.ROL_VENDEDOR
-        return rolVendedor
     }
 
     const buscando = props.pedidos.byId.isFetchingPedido
@@ -134,9 +128,8 @@ function Visualizar(props) {
     if (pedido && pedido.id) {
         titulo += " P" + pedido.id.toString().padStart(5, 0)
     }
-    let mostrarUsuario = comprobarMostrarUsuario()
-    let html = getVisualizarHtml(pedido, mostrarUsuario)
-    let rutaVolver = mostrarUsuario ? rutas.PEDIDOS_VENDEDOR : rutas.PEDIDOS_COMENSAL
+    let html = getVisualizarHtml(pedido)
+    let rutaVolver = rolVendedor ? rutas.PEDIDOS_VENDEDOR : rutas.PEDIDOS_COMENSAL
     return (
         <div className="tarjeta-body pedido-visualizar">
             <Titulo ruta={rutaVolver} titulo={titulo} clase="tabla-listado-titulo" />
