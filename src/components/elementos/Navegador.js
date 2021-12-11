@@ -21,7 +21,6 @@ import * as roles from '../../constants/roles.js';
 import '../../assets/css/Navegador.css';
 
 //Icons
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import HelpOutlineIcon from '@material-ui/icons/HelpOutline';
 
 //Images
@@ -266,13 +265,11 @@ class Navegador extends React.Component {
                 <div className="derecha">
                     <HelpOutlineIcon style={{display: gestionHabilitada && !isUpdatingUsuario ? "block" : "none"}} className="icono-material hvr-grow" onClick={() => this.decargarManualUsuario()} />
                     <span style={{display: gestionHabilitada && isUpdatingUsuario ? "block" : "none"}} className="cargando-manual">...</span>
-                    <ShoppingCartIcon className="icono-material hvr-grow" onClick={() => this.redirigirAltaPedido()} />
                     <NoLogueado mostrar={!logueado} />
                     <Logueado derecha={true} mostrar={logueado} responsive={responsive} nombre={true} />
                 </div>
                 {responsive ?
                     <div className="derecha-responsive" ref={this.menu}>
-                        <ShoppingCartIcon className="icono-material hvr-grow" onClick={() => this.redirigirAltaPedido()} />
                         <div className="menu-responsive">
                             <img src={menu} alt="Menu" onClick={(e) => this.toogleResponsive(e)} />
                         </div>

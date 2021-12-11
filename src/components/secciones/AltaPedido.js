@@ -9,6 +9,7 @@ import { resetProductos, fetchProductos } from "../../actions/ProductoActions";
 //Components
 import Producto from "../elementos/Producto";
 import Loader from "../elementos/Loader";
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 //CSS
 import "../../assets/css/AltaPedido.css";
@@ -92,8 +93,8 @@ class AltaPedido extends React.Component {
                 <div className="tarjeta-body d-flex flex-column">
                     <h1>Pedido</h1>
                     <div className="carrito-botones justify-content-end no-cerrar-carrito align-self-end">
-                        <button className="entregar bg-success" onClick={() => this.props.changeMostrar()}>
-                            Carrito
+                        <button className="entregar" onClick={() => this.props.changeMostrar()}>
+                            <ShoppingCartIcon className="icono-material hvr-grow" />
                         </button>
                     </div>
                     <div className={clase}>
