@@ -128,6 +128,7 @@ function AltaEdicion(props) {
                                 id="numero"
                                 type="number"
                                 min={0}
+                                max={500}
                                 onChange={(e) => onChangeMesa(e)}
                                 value={mesa.numero ? mesa.numero : ""}
                                 placeholder="Ingrese un número de mesa"
