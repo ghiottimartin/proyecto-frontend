@@ -328,7 +328,7 @@ class Listado extends React.Component {
                         <td>{usuario.dni}</td>
                         <td>{roles}</td>
                         <td><span className={usuario.habilitado_clase}>{usuario.habilitado_texto}</span></td>
-                        <td className="texto-una-linea text-center">{usuario.observaciones}</td>
+                        <td className="texto-una-linea text-center" title={usuario.observaciones}>{usuario.observaciones}</td>
                         <td>{operaciones}</td>
                     </tr>
                 );
