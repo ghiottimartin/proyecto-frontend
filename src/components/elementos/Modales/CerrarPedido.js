@@ -60,6 +60,12 @@ function CerrarPedido(props) {
             errores.push("El monto a pagar no puede ser menor al total.")
         }
 
+        const diferencia = cambio - total;
+        const total_potencia = total * 10;
+        if (diferencia > total_potencia) {
+            errores.push("El cambio es muy grande, ingrese un monto mas chico.")
+        }
+
         const valido = errores.length === 0
         if (!valido) {
             const items = errores.reduce((text, error) => text + '<li style="font-size: 14px;">' + error + '</li>', '')
