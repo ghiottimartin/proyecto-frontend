@@ -419,7 +419,7 @@ class AltaEdicion extends React.Component {
                         <Form.Label>Nombre</Form.Label>
                         <Form.Control
                             id="nombre"
-                            type="nombre"
+                            type="text"
                             onChange={(e) => this.onChangeProducto(e)}
                             value={producto.nombre}
                             placeholder="Ingresar nombre"

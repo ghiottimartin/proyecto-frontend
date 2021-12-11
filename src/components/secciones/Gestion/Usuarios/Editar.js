@@ -298,7 +298,7 @@ class Editar extends React.Component {
                         <Form.Label>DNI</Form.Label>
                         <Form.Control
                             id="dni"
-                            type="dni"
+                            type="number"
                             name="dni"
                             value={usuario && usuario.dni ? usuario.dni : ""}
                             onChange={(e) => this.onChangeUsuario(e)}

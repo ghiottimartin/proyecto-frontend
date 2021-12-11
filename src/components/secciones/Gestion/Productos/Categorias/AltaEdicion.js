@@ -190,7 +190,7 @@ class AltaEdicion extends React.Component {
                         <Form.Label>Nombre</Form.Label>
                         <Form.Control
                             id="nombre"
-                            type="nombre"
+                            type="text"
                             onChange={(e) => this.onChangeCategoria(e)}
                             disabled={buscando}
                             value={categoria.nombre}
