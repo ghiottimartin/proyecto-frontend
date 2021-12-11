@@ -42,6 +42,10 @@
   position: absolute;
 }
 
+.mesas-listado .texto-una-linea {
+  max-width: 230px;
+}
+
 .mesas-listado .mesa-tarjeta {
   min-height: 170px;
   max-height: 300px;

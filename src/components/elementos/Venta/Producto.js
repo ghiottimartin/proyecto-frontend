@@ -13,7 +13,7 @@ import { formatearMoneda } from "../../../utils/formateador"
 function Producto(props) {
     const cantidad = parseInt(props.cantidad)
     const producto = props.producto
-    const entregas = props.entregas
+    const entregas = props.entregas ? props.entregas : 0
     let path = productoVacio;
     if (producto.imagen) {
         try {
@@ -26,9 +26,9 @@ function Producto(props) {
     const stock = props.stock !== undefined ? props.stock : null
     return (
         <article key={producto.id} className="producto no-cerrar-carrito  position-relative">
-            <span className="producto-entregas mt-2" style={{display: !isNaN(entregas) ? "block" : "none"}}>
+            <span className="producto-entregas mt-2" style={{display: !isNaN(cantidad) ? "block" : "none"}}>
                 <i className="fas fa-concierge-bell mr-2"></i>
-                {entregas}/ {cantidad}
+                {entregas}/{cantidad}
             </span>
             <span style={{display: mostrarStock ? "block" : "none"}} className="producto-stock badge badge-primary badge-pill float-right" title={`Stock del producto ${producto.nombre}`}>
                 {stock}

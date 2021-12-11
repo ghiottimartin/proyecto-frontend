@@ -148,7 +148,7 @@ export function updateTurno(turno, mesa) {
     }
 }
 
-export function saveUpdateTurno(volverA, mensaje) {
+export function saveUpdateTurno(volverA, mensaje, idMesa) {
     return (dispatch, getState) => {
         if (mensaje !== false) {
             dispatch(requestUpdateTurno());
@@ -176,6 +176,11 @@ export function saveUpdateTurno(volverA, mensaje) {
                     dispatch(fetchMesaById(turno.mesa.id));
                 } else {
                     dispatch(receiveUpdateTurno());
+                }
+            })
+            .then(() => { 
+                if (!isNaN(idMesa)) {
+                    dispatch(comanda(idMesa))
                 }
             })
             .catch(function (error) {

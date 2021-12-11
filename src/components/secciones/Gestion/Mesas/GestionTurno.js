@@ -281,10 +281,10 @@ function GestionTurno(props) {
      * Guarda las órdenes del turno, permitiendo editarlo al reingresar a la gestión
      * del mismo.
      */
-    const guardarBorrador = (volverA, mensaje) => {
+    const guardarBorrador = (volverA, mensaje, idMesa) => {
         let valido = comprobarTurnoValido()
         if (valido) {
-            props.saveUpdateTurno(volverA, mensaje)
+            props.saveUpdateTurno(volverA, mensaje, idMesa)
         }
     }
 
@@ -310,7 +310,8 @@ function GestionTurno(props) {
                 cancelButtonColor: '#bfbfbf',
             })
         } else {
-            props.comanda(idMesa)
+            let volverA = rutas.MESA_TURNO + idMesa
+            guardarBorrador(volverA, false, idMesa)
         }
     }
 
@@ -542,8 +543,8 @@ const mapDispatchToProps = (dispatch) => {
         updateTurno: (turno, mesa) => {
             dispatch(updateTurno(turno, mesa))
         },
-        saveUpdateTurno: (volverA, mensaje) => {
-            dispatch(saveUpdateTurno(volverA, mensaje))
+        saveUpdateTurno: (volverA, mensaje, idMesa) => {
+            dispatch(saveUpdateTurno(volverA, mensaje, idMesa))
         },
         fetchMesaById: (id) => {
             dispatch(fetchMesaById(id))
