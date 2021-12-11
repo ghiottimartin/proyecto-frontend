@@ -151,6 +151,7 @@ function CerrarPedido(props) {
                                 <input
                                     id="direccion"
                                     type="text"
+                                    maxLength={250}
                                     className="input-direccion"
                                     value={direccion}
                                     placeholder="Dirección de entrega"
