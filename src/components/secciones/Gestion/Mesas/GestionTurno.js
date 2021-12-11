@@ -318,6 +318,25 @@ function GestionTurno(props) {
      * Dedirige a la interfaz de entrega de órdenes del turno.
      */
     const entregar = () => {
+        const restante = turno.ordenes.reduce((suma, orden) => {
+            const cantidad = orden.cantidad ? orden.cantidad : 0
+            const entregado = orden.entregado ? orden.entregado : 0
+            const resta = cantidad - entregado
+            return suma + resta
+        }, 0)
+        if (restante === 0) {
+            Swal.fire({
+                title: `Productos entregados`,
+                text: 'Los productos ya se encuentran entregados en su totalidad.',
+                icon: 'warning',
+                showCloseButton: true,
+                focusConfirm: true,
+                confirmButtonText: 'Aceptar',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+                cancelButtonColor: '#bfbfbf',
+            })
+            return;
+        }
         let volverA = rutas.TURNOS_ORDENES + idMesa
         guardarBorrador(volverA, false)
     }
