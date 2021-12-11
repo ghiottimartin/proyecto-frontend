@@ -273,6 +273,7 @@ class Editar extends React.Component {
                             id="first_name"
                             type="text"
                             name="first_name"
+                            maxLength={150}
                             value={usuario && usuario.first_name ? usuario.first_name : ""}
                             onChange={(e) => this.onChangeUsuario(e)}
                             placeholder="Nombre"
@@ -311,6 +312,7 @@ class Editar extends React.Component {
                             id="direccion"
                             type="text"
                             name="direccion"
+                            maxLength={30}
                             value={usuario && usuario.direccion ? usuario.direccion : ""}
                             onChange={(e) => this.onChangeUsuario(e)}
                             placeholder="Dirección"
