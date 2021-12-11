@@ -127,7 +127,7 @@ function AltaEdicion(props) {
                             <Form.Control
                                 id="numero"
                                 type="number"
-                                min={0}
+                                min={1}
                                 max={500}
                                 onChange={(e) => onChangeMesa(e)}
                                 value={mesa.numero ? mesa.numero : ""}
