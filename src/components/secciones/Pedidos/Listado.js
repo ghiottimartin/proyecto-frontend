@@ -474,7 +474,7 @@ class Listado extends React.Component {
                         <td>
                             <span className={pedido.tiene_vuelto ? '' : 'text-muted'}>{pedido.vuelto_texto}</span>
                         </td>
-                        <td style={{ display: rolVendedor ? "table-cell" : "none" }}>
+                        <td style={{ display: rolVendedor ? "table-cell" : "none" }} className="texto-una-linea" title={pedido.observaciones}>
                             {pedido.observaciones}
                         </td>
                         <td>{operaciones}</td>
