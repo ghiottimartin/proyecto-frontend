@@ -180,6 +180,7 @@ export function saveUpdateTurno(volverA, mensaje, idMesa) {
             })
             .then(() => { 
                 if (!isNaN(idMesa)) {
+                    dispatch(fetchMesaById(idMesa))
                     dispatch(comanda(idMesa))
                 }
             })
