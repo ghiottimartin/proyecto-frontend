@@ -300,7 +300,11 @@ class Listado extends React.Component {
     }
 
     render() {
+        const habilitando = this.props.usuarios.update.isUpdating;
+        const deshabilitando = this.props.usuarios.delete.isDeleting;
         const buscando = this.props.usuarios.byId.isFetching;
+        const loader = buscando || deshabilitando || habilitando;
+
         const filtros = this.props.usuarios.byId.filtros;
         const totalCero = this.props.usuarios.byId.total == 0;
         const registros = this.props.usuarios.byId.registros;
@@ -367,11 +371,11 @@ class Listado extends React.Component {
                             </tr>
                         </thead>
                         <tbody>
-                            {buscando ? Cargando : Usuarios}
+                            {loader ? Cargando : Usuarios}
                         </tbody>
                     </table>
                     {
-                        buscando || totalCero ?
+                        loader || totalCero ?
                             ''
                             :
                             <Paginacion
