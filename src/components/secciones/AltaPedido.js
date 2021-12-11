@@ -2,6 +2,10 @@ import React from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 
+
+//Api
+import auth from "../../api/authentication";
+
 //Actions
 import { resetPedidoAbierto, fetchPedidoAbierto, updatePedidoAbierto } from "../../actions/PedidoActions";
 import { resetProductos, fetchProductos } from "../../actions/ProductoActions";
@@ -13,7 +17,6 @@ import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
 //CSS
 import "../../assets/css/AltaPedido.css";
-import auth from "../../api/authentication";
 
 class AltaPedido extends React.Component {
     constructor(props) {
@@ -25,7 +28,8 @@ class AltaPedido extends React.Component {
         this.props.fetchPedidoAbierto();
         this.props.resetProductos();
 
-        this.props.fetchProductos(false, true, true);
+        let logueado = auth.idUsuario() ? true :  false;
+        this.props.fetchProductos(false, logueado, true);
 
         this.props.updatePedidoAbierto({
             tipo: 'retiro'
