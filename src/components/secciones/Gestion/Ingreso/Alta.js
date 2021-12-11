@@ -336,7 +336,7 @@ function Alta(props) {
                             {Filas.length === 0 ? <tr className="text-center"><td colSpan={6}>Agregue productos a ingresar</td></tr> : Filas}
                         </tbody>
                         <tfoot>
-                            {Filas.length === 0 ? '' : Total}
+                            {Filas.length === 0 ? null : Total}
                         </tfoot>
                     </table>
                     <button className="btn btn-success float-right boton-guardar" onClick={() => guardarIngreso()}>

@@ -93,7 +93,6 @@ function productosById(state = {
             });
         case RESET_PRODUCTOS:
             return Object.assign({}, state, {
-                isFetching: false,
                 didInvalidate: true,
                 error: null,
                 lastUpdated: null,
