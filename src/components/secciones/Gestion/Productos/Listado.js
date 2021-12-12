@@ -368,7 +368,12 @@ class Listado extends React.Component {
                 );
             }
         });
-        if (this.props.productos.allIds.length === 0) {
+        if (this.props.productos.byId.total === 0) {
+            Productos =
+                <tr className="text-center">
+                    <td colSpan={12}>Todavía no ha cargado productos.</td>
+                </tr>;
+        } else if (this.props.productos.allIds.length === 0) {
             Productos =
                 <tr className="text-center">
                     <td colSpan={12}>No hay productos para los filtros aplicados.</td>
