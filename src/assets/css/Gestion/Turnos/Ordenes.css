@@ -7,7 +7,7 @@
 .turno-ordenes .contenedor-ordenes {
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: auto;
+  grid-template-rows: 190px;
   grid-row-gap: 15px;
   justify-items: center;
   position: relative;
