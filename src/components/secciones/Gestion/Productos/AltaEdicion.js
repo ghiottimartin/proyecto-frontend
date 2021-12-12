@@ -498,7 +498,6 @@ class AltaEdicion extends React.Component {
                             onChange={(e) => this.onChangeProducto(e)}
                             value={producto.stock_seguridad}
                             placeholder="Ingresar stock"
-                            required={true}
                         />
                         <Form.Text id="stock_seguridad" muted>
                             Cantidad de alerta sobre faltante de stock
