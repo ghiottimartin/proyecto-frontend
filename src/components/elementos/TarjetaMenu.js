@@ -33,15 +33,9 @@ class TarjetaMenu extends React.Component {
     }
 
     getTitularTexto(titular) {
-        let usuario = this.props.usuarios.update.logueado;
-        let rolesArray = usuario && usuario.rolesArray ? usuario.rolesArray : [];
         const color      = this.getColorRol(titular);
         const colorTexto = this.getColorTextoRol(titular);
-        const tieneRol = rolesArray.includes(titular);
-        console.log(titular, color, colorTexto, tieneRol)
-        if (tieneRol) {
-            return(<span key={this.props.id} className="text-capitalize rol" style={{backgroundColor: color, color: colorTexto}}>{titular}</span>)
-        }
+        return(<span key={this.props.id} className="text-capitalize rol" style={{backgroundColor: color, color: colorTexto}}>{titular}</span>)
     }
 
     render() {
