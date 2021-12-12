@@ -93,6 +93,7 @@ class Gestion extends React.Component {
         let alt         = operacion && operacion.alt ? operacion.alt : "";
         let ruta        = operacion && operacion.ruta ? operacion.ruta : "";
         let titulo      = operacion && operacion.titulo ? operacion.titulo : "";
+        let titular     = operacion && operacion.titular ? operacion.titular : "";
         let descripcion = operacion && operacion.descripcion ? operacion.descripcion : "";
         if (ruta !== "") {
             ruta = rutas.validarRuta(ruta) ? ruta : "#";
@@ -109,6 +110,7 @@ class Gestion extends React.Component {
                 ruta={ruta}
                 img={imagen}
                 roles={roles}
+                titular={titular}
                 margenLeftImg={margenLeftImg}
             />
         );

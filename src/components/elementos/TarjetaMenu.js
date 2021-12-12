@@ -32,33 +32,28 @@ class TarjetaMenu extends React.Component {
         }
     }
 
-    getTextoRoles() {
-        let roles = [];
-        let usuario    = this.props.usuarios.update.logueado;
+    getTitularTexto(titular) {
+        let usuario = this.props.usuarios.update.logueado;
         let rolesArray = usuario && usuario.rolesArray ? usuario.rolesArray : [];
-        this.props.roles.map(rol => {
-            const key        = this.props.roles.indexOf(rol) + 1;
-            const color      = this.getColorRol(rol);
-            const colorTexto = this.getColorTextoRol(rol);
-            const tieneRol = rolesArray.includes(rol);
-            if (tieneRol) {
-                roles.push(
-                    <span key={key} className="text-capitalize rol" style={{backgroundColor: color, color: colorTexto}}>{rol}</span>
-                )
-            }
-        })
-        return roles
+        const color      = this.getColorRol(titular);
+        const colorTexto = this.getColorTextoRol(titular);
+        const tieneRol = rolesArray.includes(titular);
+        console.log(titular, color, colorTexto, tieneRol)
+        if (tieneRol) {
+            return(<span key={this.props.id} className="text-capitalize rol" style={{backgroundColor: color, color: colorTexto}}>{titular}</span>)
+        }
     }
 
     render() {
-        const props = this.props;
-        const rolesTexto = this.getTextoRoles();
+        const props = this.props
+        const titular = props.titular;
+        const rolTexto = this.getTitularTexto(titular);
         const margenLeftImg = this.props.margenLeftImg;
         return (
             <a href={props.ruta} key={props.id + "-tarjeta"} className="tarjeta-menu">
                 <div className={"tarjeta hvr-grow"} onClick={props.click}>
                     <div className="roles text-capítalize">
-                        {rolesTexto}
+                        {rolTexto}
                     </div>
                     <h2>{props.titulo}</h2>
                     <img src={props.img} alt={props.alt} title={props.title} style={{marginLeft: margenLeftImg}}/>
