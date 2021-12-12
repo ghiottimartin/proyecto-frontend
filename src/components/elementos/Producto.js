@@ -42,7 +42,15 @@ function Producto(props) {
         }
     }
 
+    /**
+     * Agrega al pedido el producto.
+     */
     const agregarProducto = (cantidad) => {
+        let tiene_stock = comprobarTieneStock(cantidad);
+        if (!tiene_stock) {
+            return null;
+        }
+
         const logueado = auth.idUsuario()
         if (!logueado) {
             Swal.fire({
@@ -78,7 +86,9 @@ function Producto(props) {
             }).then((result) => {
                 if (result.isConfirmed) {
                     let pedido = actualizarPedido(cantidad)
-                    crearPedidoAbierto(pedido)
+                    if (pedido !== null) {
+                        crearPedidoAbierto(pedido)
+                    }
                 }
             })
         } else if (abierto.disponible) {
@@ -98,17 +108,57 @@ function Producto(props) {
             })
         } else {
             let pedido = actualizarPedido(cantidad)
-            crearPedidoAbierto(pedido)
+            if (pedido !== null) {
+                crearPedidoAbierto(pedido)
+            }
         }
 
     }
 
+    /**
+     * Crea o actualiza el pedido abierto.
+     * 
+     * @param {Object} pedido 
+     */
     const crearPedidoAbierto = (pedido) => {
         props.createPedido(pedido)
         props.saveCreatePedido()
     }
 
+    /**
+     * Devuelve true si el producto tiene stock disponible.
+     * 
+     * @param {int} cantidad 
+     * @returns bool
+     */
+    const comprobarTieneStock = (cantidad) => {
+        const stock = producto.stock
+        if (stock === 0 && cantidad === 1) {
+            Swal.fire({
+                title: "No hay más stock para el producto " + producto.nombre,
+                icon: 'warning',
+                showCloseButton: true,
+                focusConfirm: true,
+                confirmButtonText: 'Continuar',
+                confirmButtonColor: 'rgb(88, 219, 131)',
+            });
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Actualiza la cantidad pedida del producto actual.
+     * 
+     * @param {int} cantidad 
+     * @returns 
+     */
     const actualizarPedido = (cantidad) => {
+        let tiene_stock = comprobarTieneStock(cantidad);
+        if (!tiene_stock) {
+            return null;
+        }
+
         let pedido = abierto
         let linea = getLineaProducto()
         let nuevas = pedido.lineas
@@ -161,7 +211,7 @@ function Producto(props) {
             </button>
         </div>
     return (
-        <article key={producto.id} className="producto no-cerrar-carrito">
+        <article key={producto.id} className="producto no-cerrar-carrito" style={{backgroundColor: producto.stock === 0 ? 'rgb(220 53 69 / 20%)' : ''}}>
             <div className="producto-izquierda">
                 <img src={path} onError={(e) => e.target.src = productoVacio} alt="Imagen de producto" />
             </div>
