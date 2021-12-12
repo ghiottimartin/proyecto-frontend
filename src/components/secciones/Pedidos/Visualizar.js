@@ -41,7 +41,7 @@ function Visualizar(props) {
                 <tr key={linea.id}>
                     <td>{linea.producto.nombre}</td>
                     <td className="text-right">{linea.cantidad}</td>
-                    <td className="text-right">{linea.producto.precio_texto}</td>
+                    <td className="text-right">{linea.subtotal_texto}</td>
                     <td className="text-right">{linea.total_texto}</td>
                 </tr>
             )
@@ -52,7 +52,7 @@ function Visualizar(props) {
             listaResponsive.push(
                 <li key={linea.id + "-responsive"} className="list-group-item">
                     <span>{linea.cantidad} x </span>
-                    <span>{linea.producto.precio_texto}</span>
+                    <span>{linea.subtotal_texto}</span>
                 </li>
             )
             listaResponsive.push(
