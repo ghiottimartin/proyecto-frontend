@@ -75,9 +75,11 @@ export function saveCreateCategoria(volverA) {
                 if (data.message) {
                     mensaje = data.message;
                 }
-                dispatch(updateCategoria(data.datos.categoria))
+                dispatch(updateCategoria(data.datos.categoria));
                 dispatch(reveiceCreateCategoria(mensaje));
                 dispatch(resetCreateCategoria());
+                dispatch(resetCategorias())
+                dispatch(fetchCategorias())
                 if (rutas.validarRuta(volverA)) {
                     history.push(volverA);
                 }

@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 //Actions
 import { createProducto, updateProducto, saveCreateProducto, saveUpdateProducto, fetchProductoById } from "../../../../actions/ProductoActions";
-import { fetchCategorias } from "../../../../actions/CategoriaActions";
+import { fetchCategorias, resetUpdateCategoria } from "../../../../actions/CategoriaActions";
 
 //Constants
 import * as rutas from '../../../../constants/rutas.js';
@@ -48,17 +48,6 @@ class AltaEdicion extends React.Component {
         if (id) {
             this.props.fetchProductoById(id);
         }
-
-        let categoria = this.props.categorias.update.activo;
-        if (!id && categoria && categoria.id) {
-            var cambio = {
-                target: {
-                    id: 'categoria',
-                    value: categoria.id,
-                }
-            }
-            this.onChangeProducto(cambio)
-        }
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -73,8 +62,23 @@ class AltaEdicion extends React.Component {
                 focusConfirm: true,
                 confirmButtonText: 'Continuar',
             })
-
         }
+
+        let producto = this.getProductoAltaEdicion();
+        let categoria = this.props.categorias.update.activo;
+        if (categoria && categoria.id && producto && producto.categoria !== categoria.id) {
+            var cambio = {
+                target: {
+                    id: 'categoria',
+                    value: categoria.id,
+                }
+            }
+            this.onChangeProducto(cambio)
+        }
+    }
+
+    componentWillUnmount() {
+        this.props.resetUpdateCategoria();
     }
 
     actualizarBotonVolverA() {
@@ -172,6 +176,23 @@ class AltaEdicion extends React.Component {
             producto = this.props.productos.update.activo;
         }
         return producto;
+    }
+
+    /**
+     * Devuelve la ruta actual dependiendo de si es un alta o edición.
+     * 
+     * @returns Object
+     */
+     getRutaActual() {
+        let ruta = "";
+        let accion = this.props.match.params['accion'];
+        if (accion === rutas.ACCION_ALTA) {
+            ruta = rutas.PRODUCTO_ALTA;
+        } else {
+            const id = this.props.match.params.id;
+            ruta = rutas.PRODUCTOS_EDITAR_ADMIN + id;
+        }
+        return ruta;
     }
 
     /**
@@ -385,7 +406,7 @@ class AltaEdicion extends React.Component {
         });
 
         const buscando = this.props.categorias.byId.isFetching;
-        const rutaCategoria = rutas.CATEGORIA_ALTA + '?volverA=' + rutas.PRODUCTO_ALTA;
+        const rutaCategoria = rutas.CATEGORIA_ALTA + '?volverA=' + this.getRutaActual();
         const stockDeshabilitado = producto.compra_directa && esEdicion;
 
         let linkVolver = rutas.PRODUCTOS_LISTAR_ADMIN
@@ -575,6 +596,9 @@ const mapDispatchToProps = (dispatch) => {
         },
         fetchCategorias: () => {
             dispatch(fetchCategorias())
+        },
+        resetUpdateCategoria: () => {
+            dispatch(resetUpdateCategoria())
         },
         fetchProductoById: (id) => {
             dispatch(fetchProductoById(id))
