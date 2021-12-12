@@ -27,6 +27,9 @@ function Filtros(props) {
         props.onChangeBusqueda(e)
     }
 
+    const logueado = props.usuarios.update.logueado;
+    const esAdmin = logueado && logueado.esAdmin ? logueado.esAdmin : false;
+
     return (
         <div className="filtros">
             <h4>Filtrado</h4>
@@ -34,7 +37,7 @@ function Filtros(props) {
                 <div className="form-filtros">
                     <div className="contenedor-filtros">
                         <div className="filter-by text-nowrap">
-                            <Form.Group>
+                            <Form.Group style={{display: esAdmin ? 'block' : 'none'}}>
                                 <Form.Label>Rol:</Form.Label>
                                 <Form.Control
                                     id="rol"
