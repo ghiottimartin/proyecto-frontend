@@ -501,6 +501,7 @@ class AltaEdicion extends React.Component {
                             id="costo_vigente"
                             type="number"
                             min={0}
+                            step={0.01}
                             onChange={(e) => this.onChangeProducto(e)}
                             value={producto.costo_vigente}
                             placeholder="Ingresar costo"
@@ -513,6 +514,7 @@ class AltaEdicion extends React.Component {
                             id="precio_vigente"
                             type="number"
                             min={0}
+                            step={0.01}
                             onChange={(e) => this.onChangeProducto(e)}
                             value={producto.precio_vigente}
                             placeholder="Ingresar precio"
