@@ -437,6 +437,7 @@ function GestionTurno(props) {
                     subtotal={subtotal}
                     stock={stock_restante}
                     mostrarStock={true}
+                    ocultarDescipcion={true}
                     entregas={orden.entregado}
                     agregarCantidad={(producto, cantidad) => actualizarOrden(producto, cantidad)}
                     quitarProducto={(e) => removeOrden(e)}

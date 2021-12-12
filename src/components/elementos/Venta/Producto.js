@@ -14,6 +14,7 @@ function Producto(props) {
     const cantidad = parseInt(props.cantidad)
     const producto = props.producto
     const entregas = props.entregas ? props.entregas : 0
+    const ocultarDescipcion = props.ocultarDescipcion ? props.ocultarDescipcion : false;
     let path = productoVacio;
     if (producto.imagen) {
         try {
@@ -39,7 +40,7 @@ function Producto(props) {
             <div className="producto-derecha">
                 <div className="producto-derecha-titulos">
                     <h2>{producto.nombre}</h2>
-                    <h3>{producto.descripcion}</h3>
+                    <h3 style={{display: ocultarDescipcion ? 'none' : 'block'}}>{producto.descripcion}</h3>
                 </div>
                 <div className="producto-derecha-carrito d-flex flex-column">
                     <p className="producto-derecha-precio font-weight-bold text-right pr-2 m-0 text-nowrap font-weight-bold">
