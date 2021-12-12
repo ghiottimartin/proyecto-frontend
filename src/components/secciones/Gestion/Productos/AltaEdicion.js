@@ -481,7 +481,7 @@ class AltaEdicion extends React.Component {
                             min={0}
                             disabled={stockDeshabilitado}
                             onChange={(e) => this.onChangeProducto(e)}
-                            value={producto.stock ? producto.stock : 0}
+                            value={producto.stock}
                             placeholder="Ingresar stock"
                             required={true}
                         />
@@ -496,7 +496,7 @@ class AltaEdicion extends React.Component {
                             type="number"
                             min={0}
                             onChange={(e) => this.onChangeProducto(e)}
-                            value={producto.stock_seguridad ? producto.stock_seguridad : 0}
+                            value={producto.stock_seguridad}
                             placeholder="Ingresar stock"
                             required={true}
                         />
