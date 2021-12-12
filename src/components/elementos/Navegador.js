@@ -79,7 +79,7 @@ class Navegador extends React.Component {
         });
     }
 
-    redirectTo(ruta) {
+    redirectTo(e, ruta) {
         if (ruta === "") {
             return;
         }
@@ -157,8 +157,8 @@ class Navegador extends React.Component {
             if (props.logout || !props.ruta || props.ruta === undefined || props.ruta === "") {
                 return (
                     <button
-                        onClick={() => this.redirectTo(ruta)}
-                        className={`itemMenu no-cerrar-carrito ${display} ${grow} ${claseActiva}`}
+                        onClick={(e) => this.redirectTo(e, ruta)}
+                        className={`itemMenu ${display} ${grow} ${claseActiva}`}
                         style={{ cursor: props.grow ? "pointer" : "unset" }}
                     >
                         {props.texto}
@@ -167,8 +167,8 @@ class Navegador extends React.Component {
             }
             return (
                 <button
-                    className={`itemMenu no-cerrar-carrito ${display} ${grow} ${claseActiva}`}
-                    onClick={() => this.redirectTo(ruta)}
+                    className={`itemMenu ${display} ${grow} ${claseActiva}`}
+                    onClick={(e) => this.redirectTo(e, ruta)}
                     style={{ cursor: props.grow ? "pointer" : "unset" }}
                 >
                     {props.texto}
@@ -252,10 +252,10 @@ class Navegador extends React.Component {
         let responsive = $(window).width() <= 849;
         let isUpdatingUsuario = this.props.usuarios.update.isUpdating;
         return (
-            <nav className="navegador no-cerrar-carrito">
+            <nav className="navegador">
                 <div className="izquierda">
                     <img className="logo" src={logo}
-                        onClick={() => this.redirectTo(rutas.INICIO)}
+                        onClick={(e) => this.redirectTo(e, rutas.INICIO)}
                         alt="Logo sistema gestión"
                         title="Logo sistema de gestión gastronómico"
                     />
