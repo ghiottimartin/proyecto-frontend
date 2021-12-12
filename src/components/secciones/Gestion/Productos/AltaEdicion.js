@@ -362,6 +362,10 @@ class AltaEdicion extends React.Component {
         if (!guardar) {
             return;
         }
+        
+        if (linkVolver === null) {
+            linkVolver = rutas.PRODUCTOS_LISTAR_ADMIN;
+        }
 
         this.normalizarDatos()
         if (accion === rutas.ACCION_ALTA) {
@@ -412,6 +416,9 @@ class AltaEdicion extends React.Component {
         let linkVolver = rutas.PRODUCTOS_LISTAR_ADMIN
         if (volverAValido) {
             linkVolver = rutas.getQuery('volverA')
+        }
+        if (linkVolver === null) {
+            linkVolver = rutas.PRODUCTOS_LISTAR_ADMIN;
         }
         return (
             <div className="producto-alta">
