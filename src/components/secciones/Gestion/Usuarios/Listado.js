@@ -342,12 +342,16 @@ class Listado extends React.Component {
             <tr>
                 <td colSpan={7}><Loader display={true} /></td>
             </tr>;
+
+        const logueado = this.props.usuarios.update.logueado;
+        const esAdmin = logueado.esAdmin ? logueado.esAdmin : false;
         return (
             <div className="tabla-listado">
                 <div className="table-responsive tarjeta-body listado">
                     <div className="d-flex justify-content-between">
                         <Titulo ruta={rutas.GESTION} titulo={"Usuarios"} clase="tabla-listado-titulo" />
                         <a href="#"
+                            style={{display: esAdmin ? 'block' : 'none'}}
                             onClick={() => this.redirigirListado()}
                             data-toggle="tooltip" data-original-title="" title="">
                             <AddBoxIcon style={{ color: '#5cb860' }} />
