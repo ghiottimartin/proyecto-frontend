@@ -132,7 +132,8 @@ class Listado extends React.Component {
     comprobarAutorizado(logueado) {
         let rolVendedor = this.comprobarRutaTipoVendedor();
         let esVendedor = logueado.esVendedor;
-        return rolVendedor && esVendedor || !rolVendedor;
+        let esAdmin = logueado.esAdmin;
+        return rolVendedor && (esVendedor || esAdmin) || !rolVendedor;
     }
 
     /**
