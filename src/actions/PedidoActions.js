@@ -72,7 +72,11 @@ export function saveCreatePedido(volverA) {
                 }
             })
             .then(function (data) {
-                dispatch(reveiceCreatePedido());
+                if (data.datos && data.datos.errores) {
+                    dispatch(errorCreatePedido(data.datos.errores))
+                } else {
+                    dispatch(reveiceCreatePedido());
+                }
                 if (data.exito) {
                     dispatch(resetCreatePedido());
                     dispatch(resetPedidoAbierto());
