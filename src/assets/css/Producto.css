@@ -13,6 +13,10 @@
     border-radius: 6px;;
 }
 
+.producto .producto-derecha .texto-una-linea {
+    max-width: 220px;
+}
+
 .producto img {
     float: left;
     width:  100px;

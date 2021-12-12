@@ -168,7 +168,7 @@ function Producto(props) {
             <div className="producto-derecha">
                 <div className="producto-derecha-titulos">
                     <h2>{producto.nombre}</h2>
-                    <h3>{producto.descripcion}</h3>
+                    <h3 className="texto-una-linea" title={producto.descripcion}>{producto.descripcion}</h3>
                 </div>
                 <div className="producto-derecha-carrito">
                     <div className="producto-derecha-carrito-cantidad">
