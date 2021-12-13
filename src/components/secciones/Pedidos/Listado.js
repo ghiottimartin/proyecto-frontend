@@ -5,7 +5,7 @@ import { withRouter } from "react-router-dom";
 //Actions
 import {
     anularPedido, entregarPedido, fetchPedidos, fetchPedidosVendedor, resetPedidos, resetPedidosVendedor,
-    updateFiltros, updatePedido, pedidoDisponible, comanda
+    updateFiltros, updatePedido, pedidoDisponible, comanda, pdfVenta
 } from "../../../actions/PedidoActions";
 
 //Api
@@ -180,6 +180,10 @@ class Listado extends React.Component {
             case 'comanda':
                 this.comanda(pedido);
                 break;
+            
+            case 'venta':
+                this.venta(pedido);
+                break;
         }
     }
 
@@ -188,7 +192,11 @@ class Listado extends React.Component {
      */
     comanda(pedido) {
         this.setState({ buscando: true });
-        this.props.comanda(pedido.id)
+        this.props.comanda(pedido.id);
+    }
+
+    venta(pedido) {
+        this.props.pdfVenta(pedido.venta_id);
     }
 
     /**
@@ -584,7 +592,10 @@ const mapDispatchToProps = (dispatch) => {
         },
         comanda: (id) => {
             dispatch(comanda(id))
-        }
+        },
+        pdfVenta: (id) => {
+            dispatch(pdfVenta(id))
+        },
     }
 };
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Listado));

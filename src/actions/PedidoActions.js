@@ -6,6 +6,7 @@ import { downloadBlob } from "./FileActions";
 
 //Api
 import pedidos from "../api/pedidos";
+import ventas from "../api/ventas";
 
 //Constants
 import * as rutas from '../constants/rutas.js';
@@ -981,6 +982,82 @@ export function comanda(id) {
                                 });
                         } catch (e) {
                             dispatch(errorComanda(errorMessages.GENERAL_ERROR));
+                        }
+                        return;
+                }
+            });
+    }
+}
+
+
+// PDF VENTA
+export const REQUEST_PDF_PEDIDO_VENTA = "REQUEST_PDF_PEDIDO_VENTA";
+export const RECEIVE_PDF_PEDIDO_VENTA = "RECEIVE_PDF_PEDIDO_VENTA";
+export const ERROR_PDF_PEDIDO_VENTA = "ERROR_PDF_PEDIDO_VENTA";
+
+
+function requestPdfPedidoVenta() {
+    return {
+        type: REQUEST_PDF_PEDIDO_VENTA,
+    }
+}
+
+function receivePdfPedidoVenta(blob, nombre) {
+    downloadBlob(blob, nombre);
+    return {
+        type: RECEIVE_PDF_PEDIDO_VENTA,
+        message: 'La venta se ha exportado a pdf con éxito',
+        receivedAt: Date.now()
+    }
+}
+
+function errorPdfPedidoVenta(error) {
+    return {
+        type: ERROR_PDF_PEDIDO_VENTA,
+        error: error,
+    }
+}
+
+export function pdfVenta(id) {
+    return dispatch => {
+        dispatch(requestPdfPedidoVenta());
+        return ventas.pdf(id)
+            .then(function (response) {
+                if (response.status >= 400) {
+                    return Promise.reject(response);
+                } else {
+                    var data = response.blob();
+                    return data;
+                }
+            })
+            .then(function (blob) {
+                var id_texto = id.toString().padStart(5, 0);
+                var nombre = `Venta ${id_texto}.pdf`;
+                dispatch(receivePdfPedidoVenta(blob, nombre));
+            })
+            .catch(function (error) {
+                switch (error.status) {
+                    case 401:
+                        dispatch(errorPdfPedidoVenta(errorMessages.UNAUTHORIZED_TOKEN));
+                        dispatch(logout());
+                        return;
+                    case 404:
+                        dispatch(errorPdfPedidoVenta(errorMessages.GENERAL_ERROR));
+                        return;
+                    default:
+                        try {
+                            error.json()
+                                .then(error => {
+                                    if (error.message !== "")
+                                        dispatch(errorPdfPedidoVenta(error.message));
+                                    else
+                                        dispatch(errorPdfPedidoVenta(errorMessages.GENERAL_ERROR));
+                                })
+                                .catch(error => {
+                                    dispatch(errorPdfPedidoVenta(errorMessages.GENERAL_ERROR));
+                                });
+                        } catch (e) {
+                            dispatch(errorPdfPedidoVenta(errorMessages.GENERAL_ERROR));
                         }
                         return;
                 }
