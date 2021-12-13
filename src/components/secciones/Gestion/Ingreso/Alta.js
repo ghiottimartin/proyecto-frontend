@@ -30,6 +30,11 @@ function Alta(props) {
     const ingreso = props.ingresos.create.nuevo
     const buscando = props.productos.byId.isFetching
 
+    let linkVolver = rutas.getQuery('volverA')
+    if (linkVolver === null || linkVolver === "" || linkVolver === undefined) {
+        linkVolver = rutas.INGRESO_MERCADERIA
+    }
+
     useEffect(() => {
         props.fetchProductos(false)
         return function limpiarAlta() {
@@ -233,7 +238,7 @@ function Alta(props) {
     const guardarIngreso = () => {
         let valido = comprobarIngresoValido()
         if (valido) {
-            props.saveCreateIngreso()
+            props.saveCreateIngreso(linkVolver)
         }
     }
 
@@ -294,11 +299,6 @@ function Alta(props) {
     let placeholder = "No hay productos de compra directa cargados.";
     if (cantidadProductosCompraDirecta > 0) {
         placeholder = "No quedan más productos de compra directa para agregar."
-    }
-
-    let linkVolver = rutas.getQuery('volverA')
-    if (linkVolver === null || linkVolver === "" || linkVolver === undefined) {
-        linkVolver = rutas.INGRESO_MERCADERIA
     }
     return (
         <div className="ingreso-mercaderia tarjeta-body">
@@ -366,8 +366,8 @@ const mapDispatchToProps = (dispatch) => {
         createIngreso: (ingreso) => {
             dispatch(createIngreso(ingreso))
         },
-        saveCreateIngreso: () => {
-            dispatch(saveCreateIngreso())
+        saveCreateIngreso: (linkVolver) => {
+            dispatch(saveCreateIngreso(linkVolver))
         },
         resetCreateIngreso: () => {
             dispatch(resetCreateIngreso())
