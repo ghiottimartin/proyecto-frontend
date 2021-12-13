@@ -68,6 +68,10 @@ function Visualizar(props) {
                 <span>{pedido.total_texto}</span>
             </li>
         )
+        let observaciones = pedido.observaciones;
+        if (observaciones === undefined || observaciones === "") {
+            observaciones = "Sin observaciones";
+        }
         return (
             <div className="pedido-visualizar mt-4">
                 <ul>
@@ -116,7 +120,7 @@ function Visualizar(props) {
                     </ul>
                 </div>
                 <p style={{ display: rolVendedor ? "block" : "none" }}>
-                    <b>Observaciones:</b> {pedido.observaciones}
+                    <b>Observaciones:</b> {observaciones}
                 </p>
             </div>
         )
