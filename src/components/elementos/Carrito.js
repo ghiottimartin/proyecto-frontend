@@ -98,11 +98,6 @@ class Carrito extends React.Component {
     }
 
     comprobarOcultarCarrito(evento) {
-        const target = evento.target;
-        const tipo = target.type;
-        if (tipo === 'submit') {
-            target.click();
-        }
         let $elemento = $(evento.target).closest(".no-cerrar-carrito");
         return $elemento.length > 0;
     }
