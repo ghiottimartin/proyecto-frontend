@@ -135,7 +135,7 @@ function Producto(props) {
         const stock = producto.stock
         if (stock === 0 && cantidad === 1) {
             Swal.fire({
-                title: "No hay más stock para el producto " + producto.nombre,
+                title: "El producto " + producto.nombre + " no está disponible actualmente",
                 icon: 'warning',
                 showCloseButton: true,
                 focusConfirm: true,
