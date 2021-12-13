@@ -62,7 +62,7 @@ class Carrito extends React.Component {
         lineas.forEach(linea => {
             compras.push(
                 <ItemCarrito
-                    key={linea.producto.id}
+                    key={linea.producto.id + "-linea"}
                     linea={linea}
                     productoGuardando={this.props.producto}
                     agregarProducto={(producto, cantidad) => this.props.agregarProducto(producto, cantidad)}
