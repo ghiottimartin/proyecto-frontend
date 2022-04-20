@@ -26,6 +26,7 @@ import history from "../../../../history";
 import Swal from 'sweetalert2';
 
 //Imagenes
+import imgLupa from "../../../../assets/icon/lupe.png"
 import emptyImg from "../../../../assets/img/emptyImg.jpg";
 
 //Utils
@@ -145,6 +146,9 @@ class AltaEdicion extends React.Component {
                 if (producto.venta_directa) {
                     valor = false;
                 }
+                break;
+            
+            default:
                 break;
 
         }
@@ -409,6 +413,20 @@ class AltaEdicion extends React.Component {
                                 +
                             </Button>
                         </div>
+                    </Form.Group>
+                    <Form.Group className="form-group-codigo-barra">
+                        <Form.Label>Código de barra</Form.Label>
+                        <Form.Control
+                            id="codigo_barra"
+                            onChange={(e) => this.onChangeProducto(e)}
+                            value={producto.codigo_barra}
+                            placeholder="Ingresar código de barra"
+                        />
+                        {false && (
+                            <button className="boton-codigo-barra" onClick={(e) => this.buscarProducto(e)}>
+                                <img src={imgLupa} alt="Buscar por codigo de barra" />
+                            </button>
+                        )} 
                     </Form.Group>
                     <Form.Group>
                         <Form.Label>Nombre</Form.Label>
