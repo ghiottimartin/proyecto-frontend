@@ -20,17 +20,23 @@ const BusquedaCodigoBarra = (props) => {
     
     const onChange = (e) => {
         const actual = e.target.value
-        setCodigo(actual)
+        setCodigo(actual.trim())
         const encontrado = buscarProducto(actual)
         if (encontrado) {
             setCodigo('')
             setFocused(true)
         }        
     }
+
+    const handleKeyDown = (e) => { 
+        if (e.keyCode === 13 ) {
+            onChange(e)
+        }
+    }
     
     return (
         <div className="busqueda-codigo-barra">
-            <input ref={searchInput} type="text" value={codigo} onChange={(e) => onChange(e)} placeholder={placeholder} onFocus={onFocus} onBlur={onBlur} />
+            <input ref={searchInput} type="text" value={codigo} onChange={(e) => onChange(e)} placeholder={placeholder} onFocus={onFocus} onBlur={onBlur} onKeyDown={handleKeyDown} />
         </div>
     )
 }
