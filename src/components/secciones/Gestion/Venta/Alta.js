@@ -164,7 +164,7 @@ const Alta = (props) => {
         })
 
         if (actualizada === undefined) {
-            return
+            return false
         }
 
         let cambiada = venta
@@ -178,6 +178,7 @@ const Alta = (props) => {
             return total + precio * cantidad
         }, 0)
         props.createVenta(cambiada)
+        return true
     }
 
     /**
@@ -407,7 +408,10 @@ const Alta = (props) => {
                 id: producto.id
             }
         }
-        addLineaVenta(nuevo, producto.id)
+        const agregada = agregarCantidad(producto, 1)
+        if (!agregada) {
+            addLineaVenta(nuevo, producto.id)
+        }        
         return true
     }
 
