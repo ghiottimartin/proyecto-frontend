@@ -11,12 +11,17 @@ import "../../../../assets/css/Gestion/VentaAlmacen.css"
 
 //Constants
 import * as rutas from "../../../../constants/rutas"
+import c from "../../../../constants/constants";
+
 
 //Components
 import Titulo from "../../../elementos/Titulo"
 import BusquedaCodigoBarra from "../../../elementos/BusquedCodigoBarra/BusquedaCodigoBarra"
 import Producto from "../../../elementos/Venta/Producto"
 import SeleccionProductos from "../../../elementos/Modales/SeleccionProductos"
+
+//Imagenes
+import productoVacio from "../../../../assets/img/emptyImg.jpg";
 
 //Librerías
 import AddBoxIcon from "@material-ui/icons/AddBox"
@@ -227,12 +232,23 @@ const Alta = (props) => {
                 
                 const stock = producto.stock
                 const restante = stock - cantidad
+
+                let path = productoVacio;
+                if (producto.imagen) {
+                    try {
+                        path = c.BASE_PUBLIC + producto.imagen;
+                    } catch (e) {
+                    }
+                }
                 return (
                     <tr key={producto.id} className={ restante < 0 ? "table-danger" : "" }>
                         <td>
                             <button className="boton-icono-quitar" data-id={producto.id} onClick={(e) => removeLineaVenta(e)}>
                                 <i data-id={producto.id} className="fa fa-times"></i>
                             </button>
+                        </td>
+                        <td>
+                            <img className="tabla-img-producto" src={path} onError={(e) => e.target.src = productoVacio} alt="Imagen de producto" />
                         </td>
                         <td>{producto.nombre}</td>
                         <td>{producto.stock}</td>
@@ -255,6 +271,7 @@ const Alta = (props) => {
                 <thead>
                     <tr>
                         <th></th>
+                        <th>Imagen</th>
                         <th>Producto</th>
                         <th>Stock</th>
                         <th>Cantidad</th>
@@ -263,9 +280,9 @@ const Alta = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {FilasHTML.length === 0 ? <tr className="text-center"><td colSpan={6}>Agregue productos a vender</td></tr> : FilasHTML}
+                    {FilasHTML.length === 0 ? <tr className="text-center"><td colSpan={7}>Agregue productos a vender</td></tr> : FilasHTML}
                     <tr>
-                        <td colSpan={6} className="text-right text-success font-weight-bold">
+                        <td colSpan={7} className="text-right text-success font-weight-bold">
                             <div onClick={() => abrirModalProductos()} className="d-flex justify-content-end align-items-center">
                                 <AddBoxIcon style={{ color: '#5cb860' }} />
                                 <button type="button" className="boton-modal bg-transparent text-success" data-target=".bs-example-modal-lg">Agregar producto</button>
@@ -275,7 +292,7 @@ const Alta = (props) => {
                 </tbody>
                 <tfoot>
                     <tr className="font-weight-bold">
-                        <td colSpan={4}>Total</td>
+                        <td colSpan={5}>Total</td>
                         <td colSpan={2} className="text-right">{formatearMoneda(venta.total)}</td>
                     </tr>
                 </tfoot>

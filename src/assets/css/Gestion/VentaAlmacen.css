@@ -21,6 +21,12 @@
   width: 80px;
 }
 
+.venta-alta-escritorio .tabla-img-producto {
+  width: 60px;
+  height: auto;
+  object-fit: cover;
+}
+
 .venta-almacen table {
   table-layout: fixed;
 }
