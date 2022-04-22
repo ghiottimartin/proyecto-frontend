@@ -14,6 +14,7 @@ import * as rutas from "../../../../constants/rutas"
 
 //Components
 import Titulo from "../../../elementos/Titulo"
+import BusquedaCodigoBarra from "../../../elementos/BusquedCodigoBarra/BusquedaCodigoBarra"
 import Producto from "../../../elementos/Venta/Producto"
 import SeleccionProductos from "../../../elementos/Modales/SeleccionProductos"
 
@@ -25,7 +26,7 @@ import Swal from 'sweetalert2'
 import { formatearMoneda } from "../../../../utils/formateador"
 import { getIconoConId } from "../../../../utils/utils"
 
-function Alta(props) {
+const Alta = (props) => {
 
     useEffect(() => {
         props.resetCreateVenta()
@@ -90,10 +91,10 @@ function Alta(props) {
      * 
      * @param {SyntheticBaseEvent} e 
      */
-    const addLineaVenta = (e) => {
+    const addLineaVenta = (e, id = null) => {
         e.preventDefault()
-        const elemento = getIconoConId(e)
-        const idProducto = elemento.dataset.id
+        const elemento = id === null ? getIconoConId(e) : id
+        const idProducto = id !== null ? id : elemento.dataset.id
         const producto = buscarProducto(idProducto)
         let nuevas = venta.lineas
         if (!Array.isArray(nuevas)) {
@@ -381,9 +382,41 @@ function Alta(props) {
 
     const AltaEscritorio = getTablaEscritorio()
     const AltaResponsive = getTablaResponsive()
+
+    const buscarProductoPorCodigo = (codigo) => {
+        let producto = null
+        props.productos.allIds.map(id => {
+            const actual = props.productos.byId.productos[id]
+            const codigoActual = actual && actual.codigo_barra ? actual.codigo_barra : ''
+            console.log(actual.codigo_barra)
+            if (codigoActual !== '' && codigo === codigoActual) {
+                producto = actual
+            }
+        })
+        return producto
+    }
+
+    const cargarProductoPorCodigo = (codigo) => { 
+        const producto = buscarProductoPorCodigo(codigo)
+        if (!producto) {
+            return false
+        }
+        const nuevo = {
+            preventDefault: () => {},
+            dataset: {
+                id: producto.id
+            }
+        }
+        addLineaVenta(nuevo, producto.id)
+        return true
+    }
+
     return (
         <div className="venta-almacen fondo-gris">
-            <Titulo ruta={rutas.VENTA_LISTADO} titulo={titulo} />
+            <header>
+                <Titulo ruta={rutas.VENTA_LISTADO} titulo={titulo} />
+                <BusquedaCodigoBarra buscarProducto={cargarProductoPorCodigo}/>
+            </header>
             <SeleccionProductos
                 show={show}
                 onHide={() => onHide()}
