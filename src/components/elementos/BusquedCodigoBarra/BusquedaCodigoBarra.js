@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import './BusquedaCodigoBarra.css'
 
 const BusquedaCodigoBarra = (props) => {
-    const { buscarProducto } = props
+    const { buscarProducto, foco } = props
 
     const searchInput = useRef(null);
     
@@ -11,7 +11,12 @@ const BusquedaCodigoBarra = (props) => {
         searchInput.current.focus();
     }, [])
 
-    const [focused, setFocused] = useState(true)
+    const [focused, setFocused] = useState(foco)
+
+    useEffect(() => {
+        setFocused(foco)
+    }, [foco])
+    
     const [codigo, setCodigo] = useState('')
     const placeholder = focused ? 'Lea el código con la lectora' : 'Haga click para buscar producto por código'
 

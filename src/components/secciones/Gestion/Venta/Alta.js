@@ -47,6 +47,7 @@ const Alta = (props) => {
     const isCreating = props.ventas.create.isCreating
 
     const [show, setShow] = useState(false)
+    const [foco, setFoco] = useState(true)
 
     /**
      * Abre el modal de selección de productos.
@@ -151,6 +152,7 @@ const Alta = (props) => {
             return total + precio * cantidad
         }, 0)
         props.createVenta(actualizado)
+        setFoco(true)
     }
 
     /**
@@ -428,7 +430,7 @@ const Alta = (props) => {
         const agregada = agregarCantidad(producto, 1)
         if (!agregada) {
             addLineaVenta(nuevo, producto.id)
-        }        
+        }
         return true
     }
 
@@ -436,7 +438,7 @@ const Alta = (props) => {
         <div className="venta-almacen fondo-gris">
             <header>
                 <Titulo ruta={rutas.VENTA_LISTADO} titulo={titulo} />
-                <BusquedaCodigoBarra buscarProducto={cargarProductoPorCodigo}/>
+                <BusquedaCodigoBarra foco={foco} buscarProducto={cargarProductoPorCodigo}/>
             </header>
             <SeleccionProductos
                 show={show}
