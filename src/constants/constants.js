@@ -3,7 +3,7 @@
  */
 let develop = false;
 let BASE_URL = "https://pico-backend-kiosco.herokuapp.com/api";
-let BASE_PUBLIC = "https://pico-backend-kiosco.herokuapp.com/";
+let BASE_PUBLIC = "https://pico-backend-kiosco.herokuapp.com";
 let CAPTCHA_KEY = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
 if (develop) {
     BASE_URL = "http://localhost:8000/api";
