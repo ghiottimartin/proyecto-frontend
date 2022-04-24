@@ -1,9 +1,9 @@
 /**
  * Created by martingh15 on 21/04/2020.
  */
-let develop = true;
-let BASE_URL = "https://ancient-oasis-22601.herokuapp.com/api";
-let BASE_PUBLIC = "https://ancient-oasis-22601.herokuapp.com";
+let develop = false;
+let BASE_URL = "https://pico-backend-kiosco.herokuapp.com/api";
+let BASE_PUBLIC = "https://pico-backend-kiosco.herokuapp.com/";
 let CAPTCHA_KEY = "6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI";
 if (develop) {
     BASE_URL = "http://localhost:8000/api";
